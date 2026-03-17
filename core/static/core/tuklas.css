@@ -1,0 +1,395 @@
+:root {
+    --primary-red: #fc6c6d;
+    --primary-red-border: #fc6c6d;
+    --text-dark: #333333;
+    --bg-color: #fdfdfd;
+    --banner-yellow: #fee470;
+    --btn-main: #4dcfc6; /* Teal */
+    --btn-orange: #fe9f45;
+    --btn-blue: #bdc7e7;
+    --border-dark: #2c2f33;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Nunito', sans-serif;
+    user-select: none;
+}
+
+body {
+    background: linear-gradient(135deg, #fdfdfd 0%, #eef1f6 100%);
+    background-attachment: fixed;
+    overflow-x: hidden;
+}
+
+/* Background Decorations */
+.background-decorations {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+}
+
+.circle-1 {
+    width: 120px;
+    height: 120px;
+    background-color: #e0f2f1; /* Light mint/cyan */
+    top: 10%;
+    left: 20%;
+}
+
+.circle-2 {
+    width: 90px;
+    height: 90px;
+    background-color: #fce4e4; /* Light pink/red */
+    bottom: 25%;
+    left: 15%;
+}
+
+.circle-3 {
+    width: 150px;
+    height: 150px;
+    background-color: #f4f4f4; /* Light gray */
+    bottom: 10%;
+    right: 5%;
+}
+
+.circle-4 {
+    width: 60px;
+    height: 60px;
+    background-color: #fff9c4; /* Light yellow */
+    top: 30%;
+    right: 15%;
+}
+
+.cloud-bg {
+    position: absolute;
+    width: 150px;
+    opacity: 0.7;
+}
+
+.cloud-1 {
+    top: 8%;
+    left: 5%;
+}
+
+.cloud-2 {
+    bottom: 15%;
+    left: 2%;
+    transform: scale(0.8);
+}
+
+/* Character Animation */
+.owl-container {
+    animation: floating 3s ease-in-out infinite;
+}
+
+.owl-container svg {
+    filter: drop-shadow(0px 8px 0px rgba(0,0,0,0.05));
+}
+
+@keyframes floating {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+
+/* Specific UI Components Customization */
+.title-card {
+    border: 3px solid var(--primary-red-border);
+    border-radius: 24px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.08); /* Soft drop shadow */
+    max-width: 650px;
+    width: 100%;
+}
+
+.title-card h1 {
+    color: var(--primary-red);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 900;
+    letter-spacing: 4px;
+}
+
+.title-card h2 {
+    color: var(--text-dark);
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: 600;
+    font-style: italic;
+    letter-spacing: 1px;
+}
+
+.motto-banner {
+    background-color: var(--banner-yellow);
+    border-radius: 8px;
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    font-weight: 700;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.05);
+    max-width: 100%;
+}
+
+/* Custom Game Buttons (Overriding default Bootstrap .btn) */
+.btn {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    border: 2px solid var(--border-dark);
+    transition: all 0.1s ease-in-out;
+    color: white;
+}
+
+.btn:hover {
+    color: white; /* Prevent Bootstrap hover color change */
+}
+
+.btn-game-primary {
+    background-color: var(--btn-main);
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    padding: 15px 40px;
+    border-radius: 12px;
+    box-shadow: 0px 8px 0px var(--border-dark);
+    max-width: 450px;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.btn-game-primary:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0px 12px 0px var(--border-dark), 0px 15px 25px rgba(77, 207, 198, 0.4);
+    filter: brightness(1.05); /* Make it subtly glow */
+}
+
+/* Gloss highlight matching 2D style */
+.btn-game-primary .btn-highlight {
+    width: 90%;
+    height: 12px;
+    background-color: rgba(255, 255, 255, 0.35);
+    pointer-events: none;
+}
+
+.btn-game-primary:active {
+    transform: translateY(8px);
+    box-shadow: 0px 0px 0px var(--border-dark);
+}
+
+.btn-game-primary:active .btn-highlight {
+    opacity: 0.5;
+}
+
+/* Secondary Actions Buttons */
+.btn-game-orange, .btn-game-blue {
+    font-size: 1.3rem;
+    padding: 14px 35px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 0px var(--border-dark);
+}
+
+.btn-game-orange:active, .btn-game-blue:active {
+    transform: translateY(5px);
+    box-shadow: 0px 0px 0px var(--border-dark);
+}
+
+.btn-game-orange {
+    background-color: var(--btn-orange);
+}
+
+.btn-game-blue {
+    background-color: var(--btn-blue);
+    color: var(--text-dark); /* Contrast fix */
+}
+
+.btn-game-blue:hover {
+    color: var(--text-dark);
+}
+
+/* Global Footer Adjustments */
+.footer-line {
+    height: 8px;
+    background-color: var(--primary-red);
+}
+
+/* ========================================= */
+/* MAP PAGE STYLES */
+/* ========================================= */
+
+.map-bg {
+    background-color: #fbf5e7; /* Cream background from screenshot */
+}
+
+/* Header */
+.map-header {
+    background-color: var(--primary-red);
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+}
+
+.map-title {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 800;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+}
+
+.btn-map-nav {
+    border-radius: 12px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--border-dark);
+    box-shadow: 0px 4px 0px var(--border-dark);
+    transition: all 0.1s ease;
+}
+
+.btn-map-nav:active {
+    transform: translateY(4px);
+    box-shadow: 0px 0px 0px var(--border-dark);
+}
+
+.user-badge {
+    box-shadow: 0px 4px 0px var(--border-dark) !important;
+}
+
+/* Progress Pill */
+.progress-pill {
+    box-shadow: 0px 6px 0px #a4e5e0 !important; /* Matches border-info */
+}
+
+/* Map Path Canvas */
+.map-path-canvas {
+    pointer-events: none;
+}
+
+.path-line-active {
+    stroke: #b2ebd5; /* Light teal/mint for completed path */
+    stroke-width: 15;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.path-line-inactive {
+    stroke: #e0e6ed; /* Light gray for locked path */
+    stroke-width: 15;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Map Nodes */
+.map-node {
+    position: absolute;
+    transform: translate(-50%, -50%); /* Centering */
+    z-index: 10;
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.map-node:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.node-circle {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: 900;
+    border: 3px solid var(--border-dark);
+    box-shadow: 0px 5px 0px var(--border-dark);
+}
+
+/* Node States */
+.node-completed .node-circle {
+    background-color: var(--btn-main);
+    color: white;
+}
+
+.node-locked .node-circle {
+    background-color: #d1d5db; /* Gray */
+    color: #9ca3af; /* Darker gray text */
+}
+
+.node-locked .lock-icon {
+    position: absolute;
+    font-size: 1.2rem;
+    color: #6b7280;
+    bottom: -5px;
+    right: -5px;
+}
+
+/* Active Node Pulsing & Styling */
+.node-active {
+    z-index: 20; /* Bring above others */
+}
+
+.node-active .node-circle {
+    width: 80px;
+    height: 80px;
+    font-size: 2.2rem;
+    border: 4px dashed #fe9f45; /* Orange dashed border */
+    background-color: white;
+    color: #fe9f45;
+    box-shadow: 0px 6px 0px rgba(254, 159, 69, 0.4);
+}
+
+/* Pulsing outer ring */
+.node-active-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: rgba(254, 159, 69, 0.2);
+    animation: pulse-ring 2s infinite ease-in-out;
+    z-index: -1;
+}
+
+@keyframes pulse-ring {
+    0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.8; }
+    100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+}
+
+.active-indicator {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    animation: float-up-down 1.5s infinite ease-in-out;
+}
+
+.text-orange {
+    color: var(--btn-orange);
+}
+
+.border-orange {
+    border-color: var(--btn-orange) !important;
+}
+
+@keyframes float-up-down {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(5px); }
+}
+
+/* Continue Button */
+.continue-btn {
+    box-shadow: 0px 8px 0px var(--border-dark) !important;
+}
+
+.continue-btn:active {
+    transform: translateY(8px);
+    box-shadow: 0px 0px 0px var(--border-dark) !important;
+}
