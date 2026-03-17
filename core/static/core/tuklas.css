@@ -223,7 +223,27 @@ body {
 /* ========================================= */
 
 .map-bg {
-    background-color: #fbf5e7; /* Cream background from screenshot */
+    background-color: #fbf5e7; /* Cream fallback */
+    overflow: hidden;
+}
+
+/* Map Horizontal Scroll (heights handled inline in template) */
+.map-scroll-wrapper {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.map-scroll-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.map-nodes-container {
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 /* Header */
@@ -270,17 +290,19 @@ body {
 }
 
 .path-line-active {
-    stroke: #b2ebd5; /* Light teal/mint for completed path */
-    stroke-width: 15;
+    stroke: #ff9f45; /* Vibrant Orange for completed path line */
+    stroke-width: 12;
     stroke-linecap: round;
     stroke-linejoin: round;
+    filter: drop-shadow(0px 4px 0px rgba(0,0,0,0.1));
 }
 
 .path-line-inactive {
-    stroke: #e0e6ed; /* Light gray for locked path */
-    stroke-width: 15;
+    stroke: rgba(255,255,255,0.4); /* Subtle white path for locked levels */
+    stroke-width: 12;
     stroke-linecap: round;
     stroke-linejoin: round;
+    stroke-dasharray: 20 20; /* Dashed line for locked path */
 }
 
 /* Map Nodes */
@@ -293,7 +315,7 @@ body {
 }
 
 .map-node:hover {
-    transform: translate(-50%, -50%) scale(1.1);
+    transform: translate(-50%, -50%) scale(1.15);
 }
 
 .node-circle {
@@ -307,6 +329,12 @@ body {
     font-weight: 900;
     border: 3px solid var(--border-dark);
     box-shadow: 0px 5px 0px var(--border-dark);
+    animation: breathing 4s ease-in-out infinite;
+}
+
+@keyframes breathing {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
 }
 
 /* Node States */

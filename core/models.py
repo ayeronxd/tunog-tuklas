@@ -21,6 +21,10 @@ class Level(models.Model):
     description = models.TextField(blank=True)
     required_stars = models.IntegerField(default=0)
     order = models.IntegerField(default=0) # For sorting levels
+    
+    # Coordinates for rendering on the map (percentages)
+    pos_top = models.IntegerField(default=50, help_text="Y coordinate percentage (0-100)")
+    pos_left = models.IntegerField(default=50, help_text="X coordinate percentage (0-100)")
 
     class Meta:
         ordering = ['order']
@@ -59,3 +63,20 @@ class MaterialContent(models.Model):
 
     def __str__(self):
         return f"{self.material.title} - Content {self.order}"
+
+class UserLevelProgress(models.Model):
+    """
+    Tracks a specific user's progress and stars for a specific level.
+    """
+    account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='progress')
+    level = models.ForeignKey(Level, on_delete=models.CASCADE)
+    
+    is_unlocked = models.BooleanField(default=False)
+    is_completed = models.BooleanField(default=False)
+    stars_earned = models.IntegerField(default=0, help_text="Max 5 stars per level")
+
+    class Meta:
+        unique_together = ('account', 'level') # A user can only have one progress record per level
+
+    def __str__(self):
+        return f"{self.account.user.username} - {self.level.name} ({self.stars_earned} Stars)"

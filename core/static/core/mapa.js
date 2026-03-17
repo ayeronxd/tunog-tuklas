@@ -17,10 +17,14 @@ const mapApp = createApp({
             window.location.href = "/"; // Simulate back button returning to lobby
         };
 
-        const continueLetter = () => {
-            console.log(`Starting level for letter ${activeLetter.value}`);
+        const continueLetter = (levelId, levelName) => {
+            console.log(`Starting level ${levelId} for letter ${levelName}`);
             // Logic to launch the mini-game component
-            alert("This will open the mini-game for letter B!");
+            alert(`This will open the mini-game for letter ${levelName}!`);
+        };
+        
+        const completedGame = () => {
+             alert('Congratulations! You have completed all levels!');
         };
 
         return {
@@ -30,7 +34,8 @@ const mapApp = createApp({
             totalLevels,
             activeLetter,
             goBack,
-            continueLetter
+            continueLetter,
+            completedGame
         };
     }
 });
