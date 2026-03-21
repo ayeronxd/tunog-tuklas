@@ -6,86 +6,675 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mapa ng Letra - Tunog Tuklas</title>
-    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'core/tuklas.css' %}">
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,800;0,900;1,400&display=swap"
         rel="stylesheet">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        html, body, #map-app {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
+        /* ── Scenic Discovery Regions ── */
+        :root {
+            --region-coastal: #7ec8e3;
+            --region-rural: #aed581;
+            --region-highland: #81c784;
+            --region-town: #ffccbc;
+            --fiesta-red: #e53935;
+            --fiesta-yellow: #fdd835;
+            --border-dark: #2c2f33;
         }
+
+        html,
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            overflow: hidden !important;
+        }
+
         #map-app {
             display: flex;
             flex-direction: column;
-        }
-        .map-main {
-            flex: 1;
-            min-height: 0; /* Critical: allows flex child to shrink below content size */
-            position: relative;
+            height: 100vh;
             overflow: hidden;
+            background: #e1f5fe;
         }
-        .map-scroll-wrapper {
-            width: 100%;
-            height: 100%;
-            overflow-x: auto;
-            overflow-y: hidden;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
+
+        /* ── PREMIUM HEADER ── */
+        .map-header {
             position: relative;
+            z-index: 1000;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, #f44336 0%, #ff5252 100%);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-bottom: 4px solid #ba000d;
+            padding: 10px 20px;
         }
-        .map-scroll-wrapper::-webkit-scrollbar { display: none; }
+
+        .header-banderitas {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            height: 25px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M0,0 L10,15 L20,0 L30,15 L40,0 L50,15 L60,0 L70,15 L80,0 L90,15 L100,0" fill="%23fdd835"/><path d="M5,0 L15,12 L25,0 L35,12 L45,0 L55,12 L65,0 L75,12 L85,0 L95,12" fill="%23e53935" opacity="0.6"/></svg>');
+            background-size: 150px 25px;
+            z-index: 999;
+            pointer-events: none;
+        }
+
+        /* ── SCROLL AREA ── */
+        .map-scroll-area {
+            flex: 1;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            position: relative;
+            cursor: grab;
+            scrollbar-width: thin;
+        }
+
+        .map-scroll-area:active {
+            cursor: grabbing;
+        }
+
         .map-canvas {
-            /* The wide scrollable canvas */
             width: 5500px;
             height: 100%;
             position: relative;
+            /* Sky gradient for the background */
+            background: linear-gradient(180deg, #4FC3F7 0%, #B3E5FC 40%, #E1F5FE 100%);
+            overflow: hidden;
         }
-        .map-panorama-bg {
+
+        /* Container for all background decorative elements */
+        .scenery-layer {
             position: absolute;
             inset: 0;
-            background-image: url("{% static 'core/map_bg_panorama.png' %}");
-            background-size: cover;
-            background-position: center bottom;
-            background-color: #c8e6c9;
-            z-index: 0;
-        }
-        .map-path-svg {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
+            pointer-events: none;
             z-index: 1;
+        }
+
+        /* The terrain SVG fills the full canvas */
+        .terrain-svg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 5500px;
+            height: 55%;
+            /* terrain fills bottom 55% of canvas */
+            overflow: visible;
+        }
+
+
+        /* ── THEMED NODES: STONE TYPES ── */
+        .map-node .node-circle {
+            border: 5px solid rgba(0,0,0,0.45);
+            box-shadow:
+                inset 0 3px 6px rgba(255,255,255,0.35),
+                inset 0 -4px 8px rgba(0,0,0,0.3),
+                0 8px 0 rgba(0,0,0,0.5),
+                0 12px 25px rgba(0,0,0,0.3);
+            width: 85px;
+            height: 85px;
+            font-size: 2.22rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.6), 0 1px 0 rgba(0,0,0,0.8);
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        /* Sheen highlight on all stones */
+        .map-node .node-circle::before {
+            content: '';
+            position: absolute;
+            top: 8%;
+            left: 15%;
+            width: 45%;
+            height: 35%;
+            background: radial-gradient(ellipse, rgba(255,255,255,0.55) 0%, transparent 70%);
+            border-radius: 50%;
             pointer-events: none;
         }
+
+        /* ── COASTAL: Smooth Sea Stone (blue-grey, polished) ── */
+        .node-coastal .node-circle {
+            background:
+                radial-gradient(ellipse at 35% 30%, rgba(255,255,255,0.18) 0%, transparent 50%),
+                radial-gradient(circle at 60% 70%, #0d47a1 0%, #1565c0 30%, #1976d2 60%, #42a5f5 100%);
+            border-color: #0d2a6e;
+            box-shadow:
+                inset 0 4px 8px rgba(255,255,255,0.3),
+                inset 0 -5px 10px rgba(0,20,80,0.5),
+                0 8px 0 #08175a,
+                0 12px 25px rgba(0,0,0,0.35);
+        }
+
+        /* ── RURAL: Mossy Rock (earthy green with texture) ── */
+        .node-rural .node-circle {
+            background:
+                radial-gradient(circle at 25% 20%, rgba(180,255,120,0.18) 0%, transparent 40%),
+                radial-gradient(ellipse at 70% 80%, #1b5e20 0%, #2e7d32 35%, #388e3c 65%, #558b2f 100%);
+            border-color: #0a2e0d;
+            box-shadow:
+                inset 0 4px 8px rgba(180,255,100,0.2),
+                inset 0 -5px 10px rgba(0,40,0,0.5),
+                0 8px 0 #071a09,
+                0 12px 25px rgba(0,0,0,0.35);
+        }
+
+        /* ── HIGHLAND: Dark Granite (speckled grey-purple) ── */
+        .node-highland .node-circle {
+            background:
+                radial-gradient(circle at 30% 25%, rgba(200,190,255,0.12) 0%, transparent 45%),
+                radial-gradient(ellipse at 65% 75%, #1a0533 0%, #37225e 30%, #4a3670 60%, #6a5a8a 100%);
+            border-color: #0f021f;
+            box-shadow:
+                inset 0 4px 8px rgba(180,150,255,0.2),
+                inset 0 -5px 10px rgba(10,0,30,0.6),
+                0 8px 0 #080015,
+                0 12px 25px rgba(0,0,0,0.4);
+        }
+
+        /* Granite speckle dots — sits between background and text via mix-blend */
+        .node-highland .node-circle::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background-image:
+                radial-gradient(circle, rgba(255,255,255,0.25) 1px, transparent 1px),
+                radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px);
+            background-size: 12px 12px, 7px 7px;
+            background-position: 0 0, 4px 4px;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+            z-index: -1;
+        }
+
+        /* ── TOWN: Warm Sandstone (terracotta orange-tan) ── */
+        .node-town .node-circle {
+            background:
+                radial-gradient(circle at 30% 25%, rgba(255,220,150,0.2) 0%, transparent 45%),
+                radial-gradient(ellipse at 65% 75%, #7f3000 0%, #bf360c 30%, #e64a19 60%, #ff7043 100%);
+            border-color: #4a1500;
+            box-shadow:
+                inset 0 4px 8px rgba(255,180,80,0.25),
+                inset 0 -5px 10px rgba(80,15,0,0.5),
+                0 8px 0 #320e00,
+                0 12px 25px rgba(0,0,0,0.35);
+        }
+
+        /* ── ACTIVE: Golden Amber Stone ── */
+        .node-active .node-circle {
+            transform: scale(1.15);
+            background:
+                radial-gradient(circle at 30% 25%, rgba(255,250,180,0.3) 0%, transparent 45%),
+                radial-gradient(ellipse at 65% 75%, #7f4800 0%, #bf6d00 30%, #e8940a 60%, #ffc107 100%) !important;
+            border-color: #fdd835 !important;
+            box-shadow:
+                inset 0 4px 8px rgba(255,240,100,0.35),
+                inset 0 -5px 10px rgba(120,60,0,0.4),
+                0 0 0 10px rgba(253,216,53,0.35),
+                0 10px 0 #5c2f00,
+                0 0 40px rgba(255,200,0,0.5) !important;
+            color: #fff8e1;
+            text-shadow: 0 0 12px rgba(255,220,0,0.9), 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* Mascot Styles */
+        .tarsier-guide {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            pointer-events: none;
+            z-index: 60;
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            animation: bounceMascot 2s ease-in-out infinite;
+        }
+
+        @keyframes bounceMascot {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes floatCloud {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            50% {
+                transform: translateX(25px);
+            }
+        }
+
+        /* ── SVG TRAIL ── */
+        /* CRITICAL: ALL paths must have fill:none — SVG defaults to fill:black */
+        .path-glow,
+        .path-shadow,
+        .path-active,
+        .path-inactive,
+        .path-highlight {
+            fill: none;
+        }
+
+        .path-glow {
+            stroke: rgba(255, 220, 80, 0.35);
+            stroke-width: 28;
+            stroke-linecap: round;
+        }
+
+        .path-active {
+            stroke: #fdd835;
+            stroke-width: 16;
+            stroke-linecap: round;
+            filter: drop-shadow(0 0 8px rgba(253, 216, 53, 0.6));
+            stroke-dasharray: 25 15;
+            animation: dashScroll 1s linear infinite;
+        }
+
+        .path-inactive {
+            stroke: rgba(255, 255, 255, 0.35);
+            stroke-width: 12;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 22 18;
+        }
+
+        .path-highlight {
+            stroke: rgba(255, 250, 180, 0.5);
+            stroke-width: 5;
+            stroke-linecap: round;
+        }
+
+        @keyframes dashScroll {
+            to {
+                stroke-dashoffset: -40;
+            }
+        }
+
+        /* ── MAP NODES: base shared styles ── */
+        .map-node {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .map-node:hover {
+            transform: translate(-50%, -50%) scale(1.12);
+        }
+
         .map-nodes-layer {
             position: absolute;
             inset: 0;
-            z-index: 2;
+            z-index: 5;
         }
-        /* Progress pill fixed to screen */
+
+        .map-path-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        .path-glow {
+            stroke: rgba(255, 200, 80, 0.4);
+            stroke-width: 28;
+            stroke-linecap: round;
+            fill: none;
+            filter: blur(4px);
+        }
+
+        .path-shadow {
+            stroke: rgba(0, 0, 0, 0.15);
+            stroke-width: 18;
+            stroke-linecap: round;
+            fill: none;
+        }
+
+        .path-inactive {
+            stroke: rgba(255, 255, 255, 0.45);
+            stroke-width: 12;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 22 18;
+            fill: none;
+        }
+
+        .path-highlight {
+            stroke: rgba(255, 240, 160, 0.6);
+            stroke-width: 5;
+            stroke-linecap: round;
+            fill: none;
+        }
+
+        /* ── COMPLETED: Jade / Emerald Stone ── */
+        .node-completed .node-circle {
+            background:
+                radial-gradient(circle at 30% 25%, rgba(180,255,200,0.25) 0%, transparent 45%),
+                radial-gradient(ellipse at 65% 75%, #004d40 0%, #00695c 30%, #00897b 60%, #26a69a 100%);
+            border-color: #001f1a !important;
+            box-shadow:
+                inset 0 4px 8px rgba(100,255,180,0.25),
+                inset 0 -5px 10px rgba(0,50,40,0.5),
+                0 8px 0 #001a15,
+                0 12px 25px rgba(0,0,0,0.35) !important;
+            color: #b2dfdb;
+            text-shadow: 0 0 8px rgba(100,255,200,0.7), 0 2px 4px rgba(0,0,0,0.6);
+        }
+
+        .node-completed::after {
+            content: "\2713";
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: #00897b;
+            color: white;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #004d40;
+            font-weight: 900;
+            box-shadow: 0 2px 0 #001a15;
+        }
+
+        /* ── LOCKED: Dull Grey Limestone ── */
+        .node-locked .node-circle {
+            background:
+                radial-gradient(circle at 30% 25%, rgba(220,220,220,0.15) 0%, transparent 45%),
+                radial-gradient(ellipse at 65% 75%, #37474f 0%, #546e7a 30%, #78909c 60%, #90a4ae 100%);
+            border-color: #1c2b30 !important;
+            box-shadow:
+                inset 0 4px 8px rgba(200,220,230,0.15),
+                inset 0 -5px 10px rgba(0,10,20,0.4),
+                0 8px 0 #0d1619,
+                0 12px 25px rgba(0,0,0,0.3) !important;
+            color: #b0bec5;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            filter: saturate(0.6);
+        }
+
+        .node-locked .lock-icon {
+            position: absolute;
+            bottom: -4px;
+            right: -4px;
+            background: #546e7a;
+            color: #cfd8dc;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #37474f;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 0 #0d1619;
+        }
+
+        /* Active */
+        .node-active {
+            z-index: 20;
+        }
+
+        .node-active-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 115px;
+            height: 115px;
+            border-radius: 50%;
+            border: 3px solid rgba(253, 216, 53, 0.7);
+            animation: ringExpand 2s infinite ease-out;
+            pointer-events: none;
+        }
+
+        @keyframes ringExpand {
+            0% {
+                transform: translate(-50%, -50%) scale(0.7);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(1.7);
+                opacity: 0;
+            }
+        }
+
+        /* "Dito ka na!" */
+        .active-label {
+            position: absolute;
+            top: calc(100% + 16px);
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            background: #ba000d;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 900;
+            padding: 4px 14px;
+            border-radius: 20px;
+            border: 2px solid #2c2f33;
+            box-shadow: 0 3px 0 #2c2f33;
+            animation: labelBounce 1.4s ease-in-out infinite;
+        }
+
+        .active-label::before {
+            content: "";
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-bottom-color: #2c2f33;
+        }
+
+        .active-label::after {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 4px solid transparent;
+            border-bottom-color: #ba000d;
+        }
+
+        @keyframes labelBounce {
+
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            50% {
+                transform: translateX(-50%) translateY(5px);
+            }
+        }
+
+        /* Star badge */
+        .star-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ffe066;
+            border: 2px solid #2c2f33;
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            box-shadow: 0 2px 0 #2c2f33;
+        }
+
+        /* ── FIXED UI ── */
         .pill-fixed {
             position: fixed;
-            top: 100px;
+            top: 105px;
             left: 20px;
             z-index: 9999;
         }
-        /* Continue button fixed to bottom center of screen */
+
+        .progress-pill {
+            background: #fff;
+            border: 4px solid #2c2f33;
+            border-radius: 40px;
+            padding: 10px 22px;
+            box-shadow: 0 6px 0 #2c2f33;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            white-space: nowrap;
+        }
+
+        /* Scroll arrows */
+        .scroll-hint {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 500;
+            background: #fff;
+            border: 4px solid #2c2f33;
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 0 #2c2f33;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #2c2f33;
+            font-size: 1.2rem;
+        }
+
+        .scroll-hint:hover {
+            background: #fdd835;
+            color: #000;
+        }
+
+        .scroll-hint:active {
+            transform: translateY(-50%) translateY(4px);
+            box-shadow: none;
+        }
+
+        .scroll-hint-left {
+            left: 14px;
+        }
+
+        .scroll-hint-right {
+            right: 14px;
+        }
+
+        /* Scroll progress bar */
+        .scroll-progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: rgba(0, 0, 0, 0.15);
+            z-index: 9998;
+        }
+
+        .scroll-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4dcfc6, #fdd835);
+            width: 0%;
+            transition: width 0.1s;
+            border-radius: 0 3px 3px 0;
+        }
+
+        /* Continue button */
         .continue-fixed {
             position: fixed;
-            bottom: 40px;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%) translateY(120px);
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+        }
+
+        .continue-fixed.visible {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .continue-btn {
+            box-shadow: 0 8px 0 #2c2f33, 0 12px 30px rgba(0, 0, 0, 0.2) !important;
+            transition: filter 0.15s, box-shadow 0.15s !important;
+        }
+
+        .continue-btn:hover {
+            filter: brightness(1.08);
+        }
+
+        .continue-btn:active {
+            transform: translateY(8px) !important;
+            box-shadow: 0 0 0 #2c2f33 !important;
+        }
+
+        /* Drag hint */
+        .drag-hint {
+            position: fixed;
+            bottom: 50px;
             left: 50%;
             transform: translateX(-50%);
-            z-index: 9999;
+            z-index: 9998;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            animation: fadeHint 3s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes fadeHint {
+
+            0%,
+            60% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
         }
     </style>
 </head>
@@ -93,38 +682,50 @@
 <body>
     <div id="map-app">
 
-        <!-- Top Header Bar -->
-        <header class="map-header w-100 d-flex justify-content-between align-items-center p-3 p-md-4">
-            <!-- Back Button -->
-            <button class="btn btn-map-nav text-danger bg-white shadow-sm" @click="goBack">
+        <!-- ══ HEADER ══ -->
+        <header class="map-header d-flex justify-content-between align-items-center" v-pre>
+            <div class="header-banderitas"></div>
+            <a href="{% url 'core:index' %}"
+                class="btn btn-map-nav text-danger bg-white shadow-sm d-flex align-items-center justify-content-center"
+                style="width:52px; height:52px; border-radius:15px; border:2px solid #2c2f33; text-decoration:none;"
+                id="btn-back">
                 <i class="fa-solid fa-chevron-left fs-4"></i>
-            </button>
+            </a>
 
-            <!-- Title -->
-            <h1 class="text-white text-center flex-grow-1 m-0 header-title map-title mx-3">
-                Aking Mapa ng mga Letra
+            <h1 class="text-white text-center flex-grow-1 m-0 map-title mx-3 fw-black"
+                style="font-size: 1.8rem; text-shadow: 2px 2px 0 rgba(0,0,0,0.3);">
+                MAPA NG MGA LETRA
             </h1>
 
-            <!-- Profile & Logout Dropdown -->
             <div class="dropdown">
-                <button class="btn btn-map-nav bg-white p-0 overflow-hidden shadow-sm d-flex align-items-center justify-content-center mx-2" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="width: 65px; height: 65px; border-radius: 50%; border: 3px solid var(--border-dark);">
+                <button
+                    class="btn btn-map-nav bg-white p-0 overflow-hidden shadow-sm d-flex align-items-center justify-content-center"
+                    type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                    style="width:62px;height:62px;border-radius:50%;border:4px solid #2c2f33;" id="btn-profile">
                     {% get_social_accounts user as accounts %}
                     {% if accounts.google %}
-                        <img src="{{ accounts.google.0.get_avatar_url }}" alt="Profile" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img src="{{ accounts.google.0.get_avatar_url }}" alt="Profile"
+                        style="width:100%;height:100%;object-fit:cover;">
                     {% else %}
-                        <i class="fa-solid fa-user fs-3 text-secondary"></i>
+                    <i class="fa-solid fa-user fs-2 text-dark"></i>
                     {% endif %}
                 </button>
-                <ul class="dropdown-menu dropdown-menu-end shadow-lg rounded-4 overflow-hidden mt-3 p-0" style="border: 3px solid var(--border-dark) !important; min-width: 250px;">
-                    <li class="px-4 py-3 text-center bg-light" style="border-bottom: 2px solid var(--border-dark);">
-                        <strong class="d-block fs-5 text-dark fw-bold mb-1">{{ request.user.first_name|default:request.user.username }}</strong>
-                        <small class="text-muted fw-semibold">{{ request.user.email }}</small>
+                <ul class="dropdown-menu dropdown-menu-end shadow-lg rounded-4 overflow-hidden mt-3 p-0"
+                    style="border:4px solid #2c2f33!important;min-width:260px;">
+                    <li class="px-4 py-4 text-center bg-light" style="border-bottom:4px solid #2c2f33;">
+                        <strong class="d-block fs-5 text-dark fw-bold mb-1">
+                            {% if request.user.first_name %}{{ request.user.first_name }} {{ request.user.last_name }}{%
+                            else %}{{ request.user.username }}{% endif %}
+                        </strong>
+                        <small class="text-muted fw-bold">{{ request.user.email }}</small>
                     </li>
                     <li>
                         <form method="post" action="{% url 'account_logout' %}">
                             {% csrf_token %}
-                            <button type="submit" class="dropdown-item text-danger py-3 fw-bold d-flex align-items-center justify-content-center gap-2" style="font-size: 1.1rem; transition: background-color 0.2s;">
-                                <i class="fa-solid fa-right-from-bracket"></i> Mag-logout
+                            <button type="submit"
+                                class="dropdown-item text-danger py-3 fw-black d-flex align-items-center justify-content-center gap-2"
+                                style="font-size:1.15rem;">
+                                <i class="fa-solid fa-right-from-bracket"></i> MAG-LOGOUT
                             </button>
                         </form>
                     </li>
@@ -132,100 +733,260 @@
             </div>
         </header>
 
-        <!-- Progress Pill (Fixed to Viewport) -->
-        <div class="pill-fixed">
-            <div class="progress-pill bg-white px-4 py-2 rounded-pill d-flex align-items-center gap-3 border border-2 border-info shadow-sm">
-                <i class="fa-solid fa-star text-warning fs-4"></i>
-                <span class="fs-4 fw-bold">{{ total_stars }} <span class="fs-6 text-muted ms-1 fw-semibold">Stars</span></span>
-                <span class="fs-5 fw-bold text-info border-start border-2 ps-3">{{ total_stars }}/{{ max_stars }}</span>
+        <!-- ══ MAIN SCROLL AREA ══ -->
+        <div class="map-scroll-area" id="mapScrollArea">
+
+            <!-- 5500px wide canvas -->
+            <div class="map-canvas" id="mapCanvas">
+
+                <!-- ══ BACKGROUND: sky-level floating elements ══ -->
+                <div class="scenery-layer" aria-hidden="true">
+
+                    <!-- Floating sky elements (sun, balloons, clouds) -->
+                    <div style="position:absolute;top:5%;left:250px;font-size:9rem;animation:spinSlow 40s linear infinite;filter:drop-shadow(0 0 40px #FFEB3B);z-index: 0;">☀️</div>
+                    <div style="position:absolute;top:15%;left:900px;font-size:6rem;animation:floatCloud 8s ease-in-out infinite;">🎈</div>
+                    <div style="position:absolute;top:8%;left:2500px;font-size:7rem;animation:floatCloud 10s ease-in-out infinite;animation-delay:2s;">✈️</div>
+                    <div style="position:absolute;top:20%;left:3800px;font-size:6.5rem;animation:floatCloud 9s ease-in-out infinite;">🦋</div>
+                    <div style="position:absolute;top:10%;left:4800px;font-size:7.5rem;animation:floatCloud 12s ease-in-out infinite;">🚀</div>
+
+                    <!-- Floating clouds -->
+                    <span style="position:absolute;top:4%;left:150px;font-size:6rem;opacity:0.9;animation:floatCloud 8s ease-in-out infinite;">☁️</span>
+                    <span style="position:absolute;top:12%;left:550px;font-size:4.5rem;opacity:0.8;animation:floatCloud 11s ease-in-out infinite 1.5s;">☁️</span>
+                    <span style="position:absolute;top:6%;left:1100px;font-size:5.5rem;opacity:0.85;animation:floatCloud 9s ease-in-out infinite 0.5s;">☁️</span>
+                    <span style="position:absolute;top:3%;left:1600px;font-size:6rem;opacity:0.9;animation:floatCloud 10s ease-in-out infinite 3s;">☁️</span>
+                    <span style="position:absolute;top:15%;left:2200px;font-size:5rem;opacity:0.8;animation:floatCloud 12s ease-in-out infinite 2s;">☁️</span>
+                    <span style="position:absolute;top:5%;left:2800px;font-size:6.5rem;opacity:0.9;animation:floatCloud 8s ease-in-out infinite 1s;">☁️</span>
+                    <span style="position:absolute;top:10%;left:3400px;font-size:5rem;opacity:0.8;animation:floatCloud 11s ease-in-out infinite 4s;">☁️</span>
+                    <span style="position:absolute;top:4%;left:4100px;font-size:5.5rem;opacity:0.9;animation:floatCloud 9s ease-in-out infinite 2.5s;">☁️</span>
+                    <span style="position:absolute;top:12%;left:4700px;font-size:4.5rem;opacity:0.8;animation:floatCloud 10s ease-in-out infinite 0.5s;">☁️</span>
+                    <span style="position:absolute;top:7%;left:5200px;font-size:6rem;opacity:0.9;animation:floatCloud 12s ease-in-out infinite 3.5s;">☁️</span>
+                    
+                    <!-- Ground decorations (trees, houses, flowers) -->
+                    <div style="position:absolute; bottom:18%; left:300px; font-size:7rem; z-index:2; pointer-events:none;">🌳</div>
+                    <div style="position:absolute; bottom:10%; left:650px; font-size:5rem; z-index:2; pointer-events:none;">🌻</div>
+                    <div style="position:absolute; bottom:25%; left:1100px; font-size:6rem; z-index:2; pointer-events:none;">🌲</div>
+                    <div style="position:absolute; bottom:20%; left:1700px; font-size:5rem; z-index:2; pointer-events:none;">🏡</div>
+                    <div style="position:absolute; bottom:12%; left:2200px; font-size:4rem; z-index:2; pointer-events:none;">🌼</div>
+                    <div style="position:absolute; bottom:28%; left:2600px; font-size:8rem; z-index:2; pointer-events:none;">🌳</div>
+                    <div style="position:absolute; bottom:15%; left:3100px; font-size:6rem; z-index:2; pointer-events:none;">🌵</div>
+                    <div style="position:absolute; bottom:20%; left:3700px; font-size:5.5rem; z-index:2; pointer-events:none;">🏕️</div>
+                    <div style="position:absolute; bottom:8%; left:4200px; font-size:5rem; z-index:2; pointer-events:none;">🌻</div>
+                    <div style="position:absolute; bottom:25%; left:4700px; font-size:7rem; z-index:2; pointer-events:none;">🌲</div>
+                    <div style="position:absolute; bottom:12%; left:5100px; font-size:6rem; z-index:2; pointer-events:none;">🏠</div>
+                </div>
+
+                <!-- ══ TERRAIN BACKGROUND ══ -->
+                <svg class="terrain-svg" viewBox="0 0 5500 400" preserveAspectRatio="none">
+                    <!-- Layer 1: Back Hills -->
+                    <path fill="#A5D6A7" d="M0,400 L0,180 Q300,300 600,180 T1200,180 T1800,180 T2400,180 T3000,180 T3600,180 T4200,180 T4800,180 T5400,180 T6000,180 L6000,400 Z" />
+                    <!-- Layer 2: Mid Hills -->
+                    <path fill="#81C784" d="M0,400 L0,240 Q400,100 800,240 T1600,240 T2400,240 T3200,240 T4000,240 T4800,240 T5600,240 L5600,400 Z" />
+                    <!-- Layer 3: Foreground Ground -->
+                    <path fill="#66BB6A" d="M0,400 L0,320 Q250,420 500,320 T1000,320 T1500,320 T2000,320 T2500,320 T3000,320 T3500,320 T4000,320 T4500,320 T5000,320 T5500,320 Q5750,420 6000,320 L6000,400 Z" />
+                </svg>
+
+                <!-- ══ SVG PATH ══ -->
+                <svg class="map-path-svg" viewBox="0 0 5500 700" preserveAspectRatio="none">
+                    <defs>
+                        <filter id="glow">
+                            <feGaussianBlur stdDeviation="6" result="coloredBlur" />
+                            <feMerge>
+                                <feMergeNode in="coloredBlur" />
+                                <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                        </filter>
+                    </defs>
+
+                    <!-- fill="none" must be set as SVG attribute AND CSS to override browser defaults -->
+                    <path class="path-glow" fill="none" filter="url(#glow)" d="{{ svg_path_d }}" />
+                    <path class="path-active" fill="none" d="{{ svg_path_d }}" />
+                    <path class="path-inactive" fill="none" d="{{ svg_path_d }}" />
+                    <path class="path-highlight" fill="none" d="{{ svg_path_d }}" />
+                </svg>
+
+                <!-- ══ NODES LAYER ══ -->
+                <div class="map-nodes-layer">
+                    {% for node in map_nodes %}
+                    {% if node.status == 'completed' %}
+                    <div class="map-node node-completed 
+                        {% if forloop.counter <= 5 %}node-coastal{% elif forloop.counter <= 11 %}node-rural{% elif forloop.counter <= 18 %}node-highland{% else %}node-town{% endif %}"
+                        style="top:{{ node.pos_top }}%;left:{{ node.pos_left_px }}px;" title="{{ node.name }}"
+                        onclick="window.location.href='{% if node.name == 'M' %}{% url 'core:letrang_m' %}{% else %}/game/{{ node.id }}/{% endif %}'">
+                        <div class="node-circle position-relative">{{ node.name }}
+                            {% if node.stars > 0 %}
+                            <div class="star-badge"><i class="fa-solid fa-star text-warning"></i></div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {% elif node.status == 'active' %}
+                    <div class="map-node node-active 
+                        {% if forloop.counter <= 5 %}node-coastal{% elif forloop.counter <= 11 %}node-rural{% elif forloop.counter <= 18 %}node-highland{% else %}node-town{% endif %}"
+                        style="top:{{ node.pos_top }}%;left:{{ node.pos_left_px }}px;" id="active-node"
+                        onclick="window.location.href='{% if node.name == 'M' %}{% url 'core:letrang_m' %}{% else %}/game/{{ node.id }}/{% endif %}'">
+
+                        <div class="tarsier-guide" id="mascot">🐒</div>
+                        <div class="node-active-ring"></div>
+                        <div class="node-circle">{{ node.name }}</div>
+                        <div class="active-label" style="background:#ba000d; border-color:#2c2f33;">▲ DITO KA NA!</div>
+                    </div>
+
+                    {% else %}
+                    <div class="map-node node-locked 
+                        {% if forloop.counter <= 5 %}node-coastal{% elif forloop.counter <= 11 %}node-rural{% elif forloop.counter <= 18 %}node-highland{% else %}node-town{% endif %}"
+                        style="top:{{ node.pos_top }}%;left:{{ node.pos_left_px }}px;">
+                        <div class="node-circle">{{ node.name }}
+                            <span class="lock-icon"><i class="fa-solid fa-lock" style="font-size:0.65rem;"></i></span>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div><!-- end .map-canvas -->
+        </div><!-- end .map-scroll-area -->
+
+        <!-- ══ FIXED OVERLAYS ══ -->
+
+        <!-- Stars Pill -->
+        <div class="pill-fixed" id="stars-pill">
+            <div class="progress-pill">
+                <i class="fa-solid fa-star text-warning fs-5"></i>
+                <span class="fs-5 fw-bold">{{ total_stars }}</span>
+                <span class="text-muted fw-semibold" style="font-size:0.85rem;">/ {{ max_stars }}</span>
             </div>
         </div>
 
-        <!-- Main Scrolling Map Area -->
-        <main class="map-main">
-            <div class="map-scroll-wrapper">
-                
-                <!-- Wide Canvas -->
-                <div class="map-canvas">
-                    
-                    <!-- Background Layer -->
-                    <div class="map-panorama-bg"></div>
+        <!-- Scroll arrows -->
+        <button class="scroll-hint scroll-hint-left" id="btn-scroll-left" title="Scroll left" style="display: none;">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button class="scroll-hint scroll-hint-right" id="btn-scroll-right" title="Scroll right">
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
 
-                    <!-- SVG Path Lines -->
-                    <svg class="map-path-svg" viewBox="0 0 5500 700" preserveAspectRatio="none">
-                        <!-- Trail connecting nodes at their pixel positions in 5500px wide canvas -->
-                        <!-- Node positions in px: M=550, I=1375, O=2200, B=3300, E=4675, U=6050, T=7425, K=8800, L=10450, Y=12100, N=13750, G=15400, Ng=17325, P=19250, R=21175, D=23100, H=25025, W=26950 -->
-                        <!-- Simplified SVG spanning the 5500px canvas. Y positions based on top% * 700 -->
-                        <path d="M 0 420 C 200 420 400 315 550 315 S 1100 455 1375 455 S 1900 350 2200 350 S 2750 490 3300 490 S 3850 385 4675 385 S 5250 525 5500 525"
-                              fill="none" class="path-line-active" vector-effect="non-scaling-stroke"/>
-                        <path d="M 0 420 C 200 420 400 315 550 315 S 1100 455 1375 455 S 1900 350 2200 350 S 2750 490 3300 490 S 3850 385 4675 385 S 5250 525 5500 525"
-                              fill="none" class="path-line-inactive" vector-effect="non-scaling-stroke"/>
-                    </svg>
+        <!-- Scroll progress bar -->
+        <div class="scroll-progress-bar">
+            <div class="scroll-progress-fill" id="scrollProgressFill"></div>
+        </div>
 
-                    <!-- Nodes Layer -->
-                    <div class="map-nodes-layer">
-                        {% for node in map_nodes %}
-                            {% if node.status == 'completed' %}
-                                <!-- Completed Nodes (Teal) -->
-                                <div class="map-node node-completed" style="top: {{ node.pos_top }}%; left: calc({{ node.pos_left }}vw);">
-                                    <div class="node-circle position-relative">{{ node.name }}
-                                        {% if node.stars > 0 %}
-                                            <div class="star-badge position-absolute top-0 start-100 translate-middle">
-                                                <i class="fa-solid fa-star fs-6 text-warning"></i>
-                                            </div>
-                                        {% endif %}
-                                    </div>
-                                </div>
-
-                            {% elif node.status == 'active' %}
-                                <!-- Current Active Node (Orange) -->
-                                <div class="map-node node-active" style="top: {{ node.pos_top }}%; left: calc({{ node.pos_left }}vw);">
-                                    <div class="node-wrapper d-flex flex-column align-items-center">
-                                        <div class="node-active-ring"></div>
-                                        <div class="node-circle bg-warning text-white border-orange">{{ node.name }}</div>
-                                        <div class="active-indicator text-orange fw-bold mt-2 small d-flex flex-column align-items-center">
-                                            <i class="fa-solid fa-arrow-up fs-6"></i>
-                                            <span>Dito ka na!</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            {% else %}
-                                <!-- Upcoming Locked Nodes (Gray) -->
-                                <div class="map-node node-locked" style="top: {{ node.pos_top }}%; left: calc({{ node.pos_left }}vw);">
-                                    <div class="node-circle">{{ node.name }}<i class="fa-solid fa-lock lock-icon"></i></div>
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-
-                </div><!-- End .map-canvas -->
-            </div><!-- End .map-scroll-wrapper -->
-        </main>
-
-        <!-- Continue Button (Fixed to Viewport) -->
+        <!-- Continue Button -->
         <div class="continue-fixed">
             {% if active_node %}
-                <button class="btn btn-game-orange fs-4 px-5 py-3 rounded-pill fw-bold border-3 shadow-lg continue-btn"
-                    @click="continueLetter('{{ active_node.id }}', '{{ active_node.name }}')">
-                    Ituloy ang Letrang {{ active_node.name }}
-                </button>
-            {% else %}
-                <button class="btn btn-game-primary fs-4 px-5 py-3 rounded-pill fw-bold border-3 shadow-lg continue-btn"
-                    @click="completedGame">
-                    Lahat ay Nakumpleto na!
-                </button>
+            <button class="btn btn-warning fs-5 px-5 py-3 rounded-pill fw-bold border-3 continue-btn"
+                style="border:3px solid #2c2f33; box-shadow:0 6px 0 #2c2f33;" id="btn-continue"
+                onclick="window.location.href='{% if active_node.name == 'M' %}{% url 'core:letrang_m' %}{% else %}/game/{{ active_node.id }}/{% endif %}'">
+                <i class="fa-solid fa-play me-2"></i>Ituloy: Letrang {{ active_node.name }}
+            </button>
             {% endif %}
         </div>
 
-    </div>
+        <!-- Scroll hint -->
+        <div class="drag-hint" id="dragHint">
+            <i class="fa-solid fa-left-right"></i> Swipe para mag-scroll
+        </div>
 
-    <!-- Vue 3 JS (Global Build) -->
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <!-- Bootstrap 5 JS (Required for Dropdown) -->
+    </div><!-- end #map-app -->
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom Map JS -->
-    <script src="{% static 'core/mapa.js' %}"></script>
+    <script>
+        (function () {
+            const scrollArea = document.getElementById('mapScrollArea');
+            const progressFill = document.getElementById('scrollProgressFill');
+            const continueFixed = document.querySelector('.continue-fixed');
+            const activeNodeEl = document.getElementById('active-node');
+            const activeNodePx = {{ active_node_scroll_px|default:0 }};
+
+        // ── Scroll Arrow Elements ──
+        const btnScrollLeft = document.getElementById('btn-scroll-left');
+        const btnScrollRight = document.getElementById('btn-scroll-right');
+
+        // ── Update scroll progress bar & arrows ──
+        function updateProgress() {
+            const maxScroll = scrollArea.scrollWidth - scrollArea.clientWidth;
+            const pct = maxScroll > 0 ? (scrollArea.scrollLeft / maxScroll) * 100 : 0;
+            if (progressFill) progressFill.style.width = pct + '%';
+            
+            // Show/hide arrows based on scroll position
+            if (btnScrollLeft && btnScrollRight) {
+                btnScrollLeft.style.display = scrollArea.scrollLeft <= 5 ? 'none' : 'flex';
+                btnScrollRight.style.display = scrollArea.scrollLeft >= maxScroll - 5 ? 'none' : 'flex';
+            }
+        }
+        scrollArea.addEventListener('scroll', updateProgress, { passive: true });
+
+        // ── Scroll buttons event listeners ──
+        if (btnScrollLeft) {
+            btnScrollLeft.addEventListener('click', () => {
+                scrollArea.scrollBy({ left: -600, behavior: 'smooth' });
+            });
+        }
+        if (btnScrollRight) {
+            btnScrollRight.addEventListener('click', () => {
+                scrollArea.scrollBy({ left: 600, behavior: 'smooth' });
+            });
+        }
+
+
+        // ── Show/hide continue button based on active-node visibility ──
+        if (activeNodeEl && continueFixed) {
+            const observer = new IntersectionObserver(
+                function (entries) {
+                    const entry = entries[0];
+                    if (entry.isIntersecting) {
+                        continueFixed.classList.remove('visible');
+                    } else {
+                        continueFixed.classList.add('visible');
+                    }
+                },
+                {
+                    root: scrollArea,
+                    threshold: 0.1
+                }
+            );
+            observer.observe(activeNodeEl);
+        } else if (continueFixed) {
+            continueFixed.classList.add('visible');
+        }
+
+        // ── Auto-scroll to active node on load ──
+        window.addEventListener('load', function () {
+            if (activeNodePx > 0) {
+                const target = activeNodePx - (scrollArea.clientWidth / 2);
+                scrollArea.scrollTo({ left: Math.max(0, target), behavior: 'smooth' });
+            }
+            updateProgress();
+        });
+
+        // ── Mouse drag-to-scroll ──
+        let isDown = false, startX = 0, scrollLeft = 0;
+        scrollArea.addEventListener('mousedown', function (e) {
+            isDown = true;
+            scrollArea.classList.add('active');
+            startX = e.pageX - scrollArea.offsetLeft;
+            scrollLeft = scrollArea.scrollLeft;
+        });
+        document.addEventListener('mouseup', function () { isDown = false; scrollArea.classList.remove('active'); });
+        scrollArea.addEventListener('mousemove', function (e) {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - scrollArea.offsetLeft;
+            scrollArea.scrollLeft = scrollLeft - (x - startX) * 1.5;
+        });
+        }) ();
+
+        // ── MASCOT POSITIONING ──
+        function updateMascot() {
+            const mascot = document.getElementById('mascot');
+            const activeNode = document.getElementById('active-node');
+            if (mascot && activeNode) {
+                // Adjust mascot position relative to the node
+                mascot.style.top = '-90px';
+                mascot.style.left = '5px';
+                mascot.style.fontSize = '4.5rem';
+            }
+        }
+        window.addEventListener('load', updateMascot);
+    </script>
 </body>
 
 </html>

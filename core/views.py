@@ -56,23 +56,61 @@ def mapa(request):
              node_status = "active"
              found_active = True
 
+        # Map pos_left (range ~10-490) to pixel position on 5500px canvas
+        # Reserve 250px padding on each side: usable range 250–5250px
+        CANVAS_WIDTH = 5500
+        CANVAS_PAD = 250
+        POS_MIN, POS_MAX = 10, 490
+        pos_left_px = int(
+            CANVAS_PAD + (level.pos_left - POS_MIN) / (POS_MAX - POS_MIN) * (CANVAS_WIDTH - 2 * CANVAS_PAD)
+        )
+        # SVG Y coordinate: viewBox height is 700 units
+        svg_x = pos_left_px
+        svg_y = int(level.pos_top / 100 * 700)
+
         map_nodes.append({
             'id': level.id,
-            'name': level.name.replace("Letrang ", ""), # Extract just the letter (M, B, etc)
+            'name': level.name.replace("Letrang ", ""),
             'pos_top': level.pos_top,
             'pos_left': level.pos_left,
+            'pos_left_px': pos_left_px,
+            'svg_x': svg_x,
+            'svg_y': svg_y,
             'status': node_status,
             'stars': stars
         })
 
+    # ── Build SVG path connecting every node to the next with smooth cubic beziers ──
+    # Control points pull horizontally (1/3 of horizontal distance) to make organic S-curves
+    svg_path_d = ""
+    for i, node in enumerate(map_nodes):
+        x, y = node['svg_x'], node['svg_y']
+        if i == 0:
+            svg_path_d += f"M {x} {y}"
+        else:
+            prev = map_nodes[i - 1]
+            px, py = prev['svg_x'], prev['svg_y']
+            dx = (x - px) / 3
+            cp1x, cp1y = round(px + dx), py
+            cp2x, cp2y = round(x - dx), y
+            svg_path_d += f" C {cp1x} {cp1y} {cp2x} {cp2y} {x} {y}"
+
     # If all levels are completed, the last one might just stay completed, no active node.
     active_node = next((n for n in map_nodes if n['status'] == 'active'), None)
+    active_node_scroll_px = active_node['pos_left_px'] if active_node else 0
 
     context = {
         'map_nodes': map_nodes,
+        'svg_path_d': svg_path_d,
         'total_stars': total_earned_stars,
         'max_stars': max_possible_stars,
         'active_node': active_node,
+        'active_node_scroll_px': active_node_scroll_px,
     }
     
     return render(request, 'core/mapa.html', context)
+
+@login_required
+def letrang_m(request):
+    """View for the Letrang Mm interactive lesson page."""
+    return render(request, 'core/letrang_m.html')

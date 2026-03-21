@@ -1,0 +1,1677 @@
+<!DOCTYPE html>
+{% load static socialaccount %}
+<html lang="tl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letrang Mm – Tunog Tuklas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&family=Bubblegum+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --pink:    #FF6B9D;
+            --yellow:  #FFD93D;
+            --green:   #6BCB77;
+            --blue:    #4D96FF;
+            --purple:  #C77DFF;
+            --orange:  #FF9F43;
+            --dark:    #2C2F33;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #FFF8F0 0%, #FFF0F5 50%, #F0F8FF 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ── HEADER ── */
+        .lesson-header {
+            background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 0 rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 200;
+        }
+        .header-back-btn {
+            width: 48px; height: 48px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.25);
+            border: 3px solid rgba(255,255,255,0.6);
+            color: white; font-size: 1.2rem;
+            display: flex; align-items: center; justify-content: center;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .header-back-btn:hover { background: rgba(255,255,255,0.45); color: white; }
+        .header-title {
+            font-family: 'Nunito', sans-serif; font-weight: 900;
+            font-size: 1.6rem; color: white;
+            text-shadow: 2px 3px 0 rgba(0,0,0,0.2);
+        }
+        .header-stars {
+            background: rgba(255,255,255,0.25);
+            border: 3px solid rgba(255,255,255,0.6);
+            border-radius: 40px; padding: 5px 16px;
+            color: white; font-weight: 900; font-size: 1rem;
+            display: flex; align-items: center; gap: 6px;
+        }
+
+        /* ── PROGRESS BAR ── */
+        .unit-progress-bar {
+            background: rgba(255,255,255,0.3);
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: white;
+            border-bottom: 3px solid #eee;
+        }
+        .progress-dot {
+            width: 14px; height: 14px;
+            border-radius: 50%;
+            background: #ddd;
+            border: 3px solid #ccc;
+            transition: all 0.3s;
+        }
+        .progress-dot.active {
+            background: var(--pink);
+            border-color: #c0004f;
+            transform: scale(1.3);
+        }
+        .progress-dot.done {
+            background: var(--green);
+            border-color: #2e7d32;
+        }
+        .progress-label {
+            font-weight: 900;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        /* ── UNIT SLIDER WRAPPER ── */
+        .units-viewport {
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+        }
+        .units-track {
+            display: flex;
+            width: 500%;      /* 5 units × 100% each */
+            transition: transform 0.45s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        .unit-slide {
+            width: calc(100% / 5);
+            min-height: calc(100vh - 130px);
+            padding: 28px 20px 100px;
+            flex-shrink: 0;
+        }
+
+        /* ── UNIT 4: Writing / Drawing styles ── */
+        .badge-orange { background: var(--orange); color: white; }
+        .badge-green  { background: var(--green);  color: white; }
+
+        /* Drawing pad wrapper */
+        .draw-pad-wrapper {
+            margin-bottom: 24px;
+        }
+        .draw-pad-label {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 900;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .draw-pad-label .letter-preview {
+            font-family: 'Nunito', sans-serif; font-weight: 900;
+            font-size: 1.6rem;
+            padding: 2px 14px;
+            border-radius: 12px;
+            border: 3px solid var(--dark);
+            box-shadow: 0 3px 0 var(--dark);
+        }
+        .draw-pad-label .letter-preview.upper {
+            background: #EEF5FF;
+            color: var(--blue);
+            border-color: var(--blue);
+            box-shadow: 0 3px 0 #1565c0;
+        }
+        .draw-pad-label .letter-preview.lower {
+            background: #FFF0F5;
+            color: var(--pink);
+            border-color: var(--pink);
+            box-shadow: 0 3px 0 #c0004f;
+        }
+
+        /* The actual canvas frame */
+        .canvas-frame {
+            position: relative;
+            border-radius: 18px;
+            border: 4px solid #90CAF9;
+            overflow: hidden;
+            background: linear-gradient(180deg, #e8f4fd 0%, #fff 30%, #fff 70%, #fce4ec 100%);
+            box-shadow: 0 6px 0 #90CAF9, 0 10px 30px rgba(0,0,0,0.06);
+            touch-action: none;
+        }
+        /* Ruled lines drawn via CSS pseudo + repeating gradient */
+        .canvas-frame::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            background:
+                repeating-linear-gradient(
+                    180deg,
+                    transparent 0px,
+                    transparent calc(33.33% - 1px),
+                    #90CAF9 calc(33.33% - 1px),
+                    #90CAF9 calc(33.33%),
+                    transparent calc(33.33%),
+                    transparent calc(66.66% - 1px),
+                    #EF9A9A calc(66.66% - 1px),
+                    #EF9A9A calc(66.66%),
+                    transparent calc(66.66%),
+                    transparent 100%
+                );
+        }
+        /* Ghost letter watermark */
+        .canvas-ghost {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Nunito', sans-serif; font-weight: 900;
+            font-size: 7rem;
+            color: rgba(0,0,0,0.055);
+            pointer-events: none;
+            z-index: 0;
+            user-select: none;
+            letter-spacing: 18px;
+        }
+        .canvas-frame canvas {
+            position: relative;
+            z-index: 2;
+            display: block;
+            width: 100%;
+            cursor: crosshair;
+        }
+
+        /* Stroke hint bar */
+        .stroke-hint {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0 6px;
+            flex-wrap: wrap;
+        }
+        .stroke-dot {
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            border: 3px solid var(--blue);
+            background: #EEF5FF;
+            font-size: 0.75rem;
+            font-weight: 900;
+            color: var(--blue);
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.25s;
+        }
+        .stroke-dot.done {
+            background: var(--blue);
+            color: white;
+            border-color: #1565c0;
+            transform: scale(1.15);
+        }
+        .stroke-hint-label {
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: #888;
+        }
+
+        /* Pad toolbar */
+        .pad-toolbar {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        .pad-tool-btn {
+            display: flex; align-items: center; gap: 6px;
+            padding: 7px 16px;
+            border-radius: 30px;
+            border: 3px solid var(--dark);
+            background: white;
+            font-weight: 900;
+            font-size: 0.88rem;
+            cursor: pointer;
+            box-shadow: 0 3px 0 var(--dark);
+            transition: all 0.15s;
+            font-family: 'Nunito', sans-serif;
+        }
+        .pad-tool-btn:active { transform: translateY(3px); box-shadow: 0 0 0 var(--dark); }
+        .pad-tool-btn.erase { color: #f44336; border-color: #f44336; box-shadow: 0 3px 0 #b71c1c; }
+        .pad-tool-btn.erase:active { box-shadow: 0 0 0 #b71c1c; }
+        .pad-tool-btn.done-draw { background: linear-gradient(135deg, var(--green), #2e7d32); color: white; border-color: #1b5e20; box-shadow: 0 3px 0 #1b5e20; }
+        .pad-tool-btn.done-draw:active { box-shadow: 0 0 0 #1b5e20; }
+        .pad-tool-btn.undo-btn { color: var(--orange); border-color: var(--orange); box-shadow: 0 3px 0 #e65100; }
+        .pad-tool-btn.undo-btn:active { box-shadow: 0 0 0 #e65100; }
+
+        /* Color picker row */
+        .color-row {
+            display: flex;
+            gap: 7px;
+            margin-top: 8px;
+            align-items: center;
+        }
+        .color-swatch {
+            width: 26px; height: 26px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .color-swatch.active {
+            border-color: var(--dark);
+            transform: scale(1.25);
+        }
+
+        /* Completion tick */
+        .pad-done-tick {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            background: #E9FBEE;
+            border: 3px solid var(--green);
+            border-radius: 14px;
+            padding: 8px 16px;
+            font-weight: 900;
+            color: #1b5e20;
+            font-size: 0.95rem;
+            margin-top: 10px;
+        }
+        .pad-done-tick.show { display: flex; }
+
+        /* Brush size buttons */
+        .brush-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .brush-btn {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            border: 3px solid #ccc;
+            background: white;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .brush-btn.active { border-color: var(--dark); background: var(--dark); }
+        .brush-dot { border-radius: 50%; background: #555; }
+        .brush-btn.active .brush-dot { background: white; }
+
+        /* Counting tokens */
+        .letter-tokens {
+            display: flex; flex-wrap: wrap;
+            gap: 10px; justify-content: center;
+            margin: 12px 0;
+        }
+        .letter-token {
+            font-family: 'Nunito', sans-serif; font-weight: 900;
+            font-size: 2rem;
+            width: 56px; height: 56px;
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            border: 4px solid #ddd;
+            background: #f9f9f9;
+            box-shadow: 0 4px 0 #ccc;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .letter-token:hover { transform: scale(1.1) translateY(-3px); }
+        .letter-token.uppercase { color: var(--blue); border-color: var(--blue); background: #EEF5FF; box-shadow: 0 4px 0 #1565c0; }
+        .letter-token.lowercase { color: var(--pink); border-color: var(--pink); background: #FFF0F5; box-shadow: 0 4px 0 #c0004f; }
+        .letter-token.counted   { opacity: 0.38; transform: scale(0.88); cursor: default; }
+
+        .count-display {
+            display: flex; gap: 14px; justify-content: center;
+            flex-wrap: wrap; margin: 14px 0;
+        }
+        .count-box {
+            background: white;
+            border: 4px solid var(--dark);
+            border-radius: 18px;
+            padding: 12px 20px;
+            text-align: center;
+            min-width: 130px;
+            box-shadow: 0 5px 0 var(--dark);
+        }
+        .count-box label {
+            font-weight: 900; font-size: 0.9rem; color: #666;
+            display: block; margin-bottom: 4px;
+        }
+        .count-number {
+            font-family: 'Nunito', sans-serif; font-weight: 900;
+            font-size: 2.8rem; line-height: 1;
+        }
+        .count-number.m-upper { color: var(--blue); }
+        .count-number.m-lower { color: var(--pink); }
+
+        /* Sagutin Natin */
+        .fill-blank-input {
+            border: none;
+            border-bottom: 4px solid var(--dark);
+            background: transparent;
+            font-family: 'Nunito', sans-serif; font-weight: 900;
+            font-size: 1.4rem;
+            width: 130px;
+            text-align: center;
+            color: var(--purple);
+            outline: none;
+            padding: 2px 6px;
+            transition: border-color 0.2s;
+        }
+        .fill-blank-input:focus { border-bottom-color: var(--pink); }
+        .sagutin-sentence {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--dark);
+            line-height: 2.2;
+            text-align: center;
+        }
+
+        /* ── SECTION CARD ── */
+        .section-card {
+            background: white;
+            border-radius: 28px;
+            border: 4px solid var(--dark);
+            box-shadow: 0 8px 0 var(--dark), 0 16px 40px rgba(0,0,0,0.08);
+            padding: 32px 24px;
+            max-width: 760px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .section-badge {
+            position: absolute;
+            top: -18px; left: 24px;
+            font-family: 'Nunito', sans-serif; font-weight: 900;
+            font-size: 1rem;
+            padding: 5px 18px;
+            border-radius: 20px;
+            border: 3px solid var(--dark);
+            box-shadow: 0 3px 0 var(--dark);
+            text-transform: uppercase;
+        }
+        .badge-pink   { background: var(--pink);   color: white; }
+        .badge-blue   { background: var(--blue);   color: white; }
+        .badge-purple { background: var(--purple); color: white; }
+
+        /* ── INTRO STYLES ── */
+        .big-letter {
+            font-family: 'Bubblegum Sans', cursive;
+            font-size: 9rem; line-height: 1;
+            background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(3px 4px 0 rgba(0,0,0,0.12));
+            animation: letterPulse 2.2s ease-in-out infinite;
+        }
+        @keyframes letterPulse {
+            0%,100% { transform: scale(1) rotate(-2deg); }
+            50%      { transform: scale(1.07) rotate(2deg); }
+        }
+        .intro-instruction {
+            background: linear-gradient(135deg, #FFF3CD, #FFF0F5);
+            border: 3px solid var(--yellow);
+            border-radius: 18px;
+            padding: 14px 20px;
+            font-size: 1.05rem; font-weight: 700;
+            color: #5A3E00; line-height: 1.65;
+        }
+        .sound-btn {
+            background: linear-gradient(135deg, var(--yellow), var(--orange));
+            border: 4px solid var(--dark); border-radius: 50px;
+            padding: 12px 30px;
+            font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.2rem;
+            color: var(--dark); cursor: pointer;
+            box-shadow: 0 6px 0 var(--dark);
+            transition: all 0.15s;
+            display: inline-flex; align-items: center; gap: 10px;
+        }
+        .sound-btn:hover { filter: brightness(1.07); }
+        .sound-btn:active { transform: translateY(6px); box-shadow: 0 0 0 var(--dark); }
+
+        /* ── ACTIVITY ── */
+        .activity-title {
+            font-family: 'Nunito', sans-serif; font-weight: 900;
+            font-size: 1.45rem; color: var(--dark); margin-bottom: 6px;
+        }
+        .activity-instruction {
+            font-size: 0.97rem; font-weight: 700; color: #666;
+            line-height: 1.6; margin-bottom: 22px;
+        }
+        .choices-grid {
+            display: flex; flex-wrap: wrap;
+            gap: 14px; justify-content: center;
+        }
+        .choice-card {
+            display: flex; flex-direction: column;
+            align-items: center; gap: 8px;
+            cursor: pointer; user-select: none;
+        }
+        .choice-emoji-box {
+            width: 105px; height: 105px;
+            border-radius: 22px;
+            border: 4px solid #ddd;
+            background: #f9f9f9;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 3.8rem;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 5px 0 #ccc;
+        }
+        .choice-card:hover .choice-emoji-box { transform: scale(1.08) translateY(-3px); }
+        .choice-label { font-weight: 900; font-size: 0.88rem; color: #555; text-align: center; }
+        .choice-checkbox {
+            width: 34px; height: 34px; border-radius: 10px;
+            border: 4px solid #ccc; background: white;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; transition: all 0.2s;
+            box-shadow: 0 3px 0 #ccc;
+        }
+
+        /* States */
+        .choice-card.selected .choice-emoji-box {
+            border-color: var(--blue); background: #EEF5FF;
+            box-shadow: 0 5px 0 var(--blue);
+            transform: scale(1.1) translateY(-4px);
+        }
+        .choice-card.selected .choice-checkbox {
+            background: var(--blue); border-color: #1565c0;
+            box-shadow: 0 3px 0 #1565c0; color: white;
+        }
+        .choice-card.correct .choice-emoji-box {
+            border-color: var(--green); background: #E9FBEd;
+            box-shadow: 0 5px 0 var(--green);
+            animation: correctBounce 0.45s ease;
+        }
+        .choice-card.correct .choice-checkbox {
+            background: var(--green); border-color: #2e7d32;
+            box-shadow: 0 3px 0 #2e7d32; color: white;
+        }
+        .choice-card.wrong .choice-emoji-box {
+            border-color: #f44336; background: #FFEBEE;
+            box-shadow: 0 5px 0 #f44336;
+            animation: wrongShake 0.4s ease;
+        }
+        .choice-card.wrong .choice-checkbox {
+            background: #f44336; border-color: #b71c1c;
+            box-shadow: 0 3px 0 #b71c1c; color: white;
+        }
+        .choice-card.missed .choice-emoji-box {
+            border-color: var(--orange); background: #FFF8E1;
+            box-shadow: 0 5px 0 var(--orange);
+        }
+        .choice-card.missed .choice-checkbox {
+            background: var(--orange); border-color: #e65100;
+            box-shadow: 0 3px 0 #e65100; color: white;
+        }
+        @keyframes correctBounce {
+            0%  { transform: scale(1.1) translateY(-4px); }
+            40% { transform: scale(1.28) translateY(-12px); }
+            70% { transform: scale(1.05) translateY(-2px); }
+            100%{ transform: scale(1.1) translateY(-4px); }
+        }
+        @keyframes wrongShake {
+            0%,100%{ transform: translateX(0); }
+            20%{ transform: translateX(-8px); }
+            60%{ transform: translateX(8px); }
+            80%{ transform: translateX(-4px); }
+        }
+
+        /* ── CHECK BUTTON ── */
+        .check-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--green), #2e7d32);
+            border: 4px solid var(--dark); border-radius: 50px;
+            padding: 13px 30px;
+            font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.25rem;
+            color: white; cursor: pointer;
+            box-shadow: 0 7px 0 var(--dark);
+            transition: all 0.15s;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            margin-top: 24px;
+        }
+        .check-btn:hover { filter: brightness(1.07); }
+        .check-btn:active { transform: translateY(7px); box-shadow: 0 0 0 var(--dark); }
+        .check-btn:disabled { background: #ccc; cursor: not-allowed; box-shadow: 0 4px 0 #999; }
+
+        /* ── FEEDBACK BANNER ── */
+        .feedback-banner {
+            display: none;
+            border-radius: 18px; border: 4px solid;
+            padding: 13px 20px; margin-top: 16px;
+            font-weight: 900; font-size: 1.05rem;
+            align-items: center; gap: 12px;
+        }
+        .feedback-banner.show { display: flex; }
+        .feedback-banner.correct-fb { background: #E9FBEE; border-color: var(--green); color: #1b5e20; }
+        .feedback-banner.wrong-fb   { background: #FFEBEE; border-color: #f44336; color: #b71c1c; }
+        .feedback-icon { font-size: 1.8rem; }
+
+        /* ── FIXED BOTTOM NAVIGATION ── */
+        .nav-bar {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background: white;
+            border-top: 4px solid var(--dark);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 300;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+        }
+        .nav-btn {
+            display: flex; align-items: center; gap: 10px;
+            font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.15rem;
+            padding: 11px 26px;
+            border-radius: 50px;
+            border: 4px solid var(--dark);
+            cursor: pointer;
+            box-shadow: 0 5px 0 var(--dark);
+            transition: all 0.15s;
+            text-decoration: none;
+        }
+        .nav-btn:active { transform: translateY(5px); box-shadow: 0 0 0 var(--dark); }
+        .nav-btn.prev-btn {
+            background: white;
+            color: var(--dark);
+        }
+        .nav-btn.prev-btn:hover { background: #f5f5f5; color: var(--dark); }
+        .nav-btn.next-btn {
+            background: linear-gradient(135deg, var(--pink), var(--purple));
+            color: white;
+        }
+        .nav-btn.next-btn:hover { filter: brightness(1.07); color: white; }
+        .nav-btn.next-btn:disabled {
+            background: #ddd; border-color: #aaa;
+            box-shadow: 0 3px 0 #aaa; cursor: not-allowed; color: #aaa;
+        }
+        .nav-btn.finish-btn {
+            background: linear-gradient(135deg, var(--green), #2e7d32);
+            color: white;
+        }
+        .nav-btn.finish-btn:hover { filter: brightness(1.07); color: white; }
+
+        .unit-counter {
+            font-family: 'Bubblegum Sans', cursive;
+            font-size: 1rem; color: #888;
+            text-align: center; line-height: 1.3;
+        }
+        .unit-counter strong { font-size: 1.3rem; color: var(--dark); }
+
+        /* ── FINAL SCORE ── */
+        .score-card {
+            background: linear-gradient(135deg, #FFF8F0, #F5F0FF);
+            border: 5px solid var(--dark); border-radius: 28px;
+            box-shadow: 0 10px 0 var(--dark), 0 20px 50px rgba(0,0,0,0.1);
+            padding: 40px 28px; text-align: center;
+            max-width: 760px; margin: 0 auto;
+        }
+        .score-title {
+            font-family: 'Bubblegum Sans', cursive; font-size: 2.4rem;
+            background: linear-gradient(135deg, var(--pink), var(--purple));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .score-stars {
+            font-size: 3.2rem; letter-spacing: 5px;
+            margin: 14px 0;
+            animation: starPop 0.5s ease;
+        }
+        @keyframes starPop {
+            from { transform: scale(0); opacity: 0; }
+            to   { transform: scale(1); opacity: 1; }
+        }
+
+        /* ── CONFETTI ── */
+        .confetti-wrap {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none; z-index: 9999;
+            overflow: hidden; display: none;
+        }
+        .confetti-wrap.active { display: block; }
+        .confetti-particle {
+            position: absolute; width: 12px; height: 12px;
+            border-radius: 3px;
+            animation: confettiFall linear forwards;
+        }
+        @keyframes confettiFall {
+            0%   { top: -20px; opacity: 1; transform: rotate(0deg) scale(1); }
+            100% { top: 110vh;  opacity: 0; transform: rotate(720deg) scale(0.5); }
+        }
+
+        /* Floating deco */
+        .floating-deco {
+            position: fixed; font-size: 2.5rem;
+            opacity: 0.1; pointer-events: none; z-index: 0;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Confetti -->
+<div class="confetti-wrap" id="confettiWrap" aria-hidden="true"></div>
+
+<!-- Floating background decorations -->
+<div class="floating-deco" style="top:10%; left:3%;">⭐</div>
+<div class="floating-deco" style="top:30%; right:4%;">🌸</div>
+<div class="floating-deco" style="top:55%; left:2%;">🌈</div>
+<div class="floating-deco" style="bottom:15%; right:3%;">✨</div>
+
+<!-- ══ HEADER ══ -->
+<header class="lesson-header">
+    <a href="{% url 'core:mapa' %}" class="header-back-btn" title="Bumalik sa Mapa">
+        <i class="fa-solid fa-chevron-left"></i>
+    </a>
+    <h1 class="header-title">🔤 Letrang Mm</h1>
+    <div class="header-stars">
+        <i class="fa-solid fa-star" style="color:#FFD93D;"></i>
+        <span id="starCount">0</span> / 4
+    </div>
+</header>
+
+<!-- ══ UNIT PROGRESS DOTS ══ -->
+<div class="unit-progress-bar">
+    <span class="progress-label">Yunit</span>
+    <div class="progress-dot active" id="dot-0"></div>
+    <div class="progress-dot" id="dot-1"></div>
+    <div class="progress-dot" id="dot-2"></div>
+    <div class="progress-dot" id="dot-3"></div>
+    <div class="progress-dot" id="dot-4"></div>
+</div>
+
+<!-- ══ SLIDING UNITS VIEWPORT ══ -->
+<div class="units-viewport">
+    <div class="units-track" id="unitsTrack">
+
+        <!-- ═══════════════════════════════════
+             UNIT 1: Kilalanin Natin (Intro)
+        ═══════════════════════════════════ -->
+        <div class="unit-slide" id="unit-0">
+            <div class="section-card">
+                <div class="section-badge badge-pink">📖 Kilalanin Natin</div>
+
+                <div class="text-center mt-3 mb-4">
+                    <div class="big-letter">Mm</div>
+                </div>
+
+                <div class="text-center mb-4">
+                    <p style="font-weight:800; color:var(--pink); font-size:1.1rem; margin-bottom:4px;">
+                        Pagpapakilala at Pagbigkas ng Mm
+                    </p>
+                    <p style="font-weight:700; color:#c0392b; font-size:0.95rem;">
+                        Ipakita ang larawan ng malaki at maliit na letrang Mm.
+                    </p>
+                </div>
+
+                <div class="intro-instruction">
+                    <i class="fa-solid fa-lips" style="color:var(--pink); margin-right:6px;"></i>
+                    <strong>Paano bigkasin?</strong> Pagdikitin ang mga labi. Habang nakasara,
+                    subuking lumikha ng tunog. Ulitin hanggang sa maging pamilyar sa tunog ng <strong>Mm</strong>.
+                </div>
+
+                <div class="text-center mt-4">
+                    <button class="sound-btn" onclick="playMSound()" id="soundBtn">
+                        <i class="fa-solid fa-volume-high"></i> Pakinggan ang /m/
+                    </button>
+                </div>
+
+                <div class="text-center mt-3" style="font-size:0.95rem; font-weight:700; color:#888;">
+                    🐑 Halimbawa ng salita:
+                    <strong style="color:var(--purple);">Manok &nbsp;•&nbsp; Mangga &nbsp;•&nbsp; Mata</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════
+             UNIT 2: Gawain 1 – Starting /m/
+        ═══════════════════════════════════ -->
+        <div class="unit-slide" id="unit-1">
+            <div class="section-card">
+                <div class="section-badge badge-blue">🎯 Alamin Natin – Gawain 1</div>
+
+                <h2 class="activity-title mt-3">Aling larawan ang may simulang tunog na /m/?</h2>
+                <p class="activity-instruction">
+                    Pindutin ang lahat ng larawan na nagsisimula sa tunog na <strong>/m/</strong>,
+                    tapos pindutin ang "Suriin"!
+                </p>
+
+                <div class="choices-grid" id="act1-grid">
+                    <!-- Tandang – hindi /m/ -->
+                    <div class="choice-card" data-correct="false" data-activity="1" onclick="toggleChoice(this)">
+                        <div class="choice-emoji-box">🐓</div>
+                        <div class="choice-label">Tandang</div>
+                        <div class="choice-checkbox"></div>
+                    </div>
+                    <!-- Mais – /m/ ✓ -->
+                    <div class="choice-card" data-correct="true" data-activity="1" onclick="toggleChoice(this)">
+                        <div class="choice-emoji-box">🌽</div>
+                        <div class="choice-label">Mais</div>
+                        <div class="choice-checkbox"></div>
+                    </div>
+                    <!-- Mansanas – /m/ ✓ -->
+                    <div class="choice-card" data-correct="true" data-activity="1" onclick="toggleChoice(this)">
+                        <div class="choice-emoji-box">🍎</div>
+                        <div class="choice-label">Mansanas</div>
+                        <div class="choice-checkbox"></div>
+                    </div>
+                    <!-- Bola – hindi /m/ -->
+                    <div class="choice-card" data-correct="false" data-activity="1" onclick="toggleChoice(this)">
+                        <div class="choice-emoji-box">🏀</div>
+                        <div class="choice-label">Bola</div>
+                        <div class="choice-checkbox"></div>
+                    </div>
+                    <!-- Medyas – /m/ ✓ -->
+                    <div class="choice-card" data-correct="true" data-activity="1" onclick="toggleChoice(this)">
+                        <div class="choice-emoji-box">🧦</div>
+                        <div class="choice-label">Medyas</div>
+                        <div class="choice-checkbox"></div>
+                    </div>
+                </div>
+
+                <button class="check-btn" id="check-act1" onclick="checkActivity(1)">
+                    <i class="fa-solid fa-check-circle"></i> Suriin ang Aking Sagot
+                </button>
+
+                <div class="feedback-banner" id="feedback-act1">
+                    <span class="feedback-icon" id="feedback-icon-1"></span>
+                    <span id="feedback-text-1"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════
+             UNIT 3: Gawain 2 – Ending /m/
+        ═══════════════════════════════════ -->
+        <div class="unit-slide" id="unit-2">
+            <div class="section-card">
+                <div class="section-badge badge-purple">🎯 Alamin Natin – Gawain 2</div>
+
+                <h2 class="activity-title mt-3">Ikahon ang mga larawang may <em>hulihang</em> tunog na /m/.</h2>
+                <p class="activity-instruction">
+                    Piliin ang lahat ng larawan na <strong>nagtatapos</strong> sa tunog na <strong>/m/</strong>.
+                </p>
+
+                <div class="choices-grid" id="act2-grid">
+                    <!-- Sinulid – hindi /m/ -->
+                    <div class="choice-card" data-correct="false" data-activity="2" onclick="toggleChoice(this)">
+                        <div class="choice-emoji-box">🧵</div>
+                        <div class="choice-label">Sinulid</div>
+                        <div class="choice-checkbox"></div>
+                    </div>
+                    <!-- Itlog – hindi /m/ -->
+                    <div class="choice-card" data-correct="false" data-activity="2" onclick="toggleChoice(this)">
+                        <div class="choice-emoji-box">🥚</div>
+                        <div class="choice-label">Itlog</div>
+                        <div class="choice-checkbox"></div>
+                    </div>
+                    <!-- Langgam – /m/ ✓ -->
+                    <div class="choice-card" data-correct="true" data-activity="2" onclick="toggleChoice(this)">
+                        <div class="choice-emoji-box">🐜</div>
+                        <div class="choice-label">Langgam</div>
+                        <div class="choice-checkbox"></div>
+                    </div>
+                    <!-- Pinya – hindi /m/ -->
+                    <div class="choice-card" data-correct="false" data-activity="2" onclick="toggleChoice(this)">
+                        <div class="choice-emoji-box">🍍</div>
+                        <div class="choice-label">Pinya</div>
+                        <div class="choice-checkbox"></div>
+                    </div>
+                    <!-- Siyam – /m/ ✓ -->
+                    <div class="choice-card" data-correct="true" data-activity="2" onclick="toggleChoice(this)">
+                        <div class="choice-emoji-box" style="font-family:'Bubblegum Sans',cursive;font-size:3.2rem;color:var(--purple);">9</div>
+                        <div class="choice-label">Siyam</div>
+                        <div class="choice-checkbox"></div>
+                    </div>
+                </div>
+
+                <button class="check-btn" id="check-act2"
+                    style="background:linear-gradient(135deg,var(--purple),#6a00f4);"
+                    onclick="checkActivity(2)">
+                    <i class="fa-solid fa-check-circle"></i> Suriin ang Aking Sagot
+                </button>
+
+                <div class="feedback-banner" id="feedback-act2">
+                    <span class="feedback-icon" id="feedback-icon-2"></span>
+                    <span id="feedback-text-2"></span>
+                </div>
+
+                <!-- Final score (only visible after both checked) -->
+                <div id="score-section" style="display:none; margin-top: 28px;">
+                    <div class="score-card">
+                        <div class="score-title">🎉 Napakahusay!</div>
+                        <div class="score-stars" id="scoreStars">⭐⭐⭐⭐⭐</div>
+                        <p style="font-size:1.1rem;font-weight:800;color:#555;" id="scoreText"></p>
+                        <p style="font-size:0.95rem;color:#888;font-weight:700;margin-top:6px;" id="scoreDetail"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════
+             UNIT 4: Pagsulat ng letrang Mm
+        ═══════════════════════════════════════════ -->
+        <div class="unit-slide" id="unit-3">
+            <div class="section-card">
+                <div class="section-badge badge-orange">✏️ Pagsulat ng Mm</div>
+
+                <h2 class="activity-title mt-3" style="color:var(--orange);">Sumulat ng Letrang Mm!</h2>
+                <p class="activity-instruction">Gamitin ang iyong daliri o mouse para magsulat ng malaki at maliit na <strong>Mm</strong> sa loob ng kahon. Sunugin ang guhit-gabay! ✍️</p>
+
+                <!-- ── Uppercase M Drawing Pad ── -->
+                <div class="draw-pad-wrapper">
+                    <div class="draw-pad-label">
+                        <span class="letter-preview upper">M</span>
+                        <span style="color:var(--blue);">Malaking M</span>
+                    </div>
+
+                    <div class="canvas-frame" id="frameUpper" style="margin-top:14px;">
+                        <div class="canvas-ghost" id="ghostUpper" style="gap: 15%;">
+                            <span class="ghost-letter">M</span>
+                            <span class="ghost-letter">M</span>
+                            <span class="ghost-letter">M</span>
+                        </div>
+                        <canvas id="canvasUpper" height="180"></canvas>
+                    </div>
+
+                    <!-- Toolbar -->
+                    <div class="pad-toolbar">
+                        <button class="pad-tool-btn undo-btn" onclick="undoStroke('upper')">↩ Burahin huli</button>
+                        <button class="pad-tool-btn erase" onclick="clearCanvas('upper')">🗑 I-clear</button>
+                        <button class="pad-tool-btn done-draw" onclick="markDone('upper')">✓ Tapos na!</button>
+                    </div>
+                    <!-- Color row -->
+                    <div class="color-row">
+                        <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Kulay:</span>
+                        <div class="color-swatch active" style="background:#4D96FF;" onclick="setColor('upper','#4D96FF',this)"></div>
+                        <div class="color-swatch" style="background:#FF6B9D;" onclick="setColor('upper','#FF6B9D',this)"></div>
+                        <div class="color-swatch" style="background:#6BCB77;" onclick="setColor('upper','#6BCB77',this)"></div>
+                        <div class="color-swatch" style="background:#FF9F43;" onclick="setColor('upper','#FF9F43',this)"></div>
+                        <div class="color-swatch" style="background:#C77DFF;" onclick="setColor('upper','#C77DFF',this)"></div>
+                        <div class="color-swatch" style="background:#2C2F33;" onclick="setColor('upper','#2C2F33',this)"></div>
+                    </div>
+                    <!-- Brush size -->
+                    <div class="brush-row">
+                        <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Laki ng panulat:</span>
+                        <div class="brush-btn active" onclick="setBrush('upper',5,this)"><div class="brush-dot" style="width:6px;height:6px;"></div></div>
+                        <div class="brush-btn" onclick="setBrush('upper',10,this)"><div class="brush-dot" style="width:11px;height:11px;"></div></div>
+                        <div class="brush-btn" onclick="setBrush('upper',18,this)"><div class="brush-dot" style="width:18px;height:18px;"></div></div>
+                    </div>
+                    <div class="pad-done-tick" id="doneTick-upper">✅ Napakahusay! Sinulatan mo na ang malaking M!</div>
+                </div>
+
+                <!-- ── Lowercase m Drawing Pad ── -->
+                <div class="draw-pad-wrapper">
+                    <div class="draw-pad-label">
+                        <span class="letter-preview lower">m</span>
+                        <span style="color:var(--pink);">Maliit na m</span>
+                    </div>
+
+                    <div class="canvas-frame" id="frameLower" style="margin-top:14px;">
+                        <div class="canvas-ghost" id="ghostLower" style="gap: 15%;">
+                            <span class="ghost-letter">m</span>
+                            <span class="ghost-letter">m</span>
+                            <span class="ghost-letter">m</span>
+                        </div>
+                        <canvas id="canvasLower" height="160"></canvas>
+                    </div>
+
+                    <!-- Toolbar -->
+                    <div class="pad-toolbar">
+                        <button class="pad-tool-btn undo-btn" onclick="undoStroke('lower')">↩ Burahin huli</button>
+                        <button class="pad-tool-btn erase" onclick="clearCanvas('lower')">🗑 I-clear</button>
+                        <button class="pad-tool-btn done-draw" onclick="markDone('lower')">✓ Tapos na!</button>
+                    </div>
+                    <!-- Color row -->
+                    <div class="color-row">
+                        <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Kulay:</span>
+                        <div class="color-swatch" style="background:#4D96FF;" onclick="setColor('lower','#4D96FF',this)"></div>
+                        <div class="color-swatch active" style="background:#FF6B9D;" onclick="setColor('lower','#FF6B9D',this)"></div>
+                        <div class="color-swatch" style="background:#6BCB77;" onclick="setColor('lower','#6BCB77',this)"></div>
+                        <div class="color-swatch" style="background:#FF9F43;" onclick="setColor('lower','#FF9F43',this)"></div>
+                        <div class="color-swatch" style="background:#C77DFF;" onclick="setColor('lower','#C77DFF',this)"></div>
+                        <div class="color-swatch" style="background:#2C2F33;" onclick="setColor('lower','#2C2F33',this)"></div>
+                    </div>
+                    <!-- Brush size -->
+                    <div class="brush-row">
+                        <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Laki ng panulat:</span>
+                        <div class="brush-btn active" onclick="setBrush('lower',5,this)"><div class="brush-dot" style="width:6px;height:6px;"></div></div>
+                        <div class="brush-btn" onclick="setBrush('lower',10,this)"><div class="brush-dot" style="width:11px;height:11px;"></div></div>
+                        <div class="brush-btn" onclick="setBrush('lower',18,this)"><div class="brush-dot" style="width:18px;height:18px;"></div></div>
+                    </div>
+                    <div class="pad-done-tick" id="doneTick-lower">✅ Magaling! Sinulatan mo na ang maliit na m!</div>
+                </div>
+
+                <!-- Instruction reminder -->
+                <div class="intro-instruction" style="margin-top:8px;">
+                    💡 <strong>Gabay sa pagsulat ng M:</strong> Simulan sa itaas-kaliwa ↓ pababa, pagkatapos ↗ diagonal, ↘ diagonal, at ↑ pataas. Para sa maliit na m: simulan sa kaliwa ↓ pababa at gumawa ng dalawang kurbang pasulong.
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════
+             UNIT 5: Pagsasanay 1 at Sagutin Natin
+        ═══════════════════════════════════════════ -->
+        <div class="unit-slide" id="unit-4">
+            <div class="section-card">
+                <div class="section-badge badge-green">📝 Pagsasanay 1</div>
+
+                <!-- Pagsasanay 1: count uppercase & lowercase -->
+                <h2 class="activity-title mt-3">Pagsasanay 1</h2>
+                <p class="activity-instruction">
+                    Bigkasin muli ang tunog ng mga letrang Mm. I-tap ang bawat letra para mabigkas!
+                </p>
+
+                <!-- Clickable letter tokens -->
+                <div class="letter-tokens" id="letterTokens">
+                    <div class="letter-token" onclick="tapToken(this,'M')">M</div>
+                    <div class="letter-token" onclick="tapToken(this,'m')">m</div>
+                    <div class="letter-token" onclick="tapToken(this,'m')">m</div>
+                    <div class="letter-token" onclick="tapToken(this,'M')">M</div>
+                    <div class="letter-token" onclick="tapToken(this,'M')">M</div>
+                    <div class="letter-token" onclick="tapToken(this,'M')">M</div>
+                    <div class="letter-token" onclick="tapToken(this,'M')">M</div>
+                    <div class="letter-token" onclick="tapToken(this,'m')">m</div>
+                    <div class="letter-token" onclick="tapToken(this,'m')">m</div>
+                    <div class="letter-token" onclick="tapToken(this,'M')">M</div>
+                    <div class="letter-token" onclick="tapToken(this,'m')">m</div>
+                </div>
+
+                <p style="font-size:0.85rem; font-weight:700; color:#aaa; text-align:center; margin-top:4px;">
+                    I-tap ang bawat letra para makita ang bilang!
+                </p>
+
+                <!-- Live counting display -->
+                <div class="count-display">
+                    <div class="count-box">
+                        <label>Maliit na m</label>
+                        <div class="count-number m-lower" id="countLower">0</div>
+                    </div>
+                    <div class="count-box">
+                        <label>Malalaking M</label>
+                        <div class="count-number m-upper" id="countUpper">0</div>
+                    </div>
+                </div>
+
+                <hr style="border-color:#eee; margin: 20px 0;">
+
+                <!-- Sagutin Natin -->
+                <h3 class="activity-title" style="font-size:1.2rem; color:var(--purple);">&#x1F4AC; Sagutin Natin</h3>
+                <div class="sagutin-sentence">
+                    Ngayon ay pinag-aralan natin ang letrang
+                    <input class="fill-blank-input" id="blank1" type="text" maxlength="2"
+                           placeholder="__" autocomplete="off">
+                    .<br>
+                    Ang tunog nito ay
+                    <input class="fill-blank-input" id="blank2" type="text" maxlength="5"
+                           placeholder="_____" autocomplete="off">
+                    .
+                    <span style="font-size:0.85rem; font-weight:700; color:#aaa;">(ipabigkas)</span>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button class="check-btn" id="check-act3"
+                        style="background:linear-gradient(135deg,var(--orange),#e65100);"
+                        onclick="checkSagutin()">
+                        <i class="fa-solid fa-check-circle"></i> Suriin ang Aking Sagot
+                    </button>
+                    <div class="feedback-banner" id="feedback-act3" style="margin-top:14px;">
+                        <span class="feedback-icon" id="feedback-icon-3"></span>
+                        <span id="feedback-text-3"></span>
+                    </div>
+                </div>
+
+                <!-- Final score -->
+                <div id="score-section" style="display:none; margin-top: 28px;">
+                    <div class="score-card">
+                        <div class="score-title">🎉 Napakahusay!</div>
+                        <div class="score-stars" id="scoreStars">⭐⭐⭐⭐⭐</div>
+                        <p style="font-size:1.1rem;font-weight:800;color:#555;" id="scoreText"></p>
+                        <p style="font-size:0.95rem;color:#888;font-weight:700;margin-top:6px;" id="scoreDetail"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- end units-track -->
+</div><!-- end units-viewport -->
+
+<!-- ══ BOTTOM NAVIGATION BAR ══ -->
+<div class="nav-bar" id="navBar">
+    <!-- Back button -->
+    <button class="nav-btn prev-btn" id="prevBtn" onclick="goBack()" style="visibility:hidden;">
+        <i class="fa-solid fa-arrow-left"></i> Bumalik
+    </button>
+
+    <!-- Unit counter -->
+    <div class="unit-counter">
+        <strong id="unitNum">1</strong> / 5<br>
+        <span id="unitName" style="font-size:0.8rem;">Kilalanin Natin</span>
+    </div>
+
+    <!-- Next button -->
+    <button class="nav-btn next-btn" id="nextBtn" onclick="goNext()">
+        Susunod <i class="fa-solid fa-arrow-right"></i>
+    </button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+(function () {
+    // ── State ──
+    const UNIT_NAMES = ['Kilalanin Natin', 'Gawain 1', 'Gawain 2', 'Pagsulat', 'Pagsasanay 1'];
+    let currentUnit = 0;  // 0-indexed
+    const totalUnits = 5;
+
+    const state = {
+        1: { checked: false, score: 0, total: 0 },
+        2: { checked: false, score: 0, total: 0 },
+        3: { checked: false, score: 0 },   // Sagutin Natin
+        4: { checked: false, score: 0 }    // Pagsulat
+    };
+
+    // Count correct answers per activity
+    document.querySelectorAll('.choice-card[data-correct="true"]').forEach(card => {
+        const act = card.dataset.activity;
+        if (state[act]) state[act].total++;
+    });
+
+    // ── Navigation ──
+    function updateUI() {
+        const track = document.getElementById('unitsTrack');
+        track.style.transform = `translateX(-${currentUnit * (100/5)}%)`;
+
+        // Dots
+        for (let i = 0; i < totalUnits; i++) {
+            const dot = document.getElementById(`dot-${i}`);
+            dot.classList.remove('active', 'done');
+            if (i < currentUnit) dot.classList.add('done');
+            else if (i === currentUnit) dot.classList.add('active');
+        }
+
+        // Counter
+        document.getElementById('unitNum').textContent = currentUnit + 1;
+        document.getElementById('unitName').textContent = UNIT_NAMES[currentUnit];
+
+        // Prev btn
+        const prevBtn = document.getElementById('prevBtn');
+        prevBtn.style.visibility = currentUnit === 0 ? 'hidden' : 'visible';
+
+        // Next / Finish btn
+        updateNextBtn();
+    }
+
+    function allActivitiesDone() {
+        return state[1].checked && state[2].checked && state[3].checked;
+    }
+
+    function updateNextBtn() {
+        const nextBtn = document.getElementById('nextBtn');
+        if (currentUnit === totalUnits - 1) {
+            // On last unit (unit 5)
+            if (allActivitiesDone()) {
+                nextBtn.className = 'nav-btn finish-btn';
+                nextBtn.innerHTML = '<i class="fa-solid fa-flag-checkered"></i> Tapos Na!';
+                nextBtn.disabled = false;
+                nextBtn.onclick = () => { window.location.href = "{% url 'core:mapa' %}"; };
+            } else {
+                nextBtn.className = 'nav-btn next-btn';
+                nextBtn.innerHTML = 'Suriin muna <i class="fa-solid fa-lock"></i>';
+                nextBtn.disabled = true;
+            }
+        } else if (currentUnit === 1 && !state[1].checked) {
+            // Unit 2: must check Gawain 1 first
+            nextBtn.className = 'nav-btn next-btn';
+            nextBtn.innerHTML = 'Suriin muna <i class="fa-solid fa-lock"></i>';
+            nextBtn.disabled = true;
+        } else if (currentUnit === 2 && !state[2].checked) {
+            // Unit 3: must check Gawain 2 first
+            nextBtn.className = 'nav-btn next-btn';
+            nextBtn.innerHTML = 'Suriin muna <i class="fa-solid fa-lock"></i>';
+            nextBtn.disabled = true;
+        } else {
+            // Units 0 (intro), 3 (pagsulat) are freely passable; Unit 4 with Sagutin Natin locks itself
+            nextBtn.className = 'nav-btn next-btn';
+            nextBtn.innerHTML = 'Susunod <i class="fa-solid fa-arrow-right"></i>';
+            nextBtn.disabled = false;
+            nextBtn.onclick = goNext;
+        }
+    }
+
+    window.goNext = function() {
+        if (currentUnit < totalUnits - 1) {
+            currentUnit++;
+            updateUI();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    };
+
+    window.goBack = function() {
+        if (currentUnit > 0) {
+            currentUnit--;
+            updateUI();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    };
+
+    // ── Toggle selection ──
+    window.toggleChoice = function(card) {
+        const act = card.dataset.activity;
+        if (state[act].checked) return;
+        card.classList.toggle('selected');
+        card.querySelector('.choice-checkbox').innerHTML =
+            card.classList.contains('selected') ? '✔' : '';
+    };
+
+    // ── Check activity ──
+    window.checkActivity = function(actNum) {
+        if (state[actNum].checked) return;
+        state[actNum].checked = true;
+
+        const cards = document.querySelectorAll(`.choice-card[data-activity="${actNum}"]`);
+        let correct = 0;
+        let wrongOrMissed = 0;
+        const total = state[actNum].total;
+
+        cards.forEach(card => {
+            const isCorrect = card.dataset.correct === 'true';
+            const isSelected = card.classList.contains('selected');
+            card.onclick = null;
+
+            if (isCorrect && isSelected) {
+                card.classList.remove('selected');
+                card.classList.add('correct');
+                card.querySelector('.choice-checkbox').innerHTML = '✔';
+                correct++;
+            } else if (!isCorrect && isSelected) {
+                card.classList.remove('selected');
+                card.classList.add('wrong');
+                card.querySelector('.choice-checkbox').innerHTML = '✖';
+                wrongOrMissed++;
+            } else if (isCorrect && !isSelected) {
+                card.classList.add('missed');
+                card.querySelector('.choice-checkbox').innerHTML = '!';
+                wrongOrMissed++;
+            }
+        });
+
+        const pts = (correct === total && wrongOrMissed === 0) ? 1 : 0;
+        state[actNum].score = pts;
+
+        // Feedback banner
+        const banner = document.getElementById(`feedback-act${actNum}`);
+        const icon   = document.getElementById(`feedback-icon-${actNum}`);
+        const text   = document.getElementById(`feedback-text-${actNum}`);
+        banner.classList.add('show');
+
+        if (pts === 1) {
+            banner.classList.add('correct-fb');
+            icon.textContent = '🌟';
+            text.innerHTML = `<strong>Mahusay!</strong> Tama ang lahat! <em>(+1 punto)</em>`;
+            launchConfetti();
+        } else {
+            banner.classList.add('wrong-fb');
+            icon.textContent = '💪';
+            text.innerHTML = `<strong>Subukan Muli!</strong> May mali o nakaligtaan. <em>(0 puntos)</em>`;
+        }
+
+        // Update star count
+        const cur = parseInt(document.getElementById('starCount').textContent);
+        document.getElementById('starCount').textContent = cur + pts;
+
+        // Disable check btn
+        document.getElementById(`check-act${actNum}`).disabled = true;
+
+        // Unlock next navigation
+        updateNextBtn();
+    };
+
+    // ── Unit 4: Interactive Canvas Drawing Pads ──
+    const pads = {};
+
+    function initPad(id) {
+        const canvas = document.getElementById('canvas' + (id === 'upper' ? 'Upper' : 'Lower'));
+        const frame  = document.getElementById('frame' + (id === 'upper' ? 'Upper' : 'Lower'));
+        // Resize canvas to fill frame width
+        function resizeCanvas() {
+            const w = frame.clientWidth;
+            canvas.width  = w;
+            // height is set via HTML attribute
+            if (pads[id] && pads[id].snapshots.length) {
+                restoreSnapshot(id);
+            }
+        }
+        resizeCanvas();
+        new ResizeObserver(resizeCanvas).observe(frame);
+
+        pads[id] = {
+            canvas,
+            ctx: canvas.getContext('2d'),
+            drawing: false,
+            color: id === 'upper' ? '#4D96FF' : '#FF6B9D',
+            brush: 5,
+            snapshots: [],
+            strokeCount: 0,
+            maxStrokes: id === 'upper' ? 4 : 3,
+            done: false
+        };
+
+        const ctx = pads[id].ctx;
+        ctx.lineCap  = 'round';
+        ctx.lineJoin = 'round';
+
+        function getPos(e) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width  / rect.width;
+            const scaleY = canvas.height / rect.height;
+            if (e.touches) {
+                return {
+                    x: (e.touches[0].clientX - rect.left) * scaleX,
+                    y: (e.touches[0].clientY - rect.top)  * scaleY
+                };
+            }
+            return {
+                x: (e.clientX - rect.left) * scaleX,
+                y: (e.clientY - rect.top)  * scaleY
+            };
+        }
+
+        function startDraw(e) {
+            e.preventDefault();
+            if (pads[id].done) return;
+            pads[id].drawing = true;
+            saveSnapshot(id);
+            const p = getPos(e);
+            ctx.beginPath();
+            ctx.strokeStyle = pads[id].color;
+            ctx.lineWidth   = pads[id].brush;
+            ctx.moveTo(p.x, p.y);
+        }
+        function draw(e) {
+            e.preventDefault();
+            if (!pads[id].drawing) return;
+            const p = getPos(e);
+            ctx.lineTo(p.x, p.y);
+            ctx.stroke();
+        }
+        function endDraw(e) {
+            if (!pads[id].drawing) return;
+            pads[id].drawing = false;
+            // Count stroke
+            pads[id].strokeCount = Math.min(pads[id].strokeCount + 1, pads[id].maxStrokes);
+        }
+
+        canvas.addEventListener('mousedown',  startDraw, { passive: false });
+        canvas.addEventListener('mousemove',  draw,      { passive: false });
+        canvas.addEventListener('mouseup',    endDraw);
+        canvas.addEventListener('mouseleave', endDraw);
+        canvas.addEventListener('touchstart', startDraw, { passive: false });
+        canvas.addEventListener('touchmove',  draw,      { passive: false });
+        canvas.addEventListener('touchend',   endDraw);
+    }
+
+    function saveSnapshot(id) {
+        const { canvas, snapshots } = pads[id];
+        snapshots.push(canvas.toDataURL());
+        if (snapshots.length > 30) snapshots.shift();
+    }
+
+    function restoreSnapshot(id) {
+        const { canvas, ctx, snapshots } = pads[id];
+        if (!snapshots.length) return;
+        const img = new Image();
+        img.onload = () => ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        img.src = snapshots[snapshots.length - 1];
+    }
+
+    // Removed updateStrokeDots since stroke UI was removed
+
+    window.undoStroke = function(id) {
+        const p = pads[id];
+        if (p.snapshots.length) {
+            const img = new Image();
+            p.snapshots.pop();
+            p.ctx.clearRect(0, 0, p.canvas.width, p.canvas.height);
+            if (p.snapshots.length) {
+                img.onload = () => p.ctx.drawImage(img, 0, 0, p.canvas.width, p.canvas.height);
+                img.src = p.snapshots[p.snapshots.length - 1];
+            }
+            p.strokeCount = Math.max(0, p.strokeCount - 1);
+        }
+    };
+
+    window.clearCanvas = function(id) {
+        const p = pads[id];
+        p.ctx.clearRect(0, 0, p.canvas.width, p.canvas.height);
+        p.snapshots = [];
+        p.strokeCount = 0;
+        p.done = false;
+        
+        const tick = document.getElementById('doneTick-' + id);
+        tick.className = 'pad-done-tick';
+        tick.style.borderColor = 'var(--green)';
+        tick.style.color = '#1b5e20';
+        tick.style.background = '#E9FBEE';
+    };
+
+    function validateDrawing(id) {
+        const p = pads[id];
+        const ctx = p.ctx;
+        const ghostContainer = document.getElementById('ghost' + (id === 'upper' ? 'Upper' : 'Lower'));
+        const spans = ghostContainer.querySelectorAll('.ghost-letter');
+        const letterText = id === 'upper' ? 'M' : 'm';
+        const canvasRect = p.canvas.getBoundingClientRect();
+        
+        const boxes = [];
+        spans.forEach(span => {
+            const r = span.getBoundingClientRect();
+            const pad = 20;
+            boxes.push({
+                x1: r.left - canvasRect.left - pad,
+                y1: r.top - canvasRect.top - pad,
+                x2: r.right - canvasRect.left + pad,
+                y2: r.bottom - canvasRect.top + pad,
+                centerX: r.left - canvasRect.left + r.width / 2,
+                centerY: r.top - canvasRect.top + r.height / 2
+            });
+        });
+        
+        // --- 1. Create a PERFECT footprint mask of the letters ---
+        const off = document.createElement('canvas');
+        off.width = p.canvas.width;
+        off.height = p.canvas.height;
+        const oCtx = off.getContext('2d', { willReadFrequently: true });
+        
+        // Same font size used in CSS
+        oCtx.font = "900 112px Nunito";
+        oCtx.textAlign = "center";
+        oCtx.textBaseline = "middle";
+        oCtx.fillStyle = "black";
+        
+        // Remove heavy blur so the letter's exact shapes and hollow areas are preserved!
+        // This ensures tracking the precise letter, without filling the empty spaces inside the M.
+        const brushSize = parseInt(p.brush) || 5;
+        oCtx.shadowColor = "black";
+        oCtx.shadowBlur = Math.max(0, brushSize - 5);
+        
+        // Draw the exact letter text precisely under the target spans
+        boxes.forEach(box => {
+            oCtx.fillText(letterText, box.centerX, box.centerY);
+            oCtx.fillText(letterText, box.centerX, box.centerY); // Double draw to boost alpha
+        });
+        
+        // --- 2. Extract Data & Compare Pixels ---
+        const maskData = oCtx.getImageData(0, 0, p.canvas.width, p.canvas.height).data;
+        const imgData = ctx.getImageData(0, 0, p.canvas.width, p.canvas.height).data;
+        
+        let totalInk = 0;
+        let validInk = 0; 
+        let badInk = 0;
+        let inkPerBox = [0, 0, 0];
+        
+        // To guarantee they drew the FULL letter and not just one tiny line,
+        // we divide each box into a 3x3 grid and track how many grid cells have ink.
+        let boxGrids = [new Set(), new Set(), new Set()];
+        
+        for (let i = 0; i < imgData.length; i += 4) {
+            if (imgData[i + 3] > 20) { // user drew here
+                totalInk++;
+                
+                // If the user pixel is inside the expanded mask of the letter, it's a good trace.
+                if (maskData[i + 3] > 8) {
+                    validInk++;
+                } else {
+                    badInk++;
+                }
+                
+                const px = (i / 4) % p.canvas.width;
+                const py = Math.floor((i / 4) / p.canvas.width);
+                for (let b = 0; b < boxes.length; b++) {
+                    const box = boxes[b];
+                    if (px >= box.x1 && px <= box.x2 && py >= box.y1 && py <= box.y2) {
+                        inkPerBox[b]++;
+                        
+                        // Calculate which 3x3 grid cell this pixel falls into
+                        const gridX = Math.floor(3 * (px - box.x1) / (box.x2 - box.x1));
+                        const gridY = Math.floor(3 * (py - box.y1) / (box.y2 - box.y1));
+                        boxGrids[b].add(`${gridX},${gridY}`);
+                        break;
+                    }
+                }
+            }
+        }
+        
+        // --- 3. Strict Heuristic Rules ---
+        if (totalInk < 150) return { valid: false, reason: "Walang guhit ang letra" };
+        
+        // Lower error tolerance: if more than 28% of their strokes cross the empty spaces 
+        // (like horizontal lines bridging the legs of an M), it instantly fails!
+        if (badInk / totalInk > 0.28) {
+            return { valid: false, reason: "Hindi ito hugis ng letrang tama. Paki-ayos ang pag-trace" };
+        }
+        
+        // Check that they traced the whole letter:
+        // A proper M or m spans from top to bottom, left to right, covering at least 5 of 9 grid regions!
+        // Also demand minimum ink weight per box!
+        for (let b = 0; b < boxes.length; b++) {
+            if (inkPerBox[b] < 150) {
+                return { valid: false, reason: "May kulang na letra o masyadong maiksi ang guhit" };
+            }
+            if (boxGrids[b].size < 4) {
+                return { valid: false, reason: "Hindi buo ang pag-trace ng letra" };
+            }
+        }
+        
+        return { valid: true };
+    }
+
+    window.markDone = function(id) {
+        const p = pads[id];
+        const validation = validateDrawing(id);
+        const tick = document.getElementById('doneTick-' + id);
+        
+        if (!validation.valid) {
+            const frame = document.getElementById('frame' + (id === 'upper' ? 'Upper' : 'Lower'));
+            frame.style.border = '4px solid #f44336';
+            setTimeout(() => { frame.style.border = '4px solid #90CAF9'; }, 700);
+            
+            tick.className = 'pad-done-tick show error-tick';
+            tick.style.borderColor = '#f44336';
+            tick.style.color = '#b71c1c';
+            tick.style.background = '#FFEBEE';
+            tick.innerHTML = `⚠️ Oops! ${validation.reason}. Subukan ulit i-trace!`;
+            return;
+        }
+
+        p.done = true;
+        tick.className = 'pad-done-tick show';
+        tick.style.borderColor = 'var(--green)';
+        tick.style.color = '#1b5e20';
+        tick.style.background = '#E9FBEE';
+        tick.innerHTML = id === 'upper' ? '✅ Napakahusay! Sinulatan mo na ang malaking M!' : '✅ Magaling! Sinulatan mo na ang maliit na m!';
+        tick.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+        if (pads['upper'].done && pads['lower'].done && !state[4].checked) {
+            state[4].checked = true;
+            state[4].score = 1;
+            const cur = parseInt(document.getElementById('starCount').textContent);
+            document.getElementById('starCount').textContent = cur + 1;
+            launchConfetti();
+        }
+    };
+
+    window.setColor = function(id, color, swatch) {
+        pads[id].color = color;
+        const siblings = swatch.parentElement.querySelectorAll('.color-swatch');
+        siblings.forEach(s => s.classList.remove('active'));
+        swatch.classList.add('active');
+    };
+
+    window.setBrush = function(id, size, btn) {
+        pads[id].brush = size;
+        const siblings = btn.parentElement.querySelectorAll('.brush-btn');
+        siblings.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    };
+
+    // Init both pads after DOM is ready
+    initPad('upper');
+    initPad('lower');
+
+    // ── Unit 4: Token tapping (counting) ──
+    let upperCount = 0, lowerCount = 0;
+    window.tapToken = function(el, letter) {
+        if (el.classList.contains('counted')) return;
+        el.classList.add('counted');
+        if (letter === 'M') {
+            upperCount++;
+            document.getElementById('countUpper').textContent = upperCount;
+            el.classList.add('uppercase');
+        } else {
+            lowerCount++;
+            document.getElementById('countLower').textContent = lowerCount;
+            el.classList.add('lowercase');
+        }
+        // speak the letter
+        if ('speechSynthesis' in window) {
+            const u = new SpeechSynthesisUtterance(letter);
+            u.lang = 'tl-PH'; u.rate = 0.8;
+            window.speechSynthesis.cancel();
+            window.speechSynthesis.speak(u);
+        }
+    };
+
+    // ── Unit 4: Sagutin Natin check ──
+    window.checkSagutin = function() {
+        if (state[3].checked) return;
+        const b1 = document.getElementById('blank1').value.trim().toUpperCase();
+        const b2 = document.getElementById('blank2').value.trim().toUpperCase();
+        // Accept M, Mm, or mm for blank1; /m/, m, mm for blank2
+        const ok1 = ['M','MM'].includes(b1);
+        const ok2 = ['/M/','/M','M/','M','MM','/MM/'].includes(b2.replace(/\s/g,''));
+        const isCorrect = ok1 && ok2;
+
+        state[3].checked = true;
+        const pts = isCorrect ? 1 : 0;
+        state[3].score = pts;
+
+        const banner = document.getElementById('feedback-act3');
+        const icon   = document.getElementById('feedback-icon-3');
+        const text   = document.getElementById('feedback-text-3');
+        banner.classList.add('show');
+
+        if (isCorrect) {
+            banner.classList.add('correct-fb');
+            icon.textContent = '🌟';
+            text.innerHTML = '<strong>Mahusay!</strong> Tama ang iyong sagot! <em>(+1 punto)</em>';
+            launchConfetti();
+        } else {
+            banner.classList.add('wrong-fb');
+            icon.textContent = '💡';
+            text.innerHTML = '<strong>Ang tamang sagot:</strong> Letrang <em>Mm</em>, tunog <em>/m/</em>. <em>(0 puntos)</em>';
+        }
+
+        const cur = parseInt(document.getElementById('starCount').textContent);
+        document.getElementById('starCount').textContent = cur + pts;
+        document.getElementById('check-act3').disabled = true;
+        document.getElementById('blank1').disabled = true;
+        document.getElementById('blank2').disabled = true;
+
+        setTimeout(showFinalScore, 800);
+        updateNextBtn();
+    };
+
+    // ── Final Score ──
+    function showFinalScore() {
+        const totalScore = state[1].score + state[2].score + state[3].score + state[4].score;
+        const maxScore   = 4; // 1 pt per unit (Gawain 1, Gawain 2, Sagutin, Pagsulat)
+        const section    = document.getElementById('score-section');
+        section.style.display = 'block';
+        section.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        const pct = totalScore / maxScore;
+        let starsCount, msg;
+        if (pct >= 1)        { starsCount = 5; msg = "Perpekto! Ikaw ang pinakamahusay! 🏆"; }
+        else if (pct >= 0.75){ starsCount = 4; msg = "Napakahusay! Halos perpekto! 🎉"; }
+        else if (pct >= 0.5) { starsCount = 3; msg = "Magaling! Patuloy ka! 💪"; }
+        else if (pct >= 0.25){ starsCount = 2; msg = "Ayos! Subukan mo ulit! 🌱"; }
+        else                  { starsCount = 1; msg = "Huwag sumuko! Subukan ulit! ⭐"; }
+
+        document.getElementById('scoreStars').textContent = '⭐'.repeat(starsCount) + '☆'.repeat(5 - starsCount);
+        document.getElementById('scoreText').textContent = msg;
+        document.getElementById('scoreDetail').textContent = `Puntos: ${totalScore} / ${maxScore}`;
+
+        // Update finish button
+        updateNextBtn();
+        launchConfetti();
+    }
+
+    // ── Sound ──
+    window.playMSound = function() {
+        const btn = document.getElementById('soundBtn');
+        btn.style.transform = 'scale(0.93) translateY(5px)';
+        btn.style.boxShadow = '0 0 0 #000';
+        setTimeout(() => { btn.style.transform = ''; btn.style.boxShadow = ''; }, 180);
+
+        if ('speechSynthesis' in window) {
+            const utter = new SpeechSynthesisUtterance('mmm… mangga… mata… manok');
+            utter.lang = 'tl-PH'; utter.rate = 0.75; utter.pitch = 1.1;
+            window.speechSynthesis.cancel();
+            window.speechSynthesis.speak(utter);
+        }
+    };
+
+    // ── Confetti ──
+    function launchConfetti() {
+        const wrap = document.getElementById('confettiWrap');
+        wrap.innerHTML = ''; wrap.classList.add('active');
+        const colors = ['#FF6B9D','#FFD93D','#6BCB77','#4D96FF','#C77DFF','#FF9F43'];
+        for (let i = 0; i < 60; i++) {
+            const el = document.createElement('div');
+            el.className = 'confetti-particle';
+            el.style.left = Math.random() * 100 + 'vw';
+            el.style.background = colors[Math.floor(Math.random() * colors.length)];
+            el.style.width  = (8 + Math.random() * 10) + 'px';
+            el.style.height = (8 + Math.random() * 10) + 'px';
+            el.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+            el.style.animationDelay    = Math.random() * 0.8 + 's';
+            wrap.appendChild(el);
+        }
+        setTimeout(() => { wrap.classList.remove('active'); wrap.innerHTML = ''; }, 4000);
+    }
+
+    // ── Init ──
+    updateUI();
+})();
+</script>
+</body>
+</html>
