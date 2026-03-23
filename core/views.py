@@ -1,4 +1,7 @@
+import json
 from django.shortcuts import render
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 
 from core.models import Level, UserLevelProgress
@@ -113,4 +116,53 @@ def mapa(request):
 @login_required
 def letrang_m(request):
     """View for the Letrang Mm interactive lesson page."""
-    return render(request, 'core/letrang_m.html')
+    level = Level.objects.filter(name__icontains='M').first()
+    context = {'level_id': level.id if level else ''}
+    return render(request, 'core/letrang_m.html', context)
+
+@login_required
+def letrang_i(request):
+    """View for the Letrang Ii interactive lesson page."""
+    level = Level.objects.filter(name__icontains='I').first()
+    context = {'level_id': level.id if level else ''}
+    return render(request, 'core/letrang_i.html', context)
+
+@login_required
+@require_POST
+def save_progress(request):
+    """AJAX endpoint to save user progress and stars for a level."""
+    try:
+        data = json.loads(request.body)
+        level_id = data.get('level_id')
+        stars = data.get('stars', 0)
+        is_completed = data.get('is_completed', False)
+
+        if not level_id:
+            return JsonResponse({'status': 'error', 'message': 'Missing level_id'}, status=400)
+            
+        level = Level.objects.get(id=level_id)
+        progress, _ = UserLevelProgress.objects.get_or_create(
+            account=request.user.account,
+            level=level
+        )
+        
+        if stars > progress.stars_earned:
+            progress.stars_earned = stars
+            
+        if is_completed:
+            progress.is_completed = True
+            
+            # Unlock next level
+            next_level = Level.objects.filter(order__gt=level.order).order_by('order').first()
+            if next_level:
+                next_prog, _ = UserLevelProgress.objects.get_or_create(
+                    account=request.user.account,
+                    level=next_level
+                )
+                next_prog.is_unlocked = True
+                next_prog.save()
+                
+        progress.save()
+        return JsonResponse({'status': 'success'})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
