@@ -676,6 +676,125 @@
                 opacity: 0;
             }
         }
+
+        /* ── MAGICAL RAINBOW TRANSITION ── */
+        .magical-transition-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .rainbow-pinwheel {
+            position: absolute;
+            width: 250vw;
+            height: 250vw;
+            background: conic-gradient(
+                #FF5252 0deg 60deg,
+                #FF9800 60deg 120deg,
+                #FFEB3B 120deg 180deg,
+                #4CAF50 180deg 240deg,
+                #2196F3 240deg 300deg,
+                #9C27B0 300deg 360deg
+            );
+            border-radius: 50%;
+            transform: scale(0) rotate(-180deg);
+            transition: transform 1.2s cubic-bezier(0.12, 0.8, 0.4, 1);
+        }
+
+        .magical-transition-overlay.active {
+            pointer-events: all;
+        }
+
+        .magical-transition-overlay.active .rainbow-pinwheel {
+            transform: scale(1) rotate(0deg);
+        }
+
+        /* ── Floating Stars ── */
+        .floating-stars {
+            position: absolute;
+            inset: 0;
+            z-index: 10001;
+        }
+
+        .floating-stars i {
+            position: absolute;
+            color: #fff;
+            text-shadow: 0 6px 0 rgba(0,0,0,0.2);
+            font-size: 5rem;
+            opacity: 0;
+            transform: scale(0) rotate(-90deg);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .magical-transition-overlay.active .floating-stars i {
+            opacity: 1;
+            transform: scale(1) rotate(15deg);
+        }
+
+        .floating-stars .s1 { top: 15%; left: 15%; }
+        .floating-stars .s2 { top: 20%; left: 80%; }
+        .floating-stars .s3 { top: 75%; left: 20%; }
+        .floating-stars .s4 { top: 80%; left: 75%; }
+        .floating-stars .s5 { top: 10%; left: 50%; }
+
+        .magical-transition-overlay.active .floating-stars .s1 { transition-delay: 0.4s; }
+        .magical-transition-overlay.active .floating-stars .s2 { transition-delay: 0.6s; }
+        .magical-transition-overlay.active .floating-stars .s3 { transition-delay: 0.5s; }
+        .magical-transition-overlay.active .floating-stars .s4 { transition-delay: 0.7s; }
+        .magical-transition-overlay.active .floating-stars .s5 { transition-delay: 0.3s; }
+
+        /* ── Mascot Popup ── */
+        .transition-content {
+            position: absolute;
+            z-index: 10002;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition-delay: 0.6s;
+        }
+
+        .magical-transition-overlay.active .transition-content {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .mascot-fly {
+            font-size: 10rem;
+            filter: drop-shadow(0 8px 0 rgba(0,0,0,0.2));
+            opacity: 0;
+        }
+
+        .magical-transition-overlay.active .mascot-fly {
+            animation: flyIn 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            animation-delay: 0.4s;
+        }
+
+        .transition-text {
+            font-family: 'Nunito', sans-serif;
+            font-size: 5rem;
+            font-weight: 900;
+            color: #fff;
+            -webkit-text-stroke: 4px #000;
+            text-shadow: 0 8px 0 #000;
+            letter-spacing: 2px;
+            margin-top: -10px;
+            text-align: center;
+        }
+
+        @keyframes flyIn {
+            0% { transform: translateY(200px) scale(0) rotate(-20deg); opacity: 0;  }
+            50% { transform: translateY(-30px) scale(1.1) rotate(10deg); opacity: 1; }
+            100% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
+        }
     </style>
 </head>
 
@@ -811,7 +930,7 @@
                     <div class="map-node node-completed 
                         {% if forloop.counter <= 5 %}node-coastal{% elif forloop.counter <= 11 %}node-rural{% elif forloop.counter <= 18 %}node-highland{% else %}node-town{% endif %}"
                         style="top:{{ node.pos_top }}%;left:{{ node.pos_left_px }}px;" title="{{ node.name }}"
-                        onclick="window.location.href='{% if node.name == 'M' %}{% url 'core:letrang_m' %}{% elif node.name == 'I' %}{% url 'core:letrang_i' %}{% else %}/game/{{ node.id }}/?name={{ node.name }}{% endif %}'">
+                        onclick="goToNode('{% if node.name == 'M' %}{% url 'core:letrang_m' %}{% elif node.name == 'I' %}{% url 'core:letrang_i' %}{% else %}/game/{{ node.id }}/?name={{ node.name }}{% endif %}')">
                         <div class="node-circle position-relative">{{ node.name }}
                             {% if node.stars > 0 %}
                             <div class="star-badge"><i class="fa-solid fa-star text-warning"></i></div>
@@ -823,7 +942,7 @@
                     <div class="map-node node-active 
                         {% if forloop.counter <= 5 %}node-coastal{% elif forloop.counter <= 11 %}node-rural{% elif forloop.counter <= 18 %}node-highland{% else %}node-town{% endif %}"
                         style="top:{{ node.pos_top }}%;left:{{ node.pos_left_px }}px;" id="active-node"
-                        onclick="window.location.href='{% if node.name == 'M' %}{% url 'core:letrang_m' %}{% elif node.name == 'I' %}{% url 'core:letrang_i' %}{% else %}/game/{{ node.id }}/?name={{ node.name }}{% endif %}'">
+                        onclick="goToNode('{% if node.name == 'M' %}{% url 'core:letrang_m' %}{% elif node.name == 'I' %}{% url 'core:letrang_i' %}{% else %}/game/{{ node.id }}/?name={{ node.name }}{% endif %}')">
 
                         <div class="tarsier-guide" id="mascot">🐒</div>
                         <div class="node-active-ring"></div>
@@ -874,7 +993,7 @@
             {% if active_node %}
             <button class="btn btn-warning fs-5 px-5 py-3 rounded-pill fw-bold border-3 continue-btn"
                 style="border:3px solid #2c2f33; box-shadow:0 6px 0 #2c2f33;" id="btn-continue"
-                onclick="window.location.href='{% if active_node.name == 'M' %}{% url 'core:letrang_m' %}{% elif active_node.name == 'I' %}{% url 'core:letrang_i' %}{% else %}/game/{{ active_node.id }}/{% endif %}'">
+                onclick="goToNode('{% if active_node.name == 'M' %}{% url 'core:letrang_m' %}{% elif active_node.name == 'I' %}{% url 'core:letrang_i' %}{% else %}/game/{{ active_node.id }}/{% endif %}')">
                 <i class="fa-solid fa-play me-2"></i>Ituloy: Letrang {{ active_node.name }}
             </button>
             {% endif %}
@@ -885,10 +1004,43 @@
             <i class="fa-solid fa-left-right"></i> Swipe para mag-scroll
         </div>
 
+        <!-- Magical Rainbow Pinwheel Transition -->
+        <div id="magical-transition-overlay" class="magical-transition-overlay">
+            <div class="rainbow-pinwheel"></div>
+            
+            <div class="floating-stars">
+                <i class="fa-solid fa-star s1 text-warning"></i>
+                <i class="fa-solid fa-star s2 text-warning"></i>
+                <i class="fa-solid fa-star s3 text-warning"></i>
+                <i class="fa-solid fa-star s4 text-warning"></i>
+                <i class="fa-solid fa-star s5 text-warning"></i>
+            </div>
+            
+            <div class="transition-content">
+                <div class="mascot-fly">🐒</div>
+                <div class="transition-text">Maglaro Tayo!</div>
+            </div>
+        </div>
+
+        <!-- Fade Blocker Bridge (Removed) -->
+
     </div><!-- end #map-app -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // ── Magical Transition Animation Function ──
+        function goToNode(url) {
+            const overlay = document.getElementById('magical-transition-overlay');
+            if(overlay) {
+                overlay.classList.add('active');
+                setTimeout(() => {
+                    window.location.href = url;
+                }, 1450); // Finish animation perfectly matching the out transition
+            } else {
+                window.location.href = url;
+            }
+        }
+
         (function () {
             const scrollArea = document.getElementById('mapScrollArea');
             const progressFill = document.getElementById('scrollProgressFill');

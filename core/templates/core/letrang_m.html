@@ -1068,6 +1068,42 @@
 
 <body>
 
+    <!-- ── REVERSE RAINBOW TRANSITION OUT ── -->
+    <div id="transition-out" style="position:fixed; inset:0; z-index:99999; pointer-events:none; display:flex; align-items:center; justify-content:center; overflow:hidden; animation: outOverlay 0.1s 1.2s forwards;">
+        <!-- Pinwheel spins backwards and shrinks -->
+        <div style="position:absolute; width:250vw; height:250vw; border-radius:50%; background: conic-gradient(#FF5252 0deg 60deg, #FF9800 60deg 120deg, #FFEB3B 120deg 180deg, #4CAF50 180deg 240deg, #2196F3 240deg 300deg, #9C27B0 300deg 360deg); animation: reversePinwheel 0.9s cubic-bezier(0.8, 0, 0.2, 1) forwards;"></div>
+        
+        <!-- Stars shrink and rotate -->
+        <div style="position:absolute; inset:0; z-index:10001; animation: outOverlay 0.1s 1s forwards;">
+            <i class="fa-solid fa-star text-warning" style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:15%; left:15%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0s;"></i>
+            <i class="fa-solid fa-star text-warning" style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:20%; left:80%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0.1s;"></i>
+            <i class="fa-solid fa-star text-warning" style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:75%; left:20%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0.2s;"></i>
+            <i class="fa-solid fa-star text-warning" style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:80%; left:75%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0.1s;"></i>
+            <i class="fa-solid fa-star text-warning" style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:10%; left:50%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0.3s;"></i>
+        </div>
+
+        <!-- Mascot hides -->
+        <div style="position:absolute; z-index:10002; display:flex; flex-direction:column; align-items:center; justify-content:center; animation: reverseContent 0.7s cubic-bezier(0.8, 0, 0.2, 1) forwards;">
+            <div style="font-size:8rem; filter:drop-shadow(0 10px 0 rgba(0,0,0,0.15)); line-height:1;">🐒</div>
+            <div style="font-family:'Bubblegum Sans',cursive; font-size:5rem; color:white; text-shadow:4px 6px 0 rgba(0,0,0,0.2); margin-top:-20px; transform:rotate(-5deg);">Maglaro Tayo!</div>
+        </div>
+    </div>
+    <style>
+        @keyframes outOverlay { to { opacity: 0; visibility: hidden; } }
+        @keyframes reversePinwheel { 
+            0% { transform: scale(1) rotate(0deg); opacity: 1; filter: brightness(1); } 
+            100% { transform: scale(0) rotate(-180deg); opacity: 0; filter: brightness(1.5); } 
+        }
+        @keyframes reverseStar {
+            0% { opacity: 1; transform: scale(1) rotate(15deg); }
+            100% { opacity: 0; transform: scale(0) rotate(-90deg); }
+        }
+        @keyframes reverseContent {
+            0% { opacity: 1; transform: scale(1) translateY(0); }
+            100% { opacity: 0; transform: scale(0.5) translateY(200px); }
+        }
+    </style>
+
     <!-- Confetti -->
     <div class="confetti-wrap" id="confettiWrap" aria-hidden="true"></div>
 
