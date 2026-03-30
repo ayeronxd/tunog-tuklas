@@ -102,6 +102,10 @@ def mapa(request):
     active_node = next((n for n in map_nodes if n['status'] == 'active'), None)
     active_node_scroll_px = active_node['pos_left_px'] if active_node else 0
 
+    # Get a list of all completed letter names to sync with localStorage.
+    # We take the first character of the name and uppercase it (e.g., "Ii" -> "I", "Mm" -> "M")
+    completed_letters = [n['name'][0].upper() for n in map_nodes if n['status'] == 'completed' and n['name']]
+
     context = {
         'map_nodes': map_nodes,
         'svg_path_d': svg_path_d,
@@ -109,6 +113,7 @@ def mapa(request):
         'max_stars': max_possible_stars,
         'active_node': active_node,
         'active_node_scroll_px': active_node_scroll_px,
+        'completed_letters': completed_letters,
     }
     
     return render(request, 'core/mapa.html', context)
@@ -126,6 +131,13 @@ def letrang_i(request):
     level = Level.objects.filter(name__icontains='I').first()
     context = {'level_id': level.id if level else ''}
     return render(request, 'core/letrang_i.html', context)
+
+@login_required
+def letrang_o(request):
+    """View for the Letrang Oo interactive lesson page."""
+    level = Level.objects.filter(name__icontains='O').first()
+    context = {'level_id': level.id if level else ''}
+    return render(request, 'core/letrang_o.html', context)
 
 @login_required
 @require_POST

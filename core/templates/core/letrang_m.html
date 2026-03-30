@@ -1612,10 +1612,17 @@
             <span id="unitName" style="font-size:0.8rem;">Kilalanin Natin</span>
         </div>
 
-        <!-- Next button -->
-        <button class="nav-btn next-btn" id="nextBtn" onclick="goNext()">
-            Susunod <i class="fa-solid fa-arrow-right"></i>
-        </button>
+        <div style="display: flex; gap: 10px;">
+            <!-- Skip button -->
+            <button class="nav-btn prev-btn" id="skipBtn" onclick="goSkip()">
+                Laktawan <i class="fa-solid fa-forward-step"></i>
+            </button>
+
+            <!-- Next button -->
+            <button class="nav-btn next-btn" id="nextBtn" onclick="goNext()">
+                Susunod <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -1661,6 +1668,12 @@
                 const prevBtn = document.getElementById('prevBtn');
                 prevBtn.style.visibility = currentUnit === 0 ? 'hidden' : 'visible';
 
+                // Skip btn
+                const skipBtn = document.getElementById('skipBtn');
+                if (skipBtn) {
+                    skipBtn.style.display = (currentUnit === totalUnits - 1) ? 'none' : 'flex';
+                }
+
                 // Next / Finish btn
                 updateNextBtn();
             }
@@ -1677,7 +1690,7 @@
                         nextBtn.className = 'nav-btn finish-btn';
                         nextBtn.innerHTML = '<i class="fa-solid fa-flag-checkered"></i> Tapos Na!';
                         nextBtn.disabled = false;
-                        nextBtn.onclick = () => { window.location.href = "{% url 'core:mapa' %}"; };
+                        nextBtn.onclick = () => { localStorage.setItem('tunog_tuklas_pending_unlock', 'M'); window.location.href = "{% url 'core:mapa' %}"; };
                     } else {
                         nextBtn.className = 'nav-btn next-btn';
                         nextBtn.innerHTML = 'Suriin muna <i class="fa-solid fa-lock"></i>';
@@ -1713,6 +1726,19 @@
             window.goBack = function () {
                 if (currentUnit > 0) {
                     currentUnit--;
+                    updateUI();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            };
+
+            window.goSkip = function () {
+                if (currentUnit < totalUnits - 1) {
+                    // Force complete validation for current unit
+                    if (currentUnit === 1) state[1].checked = true;
+                    if (currentUnit === 2) state[2].checked = true;
+                    if (currentUnit === 3) state[4].checked = true;
+
+                    currentUnit++;
                     updateUI();
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }

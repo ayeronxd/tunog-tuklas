@@ -8,5 +8,6 @@ urlpatterns = [
     path('mapa/', views.mapa, name='mapa'),
     path('letrang-mm/', views.letrang_m, name='letrang_m'),
     path('letrang-ii/', views.letrang_i, name='letrang_i'),
+    path('letrang-oo/', views.letrang_o, name='letrang_o'),
     path('api/save-progress/', views.save_progress, name='save_progress'),
 ]

@@ -521,21 +521,243 @@
             }
         }
 
-        /* Star badge */
-        .star-badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: #ffe066;
-            border: 2px solid #2c2f33;
-            border-radius: 50%;
-            width: 26px;
-            height: 26px;
+        /* Animal avatar pill (replaces star badge) */
+        .animal-avatar-pill {
+            position: fixed;
+            top: 105px;
+            left: 20px;
+            z-index: 9999;
+        }
+        .animal-pill-inner {
+            background: #fff;
+            border: 4px solid #2c2f33;
+            border-radius: 40px;
+            padding: 8px 18px;
+            box-shadow: 0 6px 0 #2c2f33;
             display: flex;
             align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            font-size: 0.95rem;
+            color: #2c2f33;
+        }
+        .animal-emoji-big { font-size: 1.8rem; }
+
+        /* Backpack button */
+        .btn-backpack {
+            width: 52px; height: 52px;
+            border-radius: 15px;
+            border: 2px solid #2c2f33;
+            background: #fff9c4;
+            font-size: 1.7rem;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #2c2f33;
+            transition: all 0.15s;
+            flex-shrink: 0;
+        }
+        .btn-backpack:active { transform: translateY(4px); box-shadow: 0 0 0 #2c2f33; }
+
+        /* ── COLLECTION MODAL ── */
+        .koleksyon-overlay {
+            position: fixed; inset: 0; z-index: 20000;
+            background: rgba(0,0,0,0.6);
+            display: none;
+            align-items: stretch;
             justify-content: center;
-            font-size: 0.75rem;
-            box-shadow: 0 2px 0 #2c2f33;
+            backdrop-filter: blur(4px);
+        }
+        .koleksyon-overlay.open { display: flex; }
+        .koleksyon-panel {
+            background: linear-gradient(160deg, #fffde7 0%, #e8f5e9 100%);
+            width: 100%; max-width: 680px;
+            height: 100%;
+            display: flex; flex-direction: column;
+            overflow: hidden;
+            border-left: 5px solid #2c2f33;
+            border-right: 5px solid #2c2f33;
+        }
+        .koleksyon-header {
+            background: linear-gradient(135deg, #f44336, #ff5252);
+            padding: 18px 24px;
+            display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 4px solid #ba000d;
+            flex-shrink: 0;
+        }
+        .koleksyon-header h2 {
+            font-family: 'Nunito', sans-serif; font-weight: 900;
+            font-size: 1.6rem; color: #fff;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.3); margin: 0;
+        }
+        .koleksyon-close-btn {
+            width: 44px; height: 44px; border-radius: 50%;
+            border: 3px solid rgba(255,255,255,0.7);
+            background: rgba(255,255,255,0.25);
+            color: #fff; font-size: 1.4rem; font-weight: 900;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: all 0.15s;
+        }
+        .koleksyon-close-btn:hover { background: rgba(255,255,255,0.45); }
+        .koleksyon-counter {
+            text-align: center; padding: 16px;
+            font-family: 'Nunito', sans-serif; font-weight: 800;
+            font-size: 1.05rem; color: #555;
+            background: rgba(255,255,255,0.7);
+            border-bottom: 3px solid #eee;
+            flex-shrink: 0;
+        }
+        .koleksyon-counter span { color: #f44336; font-weight: 900; font-size: 1.2rem; }
+        .koleksyon-grid {
+            flex: 1; overflow-y: auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            padding: 18px;
+        }
+        @media (max-width: 500px) {
+            .koleksyon-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        .animal-card {
+            background: #fff;
+            border-radius: 18px;
+            border: 3px solid #ddd;
+            box-shadow: 0 4px 0 #ddd;
+            padding: 14px 8px 10px;
+            display: flex; flex-direction: column;
+            align-items: center; gap: 6px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        .animal-card:hover { transform: translateY(-3px); }
+        .animal-card.unlocked {
+            border-color: #FFD700;
+            box-shadow: 0 4px 0 #b8860b, 0 0 20px rgba(255,215,0,0.4);
+            background: linear-gradient(135deg, #fffde7, #fff);
+        }
+        .animal-card.locked { filter: grayscale(1) opacity(0.6); cursor: not-allowed; }
+        .animal-card.unlocked { cursor: pointer; }
+        .animal-card.unlocked:hover {
+            transform: translateY(-5px) scale(1.04);
+            border-color: #4CAF50;
+            box-shadow: 0 6px 0 #2e7d32, 0 0 20px rgba(76,175,80,0.3);
+        }
+        .animal-card.active-pet {
+            border-color: #4CAF50 !important;
+            box-shadow: 0 6px 0 #2e7d32, 0 0 28px rgba(76,175,80,0.55) !important;
+            background: linear-gradient(135deg, #e8f5e9, #fff9c4) !important;
+            transform: translateY(-3px) scale(1.05);
+        }
+        .animal-active-badge {
+            position: absolute; top: -6px; right: -6px;
+            background: #4CAF50; color: #fff;
+            border-radius: 50%; width: 20px; height: 20px;
+            font-size: 0.7rem; font-weight: 900;
+            display: flex; align-items: center; justify-content: center;
+            border: 2px solid #1b5e20;
+            box-shadow: 0 2px 0 #1b5e20;
+        }
+        .animal-card-emoji {
+            font-size: 2.8rem; line-height: 1;
+            position: relative;
+        }
+        .animal-lock-overlay {
+            position: absolute; top: -4px; right: -8px;
+            font-size: 0.85rem; background: #546e7a;
+            color: #fff; border-radius: 50%;
+            width: 20px; height: 20px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .animal-card-name {
+            font-family: 'Nunito', sans-serif; font-weight: 900;
+            font-size: 0.78rem; color: #333;
+        }
+        .animal-card-letter {
+            font-family: 'Nunito', sans-serif; font-weight: 700;
+            font-size: 0.68rem; color: #999;
+        }
+        .select-hint-bar {
+            background: linear-gradient(90deg, #e8f5e9, #fffde7);
+            border-bottom: 3px solid #eee;
+            padding: 8px 18px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.88rem; font-weight: 800; color: #388e3c;
+            display: flex; align-items: center; gap: 6px;
+            flex-shrink: 0;
+        }
+
+        /* ── CELEBRATION MODAL ── */
+        .celebrate-overlay {
+            position: fixed; inset: 0; z-index: 30000;
+            display: none;
+            align-items: center; justify-content: center;
+            background: rgba(0,0,0,0.75);
+        }
+        .celebrate-overlay.open { display: flex; }
+        .celebrate-box {
+            background: linear-gradient(160deg, #fff9c4, #e8f5e9, #e3f2fd);
+            border-radius: 32px;
+            border: 5px solid #2c2f33;
+            box-shadow: 0 12px 0 #2c2f33;
+            padding: 40px 32px 32px;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: celebrateIn 0.6s cubic-bezier(0.175,0.885,0.32,1.275) forwards;
+        }
+        @keyframes celebrateIn {
+            from { transform: scale(0.4) rotate(-8deg); opacity: 0; }
+            to   { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        .celebrate-animal-emoji {
+            font-size: 7rem; line-height: 1;
+            animation: bounceAnimal 0.8s ease-in-out infinite;
+            display: block; margin-bottom: 12px;
+        }
+        @keyframes bounceAnimal {
+            0%,100% { transform: translateY(0) scale(1); }
+            50%      { transform: translateY(-20px) scale(1.08); }
+        }
+        .celebrate-title {
+            font-family: 'Nunito', sans-serif; font-weight: 900;
+            font-size: 1.6rem; color: #2c2f33;
+            margin: 0 0 6px;
+        }
+        .celebrate-sub {
+            font-family: 'Nunito', sans-serif; font-weight: 700;
+            font-size: 1.05rem; color: #555; margin-bottom: 24px;
+        }
+        .celebrate-btn {
+            background: linear-gradient(135deg, #FFD700, #FFA000);
+            border: 4px solid #2c2f33;
+            border-radius: 50px;
+            padding: 12px 36px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900; font-size: 1.2rem;
+            color: #2c2f33; cursor: pointer;
+            box-shadow: 0 6px 0 #2c2f33;
+            transition: all 0.15s;
+            display: none;
+        }
+        .celebrate-btn.show { display: inline-block; }
+        .celebrate-btn:active { transform: translateY(6px); box-shadow: 0 0 0 #2c2f33; }
+
+        /* Confetti pieces */
+        .confetti-piece {
+            position: absolute;
+            width: 10px; height: 10px;
+            border-radius: 2px;
+            opacity: 0;
+        }
+        .confetti-piece.active {
+            animation: confettiFall 2.5s ease-in forwards;
+        }
+        @keyframes confettiFall {
+            0%   { opacity: 1; transform: translateY(-60px) rotate(0deg); }
+            100% { opacity: 0; transform: translateY(300px) rotate(720deg); }
         }
 
         /* ── FIXED UI ── */
@@ -816,39 +1038,45 @@
                 MAPA NG MGA LETRA
             </h1>
 
-            <div class="dropdown">
-                <button
-                    class="btn btn-map-nav bg-white p-0 overflow-hidden shadow-sm d-flex align-items-center justify-content-center"
-                    type="button" data-bs-toggle="dropdown" aria-expanded="false"
-                    style="width:62px;height:62px;border-radius:50%;border:4px solid #2c2f33;" id="btn-profile">
-                    {% get_social_accounts user as accounts %}
-                    {% if accounts.google %}
-                    <img src="{{ accounts.google.0.get_avatar_url }}" alt="Profile"
-                        style="width:100%;height:100%;object-fit:cover;">
-                    {% else %}
-                    <i class="fa-solid fa-user fs-2 text-dark"></i>
-                    {% endif %}
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end shadow-lg rounded-4 overflow-hidden mt-3 p-0"
-                    style="border:4px solid #2c2f33!important;min-width:260px;">
-                    <li class="px-4 py-4 text-center bg-light" style="border-bottom:4px solid #2c2f33;">
-                        <strong class="d-block fs-5 text-dark fw-bold mb-1">
-                            {% if request.user.first_name %}{{ request.user.first_name }} {{ request.user.last_name }}{%
-                            else %}{{ request.user.username }}{% endif %}
-                        </strong>
-                        <small class="text-muted fw-bold">{{ request.user.email }}</small>
-                    </li>
-                    <li>
-                        <form method="post" action="{% url 'account_logout' %}">
-                            {% csrf_token %}
-                            <button type="submit"
-                                class="dropdown-item text-danger py-3 fw-black d-flex align-items-center justify-content-center gap-2"
-                                style="font-size:1.15rem;">
-                                <i class="fa-solid fa-right-from-bracket"></i> MAG-LOGOUT
-                            </button>
-                        </form>
-                    </li>
-                </ul>
+            <div class="d-flex align-items-center gap-2">
+                <!-- 🎒 Backpack / Collection button -->
+                <button class="btn-backpack" onclick="openKoleksyon()" title="Aking Koleksyon">🎒</button>
+
+                <!-- Profile dropdown -->
+                <div class="dropdown">
+                    <button
+                        class="btn btn-map-nav bg-white p-0 overflow-hidden shadow-sm d-flex align-items-center justify-content-center"
+                        type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                        style="width:62px;height:62px;border-radius:50%;border:4px solid #2c2f33;" id="btn-profile">
+                        {% get_social_accounts user as accounts %}
+                        {% if accounts.google %}
+                        <img src="{{ accounts.google.0.get_avatar_url }}" alt="Profile"
+                            style="width:100%;height:100%;object-fit:cover;">
+                        {% else %}
+                        <i class="fa-solid fa-user fs-2 text-dark"></i>
+                        {% endif %}
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow-lg rounded-4 overflow-hidden mt-3 p-0"
+                        style="border:4px solid #2c2f33!important;min-width:260px;">
+                        <li class="px-4 py-4 text-center bg-light" style="border-bottom:4px solid #2c2f33;">
+                            <strong class="d-block fs-5 text-dark fw-bold mb-1">
+                                {% if request.user.first_name %}{{ request.user.first_name }} {{ request.user.last_name }}{%
+                                else %}{{ request.user.username }}{% endif %}
+                            </strong>
+                            <small class="text-muted fw-bold">{{ request.user.email }}</small>
+                        </li>
+                        <li>
+                            <form method="post" action="{% url 'account_logout' %}">
+                                {% csrf_token %}
+                                <button type="submit"
+                                    class="dropdown-item text-danger py-3 fw-black d-flex align-items-center justify-content-center gap-2"
+                                    style="font-size:1.15rem;">
+                                    <i class="fa-solid fa-right-from-bracket"></i> MAG-LOGOUT
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </header>
 
@@ -930,7 +1158,7 @@
                     <div class="map-node node-completed 
                         {% if forloop.counter <= 5 %}node-coastal{% elif forloop.counter <= 11 %}node-rural{% elif forloop.counter <= 18 %}node-highland{% else %}node-town{% endif %}"
                         style="top:{{ node.pos_top }}%;left:{{ node.pos_left_px }}px;" title="{{ node.name }}"
-                        onclick="goToNode('{% if node.name == 'M' %}{% url 'core:letrang_m' %}{% elif node.name == 'I' %}{% url 'core:letrang_i' %}{% else %}/game/{{ node.id }}/?name={{ node.name }}{% endif %}')">
+                        onclick="goToNode('{% if node.name == 'M' %}{% url 'core:letrang_m' %}{% elif node.name == 'I' %}{% url 'core:letrang_i' %}{% elif node.name == 'O' %}{% url 'core:letrang_o' %}{% else %}/game/{{ node.id }}/?name={{ node.name }}{% endif %}')">
                         <div class="node-circle position-relative">{{ node.name }}
                             {% if node.stars > 0 %}
                             <div class="star-badge"><i class="fa-solid fa-star text-warning"></i></div>
@@ -942,7 +1170,7 @@
                     <div class="map-node node-active 
                         {% if forloop.counter <= 5 %}node-coastal{% elif forloop.counter <= 11 %}node-rural{% elif forloop.counter <= 18 %}node-highland{% else %}node-town{% endif %}"
                         style="top:{{ node.pos_top }}%;left:{{ node.pos_left_px }}px;" id="active-node"
-                        onclick="goToNode('{% if node.name == 'M' %}{% url 'core:letrang_m' %}{% elif node.name == 'I' %}{% url 'core:letrang_i' %}{% else %}/game/{{ node.id }}/?name={{ node.name }}{% endif %}')">
+                        onclick="goToNode('{% if node.name == 'M' %}{% url 'core:letrang_m' %}{% elif node.name == 'I' %}{% url 'core:letrang_i' %}{% elif node.name == 'O' %}{% url 'core:letrang_o' %}{% else %}/game/{{ node.id }}/?name={{ node.name }}{% endif %}')">
 
                         <div class="tarsier-guide" id="mascot">🐒</div>
                         <div class="node-active-ring"></div>
@@ -966,12 +1194,42 @@
 
         <!-- ══ FIXED OVERLAYS ══ -->
 
-        <!-- Stars Pill -->
-        <div class="pill-fixed" id="stars-pill">
-            <div class="progress-pill">
-                <i class="fa-solid fa-star text-warning fs-5"></i>
-                <span class="fs-5 fw-bold">{{ total_stars }}</span>
-                <span class="text-muted fw-semibold" style="font-size:0.85rem;">/ {{ max_stars }}</span>
+        <!-- Animal Avatar Pill (replaces Stars badge) -->
+        <div class="animal-avatar-pill" id="animalAvatarPill">
+            <div class="animal-pill-inner">
+                <span class="animal-emoji-big" id="avatarEmoji">🐒</span>
+                <span id="avatarName">Matsing</span>
+            </div>
+        </div>
+
+        <!-- ══ COLLECTION MODAL ══ -->
+        <div class="koleksyon-overlay" id="koleksyon-modal">
+            <div class="koleksyon-panel">
+                <div class="koleksyon-header">
+                    <h2>🎒 Aking Koleksyon</h2>
+                    <button class="koleksyon-close-btn" onclick="closeKoleksyon()">✕</button>
+                </div>
+                <div class="koleksyon-counter">
+                    <span id="unlock-count">1</span> / 20 Hayop ang Na-unlock!
+                </div>
+                <div class="select-hint-bar">
+                    👆 I-tap ang hayop para piliin bilang iyong kasama!
+                </div>
+                <div class="koleksyon-grid" id="koleksyon-grid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ CELEBRATION MODAL ══ -->
+        <div class="celebrate-overlay" id="celebrate-modal">
+            <div class="celebrate-box">
+                <!-- Confetti pieces -->
+                <div id="confetti-container"></div>
+                <span class="celebrate-animal-emoji" id="celebrate-emoji">🐻</span>
+                <p class="celebrate-title">Nabuksan mo si</p>
+                <p class="celebrate-sub" id="celebrate-name">Oso</p>
+                <button class="celebrate-btn" id="celebrate-dismiss-btn" onclick="dismissCelebration()">🎉 Salamat!</button>
             </div>
         </div>
 
@@ -993,7 +1251,7 @@
             {% if active_node %}
             <button class="btn btn-warning fs-5 px-5 py-3 rounded-pill fw-bold border-3 continue-btn"
                 style="border:3px solid #2c2f33; box-shadow:0 6px 0 #2c2f33;" id="btn-continue"
-                onclick="goToNode('{% if active_node.name == 'M' %}{% url 'core:letrang_m' %}{% elif active_node.name == 'I' %}{% url 'core:letrang_i' %}{% else %}/game/{{ active_node.id }}/{% endif %}')">
+                onclick="goToNode('{% if active_node.name == 'M' %}{% url 'core:letrang_m' %}{% elif active_node.name == 'I' %}{% url 'core:letrang_i' %}{% elif active_node.name == 'O' %}{% url 'core:letrang_o' %}{% else %}/game/{{ active_node.id }}/{% endif %}')">
                 <i class="fa-solid fa-play me-2"></i>Ituloy: Letrang {{ active_node.name }}
             </button>
             {% endif %}
@@ -1028,14 +1286,224 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+    // ═══════════════════════════════════════════════════════
+    // ANIMAL COLLECTION SYSTEM
+    // ═══════════════════════════════════════════════════════
+    const ANIMAL_MAP = {
+        A:  { emoji: '🦅', name: 'Agila' },
+        B:  { emoji: '🐗', name: 'Baboy-ramo' },
+        K:  { emoji: '🐃', name: 'Kalabaw' },
+        D:  { emoji: '🐭', name: 'Daga' },
+        E:  { emoji: '🐘', name: 'Elepante' },
+        G:  { emoji: '🪿', name: 'Gansa' },
+        H:  { emoji: '🐢', name: 'Pagong' },
+        I:  { emoji: '🐦', name: 'Ibon' },
+        L:  { emoji: '🦁', name: 'Leon' },
+        M:  { emoji: '🐒', name: 'Matsing' },
+        N:  { emoji: '🦬', name: 'Nuwang' },
+        NG: { emoji: '🐊', name: 'Buwaya' },
+        O:  { emoji: '🐻', name: 'Oso' },
+        P:  { emoji: '🐸', name: 'Palaka' },
+        R:  { emoji: '🐠', name: 'Isda' },
+        S:  { emoji: '🐍', name: 'Sawa' },
+        T:  { emoji: '🦊', name: 'Tarsier' },
+        U:  { emoji: '🐦‍⬛', name: 'Uwak' },
+        W:  { emoji: '✨', name: 'Alitaptap' },
+        Y:  { emoji: '🦬', name: 'Yak' },
+    };
+    const LS_KEY    = 'tunog_tuklas_unlocked_animals';
+    const LS_RECENT = 'tunog_tuklas_recent_animal';
+    const LS_ACTIVE = 'tunog_tuklas_active_pet';      // NEW: chosen mascot
+    const LS_PENDING = 'tunog_tuklas_pending_unlock';
+
+    function getUnlockedAnimals() {
+        try { return new Set(JSON.parse(localStorage.getItem(LS_KEY) || '[]')); }
+        catch { return new Set(); }
+    }
+    function isAnimalUnlocked(key) { return getUnlockedAnimals().has(key); }
+    function unlockAnimal(key) {
+        const set = getUnlockedAnimals();
+        if (!set.has(key)) {
+            set.add(key);
+            localStorage.setItem(LS_KEY, JSON.stringify([...set]));
+            localStorage.setItem(LS_RECENT, key);
+        }
+    }
+
+    /** Return the currently active (chosen) pet key, defaulting to 'M' */
+    function getActivePetKey() {
+        return localStorage.getItem(LS_ACTIVE) || localStorage.getItem(LS_RECENT) || 'M';
+    }
+
+    function getMostRecentAnimal() {
+        const key = getActivePetKey();
+        return { key, ...ANIMAL_MAP[key] };
+    }
+
+    /** Save a new active pet and refresh all UI */
+    function setActivePet(key) {
+        if (!ANIMAL_MAP[key] || !isAnimalUnlocked(key)) return;
+        localStorage.setItem(LS_ACTIVE, key);
+        localStorage.setItem(LS_RECENT, key);
+        // Update avatar pill
+        updateAvatarPill();
+        // Update mascot emoji on map
+        const mascotEl = document.getElementById('mascot');
+        if (mascotEl) mascotEl.textContent = ANIMAL_MAP[key].emoji;
+        // Also update the transition overlay mascot
+        const flyEl = document.querySelector('.mascot-fly');
+        if (flyEl) flyEl.textContent = ANIMAL_MAP[key].emoji;
+        // Rebuild grid to move checkmark
+        buildKoleksyon();
+        // Quick flash on the pill to show change
+        const pill = document.getElementById('animalAvatarPill');
+        if (pill) {
+            pill.style.transform = 'scale(1.25)';
+            pill.style.transition = 'transform 0.2s';
+            setTimeout(() => { pill.style.transform = ''; }, 300);
+        }
+    }
+
+    // ── Ensure Matsing is always unlocked (default starter) ──
+    (function bootstrap() {
+        if (!isAnimalUnlocked('M')) {
+            unlockAnimal('M');
+        }
+        
+        // Sync completed levels from backend database
+        {% if completed_letters %}
+        const completedFromDB = {{ completed_letters|safe }};
+        completedFromDB.forEach(letter => {
+            if (!isAnimalUnlocked(letter)) {
+                unlockAnimal(letter);
+            }
+        });
+        {% endif %}
+    })();
+
+    // ── Animal avatar pill ──
+    function updateAvatarPill() {
+        const a = getMostRecentAnimal();
+        document.getElementById('avatarEmoji').textContent = a.emoji || '🐒';
+        document.getElementById('avatarName').textContent = a.name || 'Matsing';
+    }
+
+    // ── Collection modal ──
+    function buildKoleksyon() {
+        const grid = document.getElementById('koleksyon-grid');
+        const unlocked = getUnlockedAnimals();
+        const activePet = getActivePetKey();
+        grid.innerHTML = '';
+        let count = 0;
+        Object.entries(ANIMAL_MAP).forEach(([key, animal]) => {
+            const isLocked = !unlocked.has(key);
+            const isActive = (key === activePet) && !isLocked;
+            if (!isLocked) count++;
+            const card = document.createElement('div');
+            card.className = 'animal-card ' + (isLocked ? 'locked' : 'unlocked') + (isActive ? ' active-pet' : '');
+            card.innerHTML = `
+                <div class="animal-card-emoji" style="position:relative;">
+                    ${animal.emoji}
+                    ${isLocked ? '<span class="animal-lock-overlay">🔒</span>' : ''}
+                    ${isActive ? '<span class="animal-active-badge">✓</span>' : ''}
+                </div>
+                <div class="animal-card-name">${isLocked ? '???' : animal.name}</div>
+                <div class="animal-card-letter">Letrang ${key}</div>
+                ${!isLocked ? `<div style="font-size:0.7rem;font-weight:900;color:${isActive ? '#4CAF50' : '#aaa'};margin-top:2px;">${isActive ? '✔ Kasalukuyang Kasama' : 'Piliin'}</div>` : ''}
+            `;
+            // Click to select — only unlocked animals
+            if (!isLocked) {
+                card.addEventListener('click', () => setActivePet(key));
+            }
+            grid.appendChild(card);
+        });
+        document.getElementById('unlock-count').textContent = count;
+    }
+    window.openKoleksyon = function() {
+        buildKoleksyon();
+        document.getElementById('koleksyon-modal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    };
+    window.closeKoleksyon = function() {
+        document.getElementById('koleksyon-modal').classList.remove('open');
+        document.body.style.overflow = '';
+    };
+
+    // ── Celebration modal ──
+    const CONFETTI_COLORS = ['#f44336','#FF9800','#FFEB3B','#4CAF50','#2196F3','#9C27B0','#FF6B9D','#FFD700'];
+    function launchConfetti() {
+        const container = document.getElementById('confetti-container');
+        container.innerHTML = '';
+        for (let i = 0; i < 28; i++) {
+            const el = document.createElement('div');
+            el.className = 'confetti-piece';
+            el.style.cssText = `
+                left:${Math.random()*100}%;
+                top:${Math.random()*30}%;
+                background:${CONFETTI_COLORS[i % CONFETTI_COLORS.length]};
+                transform:rotate(${Math.random()*360}deg);
+                animation-delay:${Math.random()*1.2}s;
+                border-radius:${Math.random()>0.5?'50%':'2px'};
+            `;
+            container.appendChild(el);
+            // Trigger reflow to start animation
+            void el.offsetWidth;
+            el.classList.add('active');
+        }
+    }
+    function showCelebration(key) {
+        const animal = ANIMAL_MAP[key];
+        if (!animal) return;
+        document.getElementById('celebrate-emoji').textContent = animal.emoji;
+        document.getElementById('celebrate-name').textContent = animal.name;
+        const btn = document.getElementById('celebrate-dismiss-btn');
+        btn.classList.remove('show');
+        document.getElementById('celebrate-modal').classList.add('open');
+        launchConfetti();
+        setTimeout(() => btn.classList.add('show'), 3000);
+    }
+    window.dismissCelebration = function() {
+        document.getElementById('celebrate-modal').classList.remove('open');
+    };
+
+    // ── On load: check for pending unlock ──
+    window.addEventListener('DOMContentLoaded', function() {
+        const pending = localStorage.getItem(LS_PENDING);
+        if (pending && ANIMAL_MAP[pending]) {
+            localStorage.removeItem(LS_PENDING);
+            unlockAnimal(pending);
+            updateAvatarPill();
+            setTimeout(() => showCelebration(pending), 600);
+        } else {
+            updateAvatarPill();
+        }
+    });
+    </script>
+    <script>
         // ── Magical Transition Animation Function ──
         function goToNode(url) {
             const overlay = document.getElementById('magical-transition-overlay');
-            if(overlay) {
+            if (overlay) {
+                // ── Sync mascot to chosen pet (fully self-contained, no cross-script deps) ──
+                const flyEl = overlay.querySelector('.mascot-fly');
+                if (flyEl) {
+                    // Read active pet key directly from localStorage
+                    const petKey = localStorage.getItem('tunog_tuklas_active_pet')
+                                || localStorage.getItem('tunog_tuklas_recent_animal')
+                                || 'M';
+                    // Local emoji lookup — mirrors ANIMAL_MAP, no external dependency
+                    const _emojiMap = {
+                        A:'🦅', B:'🐗', K:'🐃', D:'🐭', E:'🐘',
+                        G:'🪿', H:'🐢', I:'🐦', L:'🦁', M:'🐒',
+                        N:'🦬', NG:'🐊', O:'🐻', P:'🐸', R:'🐠',
+                        S:'🐍', T:'🦊', U:'🐦‍⬛', W:'✨', Y:'🦬'
+                    };
+                    flyEl.textContent = _emojiMap[petKey] || '🐒';
+                }
                 overlay.classList.add('active');
                 setTimeout(() => {
                     window.location.href = url;
-                }, 1450); // Finish animation perfectly matching the out transition
+                }, 1450);
             } else {
                 window.location.href = url;
             }
@@ -1126,15 +1594,24 @@
         });
         }) ();
 
-        // ── MASCOT POSITIONING ──
+        // ── MASCOT POSITIONING + INITIAL EMOJI ──
         function updateMascot() {
             const mascot = document.getElementById('mascot');
             const activeNode = document.getElementById('active-node');
             if (mascot && activeNode) {
+                // Set the correct emoji from storage
+                const petKey = getActivePetKey();
+                if (ANIMAL_MAP[petKey]) mascot.textContent = ANIMAL_MAP[petKey].emoji;
                 // Adjust mascot position relative to the node
                 mascot.style.top = '-90px';
                 mascot.style.left = '5px';
                 mascot.style.fontSize = '4.5rem';
+            }
+            // Also sync the transition overlay mascot
+            const flyEl = document.querySelector('.mascot-fly');
+            if (flyEl) {
+                const petKey = getActivePetKey();
+                if (ANIMAL_MAP[petKey]) flyEl.textContent = ANIMAL_MAP[petKey].emoji;
             }
         }
         window.addEventListener('load', updateMascot);
