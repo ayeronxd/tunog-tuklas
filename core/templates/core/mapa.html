@@ -1463,7 +1463,56 @@
         setTimeout(() => btn.classList.add('show'), 3000);
     }
     window.dismissCelebration = function() {
-        document.getElementById('celebrate-modal').classList.remove('open');
+        const modal = document.getElementById('celebrate-modal');
+        const emojiEl = document.getElementById('celebrate-emoji');
+        const bagBtn = document.querySelector('.btn-backpack');
+        
+        if (emojiEl && bagBtn) {
+            // Get positions
+            const emojiRect = emojiEl.getBoundingClientRect();
+            const bagRect = bagBtn.getBoundingClientRect();
+            
+            // Create a flying clone
+            const clone = document.createElement('div');
+            clone.textContent = emojiEl.textContent;
+            clone.style.position = 'fixed';
+            clone.style.left = emojiRect.left + 'px';
+            clone.style.top = emojiRect.top + 'px';
+            clone.style.width = emojiRect.width + 'px';
+            clone.style.height = emojiRect.height + 'px';
+            clone.style.display = 'flex';
+            clone.style.alignItems = 'center';
+            clone.style.justifyContent = 'center';
+            clone.style.fontSize = window.getComputedStyle(emojiEl).fontSize;
+            clone.style.zIndex = '10005';
+            clone.style.transition = 'all 0.8s ease-in';
+            clone.style.pointerEvents = 'none';
+            document.body.appendChild(clone);
+            
+            // Hide the modal immediately
+            modal.classList.remove('open');
+            
+            // Calculate distance to center of the bag button
+            const targetX = bagRect.left + bagRect.width / 2 - (emojiRect.left + emojiRect.width / 2);
+            const targetY = bagRect.top + bagRect.height / 2 - (emojiRect.top + emojiRect.height / 2);
+            
+            // Trigger animation
+            requestAnimationFrame(() => {
+                clone.style.transform = `translate(${targetX}px, ${targetY}px) scale(0.1) rotate(360deg)`;
+                clone.style.opacity = '0.2';
+            });
+            
+            // Cleanup and bounce bag
+            setTimeout(() => {
+                clone.remove();
+                // Bounce the backpack button to indicate receiving item
+                bagBtn.style.transform = 'scale(1.4) rotate(-10deg)';
+                bagBtn.style.transition = 'transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                setTimeout(() => { bagBtn.style.transform = ''; }, 250);
+            }, 800);
+        } else {
+            modal.classList.remove('open');
+        }
     };
 
     // ── On load: check for pending unlock ──

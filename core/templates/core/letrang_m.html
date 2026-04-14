@@ -1069,38 +1069,80 @@
 <body>
 
     <!-- ── REVERSE RAINBOW TRANSITION OUT ── -->
-    <div id="transition-out" style="position:fixed; inset:0; z-index:99999; pointer-events:none; display:flex; align-items:center; justify-content:center; overflow:hidden; animation: outOverlay 0.1s 1.2s forwards;">
+    <div id="transition-out"
+        style="position:fixed; inset:0; z-index:99999; pointer-events:none; display:flex; align-items:center; justify-content:center; overflow:hidden; animation: outOverlay 0.1s 1.2s forwards;">
         <!-- Pinwheel spins backwards and shrinks -->
-        <div style="position:absolute; width:250vw; height:250vw; border-radius:50%; background: conic-gradient(#FF5252 0deg 60deg, #FF9800 60deg 120deg, #FFEB3B 120deg 180deg, #4CAF50 180deg 240deg, #2196F3 240deg 300deg, #9C27B0 300deg 360deg); animation: reversePinwheel 0.9s cubic-bezier(0.8, 0, 0.2, 1) forwards;"></div>
-        
+        <div
+            style="position:absolute; width:250vw; height:250vw; border-radius:50%; background: conic-gradient(#FF5252 0deg 60deg, #FF9800 60deg 120deg, #FFEB3B 120deg 180deg, #4CAF50 180deg 240deg, #2196F3 240deg 300deg, #9C27B0 300deg 360deg); animation: reversePinwheel 0.9s cubic-bezier(0.8, 0, 0.2, 1) forwards;">
+        </div>
+
         <!-- Stars shrink and rotate -->
         <div style="position:absolute; inset:0; z-index:10001; animation: outOverlay 0.1s 1s forwards;">
-            <i class="fa-solid fa-star text-warning" style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:15%; left:15%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0s;"></i>
-            <i class="fa-solid fa-star text-warning" style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:20%; left:80%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0.1s;"></i>
-            <i class="fa-solid fa-star text-warning" style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:75%; left:20%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0.2s;"></i>
-            <i class="fa-solid fa-star text-warning" style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:80%; left:75%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0.1s;"></i>
-            <i class="fa-solid fa-star text-warning" style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:10%; left:50%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0.3s;"></i>
+            <i class="fa-solid fa-star text-warning"
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:15%; left:15%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0s;"></i>
+            <i class="fa-solid fa-star text-warning"
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:20%; left:80%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0.1s;"></i>
+            <i class="fa-solid fa-star text-warning"
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:75%; left:20%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0.2s;"></i>
+            <i class="fa-solid fa-star text-warning"
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:80%; left:75%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0.1s;"></i>
+            <i class="fa-solid fa-star text-warning"
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:10%; left:50%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0.3s;"></i>
         </div>
 
         <!-- Mascot hides -->
-        <div style="position:absolute; z-index:10002; display:flex; flex-direction:column; align-items:center; justify-content:center; animation: reverseContent 0.7s cubic-bezier(0.8, 0, 0.2, 1) forwards;">
+        <div
+            style="position:absolute; z-index:10002; display:flex; flex-direction:column; align-items:center; justify-content:center; animation: reverseContent 0.7s cubic-bezier(0.8, 0, 0.2, 1) forwards;">
             <div style="font-size:8rem; filter:drop-shadow(0 10px 0 rgba(0,0,0,0.15)); line-height:1;">🐒</div>
-            <div style="font-family:'Bubblegum Sans',cursive; font-size:5rem; color:white; text-shadow:4px 6px 0 rgba(0,0,0,0.2); margin-top:-20px; transform:rotate(-5deg);">Maglaro Tayo!</div>
+            <div
+                style="font-family:'Bubblegum Sans',cursive; font-size:5rem; color:white; text-shadow:4px 6px 0 rgba(0,0,0,0.2); margin-top:-20px; transform:rotate(-5deg);">
+                Maglaro Tayo!</div>
         </div>
     </div>
     <style>
-        @keyframes outOverlay { to { opacity: 0; visibility: hidden; } }
-        @keyframes reversePinwheel { 
-            0% { transform: scale(1) rotate(0deg); opacity: 1; filter: brightness(1); } 
-            100% { transform: scale(0) rotate(-180deg); opacity: 0; filter: brightness(1.5); } 
+        @keyframes outOverlay {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
         }
+
+        @keyframes reversePinwheel {
+            0% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+                filter: brightness(1);
+            }
+
+            100% {
+                transform: scale(0) rotate(-180deg);
+                opacity: 0;
+                filter: brightness(1.5);
+            }
+        }
+
         @keyframes reverseStar {
-            0% { opacity: 1; transform: scale(1) rotate(15deg); }
-            100% { opacity: 0; transform: scale(0) rotate(-90deg); }
+            0% {
+                opacity: 1;
+                transform: scale(1) rotate(15deg);
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(0) rotate(-90deg);
+            }
         }
+
         @keyframes reverseContent {
-            0% { opacity: 1; transform: scale(1) translateY(0); }
-            100% { opacity: 0; transform: scale(0.5) translateY(200px); }
+            0% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(0.5) translateY(200px);
+            }
         }
     </style>
 
@@ -1527,9 +1569,9 @@
                     <div class="section-badge badge-green">📝 Pagsasanay 1</div>
 
                     <!-- Pagsasanay 1: count lowercase -->
-                    <h2 class="activity-title mt-3">Hanapin ang maliit na m</h2>
+                    <h2 class="activity-title mt-3">Pindutin at piliing mabuti ang maliit na letrang m</h2>
                     <p class="activity-instruction" id="p1-instruction">
-                        Pindutin ang lahat ng <strong>maliit na m</strong> para mabigkas!
+                        <strong>PAALALA :</strong> Huwag pindutin ang malaking M
                     </p>
 
                     <!-- Clickable letter tokens -->
@@ -1546,20 +1588,19 @@
                         <div class="letter-token" onclick="tapSmallM(this,'M')">M</div>
                     </div>
 
-                    <!-- Live counting display -->
-                    <div class="count-display" style="justify-content: center;">
-                        <div class="count-box">
-                            <label>Maliit na m</label>
-                            <div class="count-number m-lower" id="countLower">0</div>
-                        </div>
+                    <!-- Lives display -->
+                    <div class="hearts-display" id="heartsLowerContainer" style="display:flex; justify-content:center; gap:8px; margin:20px 0;">
+                        <i class="fa-solid fa-heart text-danger" style="font-size:2.2rem; transition:all 0.3s;" id="heartLower1"></i>
+                        <i class="fa-solid fa-heart text-danger" style="font-size:2.2rem; transition:all 0.3s;" id="heartLower2"></i>
+                        <i class="fa-solid fa-heart text-danger" style="font-size:2.2rem; transition:all 0.3s;" id="heartLower3"></i>
                     </div>
                 </div>
 
-                <div class="section-card mt-4" id="game-big-m" style="display:none;">
+                <div class="section-card mt-4" id="game-big-m">
                     <div class="section-badge badge-blue">📝 Pagsasanay 2</div>
-                    <h2 class="activity-title mt-3">Hanapin ang Malaking M</h2>
+                    <h2 class="activity-title mt-3">Pindutin at piliing mabuti ang malaking letrang M</h2>
                     <p class="activity-instruction" id="p2-instruction">
-                        Pindutin ang lahat ng <strong>Malaking M</strong> para mabigkas!
+                        <strong>PAALALA :</strong> Huwag pindutin ang maliit na m
                     </p>
                     <div class="letter-tokens" id="letterTokens2">
                         <div class="letter-token" onclick="tapBigM(this,'m')">m</div>
@@ -1575,11 +1616,10 @@
                         <div class="letter-token" onclick="tapBigM(this,'M')">M</div>
                     </div>
 
-                    <div class="count-display" style="justify-content: center;">
-                        <div class="count-box">
-                            <label>Malaking M</label>
-                            <div class="count-number m-upper" id="countUpper">0</div>
-                        </div>
+                    <div class="hearts-display" id="heartsUpperContainer" style="display:flex; justify-content:center; gap:8px; margin:20px 0;">
+                        <i class="fa-solid fa-heart text-danger" style="font-size:2.2rem; transition:all 0.3s;" id="heartUpper1"></i>
+                        <i class="fa-solid fa-heart text-danger" style="font-size:2.2rem; transition:all 0.3s;" id="heartUpper2"></i>
+                        <i class="fa-solid fa-heart text-danger" style="font-size:2.2rem; transition:all 0.3s;" id="heartUpper3"></i>
                     </div>
 
 
@@ -1693,18 +1733,18 @@
                         nextBtn.onclick = () => { localStorage.setItem('tunog_tuklas_pending_unlock', 'M'); window.location.href = "{% url 'core:mapa' %}"; };
                     } else {
                         nextBtn.className = 'nav-btn next-btn';
-                        nextBtn.innerHTML = 'Suriin muna <i class="fa-solid fa-lock"></i>';
+                        nextBtn.innerHTML = 'Susunod <i class="fa-solid fa-lock"></i>';
                         nextBtn.disabled = true;
                     }
                 } else if (currentUnit === 1 && !state[1].checked) {
                     // Unit 2: must check Gawain 1 first
                     nextBtn.className = 'nav-btn next-btn';
-                    nextBtn.innerHTML = 'Suriin muna <i class="fa-solid fa-lock"></i>';
+                    nextBtn.innerHTML = 'Susunod <i class="fa-solid fa-lock"></i>';
                     nextBtn.disabled = true;
                 } else if (currentUnit === 2 && !state[2].checked) {
                     // Unit 3: must check Gawain 2 first
                     nextBtn.className = 'nav-btn next-btn';
-                    nextBtn.innerHTML = 'Suriin muna <i class="fa-solid fa-lock"></i>';
+                    nextBtn.innerHTML = 'Susunod <i class="fa-solid fa-lock"></i>';
                     nextBtn.disabled = true;
                 } else {
                     // Units 0 (intro), 3 (pagsulat) are freely passable; Unit 4 with Sagutin Natin locks itself
@@ -2114,8 +2154,53 @@
             // ── Unit 5: Token tapping (Hunting Game 1 and 2) ──
             let lowerCount = 0;
             let upperCount = 0;
+            let lowerLives = 3;
+            let upperLives = 3;
             const totalLower = 5;
             const totalUpper = 6;
+
+            function updateHearts(type, lives) {
+                for (let i = 1; i <= 3; i++) {
+                    const h = document.getElementById(`heart${type}${i}`);
+                    if (h) {
+                        if (i <= lives) {
+                            h.className = 'fa-solid fa-heart text-danger';
+                            h.style.transform = 'scale(1.1)';
+                            setTimeout(() => h.style.transform = 'scale(1)', 200);
+                        } else {
+                            h.className = 'fa-solid fa-heart-crack text-secondary';
+                            h.style.transform = 'scale(0.9)';
+                            h.style.opacity = '0.5';
+                        }
+                    }
+                }
+            }
+
+            function resetGame(type) {
+                if (type === 'Lower') {
+                    lowerLives = 3;
+                    lowerCount = 0;
+                    updateHearts('Lower', lowerLives);
+                    document.getElementById('p1-instruction').innerHTML = '<strong>PAALALA :</strong> Huwag pindutin ang malaking M! Subukan muli!';
+                    document.getElementById('p1-instruction').style.color = 'var(--dark)';
+                    document.querySelectorAll('#letterTokens1 .letter-token').forEach(el => {
+                        el.className = 'letter-token'; // reset
+                        el.innerHTML = el.dataset.origtext || el.textContent;
+                        if (!el.dataset.origtext && el.textContent === '⭐') el.innerHTML = 'm'; // fallback
+                    });
+                } else {
+                    upperLives = 3;
+                    upperCount = 0;
+                    updateHearts('Upper', upperLives);
+                    document.getElementById('p2-instruction').innerHTML = '<strong>PAALALA :</strong> Huwag pindutin ang maliit na m! Subukan muli!';
+                    document.getElementById('p2-instruction').style.color = 'var(--dark)';
+                    document.querySelectorAll('#letterTokens2 .letter-token').forEach(el => {
+                        el.className = 'letter-token'; // reset
+                        el.innerHTML = el.dataset.origtext || el.textContent;
+                        if (!el.dataset.origtext && el.textContent === '⭐') el.innerHTML = 'M'; // fallback
+                    });
+                }
+            }
 
             const playError = (el) => {
                 el.animate([
@@ -2128,17 +2213,30 @@
                 ], { duration: 400 });
             };
 
-            window.tapSmallM = function(el, letter) {
+            window.tapSmallM = function (el, letter) {
                 if (el.classList.contains('counted')) return;
+
+                if (!el.dataset.origtext) el.dataset.origtext = el.innerHTML;
 
                 if (letter !== 'm') {
                     playError(el);
+                    if (lowerLives > 0) {
+                        lowerLives--;
+                        updateHearts('Lower', lowerLives);
+                    } else if (lowerLives === 0) {
+                        // 4th Mistake -> Game Over State
+                        lowerLives = -1; // Lock the game
+                        const instruction = document.getElementById('p1-instruction');
+                        instruction.innerHTML = '❌ Ubos na ang pagkakataon! <button onclick="resetGame(\'Lower\')" style="padding: 4px 12px; margin-left: 10px; border-radius: 8px; border: none; background: #FFEBEE; color: #b71c1c; font-weight: bold; cursor: pointer;">Ulitin muli</button>';
+                        instruction.style.color = '#b71c1c';
+                        playError(document.getElementById('letterTokens1')); // Shake the whole board
+                    }
                     return;
                 }
 
                 el.classList.add('counted', 'lowercase');
+                el.innerHTML = '⭐';
                 lowerCount++;
-                document.getElementById('countLower').textContent = lowerCount;
 
                 if (lowerCount >= totalLower) {
                     const instruction = document.getElementById('p1-instruction');
@@ -2152,12 +2250,10 @@
                         const cur = parseInt(document.getElementById('starCount').textContent);
                         document.getElementById('starCount').textContent = cur + 1;
                     }
-                    
-                    setTimeout(() => {
-                        const game2 = document.getElementById('game-big-m');
-                        game2.style.display = 'block';
-                        game2.scrollIntoView({behavior: 'smooth', block: 'start'});
-                    }, 1500);
+
+                    if (upperCount >= totalUpper) {
+                        setTimeout(showFinalScore, 1500);
+                    }
                 }
 
                 if ('speechSynthesis' in window) {
@@ -2168,17 +2264,30 @@
                 }
             };
 
-            window.tapBigM = function(el, letter) {
+            window.tapBigM = function (el, letter) {
                 if (el.classList.contains('counted')) return;
+
+                if (!el.dataset.origtext) el.dataset.origtext = el.innerHTML;
 
                 if (letter !== 'M') {
                     playError(el);
+                    if (upperLives > 0) {
+                        upperLives--;
+                        updateHearts('Upper', upperLives);
+                    } else if (upperLives === 0) {
+                        // 4th Mistake -> Game Over State
+                        upperLives = -1; // Lock the game
+                        const instruction = document.getElementById('p2-instruction');
+                        instruction.innerHTML = '❌ Ubos na ang pagkakataon! <button onclick="resetGame(\'Upper\')" style="padding: 4px 12px; margin-left: 10px; border-radius: 8px; border: none; background: #FFEBEE; color: #b71c1c; font-weight: bold; cursor: pointer;">Ulitin muli</button>';
+                        instruction.style.color = '#b71c1c';
+                        playError(document.getElementById('letterTokens2')); // Shake the whole board
+                    }
                     return;
                 }
 
                 el.classList.add('counted', 'uppercase');
+                el.innerHTML = '⭐';
                 upperCount++;
-                document.getElementById('countUpper').textContent = upperCount;
 
                 if (upperCount >= totalUpper) {
                     const instruction = document.getElementById('p2-instruction');
@@ -2192,8 +2301,10 @@
                         const cur = parseInt(document.getElementById('starCount').textContent);
                         document.getElementById('starCount').textContent = cur + 1;
                     }
-                    
-                    setTimeout(showFinalScore, 1500);
+
+                    if (lowerCount >= totalLower) {
+                        setTimeout(showFinalScore, 1500);
+                    }
                 }
 
                 if ('speechSynthesis' in window) {
