@@ -138,13 +138,13 @@
 
         .units-track {
             display: flex;
-            width: 500%;
-            /* 5 units × 100% each */
+            width: 600%;
+            /* 6 units × 100% each */
             transition: transform 0.45s cubic-bezier(0.77, 0, 0.175, 1);
         }
 
         .unit-slide {
-            width: calc(100% / 5);
+            width: calc(100% / 6);
             min-height: calc(100vh - 130px);
             padding: 28px 20px 100px;
             flex-shrink: 0;
@@ -211,26 +211,7 @@
             touch-action: none;
         }
 
-        /* Ruled lines drawn via CSS pseudo + repeating gradient */
-        .canvas-frame::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            z-index: 1;
-            background:
-                repeating-linear-gradient(180deg,
-                    transparent 0px,
-                    transparent calc(33.33% - 1px),
-                    #90CAF9 calc(33.33% - 1px),
-                    #90CAF9 calc(33.33%),
-                    transparent calc(33.33%),
-                    transparent calc(66.66% - 1px),
-                    #EF9A9A calc(66.66% - 1px),
-                    #EF9A9A calc(66.66%),
-                    transparent calc(66.66%),
-                    transparent 100%);
-        }
+
 
         /* Ghost letter watermark */
         .canvas-ghost {
@@ -821,38 +802,44 @@
 
         /* ── CHECK BUTTON ── */
         .check-btn {
-            width: 100%;
+            width: auto;
+            min-width: 280px;
             background: linear-gradient(135deg, var(--green), #2e7d32);
             border: 4px solid var(--dark);
-            border-radius: 50px;
-            padding: 13px 30px;
+            border-radius: 60px;
+            padding: 16px 40px;
             font-family: 'Nunito', sans-serif;
             font-weight: 900;
-            font-size: 1.25rem;
+            font-size: 1.35rem;
             color: white;
             cursor: pointer;
-            box-shadow: 0 7px 0 var(--dark);
+            box-shadow: 0 8px 0 var(--dark);
             transition: all 0.15s;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 12px;
             margin-top: 24px;
         }
 
         .check-btn:hover {
             filter: brightness(1.07);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 0 var(--dark);
         }
 
         .check-btn:active {
-            transform: translateY(7px);
+            transform: translateY(8px);
             box-shadow: 0 0 0 var(--dark);
         }
 
         .check-btn:disabled {
-            background: #ccc;
+            background: #eee;
+            border-color: #ccc;
+            box-shadow: 0 4px 0 #ccc;
+            color: #aaa;
             cursor: not-allowed;
-            box-shadow: 0 4px 0 #999;
+            transform: none !important;
         }
 
         /* ── FEEDBACK BANNER ── */
@@ -1144,6 +1131,53 @@
                 transform: scale(0.5) translateY(200px);
             }
         }
+        /* ── EMOJI GAME (ALAMIN NATIN) ── */
+        .emoji-game-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: nowrap;
+        }
+        .emoji-card {
+            background: white;
+            border: 4px solid #eee;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 115px;
+        }
+        .emoji-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--blue);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .emoji-card.selected {
+            border-color: var(--green);
+            background: #f0fdf4;
+            box-shadow: 0 0 0 5px rgba(107, 203, 119, 0.3);
+            transform: translateY(-5px);
+        }
+        .emoji-card.wrong {
+            border-color: var(--red);
+            background: #fef2f2;
+            animation: shake 0.4s ease;
+        }
+        .emoji-pic {
+            font-size: 4rem;
+            line-height: 1;
+            margin-bottom: 15px;
+            user-select: none;
+        }
+        .emoji-name {
+            font-weight: 800;
+            color: #555;
+            font-size: 1rem;
+            user-select: none;
+        }
+
     </style>
 
     <!-- Confetti -->
@@ -1175,6 +1209,7 @@
         <div class="progress-dot" id="dot-2"></div>
         <div class="progress-dot" id="dot-3"></div>
         <div class="progress-dot" id="dot-4"></div>
+        <div class="progress-dot" id="dot-5"></div>
     </div>
 
     <!-- ══ SLIDING UNITS VIEWPORT ══ -->
@@ -1183,40 +1218,490 @@
 
             <div class="unit-slide" id="unit-0">
                 <div class="section-card">
-                    <div class="section-badge" style="background:var(--blue);color:white;border-color:var(--dark);">📖
-                        Kilalanin Natin</div>
+                    <div class="section-badge badge-pink">📖 Kilalanin Natin</div>
 
                     <div class="text-center mt-3 mb-4">
-                        <div class="big-letter"
-                            style="background:linear-gradient(135deg, var(--blue) 0%, #0d47a1 100%); -webkit-background-clip:text; color:transparent;">
-                            Bb</div>
+                        <div class="big-letter">Bb</div>
                     </div>
 
                     <div class="text-center mb-4">
-                        <p style="font-weight:900; color:var(--blue); font-size:1.3rem; margin-bottom:8px;">
-                            Pagpapakilala at Pagbigkas ng Bb.
+                        <p style="font-weight:800; color:var(--pink); font-size:1.1rem; margin-bottom:4px;">
+                            Pagpapakilala at Pagbigkas ng Bb
                         </p>
-                        <p style="font-weight:700; color:#444; font-size:1rem;">
+                        <p style="font-weight:700; color:#c0392b; font-size:0.95rem;">
                             Ipakita ang larawan ng malaki at maliit na letrang Bb.
                         </p>
                     </div>
 
-                    <div class="intro-instruction"
-                        style="background:#FFF9C4; border-color:#FBC02D; color:#5A3E00; margin-top:30px; font-style:italic;">
-                        <i class="fa-solid fa-lips" style="color:#e53935; margin-right:6px;"></i>
-                        Pagdikitin ang mga labi. Palabasin ang hangin upang malikha ang tunog ng /b/. Ulitin hanggang sa
-                        maging pamilyar sa tunog ng Bb.
+                    <div class="intro-instruction">
+                        <i class="fa-solid fa-lips" style="color:var(--pink); margin-right:6px;"></i>
+                        <strong>Paano bigkasin?</strong> Pagdikitin ang mga labi. Palabasin ang hangin upang malikha ang tunog. Ulitin hanggang sa maging pamilyar sa tunog ng <strong>Bb</strong>.
                     </div>
 
-                    <div class="text-center mt-5 mb-2">
-                        <button class="sound-btn"
-                            style="background: linear-gradient(135deg, var(--blue), #42a5f5); color:white;"
-                            onclick="playBSound()" id="soundBtn">
+                    <div class="text-center mt-4">
+                        <button class="sound-btn" onclick="playBSound()" id="soundBtn">
                             <i class="fa-solid fa-volume-high"></i> Pakinggan ang /b/
                         </button>
                     </div>
+
+                    <div class="text-center mt-3" style="font-size:0.95rem; font-weight:700; color:#888;">
+                        🐗 Halimbawa ng salita:
+                        <strong style="color:var(--purple);">Baboy-ramo &nbsp;•&nbsp; Baka &nbsp;•&nbsp; Bato</strong>
+                    </div>
                 </div>
             </div>
+
+            <!-- ═══════════════════════════════════════════
+             UNIT 1: Pagsulat ng letrang Bb
+        ═══════════════════════════════════════════ -->
+            <div class="unit-slide" id="unit-1">
+                <div class="section-card">
+                    <div class="section-badge badge-orange">✏️ Pagsulat ng Bb</div>
+
+                    <h2 class="activity-title mt-3" style="color:var(--orange);">Sumulat ng Letrang Bb!</h2>
+                    <p class="activity-instruction">Gamitin ang iyong daliri o mouse para magsulat ng malaki at maliit
+                        na <strong>Bb</strong> sa loob ng kahon. Sundin ang guhit-gabay! ✍️</p>
+
+                    <!-- Instruction reminder (Visual Stroke Guide) -->
+                    <div class="visual-guide-box"
+                        style="margin-bottom:20px; padding: 15px; background: white; border: 2px dashed #FF9F43; border-radius: 15px; text-align: center;">
+                        <p style="font-weight: 800; color: #FF9F43; margin-bottom: 10px; font-size: 1.1rem;">💡 Paano
+                            isulat ang Bb? (Sundin ang mga numero!)</p>
+                        <svg viewBox="0 0 400 120" style="width: 100%; max-width: 450px; height: auto; overflow: visible;">
+                            <!-- B Uppercase -->
+                            <g transform="translate(40, 0)">
+                                <!-- Guidelines -->
+                                <line x1="-10" y1="10" x2="110" y2="10" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="6" />
+                                <line x1="-10" y1="55" x2="110" y2="55" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="6" />
+                                <line x1="-10" y1="100" x2="110" y2="100" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="6" />
+
+                                <!-- Skeleton B -->
+                                <path d="M 20,10 L 20,100" fill="none" stroke="#f0f0f0" stroke-width="14" stroke-linecap="round" />
+                                <path d="M 20,10 C 80,10 80,55 20,55" fill="none" stroke="#f0f0f0" stroke-width="14" stroke-linecap="round" />
+                                <path d="M 20,55 C 90,55 90,100 20,100" fill="none" stroke="#f0f0f0" stroke-width="14" stroke-linecap="round" />
+
+                                <!-- Arrow 1 (Down) -->
+                                <path d="M 20,10 L 20,95" fill="none" stroke="#FF6B9D" stroke-width="4" stroke-linecap="round" />
+                                <polygon points="15,85 25,85 20,98" fill="#FF6B9D" />
+                                <circle cx="20" cy="5" r="8" fill="#FF6B9D" /><text x="20" y="9" fill="white" font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">1</text>
+
+                                <!-- Arrow 2 (Top loop) -->
+                                <path d="M 20,10 C 70,10 70,55 30,55" fill="none" stroke="#4D96FF" stroke-width="4" stroke-linecap="round" />
+                                <polygon points="35,50 35,60 25,55" fill="#4D96FF" />
+                                <circle cx="45" cy="15" r="8" fill="#4D96FF" /><text x="45" y="19" fill="white" font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">2</text>
+
+                                <!-- Arrow 3 (Bottom loop) -->
+                                <path d="M 20,55 C 80,55 80,100 30,100" fill="none" stroke="#6BCB77" stroke-width="4" stroke-linecap="round" />
+                                <polygon points="35,95 35,105 25,100" fill="#6BCB77" />
+                                <circle cx="50" cy="60" r="8" fill="#6BCB77" /><text x="50" y="64" fill="white" font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">3</text>
+                            </g>
+
+                            <!-- b Lowercase -->
+                            <g transform="translate(260, 0)">
+                                <!-- Guidelines -->
+                                <line x1="-10" y1="10" x2="110" y2="10" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="6" />
+                                <line x1="-10" y1="55" x2="110" y2="55" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="6" />
+                                <line x1="-10" y1="100" x2="110" y2="100" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="6" />
+
+                                <!-- Skeleton b -->
+                                <path d="M 20,10 L 20,100" fill="none" stroke="#f0f0f0" stroke-width="14" stroke-linecap="round" />
+                                <path d="M 20,55 C 90,55 90,100 20,100" fill="none" stroke="#f0f0f0" stroke-width="14" stroke-linecap="round" />
+
+                                <!-- Arrow 1 (Down) -->
+                                <path d="M 20,10 L 20,95" fill="none" stroke="#FF6B9D" stroke-width="4" stroke-linecap="round" />
+                                <polygon points="15,85 25,85 20,98" fill="#FF6B9D" />
+                                <circle cx="20" cy="5" r="8" fill="#FF6B9D" /><text x="20" y="9" fill="white" font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">1</text>
+
+                                <!-- Arrow 2 (Bottom loop) -->
+                                <path d="M 20,55 C 80,55 80,100 30,100" fill="none" stroke="#4D96FF" stroke-width="4" stroke-linecap="round" />
+                                <polygon points="35,95 35,105 25,100" fill="#4D96FF" />
+                                <circle cx="50" cy="60" r="8" fill="#4D96FF" /><text x="50" y="64" fill="white" font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">2</text>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <!-- ── Uppercase B Drawing Pad ── -->
+                    <div class="draw-pad-wrapper">
+                        <div class="draw-pad-label">
+                            <span class="letter-preview upper">B</span>
+                            <span style="color:var(--blue);">Malaking B</span>
+                        </div>
+
+                        <div class="canvas-frame" id="frameUpper" style="margin-top:14px;">
+                            <div class="canvas-ghost" id="ghostUpper" style="gap: 15%;">
+                                <span class="ghost-letter">B</span>
+                                <span class="ghost-letter">B</span>
+                                <span class="ghost-letter">B</span>
+                            </div>
+                            <canvas id="canvasUpper" height="180"></canvas>
+                        </div>
+
+                        <!-- Toolbar -->
+                        <div class="pad-toolbar">
+                            <button class="pad-tool-btn undo-btn" onclick="undoStroke('upper')">↩ Burahin huli</button>
+                            <button class="pad-tool-btn erase" onclick="clearCanvas('upper')">🗑 I-clear</button>
+                            <button class="pad-tool-btn done-draw" onclick="markDone('upper')">✓ Tapos na!</button>
+                        </div>
+                        <!-- Color row -->
+                        <div class="color-row">
+                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Kulay:</span>
+                            <div class="color-swatch active" style="background:#4D96FF;"
+                                onclick="setColor('upper','#4D96FF',this)"></div>
+                            <div class="color-swatch" style="background:#FF6B9D;"
+                                onclick="setColor('upper','#FF6B9D',this)"></div>
+                            <div class="color-swatch" style="background:#6BCB77;"
+                                onclick="setColor('upper','#6BCB77',this)"></div>
+                            <div class="color-swatch" style="background:#FF9F43;"
+                                onclick="setColor('upper','#FF9F43',this)"></div>
+                            <div class="color-swatch" style="background:#C77DFF;"
+                                onclick="setColor('upper','#C77DFF',this)"></div>
+                            <div class="color-swatch" style="background:#2C2F33;"
+                                onclick="setColor('upper','#2C2F33',this)"></div>
+                        </div>
+                        <!-- Brush size -->
+                        <div class="brush-row">
+                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Laki ng panulat:</span>
+                            <div class="brush-btn active" onclick="setBrush('upper',5,this)">
+                                <div class="brush-dot" style="width:6px;height:6px;"></div>
+                            </div>
+                            <div class="brush-btn" onclick="setBrush('upper',10,this)">
+                                <div class="brush-dot" style="width:11px;height:11px;"></div>
+                            </div>
+                            <div class="brush-btn" onclick="setBrush('upper',18,this)">
+                                <div class="brush-dot" style="width:18px;height:18px;"></div>
+                            </div>
+                        </div>
+                        <div class="pad-done-tick" id="doneTick-upper">✅ Napakahusay! Sinulatan mo na ang malaking B!
+                        </div>
+                    </div>
+
+                    <!-- ── Lowercase b Drawing Pad ── -->
+                    <div class="draw-pad-wrapper">
+                        <div class="draw-pad-label">
+                            <span class="letter-preview lower">b</span>
+                            <span style="color:var(--pink);">Maliit na b</span>
+                        </div>
+
+                        <div class="canvas-frame" id="frameLower" style="margin-top:14px;">
+                            <div class="canvas-ghost" id="ghostLower" style="gap: 15%;">
+                                <span class="ghost-letter">b</span>
+                                <span class="ghost-letter">b</span>
+                                <span class="ghost-letter">b</span>
+                            </div>
+                            <canvas id="canvasLower" height="160"></canvas>
+                        </div>
+
+                        <!-- Toolbar -->
+                        <div class="pad-toolbar">
+                            <button class="pad-tool-btn undo-btn" onclick="undoStroke('lower')">↩ Burahin huli</button>
+                            <button class="pad-tool-btn erase" onclick="clearCanvas('lower')">🗑 I-clear</button>
+                            <button class="pad-tool-btn done-draw" onclick="markDone('lower')">✓ Tapos na!</button>
+                        </div>
+                        <!-- Color row -->
+                        <div class="color-row">
+                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Kulay:</span>
+                            <div class="color-swatch" style="background:#4D96FF;"
+                                onclick="setColor('lower','#4D96FF',this)"></div>
+                            <div class="color-swatch active" style="background:#FF6B9D;"
+                                onclick="setColor('lower','#FF6B9D',this)"></div>
+                            <div class="color-swatch" style="background:#6BCB77;"
+                                onclick="setColor('lower','#6BCB77',this)"></div>
+                            <div class="color-swatch" style="background:#FF9F43;"
+                                onclick="setColor('lower','#FF9F43',this)"></div>
+                            <div class="color-swatch" style="background:#C77DFF;"
+                                onclick="setColor('lower','#C77DFF',this)"></div>
+                            <div class="color-swatch" style="background:#2C2F33;"
+                                onclick="setColor('lower','#2C2F33',this)"></div>
+                        </div>
+                        <!-- Brush size -->
+                        <div class="brush-row">
+                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Laki ng panulat:</span>
+                            <div class="brush-btn active" onclick="setBrush('lower',5,this)">
+                                <div class="brush-dot" style="width:6px;height:6px;"></div>
+                            </div>
+                            <div class="brush-btn" onclick="setBrush('lower',10,this)">
+                                <div class="brush-dot" style="width:11px;height:11px;"></div>
+                            </div>
+                            <div class="brush-btn" onclick="setBrush('lower',18,this)">
+                                <div class="brush-dot" style="width:18px;height:18px;"></div>
+                            </div>
+                        </div>
+                        <div class="pad-done-tick" id="doneTick-lower">✅ Magaling! Sinulatan mo na ang maliit na b!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- ═══════════════════════════════════════════
+             UNIT 3: Pagsasanay 1 A at B
+        ═══════════════════════════════════════════ -->
+            <div class="unit-slide" id="unit-2">
+                <div class="section-card">
+                    <div class="section-badge badge-orange">📝 Pagsasanay 1</div>
+                    <h2 class="activity-title mt-3" style="color:var(--orange);">A. Sumulat ng apat (4) malalaking B.</h2>
+                    
+                    <!-- Act3A (4 B's) -->
+                    <div class="draw-pad-wrapper">
+                        <div class="draw-pad-label">
+                            <span class="letter-preview upper">B</span>
+                            <span style="color:var(--blue);">Malaking B</span>
+                        </div>
+
+                        <div class="canvas-frame" id="frameAct3a" style="margin-top:14px;">
+                            <div class="canvas-ghost" id="ghostAct3a" style="gap: 10%;">
+                                <span class="ghost-letter">B</span>
+                                <span class="ghost-letter">B</span>
+                                <span class="ghost-letter">B</span>
+                                <span class="ghost-letter">B</span>
+                            </div>
+                            <canvas id="canvasAct3a" height="180"></canvas>
+                        </div>
+                        <div class="pad-toolbar">
+                            <button class="pad-tool-btn undo-btn" onclick="undoStroke('act3a')">↩ Burahin huli</button>
+                            <button class="pad-tool-btn erase" onclick="clearCanvas('act3a')">🗑 I-clear</button>
+                            <button class="pad-tool-btn done-draw" onclick="markDone('act3a')">✓ Tapos na!</button>
+                        </div>
+                        <!-- Color row -->
+                        <div class="color-row">
+                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Kulay:</span>
+                            <div class="color-swatch active" style="background:#4D96FF;" onclick="setColor('act3a','#4D96FF',this)"></div>
+                            <div class="color-swatch" style="background:#FF6B9D;" onclick="setColor('act3a','#FF6B9D',this)"></div>
+                            <div class="color-swatch" style="background:#6BCB77;" onclick="setColor('act3a','#6BCB77',this)"></div>
+                            <div class="color-swatch" style="background:#FF9F43;" onclick="setColor('act3a','#FF9F43',this)"></div>
+                            <div class="color-swatch" style="background:#C77DFF;" onclick="setColor('act3a','#C77DFF',this)"></div>
+                            <div class="color-swatch" style="background:#2C2F33;" onclick="setColor('act3a','#2C2F33',this)"></div>
+                        </div>
+                        <!-- Brush size -->
+                        <div class="brush-row">
+                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Laki ng panulat:</span>
+                            <div class="brush-btn active" onclick="setBrush('act3a',5,this)">
+                                <div class="brush-dot" style="width:6px;height:6px;"></div>
+                            </div>
+                            <div class="brush-btn" onclick="setBrush('act3a',10,this)">
+                                <div class="brush-dot" style="width:11px;height:11px;"></div>
+                            </div>
+                            <div class="brush-btn" onclick="setBrush('act3a',18,this)">
+                                <div class="brush-dot" style="width:18px;height:18px;"></div>
+                            </div>
+                        </div>
+                        <div class="pad-done-tick" id="doneTick-act3a">✅ Mahusay! Sinulatan mo na ang malaking B!</div>
+                    </div>
+
+                    <h2 class="activity-title mt-4" style="color:var(--pink);">B. Sumulat ng apat (4) maliliit na b.</h2>
+                    <!-- Act3B (4 b's) -->
+                    <div class="draw-pad-wrapper">
+                        <div class="draw-pad-label">
+                            <span class="letter-preview lower">b</span>
+                            <span style="color:var(--pink);">Maliit na b</span>
+                        </div>
+
+                        <div class="canvas-frame" id="frameAct3b" style="margin-top:14px;">
+                            <div class="canvas-ghost" id="ghostAct3b" style="gap: 10%;">
+                                <span class="ghost-letter">b</span>
+                                <span class="ghost-letter">b</span>
+                                <span class="ghost-letter">b</span>
+                                <span class="ghost-letter">b</span>
+                            </div>
+                            <canvas id="canvasAct3b" height="160"></canvas>
+                        </div>
+                        <div class="pad-toolbar">
+                            <button class="pad-tool-btn undo-btn" onclick="undoStroke('act3b')">↩ Burahin huli</button>
+                            <button class="pad-tool-btn erase" onclick="clearCanvas('act3b')">🗑 I-clear</button>
+                            <button class="pad-tool-btn done-draw" onclick="markDone('act3b')">✓ Tapos na!</button>
+                        </div>
+                        <!-- Color row -->
+                        <div class="color-row">
+                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Kulay:</span>
+                            <div class="color-swatch" style="background:#4D96FF;" onclick="setColor('act3b','#4D96FF',this)"></div>
+                            <div class="color-swatch active" style="background:#FF6B9D;" onclick="setColor('act3b','#FF6B9D',this)"></div>
+                            <div class="color-swatch" style="background:#6BCB77;" onclick="setColor('act3b','#6BCB77',this)"></div>
+                            <div class="color-swatch" style="background:#FF9F43;" onclick="setColor('act3b','#FF9F43',this)"></div>
+                            <div class="color-swatch" style="background:#C77DFF;" onclick="setColor('act3b','#C77DFF',this)"></div>
+                            <div class="color-swatch" style="background:#2C2F33;" onclick="setColor('act3b','#2C2F33',this)"></div>
+                        </div>
+                        <!-- Brush size -->
+                        <div class="brush-row">
+                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Laki ng panulat:</span>
+                            <div class="brush-btn active" onclick="setBrush('act3b',5,this)">
+                                <div class="brush-dot" style="width:6px;height:6px;"></div>
+                            </div>
+                            <div class="brush-btn" onclick="setBrush('act3b',10,this)">
+                                <div class="brush-dot" style="width:11px;height:11px;"></div>
+                            </div>
+                            <div class="brush-btn" onclick="setBrush('act3b',18,this)">
+                                <div class="brush-dot" style="width:18px;height:18px;"></div>
+                            </div>
+                        </div>
+                        <div class="pad-done-tick" id="doneTick-act3b">✅ Magaling! Sinulatan mo na ang maliit na b!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════
+             UNIT 4: Pagsasanay 1 C
+        ═══════════════════════════════════════════ -->
+            <div class="unit-slide" id="unit-3">
+                <div class="section-card">
+                    <div class="section-badge badge-green">📝 Pagsasanay 1 C</div>
+                    <h2 class="activity-title mt-3" style="color:var(--green);">C. Pagsamahin sa guhit ang apat (4) malaki at maliit na letrang Bb.</h2>
+                    <p class="activity-instruction">Isulat ang magkatabing <strong>Bb</strong> nang apat na beses.</p>
+
+                    <!-- Act4C (4 Bb's -> 8 letters) -->
+                    <div class="draw-pad-wrapper">
+                        <div class="canvas-frame" id="frameAct4c" style="margin-top:14px;">
+                            <div class="canvas-ghost" id="ghostAct4c" style="flex-direction: column; justify-content: space-between; padding: 40px 0; font-size: 4rem; letter-spacing: normal;">
+                                <div style="display:flex; justify-content: space-evenly; width: 100%;">
+                                    <span><span class="watermark-letter">B</span><span class="watermark-letter">b</span></span>
+                                    <span><span class="watermark-letter">B</span><span class="watermark-letter">b</span></span>
+                                    <span><span class="watermark-letter">B</span><span class="watermark-letter">b</span></span>
+                                    <span><span class="watermark-letter">B</span><span class="watermark-letter">b</span></span>
+                                </div>
+                                <div style="display:flex; justify-content: space-evenly; width: 100%;">
+                                    <span><span class="watermark-letter">B</span><span class="watermark-letter">b</span></span>
+                                    <span><span class="watermark-letter">B</span><span class="watermark-letter">b</span></span>
+                                    <span><span class="watermark-letter">B</span><span class="watermark-letter">b</span></span>
+                                    <span><span class="watermark-letter">B</span><span class="watermark-letter">b</span></span>
+                                </div>
+                                <div style="display:flex; justify-content: space-evenly; width: 100%;">
+                                    <span><span class="watermark-letter">B</span><span class="watermark-letter">b</span></span>
+                                    <span><span class="watermark-letter">B</span><span class="watermark-letter">b</span></span>
+                                    <span><span class="watermark-letter">B</span><span class="watermark-letter">b</span></span>
+                                    <span><span class="watermark-letter">B</span><span class="watermark-letter">b</span></span>
+                                </div>
+                            </div>
+                            <canvas id="canvasAct4c" height="450"></canvas>
+                        </div>
+                        <div class="pad-toolbar">
+                            <button class="pad-tool-btn undo-btn" onclick="undoStroke('act4c')">↩ Burahin huli</button>
+                            <button class="pad-tool-btn erase" onclick="clearCanvas('act4c')">🗑 I-clear</button>
+                            <button class="pad-tool-btn done-draw" onclick="markDone('act4c')">✓ Tapos na!</button>
+                        </div>
+                        <!-- Color row -->
+                        <div class="color-row">
+                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Kulay:</span>
+                            <div class="color-swatch active" style="background:#4D96FF;" onclick="setColor('act4c','#4D96FF',this)"></div>
+                            <div class="color-swatch" style="background:#FF6B9D;" onclick="setColor('act4c','#FF6B9D',this)"></div>
+                            <div class="color-swatch" style="background:#6BCB77;" onclick="setColor('act4c','#6BCB77',this)"></div>
+                            <div class="color-swatch" style="background:#FF9F43;" onclick="setColor('act4c','#FF9F43',this)"></div>
+                            <div class="color-swatch" style="background:#C77DFF;" onclick="setColor('act4c','#C77DFF',this)"></div>
+                            <div class="color-swatch" style="background:#2C2F33;" onclick="setColor('act4c','#2C2F33',this)"></div>
+                        </div>
+                        <!-- Brush size -->
+                        <div class="brush-row">
+                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Laki ng panulat:</span>
+                            <div class="brush-btn active" onclick="setBrush('act4c',5,this)">
+                                <div class="brush-dot" style="width:6px;height:6px;"></div>
+                            </div>
+                            <div class="brush-btn" onclick="setBrush('act4c',10,this)">
+                                <div class="brush-dot" style="width:11px;height:11px;"></div>
+                            </div>
+                            <div class="brush-btn" onclick="setBrush('act4c',18,this)">
+                                <div class="brush-dot" style="width:18px;height:18px;"></div>
+                            </div>
+                        </div>
+                        <div class="pad-done-tick" id="doneTick-act4c">✅ Magaling! Natapos mo ang pagsasanay!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════
+                 UNIT 5: Alamin Natin (Picture Game)
+            ═══════════════════════════════════════════ -->
+            <div class="unit-slide" id="unit-4">
+                <div class="section-card">
+                    <div class="section-badge badge-blue" style="border-radius: 40px; padding: 7px 25px; top: -22px; box-shadow: 0 4px 0 #1565c0;">🎯 ALAMIN NATIN – GAWAIN 1</div>
+                    <h2 class="activity-title mt-4" style="color:var(--dark); font-weight: 900; font-size: 1.6rem;">Pindutin ang larawang nagsisimula ang tunog sa letrang /b/?</h2>
+                    <p class="activity-instruction" style="color:#777; font-size: 0.9rem;">Pindutin ang <strong>SURIIN ANG AKING SAGOT</strong> para malaman kung ikaw ay tama.</p>
+
+                    <div class="choices-grid mt-4">
+                        <div class="choice-card" onclick="toggleChoice(this)" data-activity="4" data-correct="true">
+                            <div class="choice-emoji-box">🏠</div>
+                            <div class="choice-label">Bahay</div>
+                            <div class="choice-checkbox"></div>
+                        </div>
+                        <div class="choice-card" onclick="toggleChoice(this)" data-activity="4" data-correct="true">
+                            <div class="choice-emoji-box">🏀</div>
+                            <div class="choice-label">Bola</div>
+                            <div class="choice-checkbox"></div>
+                        </div>
+                        <div class="choice-card" onclick="toggleChoice(this)" data-activity="4" data-correct="true">
+                            <div class="choice-emoji-box">🦆</div>
+                            <div class="choice-label">Bibe</div>
+                            <div class="choice-checkbox"></div>
+                        </div>
+                        <div class="choice-card" onclick="toggleChoice(this)" data-activity="4" data-correct="true">
+                            <div class="choice-emoji-box">🧺</div>
+                            <div class="choice-label">Basket</div>
+                            <div class="choice-checkbox"></div>
+                        </div>
+                        <div class="choice-card" onclick="toggleChoice(this)" data-activity="4" data-correct="false">
+                            <div class="choice-emoji-box">🐘</div>
+                            <div class="choice-label">Elepante</div>
+                            <div class="choice-checkbox"></div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-5">
+                        <button class="check-btn" id="check-act4" onclick="checkActivity(4)">
+                           <i class="fa-solid fa-circle-check"></i> Suriin ang Aking Sagot
+                        </button>
+                    </div>
+                    <div class="feedback-banner" id="feedback-act4">
+                        <div class="feedback-icon" id="feedback-icon-4"></div>
+                        <div class="feedback-text" id="feedback-text-4"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════
+                 UNIT 6: Alamin Natin (Gawain 2)
+            ═══════════════════════════════════════════ -->
+            <div class="unit-slide" id="unit-5">
+                <div class="section-card">
+                    <div class="section-badge badge-blue" style="border-radius: 40px; padding: 7px 25px; top: -22px; box-shadow: 0 4px 0 #1565c0;">🎯 ALAMIN NATIN – GAWAIN 2</div>
+                    <h2 class="activity-title mt-4" style="color:var(--dark); font-weight: 900; font-size: 1.6rem;">Alin sa mga ito ang nagsisimula sa tunog na /b/?</h2>
+                    <p class="activity-instruction" style="color:#777; font-size: 0.9rem;">Pindutin ang lahat ng tamang larawan at i-click ang sumunod na button.</p>
+
+                    <div class="choices-grid mt-4">
+                        <div class="choice-card" onclick="toggleChoice(this)" data-activity="5" data-correct="true">
+                            <div class="choice-emoji-box">🏀</div>
+                            <div class="choice-label">Bola</div>
+                            <div class="choice-checkbox"></div>
+                        </div>
+                        <div class="choice-card" onclick="toggleChoice(this)" data-activity="5" data-correct="true">
+                            <div class="choice-emoji-box">🐷</div>
+                            <div class="choice-label">Baboy</div>
+                            <div class="choice-checkbox"></div>
+                        </div>
+                        <div class="choice-card" onclick="toggleChoice(this)" data-activity="5" data-correct="true">
+                            <div class="choice-emoji-box">🥾</div>
+                            <div class="choice-label">Bota</div>
+                            <div class="choice-checkbox"></div>
+                        </div>
+                        <div class="choice-card" onclick="toggleChoice(this)" data-activity="5" data-correct="true">
+                            <div class="choice-emoji-box">🌸</div>
+                            <div class="choice-label">Bulaklak</div>
+                            <div class="choice-checkbox"></div>
+                        </div>
+                        <div class="choice-card" onclick="toggleChoice(this)" data-activity="5" data-correct="false">
+                            <div class="choice-emoji-box">🥥</div>
+                            <div class="choice-label">Niyog</div>
+                            <div class="choice-checkbox"></div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-5">
+                        <button class="check-btn" id="check-act5" onclick="checkActivity(5)">
+                           <i class="fa-solid fa-circle-check"></i> Suriin ang Aking Sagot
+                        </button>
+                    </div>
+                    <div class="feedback-banner" id="feedback-act5">
+                        <div class="feedback-icon" id="feedback-icon-5"></div>
+                        <div class="feedback-text" id="feedback-text-5"></div>
+                    </div>
+                </div>
+            </div>
+
         </div><!-- end units-track -->
     </div><!-- end units-viewport -->
 
@@ -1229,7 +1714,7 @@
 
         <!-- Unit counter -->
         <div class="unit-counter">
-            <strong id="unitNum">1</strong> / 5<br>
+            <strong id="unitNum">1</strong> / 6<br>
             <span id="unitName" style="font-size:0.8rem;">Kilalanin Natin</span>
         </div>
 
@@ -1250,16 +1735,16 @@
     <script>
         (function () {
             // ── State ──
-            const UNIT_NAMES = ['Kilalanin Natin'];
+            const UNIT_NAMES = ['Kilalanin Natin', 'Pagsulat ng Bb', 'Pagsasanay 1 A at B', 'Pagsasanay 1 C', 'Alamin Natin 1', 'Alamin Natin 2'];
             let currentUnit = 0;  // 0-indexed
-            const totalUnits = 1;
+            const totalUnits = 6;
 
             const state = {
-                1: { checked: false, score: 0, total: 0 }, // Gawain 1
-                2: { checked: false, score: 0, total: 0 }, // Gawain 2
-                4: { checked: false, score: 0 },   // Pagsulat
-                5: { checked: false, score: 0 },   // Pagsasanay 1 (maliit na m)
-                6: { checked: false, score: 0 }    // Pagsasanay 2 (Malaking M)
+                1: { checked: false, score: 0 },   // Pagsulat ng Bb
+                2: { checked: false, score: 0 },   // Pagsasanay 1 A at B
+                3: { checked: false, score: 0 },   // Pagsasanay 1 C
+                4: { checked: false, score: 0, total: 0 }, // Alamin Natin 1
+                5: { checked: false, score: 0, total: 0 }, // Alamin Natin 2
             };
 
             // Count correct answers per activity
@@ -1271,14 +1756,27 @@
             // ── Navigation ──
             function updateUI() {
                 const track = document.getElementById('unitsTrack');
-                track.style.transform = `translateX(-${currentUnit * (100 / 5)}%)`;
+                track.style.transform = `translateX(-${currentUnit * (100 / 6)}%)`;
 
                 // Dots
                 for (let i = 0; i < totalUnits; i++) {
                     const dot = document.getElementById(`dot-${i}`);
                     dot.classList.remove('active', 'done');
-                    if (i < currentUnit) dot.classList.add('done');
-                    else if (i === currentUnit) dot.classList.add('active');
+                    
+                    if (i === currentUnit) {
+                        dot.classList.add('active');
+                    } 
+                    
+                    // Logic for green (done) dots:
+                    // Unit 0 is intro, always done if we reached it or passed it.
+                    // Units 1-5 correspond to state[1]-state[5].
+                    if (i === 0) {
+                        if (currentUnit > 0) dot.classList.add('done');
+                    } else {
+                        if (state[i] && state[i].checked) {
+                            dot.classList.add('done');
+                        }
+                    }
                 }
 
                 // Counter
@@ -1299,42 +1797,57 @@
                 updateNextBtn();
             }
 
-            function allActivitiesDone() { return true; /* 
-                return state[1].checked && state[2].checked;
+            function allActivitiesDone() { 
+                return state[1].checked && state[2].checked && state[3].checked && state[4].checked && state[5].checked;
             }
 
             function updateNextBtn() {
                 const nextBtn = document.getElementById('nextBtn');
                 if (currentUnit === totalUnits - 1) {
-                    // On last unit (unit 5)
                     if (allActivitiesDone()) {
                         nextBtn.className = 'nav-btn finish-btn';
                         nextBtn.innerHTML = '<i class="fa-solid fa-flag-checkered"></i> Tapos Na!';
                         nextBtn.disabled = false;
-                        nextBtn.onclick = () => { localStorage.setItem('tunog_tuklas_pending_unlock', 'M'); window.location.href = "{% url 'core:mapa' %}"; };
+                        nextBtn.onclick = async () => {
+                            // Show loading or disable
+                            nextBtn.disabled = true;
+                            nextBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Ina-unlock...';
+
+                            try {
+                                const response = await fetch('{% url "core:save_progress" %}', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-CSRFToken': '{{ csrf_token }}'
+                                    },
+                                    body: JSON.stringify({
+                                        level_id: '{{ level_id }}',
+                                        stars: parseInt(document.getElementById('starCount').textContent),
+                                        is_completed: true
+                                    })
+                                });
+                                
+                                // Set unlock flag for animation on map
+                                localStorage.setItem('tunog_tuklas_pending_unlock', 'B');
+                            } catch (e) {
+                                console.error("Error saving progress:", e);
+                            }
+                            
+                            window.location.href = "{% url 'core:mapa' %}";
+                        };
                     } else {
                         nextBtn.className = 'nav-btn next-btn';
                         nextBtn.innerHTML = 'Susunod <i class="fa-solid fa-lock"></i>';
                         nextBtn.disabled = true;
                     }
-                } else if (currentUnit === 1 && !state[1].checked) {
-                    // Unit 2: must check Gawain 1 first
-                    nextBtn.className = 'nav-btn next-btn';
-                    nextBtn.innerHTML = 'Susunod <i class="fa-solid fa-lock"></i>';
-                    nextBtn.disabled = true;
-                } else if (currentUnit === 2 && !state[2].checked) {
-                    // Unit 3: must check Gawain 2 first
-                    nextBtn.className = 'nav-btn next-btn';
-                    nextBtn.innerHTML = 'Susunod <i class="fa-solid fa-lock"></i>';
-                    nextBtn.disabled = true;
                 } else {
-                    // Units 0 (intro), 3 (pagsulat) are freely passable; Unit 4 with Sagutin Natin locks itself
                     nextBtn.className = 'nav-btn next-btn';
                     nextBtn.innerHTML = 'Susunod <i class="fa-solid fa-arrow-right"></i>';
                     nextBtn.disabled = false;
                     nextBtn.onclick = goNext;
                 }
             }
+
 
             window.goNext = function () {
                 if (currentUnit < totalUnits - 1) {
@@ -1357,7 +1870,9 @@
                     // Force complete validation for current unit
                     if (currentUnit === 1) state[1].checked = true;
                     if (currentUnit === 2) state[2].checked = true;
-                    if (currentUnit === 3) state[4].checked = true;
+                    if (currentUnit === 3) state[3].checked = true;
+                    if (currentUnit === 4) state[4].checked = true;
+                    if (currentUnit === 5) state[5].checked = true;
 
                     currentUnit++;
                     updateUI();
@@ -1441,8 +1956,8 @@
             const pads = {};
 
             function initPad(id) {
-                const canvas = document.getElementById('canvas' + (id === 'upper' ? 'Upper' : 'Lower'));
-                const frame = document.getElementById('frame' + (id === 'upper' ? 'Upper' : 'Lower'));
+                const canvas = document.getElementById('canvas' + id.charAt(0).toUpperCase() + id.slice(1));
+                const frame = document.getElementById('frame' + id.charAt(0).toUpperCase() + id.slice(1));
                 // Resize canvas to fill frame width
                 function resizeCanvas() {
                     const w = frame.clientWidth;
@@ -1459,11 +1974,11 @@
                     canvas,
                     ctx: canvas.getContext('2d'),
                     drawing: false,
-                    color: id === 'upper' ? '#4D96FF' : '#FF6B9D',
+                    color: (id === 'upper' || id === 'act3a') ? '#4D96FF' : (id === 'lower' || id === 'act3b') ? '#FF6B9D' : '#6BCB77',
                     brush: 5,
                     snapshots: [],
                     strokeCount: 0,
-                    maxStrokes: id === 'upper' ? 4 : 3,
+                    maxStrokes: (id === 'upper' ? 4 : (id === 'lower' ? 3 : 20)),
                     done: false
                 };
 
@@ -1576,141 +2091,181 @@
                 tick.style.background = '#E9FBEE';
             };
 
-            function validateDrawing(id) {
+            // ── AI Handwriting Validation ──
+            function getTargetLetterForPad(id) {
+                const capId = id.charAt(0).toUpperCase() + id.slice(1);
+                const ghostContainer = document.getElementById('ghost' + capId);
+                if (!ghostContainer) return null;
+                // watermark-letter takes precedence
+                const wm = ghostContainer.querySelector('.watermark-letter');
+                if (wm) return wm.textContent.trim()[0]; // first char e.g. 'B'
+                const gl = ghostContainer.querySelector('.ghost-letter');
+                if (gl) return gl.textContent.trim()[0];
+                return null;
+            }
+
+            async function validateDrawingAI(id) {
                 const p = pads[id];
                 const ctx = p.ctx;
+                const canvas = p.canvas;
 
-                // --- 1. Read pixel data to measure ink spread ---
-                const imgData = ctx.getImageData(0, 0, p.canvas.width, p.canvas.height).data;
-
+                // 1. Fast empty-canvas check first
+                const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
                 let totalInk = 0;
-                let minX = p.canvas.width, maxX = 0;
-                let minY = p.canvas.height, maxY = 0;
-
                 for (let i = 0; i < imgData.length; i += 4) {
-                    if (imgData[i + 3] > 20) {
-                        totalInk++;
-                        const px = (i / 4) % p.canvas.width;
-                        const py = Math.floor((i / 4) / p.canvas.width);
-                        if (px < minX) minX = px;
-                        if (px > maxX) maxX = px;
-                        if (py < minY) minY = py;
-                        if (py > maxY) maxY = py;
-                    }
+                    if (imgData[i + 3] > 20) totalInk++;
+                }
+                if (totalInk < 50) {
+                    return {
+                        valid: false,
+                        reason: 'Walang guhit pa. Subukang sumulat!',
+                        encouragement_fil: 'Subukan mo ulit! Kaya mo yan! 💪',
+                        tip: 'Gumuhit ng malaking letra sa loob ng kahon.'
+                    };
                 }
 
-                // --- 2. Reject truly empty canvases ---
-                if (totalInk < 80) {
-                    return { valid: false, reason: "Walang guhit pa. Subukang sumulat!" };
-                }
-
-                // --- 3. Reject single-direction lines (dot, horizontal, or vertical only) ---
-                const traceW = maxX - minX;
-                const traceH = maxY - minY;
-                if (traceW < 20 || traceH < 20) {
-                    return { valid: false, reason: "Mukhang isang guhit lang ito. Subukang sumulat ng buong hugis ng M!" };
-                }
-
-                // --- 4. Require at least 3 strokes (pen-up/down actions) ---
-                if (p.strokeCount < 3) {
-                    return { valid: false, reason: "Kailangan ng hindi bababa sa tatlong guhit para mabuo ang M. Subukan ulit!" };
-                }
-
-                // --- 5. Ghost zone coverage (DOM-based, font-loading independent) ---
-                // Use the real bounding rects of the ghost letter spans to define ink zones.
-                // ALL ghost zones must have ink — ensures the child drew across the whole pad.
+                // 2. Local Completeness Check (Verify all ghost letter boxes have ink)
                 try {
-                    const ghostContainer = document.getElementById('ghost' + (id === 'upper' ? 'Upper' : 'Lower'));
+                    const capId = id.charAt(0).toUpperCase() + id.slice(1);
+                    const ghostContainer = document.getElementById('ghost' + capId);
                     const spans = ghostContainer ? ghostContainer.querySelectorAll('.ghost-letter') : [];
-                    const canvasRect = p.canvas.getBoundingClientRect();
-                    const scaleX = p.canvas.width / canvasRect.width;
-                    const scaleY = p.canvas.height / canvasRect.height;
-
-                    if (spans.length >= 2) {
+                    
+                    if (spans.length > 0) {
+                        const canvasRect = canvas.getBoundingClientRect();
+                        const scaleX = canvas.width / canvasRect.width;
+                        const scaleY = canvas.height / canvasRect.height;
                         let coveredZones = 0;
 
-                        spans.forEach(function (span) {
+                        spans.forEach(span => {
                             const r = span.getBoundingClientRect();
-                            const bx1 = Math.max(0, Math.floor((r.left - canvasRect.left) * scaleX) - 8);
-                            const by1 = Math.max(0, Math.floor((r.top - canvasRect.top) * scaleY) - 8);
-                            const bx2 = Math.min(p.canvas.width, Math.ceil((r.right - canvasRect.left) * scaleX) + 8);
-                            const by2 = Math.min(p.canvas.height, Math.ceil((r.bottom - canvasRect.top) * scaleY) + 8);
-                            const zoneH = by2 - by1;
-
-                            // Top 40% of zone — M's strokes start from the top
-                            const topEdge = by1 + zoneH * 0.40;
-
+                            // Define zone relative to canvas
+                            const bx1 = Math.max(0, Math.floor((r.left - canvasRect.left) * scaleX) - 10);
+                            const by1 = Math.max(0, Math.floor((r.top - canvasRect.top) * scaleY) - 10);
+                            const bx2 = Math.min(canvas.width, Math.ceil((r.right - canvasRect.left) * scaleX) + 10);
+                            const by2 = Math.min(canvas.height, Math.ceil((r.bottom - canvasRect.top) * scaleY) + 10);
+                            
                             let hits = 0;
-                            let topHits = 0;
-                            let inkMinY = by2, inkMaxY = by1;
-
-                            for (let sy = by1; sy <= by2; sy += 2) {
-                                for (let sx = bx1; sx <= bx2; sx += 2) {
-                                    const idx = (sy * p.canvas.width + sx) * 4;
-                                    if (idx >= 0 && idx < imgData.length && imgData[idx + 3] > 20) {
-                                        hits++;
-                                        if (sy < inkMinY) inkMinY = sy;
-                                        if (sy > inkMaxY) inkMaxY = sy;
-                                        if (sy <= topEdge) topHits++;
-                                    }
+                            // Sample the area
+                            for (let sy = by1; sy <= by2; sy += 4) {
+                                for (let sx = bx1; sx <= bx2; sx += 4) {
+                                    const idx = (sy * canvas.width + sx) * 4;
+                                    if (imgData[idx + 3] > 20) hits++;
                                 }
                             }
-
-                            const inkH = inkMaxY - inkMinY;
-
-                            // Zone counts if there's enough ink AND meaningful vertical spread.
-                            // 20% height minimum rejects flat arrows (~10% span) while passing
-                            // any M shape — uppercase (~80% span) or lowercase (~40-60% span).
-                            if (hits >= 15 && inkH >= zoneH * 0.20) {
-                                coveredZones++;
-                            }
+                            // 10 hits is a small but definite attempt at a letter
+                            if (hits >= 8) coveredZones++;
                         });
 
                         if (coveredZones < spans.length) {
-                            return { valid: false, reason: "Hindi pa buo! Subukan ulit — kailangan ng letrang M sa bawat kahon ng gabay! 😊" };
+                            return {
+                                valid: false,
+                                reason: 'Hindi pa po tapos ang lahat!',
+                                encouragement_fil: 'Sige pa, punan ang lahat ng gabay na letra! 😊',
+                                tip: `May mga kahon pa na wala pang sulat. Trace mo lahat sila!`
+                            };
                         }
                     }
                 } catch (e) {
-                    // Skip zone check on error
+                    console.warn('[Completeness check] error:', e);
+                    // Continue to AI if check fails for technical reasons
                 }
 
-                // --- 6. Passes! Recognizable skeleton attempt at the letter. ---
-                return { valid: true };
+                // Export canvas as PNG base64
+                const image_b64 = p.canvas.toDataURL('image/png');
+                const target_letter = getTargetLetterForPad(id) || '?';
+
+                try {
+                    const resp = await fetch('/api/validate-handwriting/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: JSON.stringify({ image_b64, target_letter })
+                    });
+                    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+                    return await resp.json();
+                } catch (err) {
+                    console.warn('[AI validate] fallback:', err);
+                    // Network fallback — be generous
+                    return {
+                        valid: true,
+                        confidence: 0.70,
+                        reason: 'Offline validation — accepted.',
+                        encouragement_fil: 'Magaling! Napakaganda ng iyong pagsulat! 🌟',
+                        tip: null
+                    };
+                }
             }
 
-            window.markDone = function (id) {
+            window.markDone = async function (id) {
                 const p = pads[id];
-                const validation = validateDrawing(id);
                 const tick = document.getElementById('doneTick-' + id);
+                const capId = id.charAt(0).toUpperCase() + id.slice(1);
+                const frame = document.getElementById('frame' + capId);
+
+                // Find and disable the "Tapos na!" button, show spinner
+                const doneBtn = document.querySelector(`[onclick="markDone('${id}')"]`);
+                if (doneBtn) {
+                    doneBtn.disabled = true;
+                    doneBtn.innerHTML = '⏳ Sinusuri...';
+                }
+
+                const validation = await validateDrawingAI(id);
+
+                if (doneBtn) {
+                    doneBtn.disabled = false;
+                    doneBtn.innerHTML = '✓ Tapos na!';
+                }
 
                 if (!validation.valid) {
-                    const frame = document.getElementById('frame' + (id === 'upper' ? 'Upper' : 'Lower'));
-                    frame.style.border = '4px solid #f44336';
-                    setTimeout(() => { frame.style.border = '4px solid #90CAF9'; }, 700);
-
-                    tick.className = 'pad-done-tick show error-tick';
-                    tick.style.borderColor = '#f44336';
-                    tick.style.color = '#b71c1c';
-                    tick.style.background = '#FFEBEE';
-                    tick.innerHTML = `⚠️ Oops! ${validation.reason}. Subukan ulit i-trace!`;
+                    if (frame) {
+                        frame.style.border = '4px solid #f44336';
+                        setTimeout(() => { frame.style.border = '4px solid #90CAF9'; }, 700);
+                    }
+                    if (tick) {
+                        tick.className = 'pad-done-tick show error-tick';
+                        tick.style.borderColor = '#f44336';
+                        tick.style.color = '#b71c1c';
+                        tick.style.background = '#FFEBEE';
+                        const tipMsg = validation.tip ? ` 💡 ${validation.tip}` : '';
+                        tick.innerHTML = `⚠️ ${validation.reason || 'Subukan ulit!'}${tipMsg}`;
+                    }
                     return;
                 }
 
+                // ── Valid! ──
                 p.done = true;
-                tick.className = 'pad-done-tick show';
-                tick.style.borderColor = 'var(--green)';
-                tick.style.color = '#1b5e20';
-                tick.style.background = '#E9FBEE';
-                tick.innerHTML = id === 'upper' ? '✅ Napakahusay! Sinulatan mo na ang malaking M!' : '✅ Magaling! Sinulatan mo na ang maliit na m!';
-                tick.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                if (tick) {
+                    tick.className = 'pad-done-tick show';
+                    tick.style.borderColor = 'var(--green)';
+                    tick.style.color = '#1b5e20';
+                    tick.style.background = '#E9FBEE';
+                    const msg = validation.encouragement_fil
+                        || (id === 'upper' ? '✅ Napakahusay! Sinulatan mo na ang malaking B!'
+                           : id === 'lower' ? '✅ Magaling! Sinulatan mo na ang maliit na b!'
+                           : '✅ Mahusay! Natapos mo ang pagsasanay!');
+                    tick.innerHTML = '✅ ' + msg;
+                    tick.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
 
-                if (pads['upper'].done && pads['lower'].done && !state[4].checked) {
-                    state[4].checked = true;
-                    state[4].score = 1;
+                if (pads['upper']?.done && pads['lower']?.done && !state[1].checked) {
+                    state[1].checked = true;
+                    launchConfetti();
+                }
+                if (pads['act3a']?.done && pads['act3b']?.done && !state[2].checked) {
+                    state[2].checked = true; state[2].score = 1;
                     const cur = parseInt(document.getElementById('starCount').textContent);
                     document.getElementById('starCount').textContent = cur + 1;
                     launchConfetti();
                 }
+                if (pads['act4c']?.done && !state[3].checked) {
+                    state[3].checked = true; state[3].score = 1;
+                    const cur = parseInt(document.getElementById('starCount').textContent);
+                    document.getElementById('starCount').textContent = cur + 1;
+                    launchConfetti();
+                }
+                updateNextBtn();
             };
 
             window.setColor = function (id, color, swatch) {
@@ -1731,6 +2286,9 @@
             // Init both pads after DOM is ready
             initPad('upper');
             initPad('lower');
+            initPad('act3a');
+            initPad('act3b');
+            initPad('act4c');
 
             // ── Unit 5: Token tapping (Hunting Game 1 and 2) ──
             let lowerCount = 0;
@@ -1899,9 +2457,10 @@
 
             // ── Final Score ──
             function showFinalScore() {
-                const totalScore = state[1].score + state[2].score + state[4].score + state[5].score + state[6].score;
-                const maxScore = 5; // 1 pt per unit (Gawain 1, Gawain 2, Pagsulat, Pagsasanay 1, Pagsasanay 2)
+                const totalScore = (state[1].score || 0) + (state[2].score || 0) + (state[3].score || 0) + (state[4].score || 0) + (state[5].score || 0);
+                const maxScore = 5; 
                 const section = document.getElementById('score-section');
+                if (!section) return;
                 section.style.display = 'block';
                 section.scrollIntoView({ behavior: 'smooth', block: 'center' });
 

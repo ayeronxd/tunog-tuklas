@@ -1158,7 +1158,7 @@
                     <div class="map-node node-completed 
                         {% if forloop.counter <= 5 %}node-coastal{% elif forloop.counter <= 11 %}node-rural{% elif forloop.counter <= 18 %}node-highland{% else %}node-town{% endif %}"
                         style="top:{{ node.pos_top }}%;left:{{ node.pos_left_px }}px;" title="{{ node.name }}"
-                        onclick="goToNode('{% if node.name == 'M' %}{% url 'core:letrang_m' %}{% elif node.name == 'I' %}{% url 'core:letrang_i' %}{% elif node.name == 'O' %}{% url 'core:letrang_o' %}{% else %}/game/{{ node.id }}/?name={{ node.name }}{% endif %}')">
+                        onclick="goToNode('{% if node.name == 'M' %}{% url 'core:letrang_m' %}{% elif node.name == 'I' %}{% url 'core:letrang_i' %}{% elif node.name == 'O' %}{% url 'core:letrang_o' %}{% elif node.name == 'B' %}{% url 'core:letrang_b' %}{% elif node.name == 'E' %}{% url 'core:letrang_e' %}{% else %}/game/{{ node.id }}/?name={{ node.name }}{% endif %}')">
                         <div class="node-circle position-relative">{{ node.name }}
                             {% if node.stars > 0 %}
                             <div class="star-badge"><i class="fa-solid fa-star text-warning"></i></div>
@@ -1170,7 +1170,7 @@
                     <div class="map-node node-active 
                         {% if forloop.counter <= 5 %}node-coastal{% elif forloop.counter <= 11 %}node-rural{% elif forloop.counter <= 18 %}node-highland{% else %}node-town{% endif %}"
                         style="top:{{ node.pos_top }}%;left:{{ node.pos_left_px }}px;" id="active-node"
-                        onclick="goToNode('{% if node.name == 'M' %}{% url 'core:letrang_m' %}{% elif node.name == 'I' %}{% url 'core:letrang_i' %}{% elif node.name == 'O' %}{% url 'core:letrang_o' %}{% else %}/game/{{ node.id }}/?name={{ node.name }}{% endif %}')">
+                        onclick="goToNode('{% if node.name == 'M' %}{% url 'core:letrang_m' %}{% elif node.name == 'I' %}{% url 'core:letrang_i' %}{% elif node.name == 'O' %}{% url 'core:letrang_o' %}{% elif node.name == 'B' %}{% url 'core:letrang_b' %}{% elif node.name == 'E' %}{% url 'core:letrang_e' %}{% else %}/game/{{ node.id }}/?name={{ node.name }}{% endif %}')">
 
                         <div class="tarsier-guide" id="mascot">🐒</div>
                         <div class="node-active-ring"></div>
@@ -1251,7 +1251,7 @@
             {% if active_node %}
             <button class="btn btn-warning fs-5 px-5 py-3 rounded-pill fw-bold border-3 continue-btn"
                 style="border:3px solid #2c2f33; box-shadow:0 6px 0 #2c2f33;" id="btn-continue"
-                onclick="goToNode('{% if active_node.name == 'M' %}{% url 'core:letrang_m' %}{% elif active_node.name == 'I' %}{% url 'core:letrang_i' %}{% elif active_node.name == 'O' %}{% url 'core:letrang_o' %}{% else %}/game/{{ active_node.id }}/{% endif %}')">
+                onclick="goToNode('{% if active_node.name == 'M' %}{% url 'core:letrang_m' %}{% elif active_node.name == 'I' %}{% url 'core:letrang_i' %}{% elif active_node.name == 'O' %}{% url 'core:letrang_o' %}{% elif active_node.name == 'B' %}{% url 'core:letrang_b' %}{% elif active_node.name == 'E' %}{% url 'core:letrang_e' %}{% else %}/game/{{ active_node.id }}/{% endif %}')">
                 <i class="fa-solid fa-play me-2"></i>Ituloy: Letrang {{ active_node.name }}
             </button>
             {% endif %}

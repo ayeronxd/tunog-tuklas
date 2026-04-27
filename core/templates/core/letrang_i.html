@@ -256,26 +256,7 @@
             touch-action: none;
         }
 
-        /* Ruled lines drawn via CSS pseudo + repeating gradient */
-        .canvas-frame::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            z-index: 1;
-            background:
-                repeating-linear-gradient(180deg,
-                    transparent 0px,
-                    transparent calc(33.33% - 1px),
-                    #90CAF9 calc(33.33% - 1px),
-                    #90CAF9 calc(33.33%),
-                    transparent calc(33.33%),
-                    transparent calc(66.66% - 1px),
-                    #EF9A9A calc(66.66% - 1px),
-                    #EF9A9A calc(66.66%),
-                    transparent calc(66.66%),
-                    transparent 100%);
-        }
+
 
         /* Ghost letter watermark */
         .canvas-ghost {
@@ -1849,7 +1830,29 @@
                         nextBtn.className = 'nav-btn finish-btn';
                         nextBtn.innerHTML = '<i class="fa-solid fa-flag-checkered"></i> Bumalik sa Mapa';
                         nextBtn.disabled = false;
-                        nextBtn.onclick = () => { localStorage.setItem('tunog_tuklas_pending_unlock', 'I'); window.location.href = "{% url 'core:mapa' %}"; };
+                        nextBtn.onclick = async () => {
+                            nextBtn.disabled = true;
+                            nextBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Ina-unlock...';
+                            
+                            try {
+                                const response = await fetch('{% url "core:save_progress" %}', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-CSRFToken': '{{ csrf_token }}'
+                                    },
+                                    body: JSON.stringify({
+                                        level_id: '{{ level_id }}',
+                                        stars: parseInt(document.getElementById('starCount').textContent),
+                                        is_completed: true
+                                    })
+                                });
+                                localStorage.setItem('tunog_tuklas_pending_unlock', 'I');
+                            } catch (e) {
+                                console.error("Error saving progress:", e);
+                            }
+                            window.location.href = "{% url 'core:mapa' %}";
+                        };
                     } else {
                         nextBtn.className = 'nav-btn next-btn';
                         nextBtn.innerHTML = 'Susunod <i class="fa-solid fa-lock"></i>';
@@ -2185,112 +2188,129 @@
                     tick.style.background = '#E9FBEE';
                 }
             };
-
-
-
-            function validateDrawing(id) {
-                const p = pads[id];
-                const ctx = p.ctx;
-                const imgData = ctx.getImageData(0, 0, p.canvas.width, p.canvas.height).data;
-
+            function getTargetLetterForPad(id) {
                 const capId = id.charAt(0).toUpperCase() + id.slice(1);
                 const ghostContainer = document.getElementById('ghost' + capId);
-                const spans = ghostContainer ? ghostContainer.querySelectorAll('.ghost-letter') : [];
-
-                // Requirement 1: Must complete ALL letters
-                if (spans.length === 0) return { valid: true };
-
-                // Figure out what kind of pad this is
-                let hasBigI = false;
-                let hasSmallI = false;
-
-                spans.forEach(span => {
-                    const text = span.textContent.trim();
-                    if (text === 'I') {
-                        hasBigI = true;
-                    } else if (text === 'i') {
-                        hasSmallI = true;
-                    }
-                });
-
-                // Require at least 2 strokes per ghost letter to prevent 1-line cheats.
-                // For big I: line + top/bottom bars. small i: line + dot.
-                let requiredStrokes = spans.length * 2;
-
-                if (p.strokeCount < requiredStrokes) {
-                    if (hasBigI && hasSmallI) {
-                        return { valid: false, reason: "Huwag kalimutan: ang malaking I ay may guhit sa taas at baba, at ang maliit na i ay may tuldok!" };
-                    } else if (hasBigI) {
-                        return { valid: false, reason: "Ang malaking I ay dapat may guhit pababa, at may pahalang na guhit sa taas at baba!" };
-                    } else {
-                        return { valid: false, reason: "Huwag kalimutan ang tuldok sa itaas ng maliit na i!" };
-                    }
-                }
-
-                // Verify coverage for ALL zones
-                const canvasRect = p.canvas.getBoundingClientRect();
-                const scaleX = p.canvas.width / canvasRect.width;
-                const scaleY = p.canvas.height / canvasRect.height;
-
-                let coveredZones = 0;
-
-                spans.forEach(function (span) {
-                    const r = span.getBoundingClientRect();
-                    const padX = 15;
-                    const padY = 15;
-                    const bx1 = Math.max(0, Math.floor((r.left - canvasRect.left) * scaleX) - padX);
-                    const by1 = Math.max(0, Math.floor((r.top - canvasRect.top) * scaleY) - padY);
-                    const bx2 = Math.min(p.canvas.width, Math.ceil((r.right - canvasRect.left) * scaleX) + padX);
-                    const by2 = Math.min(p.canvas.height, Math.ceil((r.bottom - canvasRect.top) * scaleY) + padY);
-
-                    let hits = 0;
-                    let sMinY = by2, sMaxY = by1;
-
-                    for (let sy = by1; sy <= by2; sy += 2) {
-                        for (let sx = bx1; sx <= bx2; sx += 2) {
-                            const idx = (sy * p.canvas.width + sx) * 4;
-                            if (idx >= 0 && idx < imgData.length && imgData[idx + 3] > 20) {
-                                hits++;
-                                if (sy < sMinY) sMinY = sy;
-                                if (sy > sMaxY) sMaxY = sy;
-                            }
-                        }
-                    }
-
-                    const inkHeight = sMaxY < sMinY ? 0 : (sMaxY - sMinY);
-                    const zoneH = by2 - by1;
-
-                    // Ensure minimum ink and height (about 30% of letter height)
-                    if (hits > 10 && inkHeight >= zoneH * 0.30) {
-                        coveredZones++;
-                    }
-                });
-
-                if (coveredZones < spans.length) {
-                    return { valid: false, reason: "Kailangan mong i-trace lahat ng " + spans.length + " na letra sa kahon! 😊" };
-                }
-
-                return { valid: true };
+                if (!ghostContainer) return null;
+                const wm = ghostContainer.querySelector('.watermark-letter');
+                if (wm) return wm.textContent.trim()[0];
+                const gl = ghostContainer.querySelector('.ghost-letter');
+                if (gl) return gl.textContent.trim()[0];
+                return null;
             }
 
-            window.markDone = function (id) {
+            async function validateDrawingAI(id) {
                 const p = pads[id];
-                const validation = validateDrawing(id);
-                const tick = document.getElementById('doneTick-' + id);
+                const ctx = p.ctx;
+                const canvas = p.canvas;
 
+                // 1. Fast empty-canvas check first
+                const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+                let totalInk = 0;
+                for (let i = 0; i < imgData.length; i += 4) {
+                    if (imgData[i + 3] > 20) totalInk++;
+                }
+                if (totalInk < 50) {
+                    return {
+                        valid: false,
+                        reason: 'Walang guhit pa. Subukang sumulat!',
+                        encouragement_fil: 'Subukan mo ulit! Kaya mo yan!',
+                        tip: 'Gumuhit ng malaking letra sa loob ng kahon.'
+                    };
+                }
+
+                // 2. Local Completeness Check (Verify all ghost letter boxes have ink)
+                try {
+                    const capId = id.charAt(0).toUpperCase() + id.slice(1);
+                    const ghostContainer = document.getElementById('ghost' + capId);
+                    const spans = ghostContainer ? ghostContainer.querySelectorAll('.ghost-letter') : [];
+                    
+                    if (spans.length > 0) {
+                        const canvasRect = canvas.getBoundingClientRect();
+                        const scaleX = canvas.width / canvasRect.width;
+                        const scaleY = canvas.height / canvasRect.height;
+                        let coveredZones = 0;
+
+                        spans.forEach(span => {
+                            const r = span.getBoundingClientRect();
+                            const bx1 = Math.max(0, Math.floor((r.left - canvasRect.left) * scaleX) - 10);
+                            const by1 = Math.max(0, Math.floor((r.top - canvasRect.top) * scaleY) - 10);
+                            const bx2 = Math.min(canvas.width, Math.ceil((r.right - canvasRect.left) * scaleX) + 10);
+                            const by2 = Math.min(canvas.height, Math.ceil((r.bottom - canvasRect.top) * scaleY) + 10);
+                            
+                            let hits = 0;
+                            for (let sy = by1; sy <= by2; sy += 4) {
+                                for (let sx = bx1; sx <= bx2; sx += 4) {
+                                    const idx = (sy * canvas.width + sx) * 4;
+                                    if (imgData[idx + 3] > 20) hits++;
+                                }
+                            }
+                            if (hits >= 8) coveredZones++;
+                        });
+
+                        if (coveredZones < spans.length) {
+                            return {
+                                valid: false,
+                                reason: 'Hindi pa po tapos ang lahat!',
+                                encouragement_fil: 'Sige pa, punan ang lahat ng gabay na letra! 😊',
+                                tip: `May mga kahon pa na wala pang sulat. Trace mo lahat sila!`
+                            };
+                        }
+                    }
+                } catch (e) {
+                    console.warn('[Completeness check] error:', e);
+                }
+
+                const image_b64 = canvas.toDataURL('image/png');
+                const target_letter = getTargetLetterForPad(id) || '?';
+                try {
+                    const resp = await fetch('/api/validate-handwriting/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: JSON.stringify({ image_b64, target_letter })
+                    });
+                    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+                    return await resp.json();
+                } catch (err) {
+                    console.warn('[AI validate] fallback:', err);
+                    return {
+                        valid: true,
+                        confidence: 0.70,
+                        reason: 'Offline validation - accepted.',
+                        encouragement_fil: 'Magaling! Napakaganda ng iyong pagsulat!',
+                        tip: null
+                    };
+                }
+            }
+
+            window.markDone = async function (id) {
+                const p = pads[id];
+                const tick = document.getElementById('doneTick-' + id);
                 const capId = id.charAt(0).toUpperCase() + id.slice(1);
                 const frame = document.getElementById('frame' + capId);
 
-                if (!validation.valid) {
-                    frame.style.border = '4px solid #f44336';
-                    setTimeout(() => { frame.style.border = '4px solid #90CAF9'; }, 700);
+                const doneBtn = document.querySelector(`[onclick="markDone('${id}')"]`);
+                if (doneBtn) { doneBtn.disabled = true; doneBtn.innerHTML = '⏳ Sinusuri...'; }
 
+                const validation = await validateDrawingAI(id);
+
+                if (doneBtn) { doneBtn.disabled = false; doneBtn.innerHTML = '✓ Tapos na!'; }
+
+                if (!validation.valid) {
+                    if (frame) {
+                        frame.style.border = '4px solid #f44336';
+                        setTimeout(() => { frame.style.border = '4px solid #90CAF9'; }, 700);
+                    }
                     if (tick) {
                         tick.className = 'pad-done-tick show error-tick';
                         tick.style.borderColor = '#f44336';
                         tick.style.color = '#b71c1c';
                         tick.style.background = '#FFEBEE';
-                        tick.innerHTML = `⚠️ Oops! ${validation.reason}. Subukan ulit i-trace!`;
+                        const tipMsg = validation.tip ? ' ?? ' + validation.tip : '';
+                        tick.innerHTML = '⚠️ ' + (validation.reason || 'Subukan ulit!') + tipMsg;
                     }
                     return;
                 }
@@ -2301,7 +2321,8 @@
                     tick.style.borderColor = 'var(--green)';
                     tick.style.color = '#1b5e20';
                     tick.style.background = '#E9FBEE';
-                    tick.innerHTML = id === 'upper' ? '✅ Napakahusay! Sinulatan mo na ang malaking I!' : '✅ Magaling! Sinulatan mo na ang maliit na i!';
+                    const defMsg = id === 'upper' ? 'Napakahusay! Sinulatan mo na ang malaking I!' : id === 'lower' ? 'Magaling! Sinulatan mo na ang maliit na i!' : 'Mahusay! Natapos mo ang pagsasanay!';
+                    tick.innerHTML = '✅ ' + (validation.encouragement_fil || defMsg);
                     tick.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 }
 
@@ -2313,14 +2334,15 @@
                     launchConfetti();
                     updateNextBtn();
                 }
+                updateNextBtn();
             };
 
-            window.checkUnit5Pagsasanay = function () {
+window.checkUnit5Pagsasanay = async function () {
                 // Lenient: count how many pads have valid drawings
                 let allValid = true;
                 let anyPadFailed = false;
-                ['p1', 'p2', 'p3'].forEach(pid => {
-                    const v = validateDrawing(pid);
+                for (const pid of ['p1', 'p2', 'p3']) {
+                    const v = await validateDrawingAI(pid);
                     if (!v.valid) {
                         allValid = false;
                         anyPadFailed = true;
@@ -2350,7 +2372,7 @@
                             tick.innerHTML = '✅ Magaling! Napakaganda ng iyong pagsulat! 🌟';
                         }
                     }
-                });
+                }
 
                 if (!anyPadFailed && !state[5].checked) {
                     state[5].checked = true;
