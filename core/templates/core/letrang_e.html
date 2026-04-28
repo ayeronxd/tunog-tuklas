@@ -24,11 +24,15 @@
             --dark: #2C2F33;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
         body {
             font-family: 'Nunito', sans-serif;
-            background: linear-gradient(135deg, #FFF8F0 0%, #FFF0FF 50%, #F0F8FF 100%);
+            background: linear-gradient(135deg, #FFF8F0 0%, #FFF0F5 50%, #F0F8FF 100%);
             min-height: 100vh;
             overflow-x: hidden;
         }
@@ -47,207 +51,1005 @@
         }
 
         .header-back-btn {
-            width: 48px; height: 48px; border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
             background: rgba(255, 255, 255, 0.25);
             border: 3px solid rgba(255, 255, 255, 0.6);
-            color: white; font-size: 1.2rem;
-            display: flex; align-items: center; justify-content: center;
-            text-decoration: none; transition: all 0.2s;
+            color: white;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.2s;
         }
-        .header-back-btn:hover { background: rgba(255, 255, 255, 0.45); color: white; }
+
+        .header-back-btn:hover {
+            background: rgba(255, 255, 255, 0.45);
+            color: white;
+        }
 
         .header-title {
-            font-family: 'Nunito', sans-serif; font-weight: 900;
-            font-size: 1.6rem; color: white;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            font-size: 1.6rem;
+            color: white;
             text-shadow: 2px 3px 0 rgba(0, 0, 0, 0.2);
         }
 
         .header-stars {
             background: rgba(255, 255, 255, 0.25);
             border: 3px solid rgba(255, 255, 255, 0.6);
-            border-radius: 40px; padding: 5px 16px;
-            color: white; font-weight: 900; font-size: 1rem;
-            display: flex; align-items: center; gap: 6px;
+            border-radius: 40px;
+            padding: 5px 16px;
+            color: white;
+            font-weight: 900;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         /* ── PROGRESS BAR ── */
         .unit-progress-bar {
-            background: white;
+            background: rgba(255, 255, 255, 0.3);
             padding: 10px 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
+            background: white;
             border-bottom: 3px solid #eee;
         }
 
         .progress-dot {
-            width: 14px; height: 14px; border-radius: 50%;
-            background: #ddd; border: 3px solid #ccc;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #ddd;
+            border: 3px solid #ccc;
             transition: all 0.3s;
         }
-        .progress-dot.active { background: var(--pink); border-color: #c0004f; transform: scale(1.3); }
-        .progress-dot.done { background: var(--green); border-color: #2e7d32; }
 
-        .progress-label { font-weight: 900; font-size: 0.9rem; color: #888; }
-
-        /* ── SLIDING UNITS ── */
-        .units-viewport { overflow: hidden; width: 100%; position: relative; }
-        .units-track { 
-            display: flex; width: 600%; /* 6 units */
-            transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1); 
+        .progress-dot.active {
+            background: var(--pink);
+            border-color: #c0004f;
+            transform: scale(1.3);
         }
-        .unit-slide { 
-            width: calc(100% / 6); 
+
+        .progress-dot.done {
+            background: var(--green);
+            border-color: #2e7d32;
+        }
+
+        .progress-label {
+            font-weight: 900;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        /* ── UNIT SLIDER WRAPPER ── */
+        .units-viewport {
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+        }
+
+        .units-track {
+            display: flex;
+            width: 600%;
+            /* 6 units × 100% each */
+            transition: transform 0.45s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .unit-slide {
+            width: calc(100% / 6);
             min-height: calc(100vh - 130px);
             padding: 28px 20px 100px;
             flex-shrink: 0;
         }
 
-        /* ── CARDS & BADGES ── */
-        .section-card {
-            background: white; border-radius: 28px;
+        /* ── DRAWING STYLES ── */
+        .badge-orange {
+            background: var(--orange);
+            color: white;
+        }
+
+        .badge-green {
+            background: var(--green);
+            color: white;
+        }
+
+        /* Drawing pad wrapper */
+        .draw-pad-wrapper {
+            margin-bottom: 24px;
+        }
+
+        .draw-pad-label {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 900;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .draw-pad-label .letter-preview {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            font-size: 1.6rem;
+            padding: 2px 14px;
+            border-radius: 12px;
+            border: 3px solid var(--dark);
+            box-shadow: 0 3px 0 var(--dark);
+        }
+
+        .draw-pad-label .letter-preview.upper {
+            background: #EEF5FF;
+            color: var(--blue);
+            border-color: var(--blue);
+            box-shadow: 0 3px 0 #1565c0;
+        }
+
+        .draw-pad-label .letter-preview.lower {
+            background: #FFF0F5;
+            color: var(--pink);
+            border-color: var(--pink);
+            box-shadow: 0 3px 0 #c0004f;
+        }
+
+        /* The actual canvas frame */
+        .canvas-frame {
+            position: relative;
+            border-radius: 18px;
+            border: 4px solid #90CAF9;
+            overflow: hidden;
+            background: linear-gradient(180deg, #e8f4fd 0%, #fff 30%, #fff 70%, #fce4ec 100%);
+            box-shadow: 0 6px 0 #90CAF9, 0 10px 30px rgba(0, 0, 0, 0.06);
+            touch-action: none;
+        }
+
+        /* Ghost letter watermark */
+        .canvas-ghost {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            font-size: 7rem;
+            color: rgba(0, 0, 0, 0.055);
+            pointer-events: none;
+            z-index: 0;
+            user-select: none;
+            letter-spacing: 18px;
+        }
+
+        .canvas-frame canvas {
+            position: relative;
+            z-index: 2;
+            display: block;
+            width: 100%;
+            cursor: crosshair;
+        }
+
+        /* Pad toolbar */
+        .pad-toolbar {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .pad-tool-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 16px;
+            border-radius: 30px;
+            border: 3px solid var(--dark);
+            background: white;
+            font-weight: 900;
+            font-size: 0.88rem;
+            cursor: pointer;
+            box-shadow: 0 3px 0 var(--dark);
+            transition: all 0.15s;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .pad-tool-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 0 0 var(--dark);
+        }
+
+        .pad-tool-btn.erase {
+            color: #f44336;
+            border-color: #f44336;
+            box-shadow: 0 3px 0 #b71c1c;
+        }
+
+        .pad-tool-btn.erase:active {
+            box-shadow: 0 0 0 #b71c1c;
+        }
+
+        .pad-tool-btn.done-draw {
+            background: linear-gradient(135deg, var(--green), #2e7d32);
+            color: white;
+            border-color: #1b5e20;
+            box-shadow: 0 3px 0 #1b5e20;
+        }
+
+        .pad-tool-btn.done-draw:active {
+            box-shadow: 0 0 0 #1b5e20;
+        }
+
+        .pad-tool-btn.undo-btn {
+            color: var(--orange);
+            border-color: var(--orange);
+            box-shadow: 0 3px 0 #e65100;
+        }
+
+        .pad-tool-btn.undo-btn:active {
+            box-shadow: 0 0 0 #e65100;
+        }
+
+        /* Color picker row */
+        .color-row {
+            display: flex;
+            gap: 7px;
+            margin-top: 8px;
+            align-items: center;
+        }
+
+        .color-swatch {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .color-swatch.active {
+            border-color: var(--dark);
+            transform: scale(1.25);
+        }
+
+        /* Completion tick */
+        .pad-done-tick {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            background: #E9FBEE;
+            border: 3px solid var(--green);
+            border-radius: 14px;
+            padding: 8px 16px;
+            font-weight: 900;
+            color: #1b5e20;
+            font-size: 0.95rem;
+            margin-top: 10px;
+        }
+
+        .pad-done-tick.show {
+            display: flex;
+        }
+
+        /* Brush size buttons */
+        .brush-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .brush-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 3px solid #ccc;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .brush-btn.active {
+            border-color: var(--dark);
+            background: var(--dark);
+        }
+
+        .brush-dot {
+            border-radius: 50%;
+            background: #555;
+        }
+
+        .brush-btn.active .brush-dot {
+            background: white;
+        }
+
+        /* Counting tokens */
+        .letter-tokens {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 12px 0;
+        }
+
+        .letter-token {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            font-size: 2rem;
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid #ddd;
+            background: #f9f9f9;
+            box-shadow: 0 4px 0 #ccc;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .letter-token:hover {
+            transform: scale(1.1) translateY(-3px);
+        }
+
+        .letter-token.uppercase {
+            color: var(--blue);
+            border-color: var(--blue);
+            background: #EEF5FF;
+            box-shadow: 0 4px 0 #1565c0;
+        }
+
+        .letter-token.lowercase {
+            color: var(--pink);
+            border-color: var(--pink);
+            background: #FFF0F5;
+            box-shadow: 0 4px 0 #c0004f;
+        }
+
+        .letter-token.counted {
+            opacity: 0.38;
+            transform: scale(0.88);
+            cursor: default;
+        }
+
+        .count-display {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 14px 0;
+        }
+
+        .count-box {
+            background: white;
             border: 4px solid var(--dark);
-            box-shadow: 0 8px 0 var(--dark), 0 16px 40px rgba(0,0,0,0.08);
-            padding: 32px 24px; max-width: 760px; margin: 0 auto;
+            border-radius: 18px;
+            padding: 12px 20px;
+            text-align: center;
+            min-width: 130px;
+            box-shadow: 0 5px 0 var(--dark);
+        }
+
+        .count-box label {
+            font-weight: 900;
+            font-size: 0.9rem;
+            color: #666;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .count-number {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            font-size: 2.8rem;
+            line-height: 1;
+        }
+
+        .count-number.m-upper {
+            color: var(--blue);
+        }
+
+        .count-number.m-lower {
+            color: var(--pink);
+        }
+
+        /* Fill in the blanks */
+        .fill-blank-input {
+            border: none;
+            border-bottom: 4px solid var(--dark);
+            background: transparent;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            font-size: 1.4rem;
+            width: 130px;
+            text-align: center;
+            color: var(--purple);
+            outline: none;
+            padding: 2px 6px;
+            transition: border-color 0.2s;
+        }
+
+        .fill-blank-input:focus {
+            border-bottom-color: var(--pink);
+        }
+
+        .sagutin-sentence {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--dark);
+            line-height: 2.2;
+            text-align: center;
+        }
+
+        /* ── SECTION CARD ── */
+        .section-card {
+            background: white;
+            border-radius: 28px;
+            border: 4px solid var(--dark);
+            box-shadow: 0 8px 0 var(--dark), 0 16px 40px rgba(0, 0, 0, 0.08);
+            padding: 32px 24px;
+            max-width: 760px;
+            margin: 0 auto;
             position: relative;
         }
+
         .section-badge {
-            position: absolute; top: -18px; left: 24px;
-            font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.1rem;
-            padding: 6px 20px; border-radius: 50px;
-            border: 3px solid var(--dark); box-shadow: 0 4px 0 var(--dark);
+            position: absolute;
+            top: -18px;
+            left: 24px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            font-size: 1rem;
+            padding: 5px 18px;
+            border-radius: 20px;
+            border: 3px solid var(--dark);
+            box-shadow: 0 3px 0 var(--dark);
             text-transform: uppercase;
         }
-        .badge-pink { background: var(--pink); color: white; }
-        .badge-purple { background: var(--purple); color: white; }
-        .badge-orange { background: var(--orange); color: white; }
-        .badge-green { background: var(--green); color: white; }
-        .badge-blue { background: var(--blue); color: white; }
 
+        .badge-pink {
+            background: var(--pink);
+            color: white;
+        }
+
+        .badge-blue {
+            background: var(--blue);
+            color: white;
+        }
+
+        .badge-purple {
+            background: var(--purple);
+            color: white;
+        }
+
+        /* ── INTRO STYLES ── */
         .big-letter {
             font-family: 'Bubblegum Sans', cursive;
-            font-size: 9rem; line-height: 1;
+            font-size: 9rem;
+            line-height: 1;
             background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             background-clip: text;
             filter: drop-shadow(3px 4px 0 rgba(0, 0, 0, 0.12));
             animation: letterPulse 2.2s ease-in-out infinite;
         }
+
         @keyframes letterPulse {
-            0%, 100% { transform: scale(1) rotate(-2deg); }
-            50% { transform: scale(1.07) rotate(2deg); }
+
+            0%,
+            100% {
+                transform: scale(1) rotate(-2deg);
+            }
+
+            50% {
+                transform: scale(1.07) rotate(2deg);
+            }
         }
 
         .intro-instruction {
             background: linear-gradient(135deg, #FFF3CD, #FFF0F5);
-            border: 3px solid var(--pink); border-radius: 18px;
-            padding: 16px 22px; font-size: 1.05rem; font-weight: 700;
-            color: #c0392b; line-height: 1.7;
+            border: 3px solid var(--yellow);
+            border-radius: 18px;
+            padding: 14px 20px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #5A3E00;
+            line-height: 1.65;
         }
 
         .sound-btn {
-            background: linear-gradient(135deg, var(--pink), var(--purple));
-            border: 4px solid var(--dark); border-radius: 50px;
-            padding: 12px 30px; font-family: 'Nunito', sans-serif;
-            font-weight: 900; font-size: 1.2rem; color: white;
-            cursor: pointer; box-shadow: 0 6px 0 var(--dark);
-            transition: all 0.15s; display: inline-flex; align-items: center; gap: 10px;
+            background: linear-gradient(135deg, var(--yellow), var(--orange));
+            border: 4px solid var(--dark);
+            border-radius: 50px;
+            padding: 12px 30px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            font-size: 1.2rem;
+            color: var(--dark);
+            cursor: pointer;
+            box-shadow: 0 6px 0 var(--dark);
+            transition: all 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        /* ── HANDWRITING PADS ── */
-        .canvas-frame {
-            position: relative; border-radius: 18px;
-            border: 4px solid #B39DDB; overflow: hidden;
-            background: white; box-shadow: 0 6px 0 #B39DDB;
-            touch-action: none; margin-top: 15px;
+        .sound-btn:hover {
+            filter: brightness(1.07);
         }
-        .canvas-ghost {
-            position: absolute; inset: 0; display: flex; align-items: center;
-            justify-content: center; font-family: 'Nunito', sans-serif;
-            font-weight: 900; font-size: 7.5rem; color: rgba(0,0,0,0.06);
-            pointer-events: none; z-index: 0; letter-spacing: 20px;
-        }
-        .canvas-frame canvas { position: relative; z-index: 2; width: 100%; cursor: crosshair; }
-        
-        .pad-toolbar { display: flex; gap: 8px; margin-top: 12px; }
-        .pad-tool-btn {
-            padding: 7px 16px; border-radius: 30px; border: 3px solid var(--dark);
-            background: white; font-weight: 900; font-size: 0.9rem;
-            cursor: pointer; box-shadow: 0 3px 0 var(--dark);
-        }
-        .pad-tool-btn.done-draw { background: var(--green); color: white; border-color: #1b5e20; box-shadow: 0 3px 0 #1b5e20; }
-        .pad-done-tick {
-            display: none; background: #E9FBEE; border: 3px solid var(--green);
-            border-radius: 14px; padding: 10px 16px; font-weight: 900;
-            color: #1b5e20; margin-top: 12px;
-        }
-        .pad-done-tick.show { display: flex; }
 
-        /* ── CHOICE GAMES ── */
-        .choices-grid { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; }
-        .choice-card { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; }
+        .sound-btn:active {
+            transform: translateY(6px);
+            box-shadow: 0 0 0 var(--dark);
+        }
+
+        /* ── ACTIVITY ── */
+        .activity-title {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            font-size: 1.45rem;
+            color: var(--dark);
+            margin-bottom: 6px;
+        }
+
+        .activity-instruction {
+            font-size: 0.97rem;
+            font-weight: 700;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 22px;
+        }
+
+        .choices-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            justify-content: center;
+        }
+
+        .choice-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            user-select: none;
+        }
+
         .choice-emoji-box {
-            width: 110px; height: 110px; border-radius: 24px; border: 4px solid #ddd;
-            background: #f9f9f9; display: flex; align-items: center; justify-content: center;
-            font-size: 4rem; box-shadow: 0 5px 0 #ccc; transition: 0.2s;
+            width: 105px;
+            height: 105px;
+            border-radius: 22px;
+            border: 4px solid #ddd;
+            background: #f9f9f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.8rem;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 5px 0 #ccc;
         }
-        .choice-label { font-weight: 800; font-size: 1rem; color: #555; }
+
+        .choice-card:hover .choice-emoji-box {
+            transform: scale(1.08) translateY(-3px);
+        }
+
+        .choice-label {
+            font-weight: 900;
+            font-size: 0.88rem;
+            color: #555;
+            text-align: center;
+        }
+
         .choice-checkbox {
-            width: 34px; height: 34px; border-radius: 10px; border: 4px solid #ccc;
-            background: white; display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem; box-shadow: 0 3px 0 #ccc;
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            border: 4px solid #ccc;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+            box-shadow: 0 3px 0 #ccc;
         }
-        .choice-card.selected .choice-emoji-box { border-color: var(--purple); background: #F3E5F5; box-shadow: 0 5px 0 var(--purple); transform: scale(1.05); }
-        .choice-card.correct .choice-emoji-box { border-color: var(--green); background: #E8F5E9; box-shadow: 0 5px 0 var(--green); }
-        .choice-card.wrong .choice-emoji-box { border-color: #f44336; background: #FFEBEE; box-shadow: 0 5px 0 #f44336; }
 
+        /* States */
+        .choice-card.selected .choice-emoji-box {
+            border-color: var(--blue);
+            background: #EEF5FF;
+            box-shadow: 0 5px 0 var(--blue);
+            transform: scale(1.1) translateY(-4px);
+        }
+
+        .choice-card.selected .choice-checkbox {
+            background: var(--blue);
+            border-color: #1565c0;
+            box-shadow: 0 3px 0 #1565c0;
+            color: white;
+        }
+
+        .choice-card.correct .choice-emoji-box {
+            border-color: var(--green);
+            background: #E9FBEd;
+            box-shadow: 0 5px 0 var(--green);
+            animation: correctBounce 0.45s ease;
+        }
+
+        .choice-card.correct .choice-checkbox {
+            background: var(--green);
+            border-color: #2e7d32;
+            box-shadow: 0 3px 0 #2e7d32;
+            color: white;
+        }
+
+        .choice-card.wrong .choice-emoji-box {
+            border-color: #f44336;
+            background: #FFEBEE;
+            box-shadow: 0 5px 0 #f44336;
+            animation: wrongShake 0.4s ease;
+        }
+
+        .choice-card.wrong .choice-checkbox {
+            background: #f44336;
+            border-color: #b71c1c;
+            box-shadow: 0 3px 0 #b71c1c;
+            color: white;
+        }
+
+        .choice-card.missed .choice-emoji-box {
+            border-color: var(--orange);
+            background: #FFF8E1;
+            box-shadow: 0 5px 0 var(--orange);
+        }
+
+        .choice-card.missed .choice-checkbox {
+            background: var(--orange);
+            border-color: #e65100;
+            box-shadow: 0 3px 0 #e65100;
+            color: white;
+        }
+
+        @keyframes correctBounce {
+            0% { transform: scale(1.1) translateY(-4px); }
+            40% { transform: scale(1.28) translateY(-12px); }
+            70% { transform: scale(1.05) translateY(-2px); }
+            100% { transform: scale(1.1) translateY(-4px); }
+        }
+
+        @keyframes wrongShake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-8px); }
+            60% { transform: translateX(8px); }
+            80% { transform: translateX(-4px); }
+        }
+
+        /* ── CHECK BUTTON ── */
         .check-btn {
+            width: auto;
+            min-width: 280px;
             background: linear-gradient(135deg, var(--green), #2e7d32);
-            border: 4px solid var(--dark); border-radius: 60px;
-            padding: 15px 40px; font-weight: 900; font-size: 1.3rem;
-            color: white; box-shadow: 0 7px 0 var(--dark); cursor: pointer;
+            border: 4px solid var(--dark);
+            border-radius: 60px;
+            padding: 16px 40px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            font-size: 1.35rem;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 8px 0 var(--dark);
+            transition: all 0.15s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 24px;
         }
-        .feedback-banner { display: none; border-radius: 18px; border: 4px solid; padding: 14px 22px; margin-top: 20px; font-weight: 900; }
-        .feedback-banner.show { display: flex; align-items: center; gap: 12px; }
-        .correct-fb { background: #E8F5E9; border-color: var(--green); color: #2e7d32; }
-        .wrong-fb { background: #FFEBEE; border-color: #f44336; color: #c62828; }
 
-        /* ── BOTTOM NAV ── */
-        .bottom-nav {
-            position: fixed; bottom: 0; left: 0; right: 0;
-            background: white; padding: 15px 25px;
-            display: flex; align-items: center; justify-content: space-between;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.08); border-top: 3px solid #eee; z-index: 100;
+        .check-btn:hover {
+            filter: brightness(1.07);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 0 var(--dark);
         }
+
+        .check-btn:active {
+            transform: translateY(8px);
+            box-shadow: 0 0 0 var(--dark);
+        }
+
+        .check-btn:disabled {
+            background: #eee;
+            border-color: #ccc;
+            box-shadow: 0 4px 0 #ccc;
+            color: #aaa;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* ── FEEDBACK BANNER ── */
+        .feedback-banner {
+            display: none;
+            border-radius: 18px;
+            border: 4px solid;
+            padding: 13px 20px;
+            margin-top: 16px;
+            font-weight: 900;
+            font-size: 1.05rem;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .feedback-banner.show {
+            display: flex;
+        }
+
+        .feedback-banner.correct-fb {
+            background: #E9FBEE;
+            border-color: var(--green);
+            color: #1b5e20;
+        }
+
+        .feedback-banner.wrong-fb {
+            background: #FFEBEE;
+            border-color: #f44336;
+            color: #b71c1c;
+        }
+
+        .feedback-icon {
+            font-size: 1.8rem;
+        }
+
+        /* ── FIXED BOTTOM NAVIGATION ── */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 4px solid var(--dark);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 300;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+        }
+
         .nav-btn {
-            padding: 12px 28px; border-radius: 50px; border: 4px solid var(--dark);
-            font-weight: 900; font-size: 1.15rem; cursor: pointer;
-            box-shadow: 0 5px 0 var(--dark); display: flex; align-items: center; gap: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            font-size: 1.15rem;
+            padding: 11px 26px;
+            border-radius: 50px;
+            border: 4px solid var(--dark);
+            cursor: pointer;
+            box-shadow: 0 5px 0 var(--dark);
+            transition: all 0.15s;
+            text-decoration: none;
         }
-        .prev-btn { background: white; color: var(--dark); }
-        .next-btn { background: var(--yellow); color: var(--dark); }
-        .finish-btn { background: var(--green); color: white; }
 
-        /* Confetti */
-        #confettiWrap { position: fixed; inset: 0; pointer-events: none; z-index: 1000; overflow: hidden; }
-        .confetti-particle { position: absolute; top: -20px; animation: fall linear forwards; }
-        @keyframes fall { to { transform: translateY(110vh) rotate(720deg); } }
+        .nav-btn:active {
+            transform: translateY(5px);
+            box-shadow: 0 0 0 var(--dark);
+        }
+
+        .nav-btn.prev-btn {
+            background: white;
+            color: var(--dark);
+        }
+
+        .nav-btn.prev-btn:hover {
+            background: #f5f5f5;
+            color: var(--dark);
+        }
+
+        .nav-btn.next-btn {
+            background: linear-gradient(135deg, var(--pink), var(--purple));
+            color: white;
+        }
+
+        .nav-btn.next-btn:hover {
+            filter: brightness(1.07);
+            color: white;
+        }
+
+        .nav-btn.next-btn:disabled {
+            background: #ddd;
+            border-color: #aaa;
+            box-shadow: 0 3px 0 #aaa;
+            cursor: not-allowed;
+            color: #aaa;
+        }
+
+        .nav-btn.finish-btn {
+            background: linear-gradient(135deg, var(--green), #2e7d32);
+            color: white;
+        }
+
+        .nav-btn.finish-btn:hover {
+            filter: brightness(1.07);
+            color: white;
+        }
+
+        .unit-counter {
+            font-family: 'Bubblegum Sans', cursive;
+            font-size: 1rem;
+            color: #888;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        .unit-counter strong {
+            font-size: 1.3rem;
+            color: var(--dark);
+        }
+
+        /* ── FINAL SCORE ── */
+        .score-card {
+            background: linear-gradient(135deg, #FFF8F0, #F5F0FF);
+            border: 5px solid var(--dark);
+            border-radius: 28px;
+            box-shadow: 0 10px 0 var(--dark), 0 20px 50px rgba(0, 0, 0, 0.1);
+            padding: 40px 28px;
+            text-align: center;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .score-title {
+            font-family: 'Bubblegum Sans', cursive;
+            font-size: 2.4rem;
+            background: linear-gradient(135deg, var(--pink), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .score-stars {
+            font-size: 3.2rem;
+            letter-spacing: 5px;
+            margin: 14px 0;
+            animation: starPop 0.5s ease;
+        }
+
+        @keyframes starPop {
+            from { transform: scale(0); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* ── CONFETTI ── */
+        .confetti-wrap {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+            display: none;
+        }
+
+        .confetti-wrap.active {
+            display: block;
+        }
+
+        .confetti-particle {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+            animation: confettiFall linear forwards;
+        }
+
+        @keyframes confettiFall {
+            0% { top: -20px; opacity: 1; transform: rotate(0deg) scale(1); }
+            100% { top: 110vh; opacity: 0; transform: rotate(720deg) scale(0.5); }
+        }
+
+        /* Floating deco */
+        .floating-deco {
+            position: fixed;
+            font-size: 2.5rem;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 0;
+        }
     </style>
 </head>
 
 <body>
-    <div id="confettiWrap"></div>
 
+    <!-- ── REVERSE RAINBOW TRANSITION OUT ── -->
+    <div id="transition-out"
+        style="position:fixed; inset:0; z-index:99999; pointer-events:none; display:flex; align-items:center; justify-content:center; overflow:hidden; animation: outOverlay 0.1s 1.2s forwards;">
+        <!-- Pinwheel spins backwards and shrinks -->
+        <div
+            style="position:absolute; width:250vw; height:250vw; border-radius:50%; background: conic-gradient(#FF5252 0deg 60deg, #FF9800 60deg 120deg, #FFEB3B 120deg 180deg, #4CAF50 180deg 240deg, #2196F3 240deg 300deg, #9C27B0 300deg 360deg); animation: reversePinwheel 0.9s cubic-bezier(0.8, 0, 0.2, 1) forwards;">
+        </div>
+
+        <!-- Stars shrink and rotate -->
+        <div style="position:absolute; inset:0; z-index:10001; animation: outOverlay 0.1s 1s forwards;">
+            <i class="fa-solid fa-star text-warning"
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:15%; left:15%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0s;"></i>
+            <i class="fa-solid fa-star text-warning"
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:20%; left:80%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0.1s;"></i>
+            <i class="fa-solid fa-star text-warning"
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:75%; left:20%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0.2s;"></i>
+            <i class="fa-solid fa-star text-warning"
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:80%; left:75%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0.1s;"></i>
+            <i class="fa-solid fa-star text-warning"
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:10%; left:50%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0.3s;"></i>
+        </div>
+
+        <!-- Mascot hides -->
+        <div
+            style="position:absolute; z-index:10002; display:flex; flex-direction:column; align-items:center; justify-content:center; animation: reverseContent 0.7s cubic-bezier(0.8, 0, 0.2, 1) forwards;">
+            <div style="font-size:8rem; filter:drop-shadow(0 10px 0 rgba(0,0,0,0.15)); line-height:1;">🐒</div>
+            <div
+                style="font-family:'Bubblegum Sans',cursive; font-size:5rem; color:white; text-shadow:4px 6px 0 rgba(0,0,0,0.2); margin-top:-20px; transform:rotate(-5deg);">
+                Maglaro Tayo!</div>
+        </div>
+    </div>
+    <style>
+        @keyframes outOverlay {
+            to { opacity: 0; visibility: hidden; }
+        }
+
+        @keyframes reversePinwheel {
+            0% { transform: scale(1) rotate(0deg); opacity: 1; filter: brightness(1); }
+            100% { transform: scale(0) rotate(-180deg); opacity: 0; filter: brightness(1.5); }
+        }
+
+        @keyframes reverseStar {
+            0% { opacity: 1; transform: scale(1) rotate(15deg); }
+            100% { opacity: 0; transform: scale(0) rotate(-90deg); }
+        }
+
+        @keyframes reverseContent {
+            0% { opacity: 1; transform: scale(1) translateY(0); }
+            100% { opacity: 0; transform: scale(0.5) translateY(200px); }
+        }
+    </style>
+
+    <!-- Confetti -->
+    <div class="confetti-wrap" id="confettiWrap" aria-hidden="true"></div>
+
+    <!-- Floating background decorations -->
+    <div class="floating-deco" style="top:10%; left:3%;">⭐</div>
+    <div class="floating-deco" style="top:30%; right:4%;">🌸</div>
+    <div class="floating-deco" style="top:55%; left:2%;">🌈</div>
+    <div class="floating-deco" style="bottom:15%; right:3%;">✨</div>
+
+    <!-- ══ HEADER ══ -->
     <header class="lesson-header">
-        <a href="{% url 'core:mapa' %}" class="header-back-btn"><i class="fa-solid fa-chevron-left"></i></a>
+        <a href="{% url 'core:mapa' %}" class="header-back-btn" title="Bumalik sa Mapa">
+            <i class="fa-solid fa-chevron-left"></i>
+        </a>
         <h1 class="header-title">🔤 Letrang Ee</h1>
         <div class="header-stars">
-            <i class="fa-solid fa-star" style="color:var(--yellow);"></i>
+            <i class="fa-solid fa-star" style="color:#FFD93D;"></i>
             <span id="starCount">0</span> / 5
         </div>
     </header>
 
+    <!-- ══ UNIT PROGRESS DOTS ══ -->
     <div class="unit-progress-bar">
         <span class="progress-label">Yunit</span>
         <div class="progress-dot active" id="dot-0"></div>
@@ -258,10 +1060,13 @@
         <div class="progress-dot" id="dot-5"></div>
     </div>
 
+    <!-- ══ SLIDING UNITS VIEWPORT ══ -->
     <div class="units-viewport">
         <div class="units-track" id="unitsTrack">
 
-            <!-- UNIT 0: Intro -->
+            <!-- ═══════════════════════════════════════════
+                 UNIT 0: Kilalanin Natin (Intro)
+            ═══════════════════════════════════════════ -->
             <div class="unit-slide" id="unit-0">
                 <div class="section-card">
                     <div class="section-badge badge-pink">📖 Kilalanin Natin</div>
@@ -280,8 +1085,8 @@
                     </div>
 
                     <div class="intro-instruction">
-                        <i class="fa-solid fa-lips" style="color:var(--pink); margin-right:8px;"></i>
-                        <strong>Paano bigkasin?</strong> Ibuka ang bibig nang pahalang, maglabas ng tunog nang malumanay at malilikha ang tunog ng <strong>/e/</strong>. Ulitin hanggang pamilyar na sa tunog.
+                        <i class="fa-solid fa-lips" style="color:var(--pink); margin-right:6px;"></i>
+                        <strong>Paano bigkasin?</strong> Ibuka ang bibig nang pahalang, maglabas ng tunog nang malumanay at malilikha ang tunog ng <strong>Ee</strong>. Ulitin hanggang sa maging pamilyar sa tunog ng <strong>/e/</strong>.
                     </div>
 
                     <div class="text-center mt-4">
@@ -297,165 +1102,565 @@
                 </div>
             </div>
 
-            <!-- UNIT 1: Handwriting -->
+            <!-- ═══════════════════════════════════════════
+                 UNIT 1: Pagsulat ng letrang Ee
+            ═══════════════════════════════════════════ -->
             <div class="unit-slide" id="unit-1">
                 <div class="section-card">
                     <div class="section-badge badge-orange">✏️ Pagsulat ng Ee</div>
-                    <h2 class="activity-title mt-4" style="color:var(--orange);">Subukan nating magsulat!</h2>
-                    <p class="activity-instruction">Trace ang malaki at maliit na letrang <strong>Ee</strong> sa loob ng kahon. Sundin ang gabay!</p>
-                    
+
+                    <h2 class="activity-title mt-3" style="color:var(--orange);">Sumulat ng Letrang Ee!</h2>
+                    <p class="activity-instruction">Gamitin ang iyong daliri o mouse para magsulat ng malaki at maliit
+                        na <strong>Ee</strong> sa loob ng kahon. Sundin ang guhit-gabay! ✍️</p>
+
+                    <!-- Instruction reminder (Visual Stroke Guide) -->
+                    <div class="visual-guide-box"
+                        style="margin-bottom:20px; padding: 15px; background: white; border: 2px dashed #FF9F43; border-radius: 15px; text-align: center;">
+                        <p style="font-weight: 800; color: #FF9F43; margin-bottom: 10px; font-size: 1.1rem;">💡 Paano
+                            isulat ang Ee? (Sundin ang mga numero!)</p>
+                        <svg viewBox="0 0 400 120" style="width: 100%; max-width: 450px; height: auto; overflow: visible;">
+                            <!-- E Uppercase -->
+                            <g transform="translate(40, 0)">
+                                <!-- Guidelines -->
+                                <line x1="-10" y1="10" x2="110" y2="10" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="6" />
+                                <line x1="-10" y1="55" x2="110" y2="55" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="6" />
+                                <line x1="-10" y1="100" x2="110" y2="100" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="6" />
+
+                                <!-- Skeleton E -->
+                                <path d="M 20,10 L 20,100" fill="none" stroke="#f0f0f0" stroke-width="14" stroke-linecap="round" />
+                                <path d="M 20,10 L 90,10" fill="none" stroke="#f0f0f0" stroke-width="14" stroke-linecap="round" />
+                                <path d="M 20,55 L 75,55" fill="none" stroke="#f0f0f0" stroke-width="14" stroke-linecap="round" />
+                                <path d="M 20,100 L 90,100" fill="none" stroke="#f0f0f0" stroke-width="14" stroke-linecap="round" />
+
+                                <!-- Arrow 1 (Down) -->
+                                <path d="M 20,10 L 20,95" fill="none" stroke="#FF6B9D" stroke-width="4" stroke-linecap="round" />
+                                <polygon points="15,85 25,85 20,98" fill="#FF6B9D" />
+                                <circle cx="20" cy="5" r="8" fill="#FF6B9D" /><text x="20" y="9" fill="white" font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">1</text>
+
+                                <!-- Arrow 2 (Top stroke) -->
+                                <path d="M 20,10 L 85,10" fill="none" stroke="#4D96FF" stroke-width="4" stroke-linecap="round" />
+                                <polygon points="75,5 75,15 88,10" fill="#4D96FF" />
+                                <circle cx="45" cy="0" r="8" fill="#4D96FF" /><text x="45" y="4" fill="white" font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">2</text>
+
+                                <!-- Arrow 3 (Middle stroke) -->
+                                <path d="M 20,55 L 70,55" fill="none" stroke="#6BCB77" stroke-width="4" stroke-linecap="round" />
+                                <polygon points="60,50 60,60 73,55" fill="#6BCB77" />
+                                <circle cx="40" cy="45" r="8" fill="#6BCB77" /><text x="40" y="49" fill="white" font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">3</text>
+
+                                <!-- Arrow 4 (Bottom stroke) -->
+                                <path d="M 20,100 L 85,100" fill="none" stroke="#C77DFF" stroke-width="4" stroke-linecap="round" />
+                                <polygon points="75,95 75,105 88,100" fill="#C77DFF" />
+                                <circle cx="45" cy="110" r="8" fill="#C77DFF" /><text x="45" y="114" fill="white" font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">4</text>
+                            </g>
+
+                            <!-- e Lowercase -->
+                            <g transform="translate(260, 0)">
+                                <!-- Guidelines -->
+                                <line x1="-10" y1="10" x2="110" y2="10" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="6" />
+                                <line x1="-10" y1="55" x2="110" y2="55" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="6" />
+                                <line x1="-10" y1="100" x2="110" y2="100" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="6" />
+
+                                <!-- Skeleton e -->
+                                <path d="M 20,57 C 20,30 80,30 80,57 L 20,57" fill="none" stroke="#f0f0f0" stroke-width="14" stroke-linecap="round" />
+                                <path d="M 20,57 C 20,85 80,100 80,90 C 80,100 60,108 40,100 C 20,92 10,75 20,57" fill="none" stroke="#f0f0f0" stroke-width="14" stroke-linecap="round" />
+
+                                <!-- Arrow 1 (Middle line) -->
+                                <path d="M 20,57 L 78,57" fill="none" stroke="#FF6B9D" stroke-width="4" stroke-linecap="round" />
+                                <polygon points="68,52 68,62 81,57" fill="#FF6B9D" />
+                                <circle cx="20" cy="47" r="8" fill="#FF6B9D" /><text x="20" y="51" fill="white" font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">1</text>
+
+                                <!-- Arrow 2 (Circle around) -->
+                                <path d="M 80,57 C 80,30 20,30 20,57 C 20,85 80,100 80,83" fill="none" stroke="#4D96FF" stroke-width="4" stroke-linecap="round" />
+                                <polygon points="72,78 82,82 80,92" fill="#4D96FF" />
+                                <circle cx="75" cy="30" r="8" fill="#4D96FF" /><text x="75" y="34" fill="white" font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">2</text>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <!-- ── Uppercase E Drawing Pad ── -->
                     <div class="draw-pad-wrapper">
-                        <div class="draw-pad-label"><span class="letter-preview upper" style="color:var(--blue); border-color:var(--blue);">E</span> Malaking E</div>
-                        <div class="canvas-frame" id="frameUpper"><div class="canvas-ghost">E E E</div><canvas id="canvasUpper" height="200"></canvas></div>
+                        <div class="draw-pad-label">
+                            <span class="letter-preview upper">E</span>
+                            <span style="color:var(--blue);">Malaking E</span>
+                        </div>
+
+                        <div class="canvas-frame" id="frameUpper" style="margin-top:14px;">
+                            <div class="canvas-ghost" id="ghostUpper" style="gap: 15%;">
+                                <span class="ghost-letter">E</span>
+                                <span class="ghost-letter">E</span>
+                                <span class="ghost-letter">E</span>
+                            </div>
+                            <canvas id="canvasUpper" height="180"></canvas>
+                        </div>
+
+                        <!-- Toolbar -->
                         <div class="pad-toolbar">
-                            <button class="pad-tool-btn" onclick="undoStroke('upper')">↩ Burahin</button>
+                            <button class="pad-tool-btn undo-btn" onclick="undoStroke('upper')">↩ Burahin huli</button>
+                            <button class="pad-tool-btn erase" onclick="clearCanvas('upper')">🗑 I-clear</button>
                             <button class="pad-tool-btn done-draw" onclick="markDone('upper')">✓ Tapos na!</button>
                         </div>
-                        <div class="pad-done-tick" id="doneTick-upper">✅ Magaling! Sinulatan mo ang malaking E!</div>
+                        <!-- Color row -->
+                        <div class="color-row">
+                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Kulay:</span>
+                            <div class="color-swatch active" style="background:#4D96FF;"
+                                onclick="setColor('upper','#4D96FF',this)"></div>
+                            <div class="color-swatch" style="background:#FF6B9D;"
+                                onclick="setColor('upper','#FF6B9D',this)"></div>
+                            <div class="color-swatch" style="background:#6BCB77;"
+                                onclick="setColor('upper','#6BCB77',this)"></div>
+                            <div class="color-swatch" style="background:#FF9F43;"
+                                onclick="setColor('upper','#FF9F43',this)"></div>
+                            <div class="color-swatch" style="background:#C77DFF;"
+                                onclick="setColor('upper','#C77DFF',this)"></div>
+                            <div class="color-swatch" style="background:#2C2F33;"
+                                onclick="setColor('upper','#2C2F33',this)"></div>
+                        </div>
+                        <!-- Brush size -->
+                        <div class="brush-row">
+                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Laki ng panulat:</span>
+                            <div class="brush-btn active" onclick="setBrush('upper',5,this)">
+                                <div class="brush-dot" style="width:6px;height:6px;"></div>
+                            </div>
+                            <div class="brush-btn" onclick="setBrush('upper',10,this)">
+                                <div class="brush-dot" style="width:11px;height:11px;"></div>
+                            </div>
+                            <div class="brush-btn" onclick="setBrush('upper',18,this)">
+                                <div class="brush-dot" style="width:18px;height:18px;"></div>
+                            </div>
+                        </div>
+                        <div class="pad-done-tick" id="doneTick-upper">✅ Napakahusay! Sinulatan mo na ang malaking E!
+                        </div>
                     </div>
 
+                    <!-- ── Lowercase e Drawing Pad ── -->
                     <div class="draw-pad-wrapper">
-                        <div class="draw-pad-label"><span class="letter-preview lower" style="color:var(--pink); border-color:var(--pink);">e</span> Maliit na e</div>
-                        <div class="canvas-frame" id="frameLower"><div class="canvas-ghost">e e e</div><canvas id="canvasLower" height="180"></canvas></div>
+                        <div class="draw-pad-label">
+                            <span class="letter-preview lower">e</span>
+                            <span style="color:var(--pink);">Maliit na e</span>
+                        </div>
+
+                        <div class="canvas-frame" id="frameLower" style="margin-top:14px;">
+                            <div class="canvas-ghost" id="ghostLower" style="gap: 15%;">
+                                <span class="ghost-letter">e</span>
+                                <span class="ghost-letter">e</span>
+                                <span class="ghost-letter">e</span>
+                            </div>
+                            <canvas id="canvasLower" height="160"></canvas>
+                        </div>
+
+                        <!-- Toolbar -->
                         <div class="pad-toolbar">
-                            <button class="pad-tool-btn" onclick="undoStroke('lower')">↩ Burahin</button>
+                            <button class="pad-tool-btn undo-btn" onclick="undoStroke('lower')">↩ Burahin huli</button>
+                            <button class="pad-tool-btn erase" onclick="clearCanvas('lower')">🗑 I-clear</button>
                             <button class="pad-tool-btn done-draw" onclick="markDone('lower')">✓ Tapos na!</button>
                         </div>
-                        <div class="pad-done-tick" id="doneTick-lower">✅ Mahusay! Sinulatan mo ang maliit na e!</div>
+                        <!-- Color row -->
+                        <div class="color-row">
+                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Kulay:</span>
+                            <div class="color-swatch" style="background:#4D96FF;"
+                                onclick="setColor('lower','#4D96FF',this)"></div>
+                            <div class="color-swatch active" style="background:#FF6B9D;"
+                                onclick="setColor('lower','#FF6B9D',this)"></div>
+                            <div class="color-swatch" style="background:#6BCB77;"
+                                onclick="setColor('lower','#6BCB77',this)"></div>
+                            <div class="color-swatch" style="background:#FF9F43;"
+                                onclick="setColor('lower','#FF9F43',this)"></div>
+                            <div class="color-swatch" style="background:#C77DFF;"
+                                onclick="setColor('lower','#C77DFF',this)"></div>
+                            <div class="color-swatch" style="background:#2C2F33;"
+                                onclick="setColor('lower','#2C2F33',this)"></div>
+                        </div>
+                        <!-- Brush size -->
+                        <div class="brush-row">
+                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Laki ng panulat:</span>
+                            <div class="brush-btn active" onclick="setBrush('lower',5,this)">
+                                <div class="brush-dot" style="width:6px;height:6px;"></div>
+                            </div>
+                            <div class="brush-btn" onclick="setBrush('lower',10,this)">
+                                <div class="brush-dot" style="width:11px;height:11px;"></div>
+                            </div>
+                            <div class="brush-btn" onclick="setBrush('lower',18,this)">
+                                <div class="brush-dot" style="width:18px;height:18px;"></div>
+                            </div>
+                        </div>
+                        <div class="pad-done-tick" id="doneTick-lower">✅ Magaling! Sinulatan mo na ang maliit na e!
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- UNIT 2: Game 1 (Choice) -->
+            <!-- ═══════════════════════════════════════════
+                 UNIT 2: Pagsasanay 1 A at B
+            ═══════════════════════════════════════════ -->
             <div class="unit-slide" id="unit-2">
                 <div class="section-card">
-                    <div class="section-badge badge-blue">🎯 Pagsasanay 1</div>
-                    <h2 class="activity-title mt-4">Alin ang nagsisimula sa tunog na /e/?</h2>
-                    <div class="choices-grid mt-5">
-                        <div class="choice-card" onclick="toggleChoice(this)" data-activity="2" data-correct="true">
-                            <div class="choice-emoji-box">🐘</div><div class="choice-label">Elepante</div><div class="choice-checkbox"></div>
+                    <div class="section-badge badge-orange">📝 Pagsasanay 1</div>
+                    <h2 class="activity-title mt-3" style="color:var(--orange);">A. Sumulat ng apat (4) malalaking E.</h2>
+
+                    <!-- Act3A (4 E's) -->
+                    <div class="draw-pad-wrapper">
+                        <div class="draw-pad-label">
+                            <span class="letter-preview upper">E</span>
+                            <span style="color:var(--blue);">Malaking E</span>
                         </div>
-                        <div class="choice-card" onclick="toggleChoice(this)" data-activity="2" data-correct="true">
-                            <div class="choice-emoji-box">✈️</div><div class="choice-label">Eroplano</div><div class="choice-checkbox"></div>
+
+                        <div class="canvas-frame" id="frameAct3a" style="margin-top:14px;">
+                            <div class="canvas-ghost" id="ghostAct3a" style="gap: 10%;">
+                                <span class="ghost-letter">E</span>
+                                <span class="ghost-letter">E</span>
+                                <span class="ghost-letter">E</span>
+                                <span class="ghost-letter">E</span>
+                            </div>
+                            <canvas id="canvasAct3a" height="180"></canvas>
                         </div>
-                        <div class="choice-card" onclick="toggleChoice(this)" data-activity="2" data-correct="false">
-                            <div class="choice-emoji-box">🎒</div><div class="choice-label">Bag</div><div class="choice-checkbox"></div>
+                        <div class="pad-toolbar">
+                            <button class="pad-tool-btn undo-btn" onclick="undoStroke('act3a')">↩ Burahin huli</button>
+                            <button class="pad-tool-btn erase" onclick="clearCanvas('act3a')">🗑 I-clear</button>
+                            <button class="pad-tool-btn done-draw" onclick="markDone('act3a')">✓ Tapos na!</button>
                         </div>
-                        <div class="choice-card" onclick="toggleChoice(this)" data-activity="2" data-correct="true">
-                            <div class="choice-emoji-box">🏫</div><div class="choice-label">Eskwela</div><div class="choice-checkbox"></div>
+                        <!-- Color row -->
+                        <div class="color-row">
+                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Kulay:</span>
+                            <div class="color-swatch active" style="background:#4D96FF;" onclick="setColor('act3a','#4D96FF',this)"></div>
+                            <div class="color-swatch" style="background:#FF6B9D;" onclick="setColor('act3a','#FF6B9D',this)"></div>
+                            <div class="color-swatch" style="background:#6BCB77;" onclick="setColor('act3a','#6BCB77',this)"></div>
+                            <div class="color-swatch" style="background:#FF9F43;" onclick="setColor('act3a','#FF9F43',this)"></div>
+                            <div class="color-swatch" style="background:#C77DFF;" onclick="setColor('act3a','#C77DFF',this)"></div>
+                            <div class="color-swatch" style="background:#2C2F33;" onclick="setColor('act3a','#2C2F33',this)"></div>
                         </div>
+                        <!-- Brush size -->
+                        <div class="brush-row">
+                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Laki ng panulat:</span>
+                            <div class="brush-btn active" onclick="setBrush('act3a',5,this)">
+                                <div class="brush-dot" style="width:6px;height:6px;"></div>
+                            </div>
+                            <div class="brush-btn" onclick="setBrush('act3a',10,this)">
+                                <div class="brush-dot" style="width:11px;height:11px;"></div>
+                            </div>
+                            <div class="brush-btn" onclick="setBrush('act3a',18,this)">
+                                <div class="brush-dot" style="width:18px;height:18px;"></div>
+                            </div>
+                        </div>
+                        <div class="pad-done-tick" id="doneTick-act3a">✅ Mahusay! Sinulatan mo na ang malaking E!</div>
                     </div>
-                    <div class="text-center mt-5"><button class="check-btn" id="check-act2" onclick="checkActivity(2)">Suriin ang Aking Sagot</button></div>
-                    <div class="feedback-banner" id="feedback-act2"><div class="feedback-icon" id="feedback-icon-2"></div><div class="feedback-text" id="feedback-text-2"></div></div>
+
+                    <h2 class="activity-title mt-4" style="color:var(--pink);">B. Sumulat ng apat (4) maliliit na e.</h2>
+                    <!-- Act3B (4 e's) -->
+                    <div class="draw-pad-wrapper">
+                        <div class="draw-pad-label">
+                            <span class="letter-preview lower">e</span>
+                            <span style="color:var(--pink);">Maliit na e</span>
+                        </div>
+
+                        <div class="canvas-frame" id="frameAct3b" style="margin-top:14px;">
+                            <div class="canvas-ghost" id="ghostAct3b" style="gap: 10%;">
+                                <span class="ghost-letter">e</span>
+                                <span class="ghost-letter">e</span>
+                                <span class="ghost-letter">e</span>
+                                <span class="ghost-letter">e</span>
+                            </div>
+                            <canvas id="canvasAct3b" height="160"></canvas>
+                        </div>
+                        <div class="pad-toolbar">
+                            <button class="pad-tool-btn undo-btn" onclick="undoStroke('act3b')">↩ Burahin huli</button>
+                            <button class="pad-tool-btn erase" onclick="clearCanvas('act3b')">🗑 I-clear</button>
+                            <button class="pad-tool-btn done-draw" onclick="markDone('act3b')">✓ Tapos na!</button>
+                        </div>
+                        <!-- Color row -->
+                        <div class="color-row">
+                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Kulay:</span>
+                            <div class="color-swatch" style="background:#4D96FF;" onclick="setColor('act3b','#4D96FF',this)"></div>
+                            <div class="color-swatch active" style="background:#FF6B9D;" onclick="setColor('act3b','#FF6B9D',this)"></div>
+                            <div class="color-swatch" style="background:#6BCB77;" onclick="setColor('act3b','#6BCB77',this)"></div>
+                            <div class="color-swatch" style="background:#FF9F43;" onclick="setColor('act3b','#FF9F43',this)"></div>
+                            <div class="color-swatch" style="background:#C77DFF;" onclick="setColor('act3b','#C77DFF',this)"></div>
+                            <div class="color-swatch" style="background:#2C2F33;" onclick="setColor('act3b','#2C2F33',this)"></div>
+                        </div>
+                        <!-- Brush size -->
+                        <div class="brush-row">
+                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Laki ng panulat:</span>
+                            <div class="brush-btn active" onclick="setBrush('act3b',5,this)">
+                                <div class="brush-dot" style="width:6px;height:6px;"></div>
+                            </div>
+                            <div class="brush-btn" onclick="setBrush('act3b',10,this)">
+                                <div class="brush-dot" style="width:11px;height:11px;"></div>
+                            </div>
+                            <div class="brush-btn" onclick="setBrush('act3b',18,this)">
+                                <div class="brush-dot" style="width:18px;height:18px;"></div>
+                            </div>
+                        </div>
+                        <div class="pad-done-tick" id="doneTick-act3b">✅ Magaling! Sinulatan mo na ang maliit na e!</div>
+                    </div>
                 </div>
             </div>
 
-            <!-- UNIT 3: Game 2 (Choice) -->
+            <!-- ═══════════════════════════════════════════
+                 UNIT 3: Pagsasanay 1 C
+            ═══════════════════════════════════════════ -->
             <div class="unit-slide" id="unit-3">
                 <div class="section-card">
-                    <div class="section-badge badge-blue">🎯 Alamin Natin</div>
-                    <h2 class="activity-title mt-4">Piliin ang mga nagsisimula sa letrang E?</h2>
-                    <div class="choices-grid mt-5">
-                        <div class="choice-card" onclick="toggleChoice(this)" data-activity="3" data-correct="true">
-                            <div class="choice-emoji-box">✖️</div><div class="choice-label">Ekis</div><div class="choice-checkbox"></div>
+                    <div class="section-badge badge-green">📝 Pagsasanay 1 C</div>
+                    <h2 class="activity-title mt-3" style="color:var(--green);">C. Pagsamahin sa guhit ang apat (4) malaki at maliit na letrang Ee.</h2>
+                    <p class="activity-instruction">Isulat ang magkatabing <strong>Ee</strong> nang apat na beses.</p>
+
+                    <!-- Act4C (4 Ee's = 8 letters) -->
+                    <div class="draw-pad-wrapper">
+                        <div class="canvas-frame" id="frameAct4c" style="margin-top:14px;">
+                            <div class="canvas-ghost" id="ghostAct4c" style="flex-direction: column; justify-content: space-between; padding: 40px 0; font-size: 4rem; letter-spacing: normal;">
+                                <div style="display:flex; justify-content: space-evenly; width: 100%;">
+                                    <span><span class="watermark-letter">E</span><span class="watermark-letter">e</span></span>
+                                    <span><span class="watermark-letter">E</span><span class="watermark-letter">e</span></span>
+                                    <span><span class="watermark-letter">E</span><span class="watermark-letter">e</span></span>
+                                    <span><span class="watermark-letter">E</span><span class="watermark-letter">e</span></span>
+                                </div>
+                                <div style="display:flex; justify-content: space-evenly; width: 100%;">
+                                    <span><span class="watermark-letter">E</span><span class="watermark-letter">e</span></span>
+                                    <span><span class="watermark-letter">E</span><span class="watermark-letter">e</span></span>
+                                    <span><span class="watermark-letter">E</span><span class="watermark-letter">e</span></span>
+                                    <span><span class="watermark-letter">E</span><span class="watermark-letter">e</span></span>
+                                </div>
+                                <div style="display:flex; justify-content: space-evenly; width: 100%;">
+                                    <span><span class="watermark-letter">E</span><span class="watermark-letter">e</span></span>
+                                    <span><span class="watermark-letter">E</span><span class="watermark-letter">e</span></span>
+                                    <span><span class="watermark-letter">E</span><span class="watermark-letter">e</span></span>
+                                    <span><span class="watermark-letter">E</span><span class="watermark-letter">e</span></span>
+                                </div>
+                            </div>
+                            <canvas id="canvasAct4c" height="450"></canvas>
                         </div>
-                        <div class="choice-card" onclick="toggleChoice(this)" data-activity="3" data-correct="false">
-                            <div class="choice-emoji-box">🐱</div><div class="choice-label">Pusa</div><div class="choice-checkbox"></div>
+                        <div class="pad-toolbar">
+                            <button class="pad-tool-btn undo-btn" onclick="undoStroke('act4c')">↩ Burahin huli</button>
+                            <button class="pad-tool-btn erase" onclick="clearCanvas('act4c')">🗑 I-clear</button>
+                            <button class="pad-tool-btn done-draw" onclick="markDone('act4c')">✓ Tapos na!</button>
                         </div>
-                        <div class="choice-card" onclick="toggleChoice(this)" data-activity="3" data-correct="true">
-                            <div class="choice-emoji-box">🚉</div><div class="choice-label">Estasyon</div><div class="choice-checkbox"></div>
+                        <!-- Color row -->
+                        <div class="color-row">
+                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Kulay:</span>
+                            <div class="color-swatch active" style="background:#4D96FF;" onclick="setColor('act4c','#4D96FF',this)"></div>
+                            <div class="color-swatch" style="background:#FF6B9D;" onclick="setColor('act4c','#FF6B9D',this)"></div>
+                            <div class="color-swatch" style="background:#6BCB77;" onclick="setColor('act4c','#6BCB77',this)"></div>
+                            <div class="color-swatch" style="background:#FF9F43;" onclick="setColor('act4c','#FF9F43',this)"></div>
+                            <div class="color-swatch" style="background:#C77DFF;" onclick="setColor('act4c','#C77DFF',this)"></div>
+                            <div class="color-swatch" style="background:#2C2F33;" onclick="setColor('act4c','#2C2F33',this)"></div>
                         </div>
-                        <div class="choice-card" onclick="toggleChoice(this)" data-activity="3" data-correct="true">
-                            <div class="choice-emoji-box">🖥️</div><div class="choice-label">Eskritoryo</div><div class="choice-checkbox"></div>
+                        <!-- Brush size -->
+                        <div class="brush-row">
+                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Laki ng panulat:</span>
+                            <div class="brush-btn active" onclick="setBrush('act4c',5,this)">
+                                <div class="brush-dot" style="width:6px;height:6px;"></div>
+                            </div>
+                            <div class="brush-btn" onclick="setBrush('act4c',10,this)">
+                                <div class="brush-dot" style="width:11px;height:11px;"></div>
+                            </div>
+                            <div class="brush-btn" onclick="setBrush('act4c',18,this)">
+                                <div class="brush-dot" style="width:18px;height:18px;"></div>
+                            </div>
+                        </div>
+                        <div class="pad-done-tick" id="doneTick-act4c">✅ Magaling! Natapos mo ang pagsasanay!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════
+                 UNIT 4: Alamin Natin (Picture Game 1)
+            ═══════════════════════════════════════════ -->
+            <div class="unit-slide" id="unit-4">
+                <div class="section-card">
+                    <div class="section-badge badge-blue" style="border-radius: 40px; padding: 7px 25px; top: -22px; box-shadow: 0 4px 0 #1565c0;">🎯 ALAMIN NATIN – GAWAIN 1</div>
+                    <h2 class="activity-title mt-4" style="color:var(--dark); font-weight: 900; font-size: 1.6rem;">Pindutin ang larawang nagsisimula ang tunog sa letrang /e/?</h2>
+                    <p class="activity-instruction" style="color:#777; font-size: 0.9rem;">Pindutin ang <strong>SURIIN ANG AKING SAGOT</strong> para malaman kung ikaw ay tama.</p>
+
+                    <div class="choices-grid mt-4">
+                        <div class="choice-card" onclick="toggleChoice(this)" data-activity="4" data-correct="true">
+                            <div class="choice-emoji-box">🐘</div>
+                            <div class="choice-label">Elepante</div>
+                            <div class="choice-checkbox"></div>
+                        </div>
+                        <div class="choice-card" onclick="toggleChoice(this)" data-activity="4" data-correct="true">
+                            <div class="choice-emoji-box">✈️</div>
+                            <div class="choice-label">Eroplano</div>
+                            <div class="choice-checkbox"></div>
+                        </div>
+                        <div class="choice-card" onclick="toggleChoice(this)" data-activity="4" data-correct="true">
+                            <div class="choice-emoji-box">🏫</div>
+                            <div class="choice-label">Eskwela</div>
+                            <div class="choice-checkbox"></div>
+                        </div>
+                        <div class="choice-card" onclick="toggleChoice(this)" data-activity="4" data-correct="false">
+                            <div class="choice-emoji-box">🐱</div>
+                            <div class="choice-label">Pusa</div>
+                            <div class="choice-checkbox"></div>
+                        </div>
+                        <div class="choice-card" onclick="toggleChoice(this)" data-activity="4" data-correct="false">
+                            <div class="choice-emoji-box">🌞</div>
+                            <div class="choice-label">Araw</div>
+                            <div class="choice-checkbox"></div>
                         </div>
                     </div>
-                    <div class="text-center mt-5"><button class="check-btn" id="check-act3" onclick="checkActivity(3)">Suriin ang Aking Sagot</button></div>
-                    <div class="feedback-banner" id="feedback-act3"><div class="feedback-icon" id="feedback-icon-3"></div><div class="feedback-text" id="feedback-text-3"></div></div>
+
+                    <div class="text-center mt-5">
+                        <button class="check-btn" id="check-act4" onclick="checkActivity(4)">
+                           <i class="fa-solid fa-circle-check"></i> Suriin ang Aking Sagot
+                        </button>
+                    </div>
+                    <div class="feedback-banner" id="feedback-act4">
+                        <div class="feedback-icon" id="feedback-icon-4"></div>
+                        <div class="feedback-text" id="feedback-text-4"></div>
+                    </div>
                 </div>
             </div>
 
-            <!-- UNIT 4 & 5... (Extra Games or Review) -->
-            <div class="unit-slide" id="unit-4">
-                <div class="section-card text-center">
-                    <div class="section-badge badge-green">✨ Husay!</div>
-                    <h2 class="activity-title mt-4">Halos Tapos na Tayo!</h2>
-                    <p class="mt-4 fs-5">Napakagaling mo! Kilala mo na ang letrang <strong>Ee</strong> at ang tunog nito. Handa ka na bang tumuloy sa huling pagsasanay?</p>
-                    <div style="font-size: 6rem; margin: 30px 0;">🎉</div>
-                </div>
-            </div>
-
+            <!-- ═══════════════════════════════════════════
+                 UNIT 5: Alamin Natin (Gawain 2)
+            ═══════════════════════════════════════════ -->
             <div class="unit-slide" id="unit-5">
                 <div class="section-card">
-                    <div class="section-badge badge-blue">🎯 Gawain 2</div>
-                    <h2 class="activity-title mt-4">Alin sa mga ito ang may letrang /e/?</h2>
-                    <div class="choices-grid mt-5">
+                    <div class="section-badge badge-blue" style="border-radius: 40px; padding: 7px 25px; top: -22px; box-shadow: 0 4px 0 #1565c0;">🎯 ALAMIN NATIN – GAWAIN 2</div>
+                    <h2 class="activity-title mt-4" style="color:var(--dark); font-weight: 900; font-size: 1.6rem;">Alin sa mga ito ang nagsisimula sa tunog na /e/?</h2>
+                    <p class="activity-instruction" style="color:#777; font-size: 0.9rem;">Pindutin ang lahat ng tamang larawan at i-click ang suriin button.</p>
+
+                    <div class="choices-grid mt-4">
                         <div class="choice-card" onclick="toggleChoice(this)" data-activity="5" data-correct="true">
-                            <div class="choice-emoji-box">🥚</div><div class="choice-label">Itlog</div><div class="choice-checkbox"></div>
+                            <div class="choice-emoji-box">✖️</div>
+                            <div class="choice-label">Ekis</div>
+                            <div class="choice-checkbox"></div>
+                        </div>
+                        <div class="choice-card" onclick="toggleChoice(this)" data-activity="5" data-correct="true">
+                            <div class="choice-emoji-box">🚉</div>
+                            <div class="choice-label">Estasyon</div>
+                            <div class="choice-checkbox"></div>
+                        </div>
+                        <div class="choice-card" onclick="toggleChoice(this)" data-activity="5" data-correct="true">
+                            <div class="choice-emoji-box">🖥️</div>
+                            <div class="choice-label">Eskritoryo</div>
+                            <div class="choice-checkbox"></div>
                         </div>
                         <div class="choice-card" onclick="toggleChoice(this)" data-activity="5" data-correct="false">
-                            <div class="choice-emoji-box">🌞</div><div class="choice-label">Araw</div><div class="choice-checkbox"></div>
+                            <div class="choice-emoji-box">🎒</div>
+                            <div class="choice-label">Bag</div>
+                            <div class="choice-checkbox"></div>
                         </div>
-                        <div class="choice-card" onclick="toggleChoice(this)" data-activity="5" data-correct="true">
-                            <div class="choice-emoji-box">🍦</div><div class="choice-label">Ice Cream</div><div class="choice-checkbox"></div>
+                        <div class="choice-card" onclick="toggleChoice(this)" data-activity="5" data-correct="false">
+                            <div class="choice-emoji-box">🥥</div>
+                            <div class="choice-label">Niyog</div>
+                            <div class="choice-checkbox"></div>
                         </div>
                     </div>
-                    <div class="text-center mt-5"><button class="check-btn" id="check-act5" onclick="checkActivity(5)">Suriin ang Aking Sagot</button></div>
-                    <div class="feedback-banner" id="feedback-act5"><div class="feedback-icon" id="feedback-icon-5"></div><div class="feedback-text" id="feedback-text-5"></div></div>
+
+                    <div class="text-center mt-5">
+                        <button class="check-btn" id="check-act5" onclick="checkActivity(5)">
+                           <i class="fa-solid fa-circle-check"></i> Suriin ang Aking Sagot
+                        </button>
+                    </div>
+                    <div class="feedback-banner" id="feedback-act5">
+                        <div class="feedback-icon" id="feedback-icon-5"></div>
+                        <div class="feedback-text" id="feedback-text-5"></div>
+                    </div>
                 </div>
             </div>
 
+        </div><!-- end units-track -->
+    </div><!-- end units-viewport -->
+
+    <!-- ══ BOTTOM NAVIGATION BAR ══ -->
+    <div class="nav-bar" id="navBar">
+        <!-- Back button -->
+        <button class="nav-btn prev-btn" id="prevBtn" onclick="goBack()" style="visibility:hidden;">
+            <i class="fa-solid fa-arrow-left"></i> Bumalik
+        </button>
+
+        <!-- Unit counter -->
+        <div class="unit-counter">
+            <strong id="unitNum">1</strong> / 6<br>
+            <span id="unitName" style="font-size:0.8rem;">Kilalanin Natin</span>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+            <!-- Skip button -->
+            <button class="nav-btn prev-btn" id="skipBtn" onclick="goSkip()">
+                Laktawan <i class="fa-solid fa-forward-step"></i>
+            </button>
+
+            <!-- Next button -->
+            <button class="nav-btn next-btn" id="nextBtn" onclick="goNext()">
+                Susunod <i class="fa-solid fa-arrow-right"></i>
+            </button>
         </div>
     </div>
 
-    <div class="bottom-nav">
-        <button class="nav-btn prev-btn" id="prevBtn" onclick="goBack()" style="visibility:hidden;"><i class="fa-solid fa-arrow-left"></i> Bumalik</button>
-        <div class="unit-counter"><strong id="unitNum">1</strong> / 6<br><span id="unitName" style="font-size:0.8rem;">Kilalanin Natin</span></div>
-        <button class="nav-btn next-btn" id="nextBtn" onclick="goNext()">Susunod <i class="fa-solid fa-arrow-right"></i></button>
-    </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        (function() {
-            const UNIT_NAMES = ['Kilalanin Natin', 'Pagsulat ng Ee', 'Pagsasanay 1', 'Alamin Natin', 'Mahusay!', 'Gawain 2'];
+        (function () {
+            // ── State ──
+            const UNIT_NAMES = ['Kilalanin Natin', 'Pagsulat ng Ee', 'Pagsasanay 1 A at B', 'Pagsasanay 1 C', 'Alamin Natin 1', 'Alamin Natin 2'];
             let currentUnit = 0;
             const totalUnits = 6;
+
             const state = {
-                1: { checked: false, score: 0 },
-                2: { checked: false, score: 0, total: 3 },
-                3: { checked: false, score: 0, total: 3 },
-                5: { checked: false, score: 0, total: 2 }
+                1: { checked: false, score: 0 },   // Pagsulat ng Ee
+                2: { checked: false, score: 0 },   // Pagsasanay 1 A at B
+                3: { checked: false, score: 0 },   // Pagsasanay 1 C
+                4: { checked: false, score: 0, total: 0 }, // Alamin Natin 1
+                5: { checked: false, score: 0, total: 0 }, // Alamin Natin 2
             };
 
-            const pads = {};
+            // Count correct answers per activity
+            document.querySelectorAll('.choice-card[data-correct="true"]').forEach(card => {
+                const act = card.dataset.activity;
+                if (state[act]) state[act].total++;
+            });
+
+            // ── Navigation ──
             function updateUI() {
                 const track = document.getElementById('unitsTrack');
-                track.style.transform = `translateX(-${currentUnit * (100/6)}%)`;
-                for(let i=0; i<6; i++) {
+                track.style.transform = `translateX(-${currentUnit * (100 / 6)}%)`;
+
+                for (let i = 0; i < totalUnits; i++) {
                     const dot = document.getElementById(`dot-${i}`);
                     dot.classList.remove('active', 'done');
-                    if (i === currentUnit) dot.classList.add('active');
-                    else if (i === 0 && currentUnit > 0) dot.classList.add('done');
-                    else if (state[i] && state[i].checked) dot.classList.add('done');
-                    else if (i === 4 && currentUnit > 4) dot.classList.add('done'); // Unit 4 is just an intro
+
+                    if (i === currentUnit) {
+                        dot.classList.add('active');
+                    }
+
+                    if (i === 0) {
+                        if (currentUnit > 0) dot.classList.add('done');
+                    } else {
+                        if (state[i] && state[i].checked) {
+                            dot.classList.add('done');
+                        }
+                    }
                 }
+
                 document.getElementById('unitNum').textContent = currentUnit + 1;
                 document.getElementById('unitName').textContent = UNIT_NAMES[currentUnit];
-                document.getElementById('prevBtn').style.visibility = (currentUnit === 0) ? 'hidden' : 'visible';
+
+                const prevBtn = document.getElementById('prevBtn');
+                prevBtn.style.visibility = currentUnit === 0 ? 'hidden' : 'visible';
+
+                const skipBtn = document.getElementById('skipBtn');
+                if (skipBtn) {
+                    skipBtn.style.display = (currentUnit === totalUnits - 1) ? 'none' : 'flex';
+                }
+
                 updateNextBtn();
             }
 
             function allActivitiesDone() {
-                return state[1].checked && state[2].checked && state[3].checked && state[5].checked;
+                return state[1].checked && state[2].checked && state[3].checked && state[4].checked && state[5].checked;
             }
 
             function updateNextBtn() {
-                const btn = document.getElementById('nextBtn');
-                if (currentUnit === 5) {
+                const nextBtn = document.getElementById('nextBtn');
+                if (currentUnit === totalUnits - 1) {
                     if (allActivitiesDone()) {
-                        btn.className = 'nav-btn finish-btn'; btn.innerHTML = 'Tapos Na! 🏁';
-                        btn.onclick = async () => {
-                            btn.disabled = true;
-                            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Ina-unlock...';
-                            
+                        nextBtn.className = 'nav-btn finish-btn';
+                        nextBtn.innerHTML = '<i class="fa-solid fa-flag-checkered"></i> Tapos Na!';
+                        nextBtn.disabled = false;
+                        nextBtn.onclick = async () => {
+                            nextBtn.disabled = true;
+                            nextBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Ina-unlock...';
+
                             try {
                                 const response = await fetch('{% url "core:save_progress" %}', {
                                     method: 'POST',
@@ -473,105 +1678,483 @@
                             } catch (e) {
                                 console.error("Error saving progress:", e);
                             }
-                            window.location.href="{% url 'core:mapa' %}";
+
+                            window.location.href = "{% url 'core:mapa' %}";
                         };
                     } else {
-                        btn.className = 'nav-btn next-btn'; btn.innerHTML = 'Susunod <i class="fa-solid fa-lock"></i>';
-                        btn.disabled = true;
+                        nextBtn.className = 'nav-btn next-btn';
+                        nextBtn.innerHTML = 'Susunod <i class="fa-solid fa-lock"></i>';
+                        nextBtn.disabled = true;
                     }
                 } else {
-                    btn.className = 'nav-btn next-btn'; btn.innerHTML = 'Susunod <i class="fa-solid fa-arrow-right"></i>';
-                    btn.disabled = false; btn.onclick = goNext;
+                    nextBtn.className = 'nav-btn next-btn';
+                    nextBtn.innerHTML = 'Susunod <i class="fa-solid fa-arrow-right"></i>';
+                    nextBtn.disabled = false;
+                    nextBtn.onclick = goNext;
                 }
             }
 
-            window.goNext = () => { if(currentUnit < 5) { currentUnit++; updateUI(); window.scrollTo(0,0); } };
-            window.goBack = () => { if(currentUnit > 0) { currentUnit--; updateUI(); window.scrollTo(0,0); } };
-
-            // Drawing init
-            function initPad(id) {
-                const canvas = document.getElementById('canvas' + id.charAt(0).toUpperCase() + id.slice(1));
-                const ctx = canvas.getContext('2d');
-                canvas.width = canvas.parentElement.clientWidth;
-                pads[id] = { canvas, ctx, drawing: false, snapshots: [], done: false };
-                ctx.lineWidth = 6; ctx.lineCap = 'round'; ctx.strokeStyle = (id==='upper'?'#4D96FF':'#FF6B9D');
-                
-                const getPos = (e) => {
-                    const r = canvas.getBoundingClientRect();
-                    const tx = e.touches ? e.touches[0].clientX : e.clientX;
-                    const ty = e.touches ? e.touches[0].clientY : e.clientY;
-                    return { x: tx - r.left, y: ty - r.top };
-                };
-                const start = (e) => { e.preventDefault(); if(pads[id].done) return; pads[id].drawing = true; pads[id].snapshots.push(canvas.toDataURL()); ctx.beginPath(); const p=getPos(e); ctx.moveTo(p.x, p.y); };
-                const move = (e) => { if(!pads[id].drawing) return; const p=getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); };
-                const stop = () => { pads[id].drawing = false; };
-                canvas.addEventListener('mousedown', start); canvas.addEventListener('mousemove', move); window.addEventListener('mouseup', stop);
-                canvas.addEventListener('touchstart', start); canvas.addEventListener('touchmove', move); window.addEventListener('touchend', stop);
-            }
-
-            window.undoStroke = (id) => {
-                const p = pads[id]; if(!p.snapshots.length) return;
-                const img = new Image(); img.src = p.snapshots.pop();
-                p.ctx.clearRect(0,0,p.canvas.width,p.canvas.height);
-                img.onload = () => p.ctx.drawImage(img, 0,0);
+            window.goNext = function () {
+                if (currentUnit < totalUnits - 1) {
+                    currentUnit++;
+                    updateUI();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
             };
 
-            window.markDone = async (id) => {
-                pads[id].done = true;
-                document.getElementById('doneTick-'+id).classList.add('show');
-                if(pads.upper.done && pads.lower.done) { state[1].checked = true; launchConfetti(); }
-                updateNextBtn(); updateUI();
+            window.goBack = function () {
+                if (currentUnit > 0) {
+                    currentUnit--;
+                    updateUI();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
             };
 
-            // Choice Logic
-            window.toggleChoice = (card) => {
-                const act = card.dataset.activity; if(state[act].checked) return;
+            window.goSkip = function () {
+                if (currentUnit < totalUnits - 1) {
+                    if (currentUnit === 1) state[1].checked = true;
+                    if (currentUnit === 2) state[2].checked = true;
+                    if (currentUnit === 3) state[3].checked = true;
+                    if (currentUnit === 4) state[4].checked = true;
+                    if (currentUnit === 5) state[5].checked = true;
+
+                    currentUnit++;
+                    updateUI();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            };
+
+            // ── Toggle selection ──
+            window.toggleChoice = function (card) {
+                const act = card.dataset.activity;
+                if (state[act].checked) return;
                 card.classList.toggle('selected');
-                card.querySelector('.choice-checkbox').innerHTML = card.classList.contains('selected') ? '✔' : '';
+                card.querySelector('.choice-checkbox').innerHTML =
+                    card.classList.contains('selected') ? '✔' : '';
             };
 
-            window.checkActivity = (act) => {
-                if(state[act].checked) return; state[act].checked = true;
-                const cards = document.querySelectorAll(`.choice-card[data-activity="${act}"]`);
+            // ── Check activity ──
+            window.checkActivity = function (actNum) {
+                if (state[actNum].checked) return;
+                state[actNum].checked = true;
+
+                const cards = document.querySelectorAll(`.choice-card[data-activity="${actNum}"]`);
                 let correct = 0;
-                cards.forEach(c => {
-                    const isCorrect = c.dataset.correct === 'true';
-                    const isSelected = c.classList.contains('selected');
-                    c.classList.remove('selected');
-                    if(isCorrect && isSelected) { c.classList.add('correct'); correct++; }
-                    else if(!isCorrect && isSelected) c.classList.add('wrong');
-                    else if(isCorrect && !isSelected) c.classList.add('missed');
+                let wrongOrMissed = 0;
+                const total = state[actNum].total;
+
+                cards.forEach(card => {
+                    const isCorrect = card.dataset.correct === 'true';
+                    const isSelected = card.classList.contains('selected');
+                    card.onclick = null;
+
+                    if (isCorrect && isSelected) {
+                        card.classList.remove('selected');
+                        card.classList.add('correct');
+                        card.querySelector('.choice-checkbox').innerHTML = '✔';
+                        correct++;
+                    } else if (!isCorrect && isSelected) {
+                        card.classList.remove('selected');
+                        card.classList.add('wrong');
+                        card.querySelector('.choice-checkbox').innerHTML = '✖';
+                        wrongOrMissed++;
+                    } else if (isCorrect && !isSelected) {
+                        card.classList.add('missed');
+                        card.querySelector('.choice-checkbox').innerHTML = '!';
+                        wrongOrMissed++;
+                    }
                 });
-                const pts = (correct === state[act].total) ? 1 : 0;
-                state[act].score = pts;
-                const banner = document.getElementById(`feedback-act${act}`);
-                banner.className = 'feedback-banner show ' + (pts?'correct-fb':'wrong-fb');
-                document.getElementById(`feedback-icon-${act}`).textContent = pts?'🌟':'💪';
-                document.getElementById(`feedback-text-${act}`).innerHTML = pts?'<strong>Mahusay!</strong> Tama lahat!':'<strong>Subukan muli!</strong>';
-                if(pts) { launchConfetti(); document.getElementById('starCount').textContent = parseInt(document.getElementById('starCount').textContent)+1; }
-                updateNextBtn(); updateUI();
+
+                const pts = (correct === total && wrongOrMissed === 0) ? 1 : 0;
+                state[actNum].score = pts;
+
+                const banner = document.getElementById(`feedback-act${actNum}`);
+                const icon = document.getElementById(`feedback-icon-${actNum}`);
+                const text = document.getElementById(`feedback-text-${actNum}`);
+                banner.classList.add('show');
+
+                if (pts === 1) {
+                    banner.classList.add('correct-fb');
+                    icon.textContent = '🌟';
+                    text.innerHTML = `<strong>Mahusay!</strong> Tama ang lahat! <em>(+1 punto)</em>`;
+                    launchConfetti();
+                } else {
+                    banner.classList.add('wrong-fb');
+                    icon.textContent = '💪';
+                    text.innerHTML = `<strong>Subukan Muli!</strong> May mali o nakaligtaan. <em>(0 puntos)</em>`;
+                }
+
+                const cur = parseInt(document.getElementById('starCount').textContent);
+                document.getElementById('starCount').textContent = cur + pts;
+
+                document.getElementById(`check-act${actNum}`).disabled = true;
+
+                updateNextBtn();
             };
 
-            window.playESound = () => {
-                if('speechSynthesis' in window) {
-                    const u = new SpeechSynthesisUtterance('eh... elepante... eroplano... eskwela');
-                    u.lang = 'tl-PH'; u.rate = 0.8; window.speechSynthesis.speak(u);
+            // ── Drawing Pads ──
+            const pads = {};
+
+            function initPad(id) {
+                const capId = id.charAt(0).toUpperCase() + id.slice(1);
+                const canvas = document.getElementById('canvas' + capId);
+                const frame = document.getElementById('frame' + capId);
+                if (!canvas || !frame) return;
+
+                function resizeCanvas() {
+                    const w = frame.clientWidth;
+                    canvas.width = w;
+                    if (pads[id] && pads[id].snapshots.length) {
+                        restoreSnapshot(id);
+                    }
+                }
+                resizeCanvas();
+                new ResizeObserver(resizeCanvas).observe(frame);
+
+                pads[id] = {
+                    canvas,
+                    ctx: canvas.getContext('2d'),
+                    drawing: false,
+                    color: (id === 'upper' || id === 'act3a') ? '#4D96FF' : (id === 'lower' || id === 'act3b') ? '#FF6B9D' : '#6BCB77',
+                    brush: 5,
+                    snapshots: [],
+                    strokeCount: 0,
+                    maxStrokes: 30,
+                    done: false
+                };
+
+                const ctx = pads[id].ctx;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+
+                function getPos(e) {
+                    const rect = canvas.getBoundingClientRect();
+                    const scaleX = canvas.width / rect.width;
+                    const scaleY = canvas.height / rect.height;
+                    if (e.touches) {
+                        return {
+                            x: (e.touches[0].clientX - rect.left) * scaleX,
+                            y: (e.touches[0].clientY - rect.top) * scaleY
+                        };
+                    }
+                    return {
+                        x: (e.clientX - rect.left) * scaleX,
+                        y: (e.clientY - rect.top) * scaleY
+                    };
+                }
+
+                function startDraw(e) {
+                    e.preventDefault();
+                    if (pads[id].done) return;
+                    pads[id].drawing = true;
+                    saveSnapshot(id);
+                    const p = getPos(e);
+                    ctx.beginPath();
+                    ctx.strokeStyle = pads[id].color;
+                    ctx.lineWidth = pads[id].brush;
+                    ctx.moveTo(p.x, p.y);
+                }
+                function draw(e) {
+                    e.preventDefault();
+                    if (!pads[id].drawing) return;
+                    const p = getPos(e);
+                    ctx.lineTo(p.x, p.y);
+                    ctx.stroke();
+                }
+                function endDraw() {
+                    if (!pads[id].drawing) return;
+                    pads[id].drawing = false;
+                    pads[id].strokeCount = Math.min(pads[id].strokeCount + 1, pads[id].maxStrokes);
+                }
+
+                canvas.addEventListener('mousedown', startDraw, { passive: false });
+                canvas.addEventListener('mousemove', draw, { passive: false });
+                canvas.addEventListener('mouseup', endDraw);
+                canvas.addEventListener('mouseleave', endDraw);
+                canvas.addEventListener('touchstart', startDraw, { passive: false });
+                canvas.addEventListener('touchmove', draw, { passive: false });
+                canvas.addEventListener('touchend', endDraw);
+
+                updateCursor(id, pads[id].color);
+            }
+
+            function updateCursor(id, color) {
+                const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="${color}" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>`;
+                const encoded = encodeURIComponent(svg);
+                if (pads[id]) pads[id].canvas.style.cursor = `url('data:image/svg+xml;utf8,${encoded}') 2 22, crosshair`;
+            }
+
+            function saveSnapshot(id) {
+                const { canvas, snapshots } = pads[id];
+                snapshots.push(canvas.toDataURL());
+                if (snapshots.length > 30) snapshots.shift();
+            }
+
+            function restoreSnapshot(id) {
+                const { canvas, ctx, snapshots } = pads[id];
+                if (!snapshots.length) return;
+                const img = new Image();
+                img.onload = () => ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                img.src = snapshots[snapshots.length - 1];
+            }
+
+            window.undoStroke = function (id) {
+                const p = pads[id];
+                if (p.snapshots.length) {
+                    const img = new Image();
+                    p.snapshots.pop();
+                    p.ctx.clearRect(0, 0, p.canvas.width, p.canvas.height);
+                    if (p.snapshots.length) {
+                        img.onload = () => p.ctx.drawImage(img, 0, 0, p.canvas.width, p.canvas.height);
+                        img.src = p.snapshots[p.snapshots.length - 1];
+                    }
+                    p.strokeCount = Math.max(0, p.strokeCount - 1);
                 }
             };
 
-            function launchConfetti() {
-                const wrap = document.getElementById('confettiWrap'); wrap.innerHTML = '';
-                const colors = ['#C77DFF', '#4D96FF', '#6BCB77', '#FFD93D', '#FF6B9D'];
-                for(let i=0; i<50; i++){
-                    const p = document.createElement('div'); p.className = 'confetti-particle';
-                    p.style.left = Math.random()*100 + 'vw'; p.style.background = colors[Math.floor(Math.random()*colors.length)];
-                    p.style.width = p.style.height = (Math.random()*10+8)+'px';
-                    p.style.animationDuration = (Math.random()*2+1.5)+'s'; wrap.appendChild(p);
+            window.clearCanvas = function (id) {
+                const p = pads[id];
+                p.ctx.clearRect(0, 0, p.canvas.width, p.canvas.height);
+                p.snapshots = [];
+                p.strokeCount = 0;
+                p.done = false;
+
+                const tick = document.getElementById('doneTick-' + id);
+                if (tick) {
+                    tick.className = 'pad-done-tick';
+                    tick.style.borderColor = 'var(--green)';
+                    tick.style.color = '#1b5e20';
+                    tick.style.background = '#E9FBEE';
+                }
+            };
+
+            // ── AI Handwriting Validation ──
+            function getTargetLetterForPad(id) {
+                const capId = id.charAt(0).toUpperCase() + id.slice(1);
+                const ghostContainer = document.getElementById('ghost' + capId);
+                if (!ghostContainer) return null;
+                const wm = ghostContainer.querySelector('.watermark-letter');
+                if (wm) return wm.textContent.trim()[0];
+                const gl = ghostContainer.querySelector('.ghost-letter');
+                if (gl) return gl.textContent.trim()[0];
+                return null;
+            }
+
+            async function validateDrawingAI(id) {
+                const p = pads[id];
+                const ctx = p.ctx;
+                const canvas = p.canvas;
+
+                const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+                let totalInk = 0;
+                for (let i = 0; i < imgData.length; i += 4) {
+                    if (imgData[i + 3] > 20) totalInk++;
+                }
+                if (totalInk < 50) {
+                    return {
+                        valid: false,
+                        reason: 'Walang guhit pa. Subukang sumulat!',
+                        encouragement_fil: 'Subukan mo ulit! Kaya mo yan! 💪',
+                        tip: 'Gumuhit ng malaking letra sa loob ng kahon.'
+                    };
+                }
+
+                try {
+                    const capId = id.charAt(0).toUpperCase() + id.slice(1);
+                    const ghostContainer = document.getElementById('ghost' + capId);
+                    const spans = ghostContainer ? ghostContainer.querySelectorAll('.ghost-letter') : [];
+
+                    if (spans.length > 0) {
+                        const canvasRect = canvas.getBoundingClientRect();
+                        const scaleX = canvas.width / canvasRect.width;
+                        const scaleY = canvas.height / canvasRect.height;
+                        let coveredZones = 0;
+
+                        spans.forEach(span => {
+                            const r = span.getBoundingClientRect();
+                            const bx1 = Math.max(0, Math.floor((r.left - canvasRect.left) * scaleX) - 10);
+                            const by1 = Math.max(0, Math.floor((r.top - canvasRect.top) * scaleY) - 10);
+                            const bx2 = Math.min(canvas.width, Math.ceil((r.right - canvasRect.left) * scaleX) + 10);
+                            const by2 = Math.min(canvas.height, Math.ceil((r.bottom - canvasRect.top) * scaleY) + 10);
+
+                            let hits = 0;
+                            for (let sy = by1; sy <= by2; sy += 4) {
+                                for (let sx = bx1; sx <= bx2; sx += 4) {
+                                    const idx = (sy * canvas.width + sx) * 4;
+                                    if (imgData[idx + 3] > 20) hits++;
+                                }
+                            }
+                            if (hits >= 8) coveredZones++;
+                        });
+
+                        if (coveredZones < spans.length) {
+                            return {
+                                valid: false,
+                                reason: 'Hindi pa po tapos ang lahat!',
+                                encouragement_fil: 'Sige pa, punan ang lahat ng gabay na letra! 😊',
+                                tip: `May mga kahon pa na wala pang sulat. Trace mo lahat sila!`
+                            };
+                        }
+                    }
+                } catch (e) {
+                    console.warn('[Completeness check] error:', e);
+                }
+
+                const image_b64 = p.canvas.toDataURL('image/png');
+                const target_letter = getTargetLetterForPad(id) || '?';
+
+                try {
+                    const resp = await fetch('/api/validate-handwriting/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: JSON.stringify({ image_b64, target_letter })
+                    });
+                    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+                    return await resp.json();
+                } catch (err) {
+                    console.warn('[AI validate] fallback:', err);
+                    return {
+                        valid: true,
+                        confidence: 0.70,
+                        reason: 'Offline validation — accepted.',
+                        encouragement_fil: 'Magaling! Napakaganda ng iyong pagsulat! 🌟',
+                        tip: null
+                    };
                 }
             }
 
-            initPad('upper'); initPad('lower'); updateUI();
+            window.markDone = async function (id) {
+                const p = pads[id];
+                const tick = document.getElementById('doneTick-' + id);
+                const capId = id.charAt(0).toUpperCase() + id.slice(1);
+                const frame = document.getElementById('frame' + capId);
+
+                const doneBtn = document.querySelector(`[onclick="markDone('${id}')"]`);
+                if (doneBtn) {
+                    doneBtn.disabled = true;
+                    doneBtn.innerHTML = '⏳ Sinusuri...';
+                }
+
+                const validation = await validateDrawingAI(id);
+
+                if (doneBtn) {
+                    doneBtn.disabled = false;
+                    doneBtn.innerHTML = '✓ Tapos na!';
+                }
+
+                if (!validation.valid) {
+                    if (frame) {
+                        frame.style.border = '4px solid #f44336';
+                        setTimeout(() => { frame.style.border = '4px solid #90CAF9'; }, 700);
+                    }
+                    if (tick) {
+                        tick.className = 'pad-done-tick show error-tick';
+                        tick.style.borderColor = '#f44336';
+                        tick.style.color = '#b71c1c';
+                        tick.style.background = '#FFEBEE';
+                        const tipMsg = validation.tip ? ` 💡 ${validation.tip}` : '';
+                        tick.innerHTML = `⚠️ ${validation.reason || 'Subukan ulit!'}${tipMsg}`;
+                    }
+                    return;
+                }
+
+                // ── Valid! ──
+                p.done = true;
+                if (tick) {
+                    tick.className = 'pad-done-tick show';
+                    tick.style.borderColor = 'var(--green)';
+                    tick.style.color = '#1b5e20';
+                    tick.style.background = '#E9FBEE';
+                    const msg = validation.encouragement_fil
+                        || (id === 'upper' ? '✅ Napakahusay! Sinulatan mo na ang malaking E!'
+                           : id === 'lower' ? '✅ Magaling! Sinulatan mo na ang maliit na e!'
+                           : '✅ Mahusay! Natapos mo ang pagsasanay!');
+                    tick.innerHTML = '✅ ' + msg;
+                    tick.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+
+                if (pads['upper']?.done && pads['lower']?.done && !state[1].checked) {
+                    state[1].checked = true;
+                    launchConfetti();
+                }
+                if (pads['act3a']?.done && pads['act3b']?.done && !state[2].checked) {
+                    state[2].checked = true; state[2].score = 1;
+                    const cur = parseInt(document.getElementById('starCount').textContent);
+                    document.getElementById('starCount').textContent = cur + 1;
+                    launchConfetti();
+                }
+                if (pads['act4c']?.done && !state[3].checked) {
+                    state[3].checked = true; state[3].score = 1;
+                    const cur = parseInt(document.getElementById('starCount').textContent);
+                    document.getElementById('starCount').textContent = cur + 1;
+                    launchConfetti();
+                }
+                updateNextBtn();
+            };
+
+            window.setColor = function (id, color, swatch) {
+                pads[id].color = color;
+                const siblings = swatch.parentElement.querySelectorAll('.color-swatch');
+                siblings.forEach(s => s.classList.remove('active'));
+                swatch.classList.add('active');
+                updateCursor(id, color);
+            };
+
+            window.setBrush = function (id, size, btn) {
+                pads[id].brush = size;
+                const siblings = btn.parentElement.querySelectorAll('.brush-btn');
+                siblings.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            };
+
+            // Init all pads
+            initPad('upper');
+            initPad('lower');
+            initPad('act3a');
+            initPad('act3b');
+            initPad('act4c');
+
+            // ── Sound ──
+            window.playESound = function () {
+                const btn = document.getElementById('soundBtn');
+                btn.style.transform = 'scale(0.93) translateY(5px)';
+                btn.style.boxShadow = '0 0 0 #000';
+                setTimeout(() => { btn.style.transform = ''; btn.style.boxShadow = ''; }, 180);
+
+                if ('speechSynthesis' in window) {
+                    const utter = new SpeechSynthesisUtterance('eh... elepante... eroplano... eskwela');
+                    utter.lang = 'tl-PH'; utter.rate = 0.75; utter.pitch = 1.1;
+                    window.speechSynthesis.cancel();
+                    window.speechSynthesis.speak(utter);
+                }
+            };
+
+            // ── Confetti ──
+            function launchConfetti() {
+                const wrap = document.getElementById('confettiWrap');
+                wrap.innerHTML = ''; wrap.classList.add('active');
+                const colors = ['#FF6B9D', '#FFD93D', '#6BCB77', '#4D96FF', '#C77DFF', '#FF9F43'];
+                for (let i = 0; i < 60; i++) {
+                    const el = document.createElement('div');
+                    el.className = 'confetti-particle';
+                    el.style.left = Math.random() * 100 + 'vw';
+                    el.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    el.style.width = (8 + Math.random() * 10) + 'px';
+                    el.style.height = (8 + Math.random() * 10) + 'px';
+                    el.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+                    el.style.animationDelay = Math.random() * 0.8 + 's';
+                    wrap.appendChild(el);
+                }
+                setTimeout(() => { wrap.classList.remove('active'); wrap.innerHTML = ''; }, 4000);
+            }
+
+            // ── Init ──
+            updateUI();
         })();
     </script>
 </body>
+
 </html>
