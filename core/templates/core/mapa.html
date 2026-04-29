@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,800;0,900;1,400&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="{% static 'core/settings.js' %}"></script>
 
     <style>
         /* ── Scenic Discovery Regions ── */
@@ -1017,6 +1018,155 @@
             50% { transform: translateY(-30px) scale(1.1) rotate(10deg); opacity: 1; }
             100% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
         }
+
+        /* ── SETTINGS MODAL ── */
+        .settings-overlay {
+            position: fixed; inset: 0; z-index: 25000;
+            background: rgba(0,0,0,0.65);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(6px);
+        }
+        .settings-overlay.open { display: flex; }
+        .settings-panel {
+            background: linear-gradient(160deg, #fff9c4 0%, #fce4ec 50%, #e3f2fd 100%);
+            border-radius: 32px;
+            border: 5px solid #2c2f33;
+            box-shadow: 0 14px 0 #2c2f33, 0 20px 50px rgba(0,0,0,0.25);
+            width: 92%;
+            max-width: 460px;
+            overflow: hidden;
+            animation: settingsIn 0.45s cubic-bezier(0.175,0.885,0.32,1.275) forwards;
+        }
+        @keyframes settingsIn {
+            from { transform: scale(0.6) rotate(-4deg); opacity: 0; }
+            to   { transform: scale(1) rotate(0deg);   opacity: 1; }
+        }
+        .settings-header {
+            background: linear-gradient(135deg, #7c4dff, #e040fb);
+            padding: 18px 24px;
+            display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 4px solid #2c2f33;
+        }
+        .settings-header h2 {
+            font-family: 'Nunito', sans-serif; font-weight: 900;
+            font-size: 1.5rem; color: #fff; margin: 0;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+        }
+        .settings-close-btn {
+            width: 42px; height: 42px; border-radius: 50%;
+            border: 3px solid rgba(255,255,255,0.7);
+            background: rgba(255,255,255,0.25);
+            color: #fff; font-size: 1.3rem; font-weight: 900;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: all 0.15s; line-height: 1;
+        }
+        .settings-close-btn:hover { background: rgba(255,255,255,0.45); }
+        .settings-body { padding: 22px 24px; display: flex; flex-direction: column; gap: 20px; }
+        /* Each row */
+        .settings-row {
+            background: #fff;
+            border: 3px solid #2c2f33;
+            border-radius: 20px;
+            padding: 14px 18px;
+            box-shadow: 0 4px 0 #2c2f33;
+        }
+        .settings-row-label {
+            font-family: 'Nunito', sans-serif; font-weight: 900;
+            font-size: 1.05rem; color: #2c2f33;
+            display: flex; align-items: center; gap: 8px;
+            margin-bottom: 10px;
+        }
+        .settings-row-label .s-icon { font-size: 1.4rem; }
+        /* Slider */
+        .tt-slider {
+            -webkit-appearance: none; appearance: none;
+            width: 100%; height: 14px;
+            border-radius: 20px;
+            outline: none; cursor: pointer;
+            border: 3px solid #2c2f33;
+        }
+        .tt-slider.volume-slider { background: linear-gradient(90deg, #4CAF50 var(--vol-pct,80%), #ddd var(--vol-pct,80%)); }
+        .tt-slider.brightness-slider { background: linear-gradient(90deg, #FDD835 var(--br-pct,50%), #ddd var(--br-pct,50%)); }
+        .tt-slider.pixel-slider { background: linear-gradient(90deg, #7c4dff var(--px-pct,0%), #ddd var(--px-pct,0%)); }
+        .tt-slider::-webkit-slider-thumb {
+            -webkit-appearance: none; appearance: none;
+            width: 28px; height: 28px; border-radius: 50%;
+            background: #fff; border: 4px solid #2c2f33;
+            box-shadow: 0 3px 0 #2c2f33;
+            cursor: pointer;
+        }
+        .slider-val {
+            font-family: 'Nunito', sans-serif; font-weight: 900;
+            font-size: 1.1rem; color: #555;
+            min-width: 44px; text-align: right;
+        }
+        /* Toggle switch */
+        .tt-toggle-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+        .tt-toggle-label { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem; color: #555; }
+        .tt-switch {
+            position: relative; display: inline-block;
+            width: 64px; height: 34px; flex-shrink: 0;
+        }
+        .tt-switch input { opacity: 0; width: 0; height: 0; }
+        .tt-switch-slider {
+            position: absolute; inset: 0;
+            background: #ccc; border-radius: 34px;
+            border: 3px solid #2c2f33;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .tt-switch-slider::before {
+            content: '';
+            position: absolute;
+            width: 22px; height: 22px;
+            left: 3px; top: 50%; transform: translateY(-50%);
+            background: #fff; border-radius: 50%;
+            border: 2px solid #2c2f33;
+            transition: left 0.3s;
+        }
+        .tt-switch input:checked + .tt-switch-slider { background: #7c4dff; }
+        .tt-switch input:checked + .tt-switch-slider::before { left: 33px; }
+        /* Fullscreen button */
+        .tt-fullscreen-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #FF9800, #F44336);
+            border: 3px solid #2c2f33;
+            border-radius: 14px;
+            box-shadow: 0 4px 0 #2c2f33;
+            font-family: 'Nunito', sans-serif; font-weight: 900;
+            font-size: 1rem; color: #fff;
+            cursor: pointer; transition: all 0.15s;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .tt-fullscreen-btn:active { transform: translateY(4px); box-shadow: 0 0 0 #2c2f33; }
+        /* Pixel overlay effect */
+        #tt-pixel-overlay {
+            position: fixed; inset: 0; z-index: 99999;
+            pointer-events: none; display: none;
+            image-rendering: pixelated;
+            background: repeating-linear-gradient(
+                0deg, rgba(0,0,0,0.04) 0px, rgba(0,0,0,0.04) 1px, transparent 1px, transparent 3px
+            ),
+            repeating-linear-gradient(
+                90deg, rgba(0,0,0,0.04) 0px, rgba(0,0,0,0.04) 1px, transparent 1px, transparent 3px
+            );
+        }
+        /* Low graphics global override */
+        body.tt-low-graphics *,
+        body.tt-low-graphics *::before,
+        body.tt-low-graphics *::after {
+            animation-duration: 0.001ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.001ms !important;
+        }
+        body.tt-low-graphics .path-glow,
+        body.tt-low-graphics .rainbow-pinwheel { display: none !important; }
+        /* Pixelated body */
+        body.tt-pixelated { image-rendering: pixelated; font-smooth: never; }
+        body.tt-pixelated img, body.tt-pixelated canvas { image-rendering: pixelated; }
     </style>
 </head>
 
@@ -1057,13 +1207,20 @@
                         {% endif %}
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end shadow-lg rounded-4 overflow-hidden mt-3 p-0"
-                        style="border:4px solid #2c2f33!important;min-width:260px;">
+                        style="border:4px solid #2c2f33!important;min-width:280px;">
                         <li class="px-4 py-4 text-center bg-light" style="border-bottom:4px solid #2c2f33;">
                             <strong class="d-block fs-5 text-dark fw-bold mb-1">
-                                {% if request.user.first_name %}{{ request.user.first_name }} {{ request.user.last_name }}{%
-                                else %}{{ request.user.username }}{% endif %}
+                                {% if request.user.first_name %}{{ request.user.first_name }} {{ request.user.last_name }}{% else %}{{ request.user.username }}{% endif %}
                             </strong>
                             <small class="text-muted fw-bold">{{ request.user.email }}</small>
+                        </li>
+                        <li style="border-bottom:2px solid #eee;">
+                            <button type="button"
+                                class="dropdown-item py-3 fw-black d-flex align-items-center justify-content-center gap-2"
+                                style="font-size:1.15rem;color:#7c4dff;"
+                                onclick="openSettings()">
+                                ⚙️ MGA SETTING
+                            </button>
                         </li>
                         <li>
                             <form method="post" action="{% url 'account_logout' %}">
@@ -1232,6 +1389,73 @@
                 <button class="celebrate-btn" id="celebrate-dismiss-btn" onclick="dismissCelebration()">🎉 Salamat!</button>
             </div>
         </div>
+
+        <!-- ══ SETTINGS MODAL ══ -->
+        <div class="settings-overlay" id="settings-modal">
+            <div class="settings-panel">
+                <div class="settings-header">
+                    <h2>⚙️ Mga Setting</h2>
+                    <button class="settings-close-btn" onclick="closeSettings()">✕</button>
+                </div>
+                <div class="settings-body">
+
+                    <!-- 🔊 Volume -->
+                    <div class="settings-row">
+                        <div class="settings-row-label"><span class="s-icon">🔊</span> Lakas ng Tunog</div>
+                        <div style="display:flex;align-items:center;gap:12px;">
+                            <input type="range" id="tt-vol-slider" class="tt-slider volume-slider"
+                                min="0" max="100" step="1" value="80"
+                                oninput="onVolChange(this.value)">
+                            <span class="slider-val" id="tt-vol-label">80%</span>
+                        </div>
+                    </div>
+
+                    <!-- ☀️ Brightness -->
+                    <div class="settings-row">
+                        <div class="settings-row-label"><span class="s-icon">☀️</span> Liwanag ng Screen</div>
+                        <div style="display:flex;align-items:center;gap:12px;">
+                            <input type="range" id="tt-br-slider" class="tt-slider brightness-slider"
+                                min="50" max="150" step="1" value="100"
+                                oninput="onBrChange(this.value)">
+                            <span class="slider-val" id="tt-br-label">100%</span>
+                        </div>
+                    </div>
+
+                    <!-- 🎮 Graphics Quality -->
+                    <div class="settings-row">
+                        <div class="settings-row-label"><span class="s-icon">🎮</span> Kalidad ng Laro</div>
+                        <div class="tt-toggle-row">
+                            <span class="tt-toggle-label">I-off ang mga Galaw (Low Graphics)</span>
+                            <label class="tt-switch">
+                                <input type="checkbox" id="tt-lowgfx-toggle" onchange="onLowGfxChange(this.checked)">
+                                <span class="tt-switch-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                                        <!-- 🟫 Pixel Mode -->
+                    <div class="settings-row">
+                        <div class="settings-row-label"><span class="s-icon">🟫</span> Pixel Effect</div>
+                        <div style="display:flex;align-items:center;gap:12px;">
+                            <input type="range" id="tt-pixel-slider" class="tt-slider pixel-slider"
+                                min="0" max="100" step="10" value="0"
+                                oninput="onPixelChange(this.value)">
+                            <span class="slider-val" id="tt-pixel-label">0%</span>
+                        </div>
+                    </div>
+
+                    <!-- ⛶ Fullscreen -->
+                    <div class="settings-row">
+                        <div class="settings-row-label"><span class="s-icon">⛶</span> Full Screen</div>
+                        <button class="tt-fullscreen-btn" id="tt-fs-btn" onclick="toggleFullscreen()">⛶ I-bukas ang Full Screen</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Pixel overlay -->
+        <div id="tt-pixel-overlay"></div>
 
         <!-- Scroll arrows -->
         <button class="scroll-hint scroll-hint-left" id="btn-scroll-left" title="Scroll left" style="display: none;">
@@ -1664,6 +1888,104 @@
             }
         }
         window.addEventListener('load', updateMascot);
+    </script>
+    <script>
+    // ═══════════════════════════════════════════════════════
+    // SETTINGS MODAL CONTROLLER
+    // ═══════════════════════════════════════════════════════
+
+    function openSettings() {
+        // Sync sliders + toggles to saved values
+        const vol = window.TTSettings.getVolume();
+        const br  = window.TTSettings.getBrightness();
+        const lg  = window.TTSettings.getLowGraphics();
+        const px  = window.TTSettings.getPixelated();
+
+        const volSlider = document.getElementById('tt-vol-slider');
+        const brSlider  = document.getElementById('tt-br-slider');
+        const pxSlider  = document.getElementById('tt-pixel-slider');
+        
+        if (volSlider) { volSlider.value = vol; updateSliderBg(volSlider, vol, 0, 100); }
+        if (brSlider)  { brSlider.value  = br;  updateSliderBg(brSlider, br, 50, 150); }
+        if (pxSlider)  { pxSlider.value  = px;  updateSliderBg(pxSlider, px, 0, 100); }
+
+        const volLabel = document.getElementById('tt-vol-label');
+        if (volLabel) volLabel.textContent = vol + '%';
+        
+        const brLabel = document.getElementById('tt-br-label');
+        if (brLabel) brLabel.textContent  = br  + '%';
+        
+        const pxLabel = document.getElementById('tt-pixel-label');
+        if (pxLabel) pxLabel.textContent = px + '%';
+        
+        const lowGfx = document.getElementById('tt-lowgfx-toggle');
+        if (lowGfx) lowGfx.checked = lg;
+
+        updateFSBtn();
+
+        document.getElementById('settings-modal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+        // Close Bootstrap dropdown first
+        document.querySelector('[data-bs-toggle="dropdown"]')?.click();
+    }
+
+    window.openSettings = openSettings;
+
+    window.closeSettings = function () {
+        document.getElementById('settings-modal').classList.remove('open');
+        document.body.style.overflow = '';
+    };
+
+    function updateSliderBg(input, val, min, max) {
+        const pct = ((val - min) / (max - min) * 100).toFixed(1) + '%';
+        if (input.classList.contains('volume-slider'))     input.style.setProperty('--vol-pct', pct);
+        if (input.classList.contains('brightness-slider')) input.style.setProperty('--br-pct',  pct);
+        if (input.classList.contains('pixel-slider'))      input.style.setProperty('--px-pct',  pct);
+    }
+
+    window.onVolChange = function (val) {
+        val = parseInt(val, 10);
+        window.TTSettings.setVolume(val);
+        document.getElementById('tt-vol-label').textContent = val + '%';
+        updateSliderBg(document.getElementById('tt-vol-slider'), val, 0, 100);
+    };
+
+    window.onBrChange = function (val) {
+        val = parseInt(val, 10);
+        window.TTSettings.setBrightness(val);
+        document.getElementById('tt-br-label').textContent = val + '%';
+        updateSliderBg(document.getElementById('tt-br-slider'), val, 50, 150);
+    };
+
+    window.onLowGfxChange = function (checked) {
+        window.TTSettings.setLowGraphics(checked);
+    };
+
+    window.onPixelChange = function (val) {
+        val = parseInt(val, 10);
+        window.TTSettings.setPixelated(val);
+        const pxLabel = document.getElementById('tt-pixel-label');
+        if (pxLabel) pxLabel.textContent = val + '%';
+        const pxSlider = document.getElementById('tt-pixel-slider');
+        if (pxSlider) updateSliderBg(pxSlider, val, 0, 100);
+    };
+
+    function updateFSBtn() {
+        const btn = document.getElementById('tt-fs-btn');
+        if (!btn) return;
+        const full = !!document.fullscreenElement;
+        btn.textContent = full ? '⎋ Lumabas sa Full Screen' : '⛶ I-bukas ang Full Screen';
+    }
+
+    window.toggleFullscreen = function () {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().catch(() => {});
+        } else {
+            document.exitFullscreen().catch(() => {});
+        }
+    };
+
+    document.addEventListener('fullscreenchange', updateFSBtn);
     </script>
 </body>
 
