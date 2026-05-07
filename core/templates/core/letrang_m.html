@@ -34,8 +34,11 @@
         body {
             font-family: 'Nunito', sans-serif;
             background: linear-gradient(135deg, #FFF8F0 0%, #FFF0F5 50%, #F0F8FF 100%);
-            min-height: 100vh;
-            overflow-x: hidden;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         /* ── HEADER ── */
@@ -49,6 +52,7 @@
             position: sticky;
             top: 0;
             z-index: 200;
+            flex-shrink: 0;
         }
 
         .header-back-btn {
@@ -80,6 +84,7 @@
         }
 
         .header-stars {
+            display: none !important;
             background: rgba(255, 255, 255, 0.25);
             border: 3px solid rgba(255, 255, 255, 0.6);
             border-radius: 40px;
@@ -87,7 +92,6 @@
             color: white;
             font-weight: 900;
             font-size: 1rem;
-            display: flex;
             align-items: center;
             gap: 6px;
         }
@@ -102,6 +106,7 @@
             gap: 10px;
             background: white;
             border-bottom: 3px solid #eee;
+            flex-shrink: 0;
         }
 
         .progress-dot {
@@ -135,18 +140,22 @@
             overflow: hidden;
             width: 100%;
             position: relative;
+            flex-grow: 1;
+            min-height: 0;
         }
 
         .units-track {
             display: flex;
             width: 500%;
+            height: 100%;
             /* 5 units × 100% each */
             transition: transform 0.45s cubic-bezier(0.77, 0, 0.175, 1);
         }
 
         .unit-slide {
             width: calc(100% / 5);
-            min-height: calc(100vh - 130px);
+            height: 100%;
+            overflow-y: auto;
             padding: 28px 20px 100px;
             flex-shrink: 0;
         }
@@ -212,26 +221,7 @@
             touch-action: none;
         }
 
-        /* Ruled lines drawn via CSS pseudo + repeating gradient */
-        .canvas-frame::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            z-index: 1;
-            background:
-                repeating-linear-gradient(180deg,
-                    transparent 0px,
-                    transparent calc(33.33% - 1px),
-                    #90CAF9 calc(33.33% - 1px),
-                    #90CAF9 calc(33.33%),
-                    transparent calc(33.33%),
-                    transparent calc(66.66% - 1px),
-                    #EF9A9A calc(66.66% - 1px),
-                    #EF9A9A calc(66.66%),
-                    transparent calc(66.66%),
-                    transparent 100%);
-        }
+
 
         /* Ghost letter watermark */
         .canvas-ghost {
@@ -557,8 +547,8 @@
             border-radius: 28px;
             border: 4px solid var(--dark);
             box-shadow: 0 8px 0 var(--dark), 0 16px 40px rgba(0, 0, 0, 0.08);
-            padding: 32px 24px;
-            max-width: 760px;
+            padding: 40px 40px;
+            max-width: 1000px;
             margin: 0 auto;
             position: relative;
         }
@@ -1071,35 +1061,43 @@
 
     <!-- ── REVERSE RAINBOW TRANSITION OUT ── -->
     <div id="transition-out"
-        style="position:fixed; inset:0; z-index:99999; pointer-events:none; display:flex; align-items:center; justify-content:center; overflow:hidden; animation: outOverlay 0.1s 1.2s forwards;">
+        style="position:fixed; inset:0; z-index:99999; pointer-events:none; display:flex; align-items:center; justify-content:center; overflow:hidden; animation: outOverlay 0.1s 2.4s forwards;">
         <!-- Pinwheel spins backwards and shrinks -->
         <div
-            style="position:absolute; width:250vw; height:250vw; border-radius:50%; background: conic-gradient(#FF5252 0deg 60deg, #FF9800 60deg 120deg, #FFEB3B 120deg 180deg, #4CAF50 180deg 240deg, #2196F3 240deg 300deg, #9C27B0 300deg 360deg); animation: reversePinwheel 0.9s cubic-bezier(0.8, 0, 0.2, 1) forwards;">
+            style="position:absolute; width:250vw; height:250vw; border-radius:50%; background: conic-gradient(#FF5252 0deg 60deg, #FF9800 60deg 120deg, #FFEB3B 120deg 180deg, #4CAF50 180deg 240deg, #2196F3 240deg 300deg, #9C27B0 300deg 360deg); animation: reversePinwheel 1.8s cubic-bezier(0.6, 0, 0.2, 1) forwards;">
         </div>
 
         <!-- Stars shrink and rotate -->
-        <div style="position:absolute; inset:0; z-index:10001; animation: outOverlay 0.1s 1s forwards;">
+        <div style="position:absolute; inset:0; z-index:10001; animation: outOverlay 0.1s 2s forwards;">
             <i class="fa-solid fa-star text-warning"
-                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:15%; left:15%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0s;"></i>
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:15%; left:15%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0s;"></i>
             <i class="fa-solid fa-star text-warning"
-                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:20%; left:80%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0.1s;"></i>
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:20%; left:80%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.15s;"></i>
             <i class="fa-solid fa-star text-warning"
-                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:75%; left:20%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0.2s;"></i>
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:75%; left:20%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.3s;"></i>
             <i class="fa-solid fa-star text-warning"
-                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:80%; left:75%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0.1s;"></i>
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:80%; left:75%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.15s;"></i>
             <i class="fa-solid fa-star text-warning"
-                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:10%; left:50%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0.3s;"></i>
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:10%; left:50%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.45s;"></i>
         </div>
 
         <!-- Mascot hides -->
         <div
-            style="position:absolute; z-index:10002; display:flex; flex-direction:column; align-items:center; justify-content:center; animation: reverseContent 0.7s cubic-bezier(0.8, 0, 0.2, 1) forwards;">
-            <div style="font-size:8rem; filter:drop-shadow(0 10px 0 rgba(0,0,0,0.15)); line-height:1;">🐒</div>
+            style="position:absolute; z-index:10002; display:flex; flex-direction:column; align-items:center; justify-content:center; animation: reverseContent 1.4s cubic-bezier(0.6, 0, 0.2, 1) forwards;">
+            <div id="transition-mascot-emoji" style="font-size:8rem; filter:drop-shadow(0 10px 0 rgba(0,0,0,0.15)); line-height:1;">🐒</div>
             <div
                 style="font-family:'Bubblegum Sans',cursive; font-size:5rem; color:white; text-shadow:4px 6px 0 rgba(0,0,0,0.2); margin-top:-20px; transform:rotate(-5deg);">
                 Maglaro Tayo!</div>
         </div>
     </div>
+    <script>
+        (function() {
+            var _em = { A:'🦅',B:'🐗',K:'🐃',D:'🐭',E:'🐘',G:'🪿',H:'🐢',I:'🐦',L:'🦁',M:'🐒',N:'🦬',NG:'🐊',O:'🐻',P:'🐸',R:'🐠',S:'🐍',T:'🦊',U:'🐦‍⬛',W:'✨',Y:'🦬' };
+            var _k = localStorage.getItem('tunog_tuklas_active_pet') || localStorage.getItem('tunog_tuklas_recent_animal') || 'M';
+            var _el = document.getElementById('transition-mascot-emoji');
+            if (_el && _em[_k]) _el.textContent = _em[_k];
+        })();
+    </script>
     <style>
         @keyframes outOverlay {
             to {
@@ -1114,9 +1112,12 @@
                 opacity: 1;
                 filter: brightness(1);
             }
-
+            60% {
+                opacity: 1;
+                filter: brightness(1.2);
+            }
             100% {
-                transform: scale(0) rotate(-180deg);
+                transform: scale(0) rotate(-270deg);
                 opacity: 0;
                 filter: brightness(1.5);
             }
@@ -1127,10 +1128,12 @@
                 opacity: 1;
                 transform: scale(1) rotate(15deg);
             }
-
+            40% {
+                opacity: 0.8;
+            }
             100% {
                 opacity: 0;
-                transform: scale(0) rotate(-90deg);
+                transform: scale(0) rotate(-135deg);
             }
         }
 
@@ -1139,10 +1142,13 @@
                 opacity: 1;
                 transform: scale(1) translateY(0);
             }
-
+            50% {
+                opacity: 0.9;
+                transform: scale(0.9) translateY(30px);
+            }
             100% {
                 opacity: 0;
-                transform: scale(0.5) translateY(200px);
+                transform: scale(0.4) translateY(250px);
             }
         }
 
@@ -2615,26 +2621,14 @@
                         <span class="slider-val" id="tt-br-label">100%</span>
                     </div>
                 </div>
-                <!-- 🎮 Low Graphics -->
-                <div class="settings-row">
-                    <div class="settings-row-label"><span class="s-icon">🎮</span> Kalidad ng Laro</div>
-                    <div class="tt-toggle-row">
-                        <span class="tt-toggle-label">I-off ang mga Galaw (Low Graphics)</span>
-                        <label class="tt-switch">
-                            <input type="checkbox" id="tt-lowgfx-toggle" onchange="onLowGfxChange(this.checked)">
-                            <span class="tt-switch-slider"></span>
-                        </label>
-                    </div>
-                </div>
-                <!-- 🟫 Pixelated -->
+                <!-- 🟫 Pixel Mode -->
                 <div class="settings-row">
                     <div class="settings-row-label"><span class="s-icon">🟫</span> Pixel Mode</div>
-                    <div class="tt-toggle-row">
-                        <span class="tt-toggle-label">Retro / Pixel na Hitsura</span>
-                        <label class="tt-switch">
-                            <input type="checkbox" id="tt-pixel-toggle" onchange="onPixelChange(this.checked)">
-                            <span class="tt-switch-slider"></span>
-                        </label>
+                    <div style="display:flex;align-items:center;gap:12px;">
+                        <input type="range" id="tt-pixel-slider" class="tt-slider pixel-slider"
+                            min="0" max="100" step="1" value="0"
+                            oninput="onPixelChange(this.value)">
+                        <span class="slider-val" id="tt-pixel-label">0%</span>
                     </div>
                 </div>
                 <!-- ⛶ Fullscreen -->
@@ -2645,8 +2639,7 @@
             </div>
         </div>
     </div>
-    <!-- Pixel overlay -->
-    <div id="tt-pixel-overlay"></div>
+    
 
 
     <script>
@@ -2656,23 +2649,19 @@
     function openSettings() {
         var vol = window.TTSettings ? window.TTSettings.getVolume() : 80;
         var br  = window.TTSettings ? window.TTSettings.getBrightness() : 100;
-        var lg  = window.TTSettings ? window.TTSettings.getLowGraphics() : false;
         var px  = window.TTSettings ? window.TTSettings.getPixelated() : 0;
         var vs = document.getElementById('tt-vol-slider');
-        var ps = document.getElementById('tt-pixel-slider');
-        if (ps) { ps.value = px; updateSliderBg(ps, px, 0, 100); }
         var bs = document.getElementById('tt-br-slider');
+        var ps = document.getElementById('tt-pixel-slider');
         if (vs) { vs.value = vol; updateSliderBg(vs, vol, 0, 100); }
         if (bs) { bs.value = br;  updateSliderBg(bs, br, 50, 150); }
+        if (ps) { ps.value = px;  updateSliderBg(ps, px, 0, 100); }
         var vl = document.getElementById('tt-vol-label');
         var bl = document.getElementById('tt-br-label');
+        var pl = document.getElementById('tt-pixel-label');
         if (vl) vl.textContent = vol + '%';
         if (bl) bl.textContent = br  + '%';
-        var pl = document.getElementById('tt-pixel-label');
-        if (pl) pl.textContent = px + '%';
-        var lt = document.getElementById('tt-lowgfx-toggle');
-        if (lt) lt.checked = lg;
-        updateFSBtn();
+        if (pl) pl.textContent = px  + '%';
         document.getElementById('settings-modal').classList.add('open');
         document.body.style.overflow = 'hidden';
     }
@@ -2700,9 +2689,6 @@
         var el = document.getElementById('tt-br-label');
         if (el) el.textContent = val + '%';
         updateSliderBg(document.getElementById('tt-br-slider'), val, 50, 150);
-    };
-    window.onLowGfxChange = function(checked) {
-        if (window.TTSettings) window.TTSettings.setLowGraphics(checked);
     };
     window.onPixelChange = function(val) {
         val = parseInt(val, 10);

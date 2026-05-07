@@ -522,29 +522,7 @@
             }
         }
 
-        /* Animal avatar pill (replaces star badge) */
-        .animal-avatar-pill {
-            position: fixed;
-            top: 105px;
-            left: 20px;
-            z-index: 9999;
-        }
-        .animal-pill-inner {
-            background: #fff;
-            border: 4px solid #2c2f33;
-            border-radius: 40px;
-            padding: 8px 18px;
-            box-shadow: 0 6px 0 #2c2f33;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            white-space: nowrap;
-            font-family: 'Nunito', sans-serif;
-            font-weight: 900;
-            font-size: 0.95rem;
-            color: #2c2f33;
-        }
-        .animal-emoji-big { font-size: 1.8rem; }
+
 
         /* Backpack button */
         .btn-backpack {
@@ -1351,13 +1329,7 @@
 
         <!-- ══ FIXED OVERLAYS ══ -->
 
-        <!-- Animal Avatar Pill (replaces Stars badge) -->
-        <div class="animal-avatar-pill" id="animalAvatarPill">
-            <div class="animal-pill-inner">
-                <span class="animal-emoji-big" id="avatarEmoji">🐒</span>
-                <span id="avatarName">Matsing</span>
-            </div>
-        </div>
+        <!-- Animal Avatar Pill removed per user request -->
 
         <!-- ══ COLLECTION MODAL ══ -->
         <div class="koleksyon-overlay" id="koleksyon-modal">
@@ -1421,24 +1393,12 @@
                         </div>
                     </div>
 
-                    <!-- 🎮 Graphics Quality -->
+                    <!-- 🟫 Pixel Mode -->
                     <div class="settings-row">
-                        <div class="settings-row-label"><span class="s-icon">🎮</span> Kalidad ng Laro</div>
-                        <div class="tt-toggle-row">
-                            <span class="tt-toggle-label">I-off ang mga Galaw (Low Graphics)</span>
-                            <label class="tt-switch">
-                                <input type="checkbox" id="tt-lowgfx-toggle" onchange="onLowGfxChange(this.checked)">
-                                <span class="tt-switch-slider"></span>
-                            </label>
-                        </div>
-                    </div>
-
-                                        <!-- 🟫 Pixel Mode -->
-                    <div class="settings-row">
-                        <div class="settings-row-label"><span class="s-icon">🟫</span> Pixel Effect</div>
+                        <div class="settings-row-label"><span class="s-icon">🟫</span> Pixel Mode</div>
                         <div style="display:flex;align-items:center;gap:12px;">
                             <input type="range" id="tt-pixel-slider" class="tt-slider pixel-slider"
-                                min="0" max="100" step="10" value="0"
+                                min="0" max="100" step="1" value="0"
                                 oninput="onPixelChange(this.value)">
                             <span class="slider-val" id="tt-pixel-label">0%</span>
                         </div>
@@ -1454,8 +1414,7 @@
             </div>
         </div>
 
-        <!-- Pixel overlay -->
-        <div id="tt-pixel-overlay"></div>
+        
 
         <!-- Scroll arrows -->
         <button class="scroll-hint scroll-hint-left" id="btn-scroll-left" title="Scroll left" style="display: none;">
@@ -1608,8 +1567,10 @@
     // ── Animal avatar pill ──
     function updateAvatarPill() {
         const a = getMostRecentAnimal();
-        document.getElementById('avatarEmoji').textContent = a.emoji || '🐒';
-        document.getElementById('avatarName').textContent = a.name || 'Matsing';
+        const emojiEl = document.getElementById('avatarEmoji');
+        const nameEl = document.getElementById('avatarName');
+        if (emojiEl) emojiEl.textContent = a.emoji || '🐒';
+        if (nameEl) nameEl.textContent = a.name || 'Matsing';
     }
 
     // ── Collection modal ──
@@ -1921,8 +1882,6 @@
         const lowGfx = document.getElementById('tt-lowgfx-toggle');
         if (lowGfx) lowGfx.checked = lg;
 
-        updateFSBtn();
-
         document.getElementById('settings-modal').classList.add('open');
         document.body.style.overflow = 'hidden';
         // Close Bootstrap dropdown first
@@ -1956,35 +1915,25 @@
         document.getElementById('tt-br-label').textContent = val + '%';
         updateSliderBg(document.getElementById('tt-br-slider'), val, 50, 150);
     };
-
-    window.onLowGfxChange = function (checked) {
-        window.TTSettings.setLowGraphics(checked);
-    };
-
-    window.onPixelChange = function (val) {
+    window.onPixelChange = function(val) {
         val = parseInt(val, 10);
-        window.TTSettings.setPixelated(val);
-        const pxLabel = document.getElementById('tt-pixel-label');
-        if (pxLabel) pxLabel.textContent = val + '%';
-        const pxSlider = document.getElementById('tt-pixel-slider');
-        if (pxSlider) updateSliderBg(pxSlider, val, 0, 100);
+        if (window.TTSettings) window.TTSettings.setPixelated(val);
+        const el = document.getElementById('tt-pixel-label');
+        if (el) el.textContent = val + '%';
+        updateSliderBg(document.getElementById('tt-pixel-slider'), val, 0, 100);
     };
-
     function updateFSBtn() {
-        const btn = document.getElementById('tt-fs-btn');
+        var btn = document.getElementById('tt-fs-btn');
         if (!btn) return;
-        const full = !!document.fullscreenElement;
-        btn.textContent = full ? '⎋ Lumabas sa Full Screen' : '⛶ I-bukas ang Full Screen';
+        btn.textContent = document.fullscreenElement ? '⎋ Lumabas sa Full Screen' : '⛶ I-bukas ang Full Screen';
     }
-
-    window.toggleFullscreen = function () {
+    window.toggleFullscreen = function() {
         if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen().catch(() => {});
+            document.documentElement.requestFullscreen().catch(function(){});
         } else {
-            document.exitFullscreen().catch(() => {});
+            document.exitFullscreen().catch(function(){});
         }
     };
-
     document.addEventListener('fullscreenchange', updateFSBtn);
     </script>
 </body>

@@ -160,13 +160,22 @@ body {
     border-radius: 12px;
     box-shadow: 0px 8px 0px var(--border-dark);
     max-width: 450px;
-    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease, filter 0.2s ease;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease;
+}
+
+@keyframes colorCycle {
+    0%   { background-color: #4dcfc6; }
+    20%  { background-color: #fe9f45; }
+    40%  { background-color: #fc6c6d; }
+    60%  { background-color: #c77dff; }
+    80%  { background-color: #4d96ff; }
+    100% { background-color: #4dcfc6; }
 }
 
 .btn-game-primary:hover {
     transform: translateY(-4px) scale(1.02);
-    box-shadow: 0px 12px 0px var(--border-dark), 0px 15px 25px rgba(77, 207, 198, 0.4);
-    filter: brightness(1.05); /* Make it subtly glow */
+    box-shadow: 0px 12px 0px var(--border-dark), 0px 15px 25px rgba(0, 0, 0, 0.15);
+    animation: colorCycle 1.8s ease-in-out infinite;
 }
 
 /* Gloss highlight matching 2D style */
@@ -180,11 +189,13 @@ body {
 .btn-game-primary:active {
     transform: translateY(8px);
     box-shadow: 0px 0px 0px var(--border-dark);
+    animation: none;
 }
 
 .btn-game-primary:active .btn-highlight {
     opacity: 0.5;
 }
+
 
 /* Secondary Actions Buttons */
 .btn-game-orange, .btn-game-blue {

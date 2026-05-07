@@ -34,8 +34,11 @@
         body {
             font-family: 'Nunito', sans-serif;
             background: linear-gradient(135deg, #FFF8F0 0%, #FFF0F5 50%, #F0F8FF 100%);
-            min-height: 100vh;
-            overflow-x: hidden;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         /* ── HEADER ── */
@@ -49,6 +52,7 @@
             position: sticky;
             top: 0;
             z-index: 200;
+            flex-shrink: 0;
         }
 
         .header-back-btn {
@@ -80,6 +84,7 @@
         }
 
         .header-stars {
+            display: none !important;
             background: rgba(255, 255, 255, 0.25);
             border: 3px solid rgba(255, 255, 255, 0.6);
             border-radius: 40px;
@@ -87,7 +92,6 @@
             color: white;
             font-weight: 900;
             font-size: 1rem;
-            display: flex;
             align-items: center;
             gap: 6px;
         }
@@ -102,6 +106,7 @@
             gap: 10px;
             background: white;
             border-bottom: 3px solid #eee;
+            flex-shrink: 0;
         }
 
         .progress-dot {
@@ -135,18 +140,22 @@
             overflow: hidden;
             width: 100%;
             position: relative;
+            flex-grow: 1;
+            min-height: 0;
         }
 
         .units-track {
             display: flex;
             width: 800%;
+            height: 100%;
             /* 8 units × 100% each */
             transition: transform 0.45s cubic-bezier(0.77, 0, 0.175, 1);
         }
 
         .unit-slide {
             width: calc(100% / 8);
-            min-height: calc(100vh - 130px);
+            height: 100%;
+            overflow-y: auto;
             padding: 28px 20px 100px;
             flex-shrink: 0;
         }
@@ -583,20 +592,20 @@
             border-radius: 28px;
             border: 4px solid var(--dark);
             box-shadow: 0 8px 0 var(--dark), 0 16px 40px rgba(0, 0, 0, 0.08);
-            padding: 32px 24px;
-            max-width: 760px;
+            padding: 40px 40px;
+            max-width: 1000px;
             margin: 0 auto;
             position: relative;
         }
 
         .section-badge {
             position: absolute;
-            top: -18px;
-            left: 24px;
+            top: -14px;
+            left: 20px;
             font-family: 'Nunito', sans-serif;
             font-weight: 900;
-            font-size: 1rem;
-            padding: 5px 18px;
+            font-size: 0.9rem;
+            padding: 4px 14px;
             border-radius: 20px;
             border: 3px solid var(--dark);
             box-shadow: 0 3px 0 var(--dark);
@@ -621,7 +630,7 @@
         /* ── INTRO STYLES ── */
         .big-letter {
             font-family: 'Bubblegum Sans', cursive;
-            font-size: 9rem;
+            font-size: 5.5rem;
             line-height: 1;
             background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
             -webkit-background-clip: text;
@@ -647,8 +656,8 @@
             background: linear-gradient(135deg, #FFF3CD, #FFF0F5);
             border: 3px solid var(--yellow);
             border-radius: 18px;
-            padding: 14px 20px;
-            font-size: 1.05rem;
+            padding: 12px 16px;
+            font-size: 0.95rem;
             font-weight: 700;
             color: #5A3E00;
             line-height: 1.65;
@@ -658,10 +667,10 @@
             background: linear-gradient(135deg, var(--yellow), var(--orange));
             border: 4px solid var(--dark);
             border-radius: 50px;
-            padding: 12px 30px;
+            padding: 10px 24px;
             font-family: 'Nunito', sans-serif;
             font-weight: 900;
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: var(--dark);
             cursor: pointer;
             box-shadow: 0 6px 0 var(--dark);
@@ -684,17 +693,17 @@
         .activity-title {
             font-family: 'Nunito', sans-serif;
             font-weight: 900;
-            font-size: 1.45rem;
+            font-size: 1.25rem;
             color: var(--dark);
             margin-bottom: 6px;
         }
 
         .activity-instruction {
-            font-size: 0.97rem;
+            font-size: 0.9rem;
             font-weight: 700;
             color: #666;
             line-height: 1.6;
-            margin-bottom: 22px;
+            margin-bottom: 18px;
         }
 
         .choices-grid {
@@ -852,10 +861,10 @@
             background: linear-gradient(135deg, var(--green), #2e7d32);
             border: 4px solid var(--dark);
             border-radius: 50px;
-            padding: 13px 30px;
+            padding: 11px 24px;
             font-family: 'Nunito', sans-serif;
             font-weight: 900;
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             color: white;
             cursor: pointer;
             box-shadow: 0 7px 0 var(--dark);
@@ -864,7 +873,7 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            margin-top: 24px;
+            margin-top: 20px;
         }
 
         .check-btn:hover {
@@ -1097,35 +1106,44 @@
 
     <!-- ── REVERSE RAINBOW TRANSITION OUT ── -->
     <div id="transition-out"
-        style="position:fixed; inset:0; z-index:99999; pointer-events:none; display:flex; align-items:center; justify-content:center; overflow:hidden; animation: outOverlay 0.1s 1.2s forwards;">
+        style="position:fixed; inset:0; z-index:99999; pointer-events:none; display:flex; align-items:center; justify-content:center; overflow:hidden; animation: outOverlay 0.1s 2.4s forwards;">
         <!-- Pinwheel spins backwards and shrinks -->
         <div
-            style="position:absolute; width:250vw; height:250vw; border-radius:50%; background: conic-gradient(#FF5252 0deg 60deg, #FF9800 60deg 120deg, #FFEB3B 120deg 180deg, #4CAF50 180deg 240deg, #2196F3 240deg 300deg, #9C27B0 300deg 360deg); animation: reversePinwheel 0.9s cubic-bezier(0.8, 0, 0.2, 1) forwards;">
+            style="position:absolute; width:250vw; height:250vw; border-radius:50%; background: conic-gradient(#FF5252 0deg 60deg, #FF9800 60deg 120deg, #FFEB3B 120deg 180deg, #4CAF50 180deg 240deg, #2196F3 240deg 300deg, #9C27B0 300deg 360deg); animation: reversePinwheel 1.8s cubic-bezier(0.6, 0, 0.2, 1) forwards;">
         </div>
 
         <!-- Stars shrink and rotate -->
-        <div style="position:absolute; inset:0; z-index:10001; animation: outOverlay 0.1s 1s forwards;">
+        <div style="position:absolute; inset:0; z-index:10001; animation: outOverlay 0.1s 2s forwards;">
             <i class="fa-solid fa-star text-warning"
-                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:15%; left:15%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0s;"></i>
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:15%; left:15%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0s;"></i>
             <i class="fa-solid fa-star text-warning"
-                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:20%; left:80%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0.1s;"></i>
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:20%; left:80%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.15s;"></i>
             <i class="fa-solid fa-star text-warning"
-                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:75%; left:20%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0.2s;"></i>
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:75%; left:20%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.3s;"></i>
             <i class="fa-solid fa-star text-warning"
-                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:80%; left:75%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0.1s;"></i>
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:80%; left:75%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.15s;"></i>
             <i class="fa-solid fa-star text-warning"
-                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:10%; left:50%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.6s cubic-bezier(0.8, 0, 0.2, 1) forwards 0.3s;"></i>
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:10%; left:50%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.45s;"></i>
         </div>
 
         <!-- Mascot hides -->
         <div
-            style="position:absolute; z-index:10002; display:flex; flex-direction:column; align-items:center; justify-content:center; animation: reverseContent 0.7s cubic-bezier(0.8, 0, 0.2, 1) forwards;">
-            <div style="font-size:8rem; filter:drop-shadow(0 10px 0 rgba(0,0,0,0.15)); line-height:1;">🐒</div>
+            style="position:absolute; z-index:10002; display:flex; flex-direction:column; align-items:center; justify-content:center; animation: reverseContent 1.4s cubic-bezier(0.6, 0, 0.2, 1) forwards;">
+            <div id="transition-mascot-emoji"
+                style="font-size:8rem; filter:drop-shadow(0 10px 0 rgba(0,0,0,0.15)); line-height:1;">🐒</div>
             <div
                 style="font-family:'Bubblegum Sans',cursive; font-size:5rem; color:white; text-shadow:4px 6px 0 rgba(0,0,0,0.2); margin-top:-20px; transform:rotate(-5deg);">
                 Maglaro Tayo!</div>
         </div>
     </div>
+    <script>
+        (function () {
+            var _em = { A: '🦅', B: '🐗', K: '🐃', D: '🐭', E: '🐘', G: '🪿', H: '🐢', I: '🐦', L: '🦁', M: '🐒', N: '🦬', NG: '🐊', O: '🐻', P: '🐸', R: '🐠', S: '🐍', T: '🦊', U: '🐦‍⬛', W: '✨', Y: '🦬' };
+            var _k = localStorage.getItem('tunog_tuklas_active_pet') || localStorage.getItem('tunog_tuklas_recent_animal') || 'M';
+            var _el = document.getElementById('transition-mascot-emoji');
+            if (_el && _em[_k]) _el.textContent = _em[_k];
+        })();
+    </script>
     <style>
         @keyframes outOverlay {
             to {
@@ -1141,8 +1159,13 @@
                 filter: brightness(1);
             }
 
+            60% {
+                opacity: 1;
+                filter: brightness(1.2);
+            }
+
             100% {
-                transform: scale(0) rotate(-180deg);
+                transform: scale(0) rotate(-270deg);
                 opacity: 0;
                 filter: brightness(1.5);
             }
@@ -1154,9 +1177,13 @@
                 transform: scale(1) rotate(15deg);
             }
 
+            40% {
+                opacity: 0.8;
+            }
+
             100% {
                 opacity: 0;
-                transform: scale(0) rotate(-90deg);
+                transform: scale(0) rotate(-135deg);
             }
         }
 
@@ -1166,9 +1193,14 @@
                 transform: scale(1) translateY(0);
             }
 
+            50% {
+                opacity: 0.9;
+                transform: scale(0.9) translateY(30px);
+            }
+
             100% {
                 opacity: 0;
-                transform: scale(0.5) translateY(200px);
+                transform: scale(0.4) translateY(250px);
             }
         }
     </style>
@@ -1262,173 +1294,180 @@
                     <p class="activity-instruction">Gamitin ang iyong daliri o mouse para magsulat ng malaki at maliit
                         na <strong>Oo</strong> sa loob ng kahon. Sundin ang guhit-gabay! ✍️</p>
 
-                    <!-- Instruction reminder (Visual Stroke Guide) -->
-                    <div class="visual-guide-box"
-                        style="margin-bottom:20px; padding: 15px; background: white; border: 2px dashed #FF9F43; border-radius: 15px; text-align: center;">
-                        <p style="font-weight: 800; color: #FF9F43; margin-bottom: 10px; font-size: 1.1rem;">💡 Paano
-                            isulat ang Oo? (Sundin ang mga numero!)</p>
-                        <svg viewBox="0 0 400 120"
-                            style="width: 100%; max-width: 450px; height: auto; overflow: visible;">
-                            <!-- O Uppercase -->
-                            <g transform="translate(40, 0)">
-                                <!-- Guidelines -->
-                                <line x1="-10" y1="10" x2="110" y2="10" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="6" />
-                                <line x1="-10" y1="55" x2="110" y2="55" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="6" />
-                                <line x1="-10" y1="100" x2="110" y2="100" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="6" />
-                                <!-- Skeleton O -->
-                                <ellipse cx="50" cy="55" rx="38" ry="44" fill="none" stroke="#f0f0f0" stroke-width="14" />
-                                <!-- Arrow 1: circle counterclockwise -->
-                                <path d="M 50,11 A 38,44 0 0 0 50,99 A 38,44 0 0 0 50,11" fill="none" stroke="#FF6B9D" stroke-width="4" stroke-linecap="round" />
-                                <!-- Directional Arrowhead -->
-                                <polygon points="34,11 48,3 48,19" fill="#FF6B9D" />
-                                <!-- Map Pin for Number 1 -->
-                                <polygon points="49,5 44,14 54,14" fill="#FF6B9D" />
-                                <circle cx="50" cy="5" r="8" fill="#FF6B9D" /><text x="50" y="9" fill="white"
-                                    font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">1</text>
-                            </g>
-                            <!-- o Lowercase -->
-                            <g transform="translate(260, 0)">
-                                <!-- Guidelines -->
-                                <line x1="-10" y1="10" x2="110" y2="10" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="6" />
-                                <line x1="-10" y1="55" x2="110" y2="55" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="6" />
-                                <line x1="-10" y1="100" x2="110" y2="100" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="6" />
-                                <!-- Skeleton o -->
-                                <ellipse cx="50" cy="77" rx="30" ry="26" fill="none" stroke="#f0f0f0" stroke-width="14" />
-                                <!-- Arrow 1: circle counterclockwise -->
-                                <path d="M 50,51 A 30,26 0 0 0 50,103 A 30,26 0 0 0 50,51" fill="none" stroke="#FF6B9D" stroke-width="4" stroke-linecap="round" />
-                                <!-- Directional Arrowhead -->
-                                <polygon points="34,51 48,43 48,59" fill="#FF6B9D" />
-                                <!-- Map Pin for Number 1 -->
-                                <polygon points="49,45 44,54 54,54" fill="#FF6B9D" />
-                                <circle cx="50" cy="45" r="8" fill="#FF6B9D" /><text x="50" y="49" fill="white"
-                                    font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">1</text>
-                            </g>
-                        </svg>
-                    </div>
+                    <!-- ── TWO-COLUMN LAYOUT ── -->
+                    <div style="display:flex; gap:0; align-items:stretch; margin-top:8px;">
 
-                    <!-- ── Uppercase I Drawing Pad ── -->
-                    <div class="draw-pad-wrapper">
-                        <div class="draw-pad-label">
-                            <span class="letter-preview upper">O</span>
-                            <span style="color:var(--blue);">Malaking O</span>
-                        </div>
+                        <!-- LEFT PANEL: Stroke guides + shared controls -->
+                        <div style="
+                            width:200px; flex-shrink:0;
+                            display:flex; flex-direction:column; gap:14px;
+                            padding-right:18px;
+                            border-right:2px solid #eee;
+                        ">
+                            <!-- Stroke guide: O uppercase -->
+                            <div
+                                style="background:#fff9f5; border:2px dashed #FF9F43; border-radius:14px; padding:10px; text-align:center;">
+                                <p style="font-weight:800; color:#FF9F43; font-size:0.78rem; margin-bottom:6px;">💡
+                                    Malaking O</p>
+                                <svg viewBox="0 0 100 110"
+                                    style="width:100%; max-width:110px; height:auto; overflow:visible; display:block; margin:0 auto;">
+                                    <line x1="-5" y1="10" x2="105" y2="10" stroke="#f0f0f0" stroke-width="2"
+                                        stroke-dasharray="5" />
+                                    <line x1="-5" y1="55" x2="105" y2="55" stroke="#f0f0f0" stroke-width="2"
+                                        stroke-dasharray="5" />
+                                    <line x1="-5" y1="100" x2="105" y2="100" stroke="#f0f0f0" stroke-width="2"
+                                        stroke-dasharray="5" />
+                                    <ellipse cx="50" cy="55" rx="38" ry="44" fill="none" stroke="#f0e0e8"
+                                        stroke-width="14" />
+                                    <path d="M 50,11 A 38,44 0 0 0 50,99 A 38,44 0 0 0 50,11" fill="none"
+                                        stroke="#FF6B9D" stroke-width="4" stroke-linecap="round" />
+                                    <polygon points="34,11 48,3 48,19" fill="#FF6B9D" />
+                                    <polygon points="49,5 44,14 54,14" fill="#FF6B9D" />
+                                    <circle cx="50" cy="5" r="9" fill="#FF6B9D" />
+                                    <text x="50" y="9" fill="white" font-size="10" font-family="Nunito"
+                                        font-weight="bold" text-anchor="middle">1</text>
+                                </svg>
+                            </div>
 
-                        <div class="canvas-frame" id="frameUpper" style="margin-top:14px;">
-                            <div class="canvas-ghost" id="ghostUpper" style="gap: 15%;">
-                                <span class="ghost-letter">O</span>
-                                <span class="ghost-letter">O</span>
-                                <span class="ghost-letter">O</span>
+                            <!-- Stroke guide: o lowercase -->
+                            <div
+                                style="background:#fff5f9; border:2px dashed #FF6B9D; border-radius:14px; padding:10px; text-align:center;">
+                                <p style="font-weight:800; color:#FF6B9D; font-size:0.78rem; margin-bottom:6px;">💡
+                                    Maliit na o</p>
+                                <svg viewBox="0 0 100 110"
+                                    style="width:100%; max-width:110px; height:auto; overflow:visible; display:block; margin:0 auto;">
+                                    <line x1="-5" y1="10" x2="105" y2="10" stroke="#f0f0f0" stroke-width="2"
+                                        stroke-dasharray="5" />
+                                    <line x1="-5" y1="55" x2="105" y2="55" stroke="#f0f0f0" stroke-width="2"
+                                        stroke-dasharray="5" />
+                                    <line x1="-5" y1="100" x2="105" y2="100" stroke="#f0f0f0" stroke-width="2"
+                                        stroke-dasharray="5" />
+                                    <ellipse cx="50" cy="77" rx="30" ry="26" fill="none" stroke="#f0e0e8"
+                                        stroke-width="14" />
+                                    <path d="M 50,51 A 30,26 0 0 0 50,103 A 30,26 0 0 0 50,51" fill="none"
+                                        stroke="#FF6B9D" stroke-width="4" stroke-linecap="round" />
+                                    <polygon points="34,51 48,43 48,59" fill="#FF6B9D" />
+                                    <polygon points="49,45 44,54 54,54" fill="#FF6B9D" />
+                                    <circle cx="50" cy="45" r="9" fill="#FF6B9D" />
+                                    <text x="50" y="49" fill="white" font-size="10" font-family="Nunito"
+                                        font-weight="bold" text-anchor="middle">1</text>
+                                </svg>
                             </div>
-                            <canvas id="canvasUpper" height="180"></canvas>
-                        </div>
 
-                        <!-- Toolbar -->
-                        <div class="pad-toolbar">
-                            <button class="pad-tool-btn undo-btn" onclick="undoStroke('upper')">↩ Burahin huli</button>
-                            <button class="pad-tool-btn erase" onclick="clearCanvas('upper')">🗑 I-clear</button>
-                            <button class="pad-tool-btn done-draw" onclick="markDone('upper')">✓ Tapos na!</button>
-                        </div>
-                        <!-- Color row -->
-                        <div class="color-row">
-                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Kulay:</span>
-                            <div class="color-swatch active" style="background:#4D96FF;"
-                                onclick="setColor('upper','#4D96FF',this)"></div>
-                            <div class="color-swatch" style="background:#FF6B9D;"
-                                onclick="setColor('upper','#FF6B9D',this)"></div>
-                            <div class="color-swatch" style="background:#6BCB77;"
-                                onclick="setColor('upper','#6BCB77',this)"></div>
-                            <div class="color-swatch" style="background:#FF9F43;"
-                                onclick="setColor('upper','#FF9F43',this)"></div>
-                            <div class="color-swatch" style="background:#C77DFF;"
-                                onclick="setColor('upper','#C77DFF',this)"></div>
-                            <div class="color-swatch" style="background:#2C2F33;"
-                                onclick="setColor('upper','#2C2F33',this)"></div>
-                        </div>
-                        <!-- Brush size -->
-                        <div class="brush-row">
-                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Laki ng panulat:</span>
-                            <div class="brush-btn active" onclick="setBrush('upper',5,this)">
-                                <div class="brush-dot" style="width:6px;height:6px;"></div>
+                            <!-- Shared toolbar: Undo + Clear -->
+                            <div style="display:flex; flex-direction:column; gap:7px;">
+                                <button class="pad-tool-btn undo-btn" style="width:100%; justify-content:center;"
+                                    onclick="undoStroke(window._u1ActivePad || 'upper')">↩ Burahin huli</button>
+                                <button class="pad-tool-btn erase" style="width:100%; justify-content:center;"
+                                    onclick="clearCanvas(window._u1ActivePad || 'upper')">🗑 I-clear</button>
                             </div>
-                            <div class="brush-btn" onclick="setBrush('upper',10,this)">
-                                <div class="brush-dot" style="width:11px;height:11px;"></div>
-                            </div>
-                            <div class="brush-btn" onclick="setBrush('upper',18,this)">
-                                <div class="brush-dot" style="width:18px;height:18px;"></div>
-                            </div>
-                        </div>
-                        <div class="pad-done-tick" id="doneTick-upper">✅ Napakahusay! Sinulatan mo na ang malaking O!
-                        </div>
-                    </div>
 
-                    <!-- ── Lowercase i Drawing Pad ── -->
-                    <div class="draw-pad-wrapper">
-                        <div class="draw-pad-label">
-                            <span class="letter-preview lower">o</span>
-                            <span style="color:var(--pink);">Maliit na o</span>
-                        </div>
+                            <!-- Shared color row -->
+                            <div>
+                                <div style="font-size:0.78rem; font-weight:800; color:#aaa; margin-bottom:5px;">Kulay:
+                                </div>
+                                <div style="display:flex; flex-wrap:wrap; gap:6px;">
+                                    <div class="color-swatch u1-color active" style="background:#4D96FF;"
+                                        data-color="#4D96FF" onclick="setU1Color('#4D96FF',this)"></div>
+                                    <div class="color-swatch u1-color" style="background:#FF6B9D;" data-color="#FF6B9D"
+                                        onclick="setU1Color('#FF6B9D',this)"></div>
+                                    <div class="color-swatch u1-color" style="background:#6BCB77;" data-color="#6BCB77"
+                                        onclick="setU1Color('#6BCB77',this)"></div>
+                                    <div class="color-swatch u1-color" style="background:#FF9F43;" data-color="#FF9F43"
+                                        onclick="setU1Color('#FF9F43',this)"></div>
+                                    <div class="color-swatch u1-color" style="background:#C77DFF;" data-color="#C77DFF"
+                                        onclick="setU1Color('#C77DFF',this)"></div>
+                                </div>
+                            </div>
 
-                        <div class="canvas-frame" id="frameLower" style="margin-top:14px;">
-                            <div class="canvas-ghost" id="ghostLower" style="gap: 15%;">
-                                <span class="ghost-letter">o</span>
-                                <span class="ghost-letter">o</span>
-                                <span class="ghost-letter">o</span>
+                            <!-- Shared brush size row -->
+                            <div>
+                                <div style="font-size:0.78rem; font-weight:800; color:#aaa; margin-bottom:5px;">Laki ng
+                                    panulat:</div>
+                                <div style="display:flex; gap:7px; align-items:center;">
+                                    <div class="brush-btn active u1-brush" data-size="5" onclick="setU1Brush(5,this)">
+                                        <div class="brush-dot" style="width:6px;height:6px;"></div>
+                                    </div>
+                                    <div class="brush-btn u1-brush" data-size="10" onclick="setU1Brush(10,this)">
+                                        <div class="brush-dot" style="width:11px;height:11px;"></div>
+                                    </div>
+                                    <div class="brush-btn u1-brush" data-size="18" onclick="setU1Brush(18,this)">
+                                        <div class="brush-dot" style="width:18px;height:18px;"></div>
+                                    </div>
+                                </div>
                             </div>
-                            <canvas id="canvasLower" height="160"></canvas>
-                        </div>
+                        </div><!-- /LEFT PANEL -->
 
-                        <!-- Toolbar -->
-                        <div class="pad-toolbar">
-                            <button class="pad-tool-btn undo-btn" onclick="undoStroke('lower')">↩ Burahin huli</button>
-                            <button class="pad-tool-btn erase" onclick="clearCanvas('lower')">🗑 I-clear</button>
-                            <button class="pad-tool-btn done-draw" onclick="markDone('lower')">✓ Tapos na!</button>
-                        </div>
-                        <!-- Color row -->
-                        <div class="color-row">
-                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Kulay:</span>
-                            <div class="color-swatch" style="background:#4D96FF;"
-                                onclick="setColor('lower','#4D96FF',this)"></div>
-                            <div class="color-swatch active" style="background:#FF6B9D;"
-                                onclick="setColor('lower','#FF6B9D',this)"></div>
-                            <div class="color-swatch" style="background:#6BCB77;"
-                                onclick="setColor('lower','#6BCB77',this)"></div>
-                            <div class="color-swatch" style="background:#FF9F43;"
-                                onclick="setColor('lower','#FF9F43',this)"></div>
-                            <div class="color-swatch" style="background:#C77DFF;"
-                                onclick="setColor('lower','#C77DFF',this)"></div>
-                            <div class="color-swatch" style="background:#2C2F33;"
-                                onclick="setColor('lower','#2C2F33',this)"></div>
-                        </div>
-                        <!-- Brush size -->
-                        <div class="brush-row">
-                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Laki ng panulat:</span>
-                            <div class="brush-btn active" onclick="setBrush('lower',5,this)">
-                                <div class="brush-dot" style="width:6px;height:6px;"></div>
+                        <!-- RIGHT PANEL: Canvases + Tapos na! -->
+                        <div
+                            style="flex:1; min-width:0; display:flex; flex-direction:column; gap:14px; padding-left:18px;">
+
+                            <!-- Malaking O canvas -->
+                            <div class="draw-pad-wrapper" style="margin-bottom:0;">
+                                <div class="draw-pad-label">
+                                    <span class="letter-preview upper">O</span>
+                                    <span style="color:var(--blue); font-weight:900;">Malaking O</span>
+                                </div>
+                                <div class="canvas-frame" id="frameUpper" style="margin-top:10px;"
+                                    onclick="window._u1ActivePad='upper'">
+                                    <div class="canvas-ghost" id="ghostUpper" style="gap:15%;">
+                                        <span class="ghost-letter">O</span>
+                                        <span class="ghost-letter">O</span>
+                                        <span class="ghost-letter">O</span>
+                                    </div>
+                                    <canvas id="canvasUpper" height="150"></canvas>
+                                </div>
+                                <div class="pad-done-tick" id="doneTick-upper">✅ Napakahusay! Sinulatan mo na ang
+                                    malaking O!</div>
                             </div>
-                            <div class="brush-btn" onclick="setBrush('lower',10,this)">
-                                <div class="brush-dot" style="width:11px;height:11px;"></div>
+
+                            <!-- Maliit na o canvas -->
+                            <div class="draw-pad-wrapper" style="margin-bottom:0;">
+                                <div class="draw-pad-label">
+                                    <span class="letter-preview lower">o</span>
+                                    <span style="color:var(--pink); font-weight:900;">Maliit na o</span>
+                                </div>
+                                <div class="canvas-frame" id="frameLower" style="margin-top:10px;"
+                                    onclick="window._u1ActivePad='lower'">
+                                    <div class="canvas-ghost" id="ghostLower" style="gap:15%;">
+                                        <span class="ghost-letter">o</span>
+                                        <span class="ghost-letter">o</span>
+                                        <span class="ghost-letter">o</span>
+                                    </div>
+                                    <canvas id="canvasLower" height="130"></canvas>
+                                </div>
+                                <div class="pad-done-tick" id="doneTick-lower">✅ Magaling! Sinulatan mo na ang maliit na
+                                    o!</div>
                             </div>
-                            <div class="brush-btn" onclick="setBrush('lower',18,this)">
-                                <div class="brush-dot" style="width:18px;height:18px;"></div>
+
+                            <!-- Single shared Tapos na! button -->
+                            <div style="display:flex; justify-content:center; padding-top:4px;">
+                                <button class="pad-tool-btn done-draw" id="u1-tapos-btn"
+                                    style="padding:14px 44px; font-size:1.15rem; border-radius:50px; box-shadow:0 6px 0 #1b5e20; gap:10px;"
+                                    onclick="markU1Done()">
+                                    <i class="fa-solid fa-check"></i> Tapos na!
+                                </button>
                             </div>
-                        </div>
-                        <div class="pad-done-tick" id="doneTick-lower">✅ Magaling! Sinulatan mo na ang maliit na o!
-                        </div>
-                    </div>
+
+                        </div><!-- /RIGHT PANEL -->
+                    </div><!-- /TWO-COLUMN -->
                 </div>
             </div>
+
 
             <!-- ═══════════════════════════════════
              UNIT 3: Pagsasanay 2 (Drawing)
         ═══════════════════════════════════ -->
-                        <!-- ===============================
+            <!-- ===============================
              UNIT 2: Pagsasanay - Malaking O
             ================================ -->
             <div class="unit-slide" id="unit-2">
                 <div class="section-card">
                     <div class="section-badge badge-purple">📝 Pagsasanay</div>
-                    <div class="pagsasanay-label text-center mt-3" style="font-size: 1.5rem; font-weight: 700; color: #333; margin-bottom: 5px;">A. Sumulat ng malalaking O.</div>
-                    
+                    <div class="pagsasanay-label text-center mt-3"
+                        style="font-size: 1.5rem; font-weight: 700; color: #333; margin-bottom: 5px;">A. Sumulat ng
+                        malalaking O.</div>
+
                     <div class="draw-pad-wrapper" style="margin-top:20px;">
                         <div class="canvas-frame" id="frameExA">
                             <div class="canvas-ghost" id="ghostExA" style="gap: 15%;">
@@ -1447,20 +1486,33 @@
                         </div>
                         <div class="color-row">
                             <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Kulay:</span>
-                            <div class="color-swatch active" style="background:#4A90E2;" onclick="setColor('exA','#4D96FF',this)"></div>
-                            <div class="color-swatch" style="background:#F44336;" onclick="setColor('exA','#FF6B9D',this)"></div>
-                            <div class="color-swatch" style="background:#4CAF50;" onclick="setColor('exA','#6BCB77',this)"></div>
-                            <div class="color-swatch" style="background:#FF9F43;" onclick="setColor('exA','#FF9F43',this)"></div>
-                            <div class="color-swatch" style="background:#C77DFF;" onclick="setColor('exA','#C77DFF',this)"></div>
-                            <div class="color-swatch" style="background:#2C2F33;" onclick="setColor('exA','#2C2F33',this)"></div>
+                            <div class="color-swatch active" style="background:#4A90E2;"
+                                onclick="setColor('exA','#4D96FF',this)"></div>
+                            <div class="color-swatch" style="background:#F44336;"
+                                onclick="setColor('exA','#FF6B9D',this)"></div>
+                            <div class="color-swatch" style="background:#4CAF50;"
+                                onclick="setColor('exA','#6BCB77',this)"></div>
+                            <div class="color-swatch" style="background:#FF9F43;"
+                                onclick="setColor('exA','#FF9F43',this)"></div>
+                            <div class="color-swatch" style="background:#C77DFF;"
+                                onclick="setColor('exA','#C77DFF',this)"></div>
+                            <div class="color-swatch" style="background:#2C2F33;"
+                                onclick="setColor('exA','#2C2F33',this)"></div>
                         </div>
                         <div class="brush-row">
                             <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Laki ng panulat:</span>
-                            <div class="brush-btn active" onclick="setBrush('exA',5,this)"><div class="brush-dot" style="width:6px;height:6px;"></div></div>
-                            <div class="brush-btn" onclick="setBrush('exA',10,this)"><div class="brush-dot" style="width:11px;height:11px;"></div></div>
-                            <div class="brush-btn" onclick="setBrush('exA',18,this)"><div class="brush-dot" style="width:18px;height:18px;"></div></div>
+                            <div class="brush-btn active" onclick="setBrush('exA',5,this)">
+                                <div class="brush-dot" style="width:6px;height:6px;"></div>
+                            </div>
+                            <div class="brush-btn" onclick="setBrush('exA',10,this)">
+                                <div class="brush-dot" style="width:11px;height:11px;"></div>
+                            </div>
+                            <div class="brush-btn" onclick="setBrush('exA',18,this)">
+                                <div class="brush-dot" style="width:18px;height:18px;"></div>
+                            </div>
                         </div>
-                        <div class="pad-done-tick" id="doneTick-exA">✅ Napakahusay! Sinulatan mo na lahat ng malaking O!</div>
+                        <div class="pad-done-tick" id="doneTick-exA">✅ Napakahusay! Sinulatan mo na lahat ng malaking O!
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1471,8 +1523,10 @@
             <div class="unit-slide" id="unit-3">
                 <div class="section-card">
                     <div class="section-badge badge-purple">📝 Pagsasanay</div>
-                    <div class="pagsasanay-label text-center mt-3" style="font-size: 1.5rem; font-weight: 700; color: #333; margin-bottom: 5px;">B. Sumulat ng maliliit na o.</div>
-                    
+                    <div class="pagsasanay-label text-center mt-3"
+                        style="font-size: 1.5rem; font-weight: 700; color: #333; margin-bottom: 5px;">B. Sumulat ng
+                        maliliit na o.</div>
+
                     <div class="draw-pad-wrapper" style="margin-top:20px;">
                         <div class="canvas-frame" id="frameExB">
                             <div class="canvas-ghost" id="ghostExB" style="gap: 15%;">
@@ -1491,18 +1545,30 @@
                         </div>
                         <div class="color-row">
                             <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Kulay:</span>
-                            <div class="color-swatch active" style="background:#4A90E2;" onclick="setColor('exB','#4D96FF',this)"></div>
-                            <div class="color-swatch" style="background:#F44336;" onclick="setColor('exB','#FF6B9D',this)"></div>
-                            <div class="color-swatch" style="background:#4CAF50;" onclick="setColor('exB','#6BCB77',this)"></div>
-                            <div class="color-swatch" style="background:#FF9F43;" onclick="setColor('exB','#FF9F43',this)"></div>
-                            <div class="color-swatch" style="background:#C77DFF;" onclick="setColor('exB','#C77DFF',this)"></div>
-                            <div class="color-swatch" style="background:#2C2F33;" onclick="setColor('exB','#2C2F33',this)"></div>
+                            <div class="color-swatch active" style="background:#4A90E2;"
+                                onclick="setColor('exB','#4D96FF',this)"></div>
+                            <div class="color-swatch" style="background:#F44336;"
+                                onclick="setColor('exB','#FF6B9D',this)"></div>
+                            <div class="color-swatch" style="background:#4CAF50;"
+                                onclick="setColor('exB','#6BCB77',this)"></div>
+                            <div class="color-swatch" style="background:#FF9F43;"
+                                onclick="setColor('exB','#FF9F43',this)"></div>
+                            <div class="color-swatch" style="background:#C77DFF;"
+                                onclick="setColor('exB','#C77DFF',this)"></div>
+                            <div class="color-swatch" style="background:#2C2F33;"
+                                onclick="setColor('exB','#2C2F33',this)"></div>
                         </div>
                         <div class="brush-row">
                             <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Laki ng panulat:</span>
-                            <div class="brush-btn active" onclick="setBrush('exB',5,this)"><div class="brush-dot" style="width:6px;height:6px;"></div></div>
-                            <div class="brush-btn" onclick="setBrush('exB',10,this)"><div class="brush-dot" style="width:11px;height:11px;"></div></div>
-                            <div class="brush-btn" onclick="setBrush('exB',18,this)"><div class="brush-dot" style="width:18px;height:18px;"></div></div>
+                            <div class="brush-btn active" onclick="setBrush('exB',5,this)">
+                                <div class="brush-dot" style="width:6px;height:6px;"></div>
+                            </div>
+                            <div class="brush-btn" onclick="setBrush('exB',10,this)">
+                                <div class="brush-dot" style="width:11px;height:11px;"></div>
+                            </div>
+                            <div class="brush-btn" onclick="setBrush('exB',18,this)">
+                                <div class="brush-dot" style="width:18px;height:18px;"></div>
+                            </div>
                         </div>
                         <div class="pad-done-tick" id="doneTick-exB">✅ Magaling! Sinulatan mo na ang maliit na o!</div>
                     </div>
@@ -1515,11 +1581,14 @@
             <div class="unit-slide" id="unit-4">
                 <div class="section-card">
                     <div class="section-badge badge-purple">📝 Pagsasanay</div>
-                    <div class="pagsasanay-label text-center mt-3" style="font-size: 1.5rem; font-weight: 700; color: #333; margin-bottom: 5px;">C. Pagsamahin sa guhit ang malaki at maliit na letrang Oo.</div>
-                    
+                    <div class="pagsasanay-label text-center mt-3"
+                        style="font-size: 1.5rem; font-weight: 700; color: #333; margin-bottom: 5px;">C. Pagsamahin sa
+                        guhit ang malaki at maliit na letrang Oo.</div>
+
                     <div class="draw-pad-wrapper" style="margin-top:20px;">
                         <div class="canvas-frame" id="frameExC">
-                            <div class="canvas-ghost" id="ghostExC" style="gap: 8%; font-size: 4.5rem; letter-spacing: 4px;">
+                            <div class="canvas-ghost" id="ghostExC"
+                                style="gap: 8%; font-size: 4.5rem; letter-spacing: 4px;">
                                 <span class="ghost-letter">Oo</span>
                                 <span class="ghost-letter">Oo</span>
                                 <span class="ghost-letter">Oo</span>
@@ -1535,18 +1604,30 @@
                         </div>
                         <div class="color-row">
                             <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Kulay:</span>
-                            <div class="color-swatch active" style="background:#4A90E2;" onclick="setColor('exC','#4D96FF',this)"></div>
-                            <div class="color-swatch" style="background:#F44336;" onclick="setColor('exC','#FF6B9D',this)"></div>
-                            <div class="color-swatch" style="background:#4CAF50;" onclick="setColor('exC','#6BCB77',this)"></div>
-                            <div class="color-swatch" style="background:#FF9F43;" onclick="setColor('exC','#FF9F43',this)"></div>
-                            <div class="color-swatch" style="background:#C77DFF;" onclick="setColor('exC','#C77DFF',this)"></div>
-                            <div class="color-swatch" style="background:#2C2F33;" onclick="setColor('exC','#2C2F33',this)"></div>
+                            <div class="color-swatch active" style="background:#4A90E2;"
+                                onclick="setColor('exC','#4D96FF',this)"></div>
+                            <div class="color-swatch" style="background:#F44336;"
+                                onclick="setColor('exC','#FF6B9D',this)"></div>
+                            <div class="color-swatch" style="background:#4CAF50;"
+                                onclick="setColor('exC','#6BCB77',this)"></div>
+                            <div class="color-swatch" style="background:#FF9F43;"
+                                onclick="setColor('exC','#FF9F43',this)"></div>
+                            <div class="color-swatch" style="background:#C77DFF;"
+                                onclick="setColor('exC','#C77DFF',this)"></div>
+                            <div class="color-swatch" style="background:#2C2F33;"
+                                onclick="setColor('exC','#2C2F33',this)"></div>
                         </div>
                         <div class="brush-row">
                             <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Laki ng panulat:</span>
-                            <div class="brush-btn active" onclick="setBrush('exC',5,this)"><div class="brush-dot" style="width:6px;height:6px;"></div></div>
-                            <div class="brush-btn" onclick="setBrush('exC',10,this)"><div class="brush-dot" style="width:11px;height:11px;"></div></div>
-                            <div class="brush-btn" onclick="setBrush('exC',18,this)"><div class="brush-dot" style="width:18px;height:18px;"></div></div>
+                            <div class="brush-btn active" onclick="setBrush('exC',5,this)">
+                                <div class="brush-dot" style="width:6px;height:6px;"></div>
+                            </div>
+                            <div class="brush-btn" onclick="setBrush('exC',10,this)">
+                                <div class="brush-dot" style="width:11px;height:11px;"></div>
+                            </div>
+                            <div class="brush-btn" onclick="setBrush('exC',18,this)">
+                                <div class="brush-dot" style="width:18px;height:18px;"></div>
+                            </div>
                         </div>
                         <div class="pad-done-tick" id="doneTick-exC">✅ Napakahusay! Natapos mo na lahat!</div>
                     </div>
@@ -1573,179 +1654,336 @@
                         background-size: 100% 100%;
                         background-repeat: no-repeat;
                     }
+
                     .choice-card.circled {
                         transform: scale(1.05);
                         border-color: transparent !important;
                         box-shadow: none !important;
                     }
+
                     .choice-card.circled .marker-circle {
                         transform: translate(-50%, -50%) scale(1);
                         opacity: 1;
                     }
+
                     .choice-card.shake {
-                        animation: wrongShake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+                        animation: wrongShake 0.5s cubic-bezier(.36, .07, .19, .97) both;
                     }
+
                     @keyframes wrongShake {
-                        10%, 90% { transform: translate3d(-1px, 0, 0); }
-                        20%, 80% { transform: translate3d(2px, 0, 0); }
-                        30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-                        40%, 60% { transform: translate3d(4px, 0, 0); }
+
+                        10%,
+                        90% {
+                            transform: translate3d(-1px, 0, 0);
+                        }
+
+                        20%,
+                        80% {
+                            transform: translate3d(2px, 0, 0);
+                        }
+
+                        30%,
+                        50%,
+                        70% {
+                            transform: translate3d(-4px, 0, 0);
+                        }
+
+                        40%,
+                        60% {
+                            transform: translate3d(4px, 0, 0);
+                        }
                     }
-            
-        /* ── SETTINGS MODAL (Tunog Tuklas) ── */
-        .settings-overlay {
-            position: fixed; inset: 0; z-index: 25000;
-            background: rgba(0,0,0,0.65);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(6px);
-        }
-        .settings-overlay.open { display: flex; }
-        .settings-panel {
-            background: linear-gradient(160deg, #fff9c4 0%, #fce4ec 50%, #e3f2fd 100%);
-            border-radius: 32px;
-            border: 5px solid #2c2f33;
-            box-shadow: 0 14px 0 #2c2f33, 0 20px 50px rgba(0,0,0,0.25);
-            width: 92%;
-            max-width: 460px;
-            overflow: hidden;
-            animation: settingsIn 0.45s cubic-bezier(0.175,0.885,0.32,1.275) forwards;
-        }
-        @keyframes settingsIn {
-            from { transform: scale(0.6) rotate(-4deg); opacity: 0; }
-            to   { transform: scale(1) rotate(0deg);   opacity: 1; }
-        }
-        .settings-header {
-            background: linear-gradient(135deg, #7c4dff, #e040fb);
-            padding: 18px 24px;
-            display: flex; align-items: center; justify-content: space-between;
-            border-bottom: 4px solid #2c2f33;
-        }
-        .settings-header h2 {
-            font-family: 'Nunito', sans-serif; font-weight: 900;
-            font-size: 1.5rem; color: #fff; margin: 0;
-            text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
-        }
-        .settings-close-btn {
-            width: 42px; height: 42px; border-radius: 50%;
-            border: 3px solid rgba(255,255,255,0.7);
-            background: rgba(255,255,255,0.25);
-            color: #fff; font-size: 1.3rem; font-weight: 900;
-            cursor: pointer; display: flex; align-items: center; justify-content: center;
-            transition: all 0.15s; line-height: 1;
-        }
-        .settings-close-btn:hover { background: rgba(255,255,255,0.45); }
-        .settings-body { padding: 22px 24px; display: flex; flex-direction: column; gap: 18px; max-height: 80vh; overflow-y: auto; }
-        .settings-row {
-            background: #fff;
-            border: 3px solid #2c2f33;
-            border-radius: 20px;
-            padding: 14px 18px;
-            box-shadow: 0 4px 0 #2c2f33;
-        }
-        .settings-row-label {
-            font-family: 'Nunito', sans-serif; font-weight: 900;
-            font-size: 1.05rem; color: #2c2f33;
-            display: flex; align-items: center; gap: 8px;
-            margin-bottom: 10px;
-        }
-        .settings-row-label .s-icon { font-size: 1.4rem; }
-        .tt-slider {
-            -webkit-appearance: none; appearance: none;
-            width: 100%; height: 14px;
-            border-radius: 20px;
-            outline: none; cursor: pointer;
-            border: 3px solid #2c2f33;
-        }
-        .tt-slider.volume-slider  { background: linear-gradient(90deg, #4CAF50 var(--vol-pct,80%), #ddd var(--vol-pct,80%)); }
-        .tt-slider.brightness-slider { background: linear-gradient(90deg, #FDD835 var(--br-pct,50%), #ddd var(--br-pct,50%)); }
-        .tt-slider.pixel-slider { background: linear-gradient(90deg, #7c4dff var(--px-pct,0%), #ddd var(--px-pct,0%)); }
-        .tt-slider::-webkit-slider-thumb {
-            -webkit-appearance: none; appearance: none;
-            width: 28px; height: 28px; border-radius: 50%;
-            background: #fff; border: 4px solid #2c2f33;
-            box-shadow: 0 3px 0 #2c2f33;
-            cursor: pointer;
-        }
-        .slider-val {
-            font-family: 'Nunito', sans-serif; font-weight: 900;
-            font-size: 1.1rem; color: #555;
-            min-width: 44px; text-align: right;
-        }
-        .tt-toggle-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-        .tt-toggle-label { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem; color: #555; }
-        .tt-switch {
-            position: relative; display: inline-block;
-            width: 64px; height: 34px; flex-shrink: 0;
-        }
-        .tt-switch input { opacity: 0; width: 0; height: 0; }
-        .tt-switch-slider {
-            position: absolute; inset: 0;
-            background: #ccc; border-radius: 34px;
-            border: 3px solid #2c2f33;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .tt-switch-slider::before {
-            content: '';
-            position: absolute;
-            width: 22px; height: 22px;
-            left: 3px; top: 50%; transform: translateY(-50%);
-            background: #fff; border-radius: 50%;
-            border: 2px solid #2c2f33;
-            transition: left 0.3s;
-        }
-        .tt-switch input:checked + .tt-switch-slider { background: #7c4dff; }
-        .tt-switch input:checked + .tt-switch-slider::before { left: 33px; }
-        .tt-fullscreen-btn {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, #FF9800, #F44336);
-            border: 3px solid #2c2f33;
-            border-radius: 14px;
-            box-shadow: 0 4px 0 #2c2f33;
-            font-family: 'Nunito', sans-serif; font-weight: 900;
-            font-size: 1rem; color: #fff;
-            cursor: pointer; transition: all 0.15s;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-        }
-        .tt-fullscreen-btn:active { transform: translateY(4px); box-shadow: 0 0 0 #2c2f33; }
-        #tt-pixel-overlay {
-            position: fixed; inset: 0; z-index: 99999;
-            pointer-events: none; display: none;
-            image-rendering: pixelated;
-            background: repeating-linear-gradient(
-                0deg, rgba(0,0,0,0.04) 0px, rgba(0,0,0,0.04) 1px, transparent 1px, transparent 3px
-            ),
-            repeating-linear-gradient(
-                90deg, rgba(0,0,0,0.04) 0px, rgba(0,0,0,0.04) 1px, transparent 1px, transparent 3px
-            );
-        }
-        body.tt-low-graphics *,
-        body.tt-low-graphics *::before,
-        body.tt-low-graphics *::after {
-            animation-duration: 0.001ms !important;
-            animation-iteration-count: 1 !important;
-            transition-duration: 0.001ms !important;
-        }
-        body.tt-pixelated { image-rendering: pixelated; }
-        body.tt-pixelated img, body.tt-pixelated canvas { image-rendering: pixelated; }
-        /* ── Settings gear button on lesson header ── */
-        .btn-lesson-settings {
-            background: rgba(255,255,255,0.25);
-            border: 3px solid rgba(255,255,255,0.6);
-            border-radius: 50%;
-            width: 44px; height: 44px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.3rem;
-            cursor: pointer;
-            transition: all 0.15s;
-            flex-shrink: 0;
-        }
-        .btn-lesson-settings:hover { background: rgba(255,255,255,0.45); }
-        .btn-lesson-settings:active { transform: translateY(2px); }
-    </style>
+
+                    /* ── SETTINGS MODAL (Tunog Tuklas) ── */
+                    .settings-overlay {
+                        position: fixed;
+                        inset: 0;
+                        z-index: 25000;
+                        background: rgba(0, 0, 0, 0.65);
+                        display: none;
+                        align-items: center;
+                        justify-content: center;
+                        backdrop-filter: blur(6px);
+                    }
+
+                    .settings-overlay.open {
+                        display: flex;
+                    }
+
+                    .settings-panel {
+                        background: linear-gradient(160deg, #fff9c4 0%, #fce4ec 50%, #e3f2fd 100%);
+                        border-radius: 32px;
+                        border: 5px solid #2c2f33;
+                        box-shadow: 0 14px 0 #2c2f33, 0 20px 50px rgba(0, 0, 0, 0.25);
+                        width: 92%;
+                        max-width: 460px;
+                        overflow: hidden;
+                        animation: settingsIn 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+                    }
+
+                    @keyframes settingsIn {
+                        from {
+                            transform: scale(0.6) rotate(-4deg);
+                            opacity: 0;
+                        }
+
+                        to {
+                            transform: scale(1) rotate(0deg);
+                            opacity: 1;
+                        }
+                    }
+
+                    .settings-header {
+                        background: linear-gradient(135deg, #7c4dff, #e040fb);
+                        padding: 18px 24px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        border-bottom: 4px solid #2c2f33;
+                    }
+
+                    .settings-header h2 {
+                        font-family: 'Nunito', sans-serif;
+                        font-weight: 900;
+                        font-size: 1.5rem;
+                        color: #fff;
+                        margin: 0;
+                        text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+                    }
+
+                    .settings-close-btn {
+                        width: 42px;
+                        height: 42px;
+                        border-radius: 50%;
+                        border: 3px solid rgba(255, 255, 255, 0.7);
+                        background: rgba(255, 255, 255, 0.25);
+                        color: #fff;
+                        font-size: 1.3rem;
+                        font-weight: 900;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        transition: all 0.15s;
+                        line-height: 1;
+                    }
+
+                    .settings-close-btn:hover {
+                        background: rgba(255, 255, 255, 0.45);
+                    }
+
+                    .settings-body {
+                        padding: 22px 24px;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 18px;
+                        max-height: 80vh;
+                        overflow-y: auto;
+                    }
+
+                    .settings-row {
+                        background: #fff;
+                        border: 3px solid #2c2f33;
+                        border-radius: 20px;
+                        padding: 14px 18px;
+                        box-shadow: 0 4px 0 #2c2f33;
+                    }
+
+                    .settings-row-label {
+                        font-family: 'Nunito', sans-serif;
+                        font-weight: 900;
+                        font-size: 1.05rem;
+                        color: #2c2f33;
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        margin-bottom: 10px;
+                    }
+
+                    .settings-row-label .s-icon {
+                        font-size: 1.4rem;
+                    }
+
+                    .tt-slider {
+                        -webkit-appearance: none;
+                        appearance: none;
+                        width: 100%;
+                        height: 14px;
+                        border-radius: 20px;
+                        outline: none;
+                        cursor: pointer;
+                        border: 3px solid #2c2f33;
+                    }
+
+                    .tt-slider.volume-slider {
+                        background: linear-gradient(90deg, #4CAF50 var(--vol-pct, 80%), #ddd var(--vol-pct, 80%));
+                    }
+
+                    .tt-slider.brightness-slider {
+                        background: linear-gradient(90deg, #FDD835 var(--br-pct, 50%), #ddd var(--br-pct, 50%));
+                    }
+
+                    .tt-slider.pixel-slider {
+                        background: linear-gradient(90deg, #7c4dff var(--px-pct, 0%), #ddd var(--px-pct, 0%));
+                    }
+
+                    .tt-slider::-webkit-slider-thumb {
+                        -webkit-appearance: none;
+                        appearance: none;
+                        width: 28px;
+                        height: 28px;
+                        border-radius: 50%;
+                        background: #fff;
+                        border: 4px solid #2c2f33;
+                        box-shadow: 0 3px 0 #2c2f33;
+                        cursor: pointer;
+                    }
+
+                    .slider-val {
+                        font-family: 'Nunito', sans-serif;
+                        font-weight: 900;
+                        font-size: 1.1rem;
+                        color: #555;
+                        min-width: 44px;
+                        text-align: right;
+                    }
+
+                    .tt-toggle-row {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        gap: 10px;
+                    }
+
+                    .tt-toggle-label {
+                        font-family: 'Nunito', sans-serif;
+                        font-weight: 800;
+                        font-size: 0.95rem;
+                        color: #555;
+                    }
+
+                    .tt-switch {
+                        position: relative;
+                        display: inline-block;
+                        width: 64px;
+                        height: 34px;
+                        flex-shrink: 0;
+                    }
+
+                    .tt-switch input {
+                        opacity: 0;
+                        width: 0;
+                        height: 0;
+                    }
+
+                    .tt-switch-slider {
+                        position: absolute;
+                        inset: 0;
+                        background: #ccc;
+                        border-radius: 34px;
+                        border: 3px solid #2c2f33;
+                        cursor: pointer;
+                        transition: background 0.3s;
+                    }
+
+                    .tt-switch-slider::before {
+                        content: '';
+                        position: absolute;
+                        width: 22px;
+                        height: 22px;
+                        left: 3px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        background: #fff;
+                        border-radius: 50%;
+                        border: 2px solid #2c2f33;
+                        transition: left 0.3s;
+                    }
+
+                    .tt-switch input:checked+.tt-switch-slider {
+                        background: #7c4dff;
+                    }
+
+                    .tt-switch input:checked+.tt-switch-slider::before {
+                        left: 33px;
+                    }
+
+                    .tt-fullscreen-btn {
+                        width: 100%;
+                        padding: 12px;
+                        background: linear-gradient(135deg, #FF9800, #F44336);
+                        border: 3px solid #2c2f33;
+                        border-radius: 14px;
+                        box-shadow: 0 4px 0 #2c2f33;
+                        font-family: 'Nunito', sans-serif;
+                        font-weight: 900;
+                        font-size: 1rem;
+                        color: #fff;
+                        cursor: pointer;
+                        transition: all 0.15s;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 8px;
+                    }
+
+                    .tt-fullscreen-btn:active {
+                        transform: translateY(4px);
+                        box-shadow: 0 0 0 #2c2f33;
+                    }
+
+                    #tt-pixel-overlay {
+                        position: fixed;
+                        inset: 0;
+                        z-index: 99999;
+                        pointer-events: none;
+                        display: none;
+                        image-rendering: pixelated;
+                        background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.04) 0px, rgba(0, 0, 0, 0.04) 1px, transparent 1px, transparent 3px),
+                            repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.04) 0px, rgba(0, 0, 0, 0.04) 1px, transparent 1px, transparent 3px);
+                    }
+
+                    body.tt-low-graphics *,
+                    body.tt-low-graphics *::before,
+                    body.tt-low-graphics *::after {
+                        animation-duration: 0.001ms !important;
+                        animation-iteration-count: 1 !important;
+                        transition-duration: 0.001ms !important;
+                    }
+
+                    body.tt-pixelated {
+                        image-rendering: pixelated;
+                    }
+
+                    body.tt-pixelated img,
+                    body.tt-pixelated canvas {
+                        image-rendering: pixelated;
+                    }
+
+                    /* ── Settings gear button on lesson header ── */
+                    .btn-lesson-settings {
+                        background: rgba(255, 255, 255, 0.25);
+                        border: 3px solid rgba(255, 255, 255, 0.6);
+                        border-radius: 50%;
+                        width: 44px;
+                        height: 44px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 1.3rem;
+                        cursor: pointer;
+                        transition: all 0.15s;
+                        flex-shrink: 0;
+                    }
+
+                    .btn-lesson-settings:hover {
+                        background: rgba(255, 255, 255, 0.45);
+                    }
+
+                    .btn-lesson-settings:active {
+                        transform: translateY(2px);
+                    }
+                </style>
                 <div class="section-card" style="max-width: 1050px;">
                     <div class="section-badge badge-blue">🎯 Alamin Natin</div>
 
@@ -1756,33 +1994,40 @@
                         kung ikaw ay tama.
                     </p>
 
-                    <div class="choices-grid" id="act1-grid" style="grid-template-columns: repeat(6, 1fr); gap:15px; margin-top:30px;">
-                        <div class="choice-card" data-correct="true" data-activity="3" onclick="toggleChoice(this)" style="position:relative; overflow:visible;">
+                    <div class="choices-grid" id="act1-grid"
+                        style="grid-template-columns: repeat(6, 1fr); gap:15px; margin-top:30px;">
+                        <div class="choice-card" data-correct="true" data-activity="3" onclick="toggleChoice(this)"
+                            style="position:relative; overflow:visible;">
                             <div class="choice-emoji-box" style="font-size:3.5rem;">🥒</div>
                             <div class="choice-label">Okra</div>
                             <div class="marker-circle"></div>
                         </div>
-                        <div class="choice-card" data-correct="true" data-activity="3" onclick="toggleChoice(this)" style="position:relative; overflow:visible;">
+                        <div class="choice-card" data-correct="true" data-activity="3" onclick="toggleChoice(this)"
+                            style="position:relative; overflow:visible;">
                             <div class="choice-emoji-box" style="font-size:3.5rem;">⏰</div>
                             <div class="choice-label">Orasan</div>
                             <div class="marker-circle"></div>
                         </div>
-                        <div class="choice-card" data-correct="true" data-activity="3" onclick="toggleChoice(this)" style="position:relative; overflow:visible;">
+                        <div class="choice-card" data-correct="true" data-activity="3" onclick="toggleChoice(this)"
+                            style="position:relative; overflow:visible;">
                             <div class="choice-emoji-box" style="font-size:3.5rem;">🐻</div>
                             <div class="choice-label">Oso</div>
                             <div class="marker-circle"></div>
                         </div>
-                        <div class="choice-card" data-correct="true" data-activity="3" onclick="toggleChoice(this)" style="position:relative; overflow:visible;">
+                        <div class="choice-card" data-correct="true" data-activity="3" onclick="toggleChoice(this)"
+                            style="position:relative; overflow:visible;">
                             <div class="choice-emoji-box" style="font-size:3.5rem;">🚗</div>
                             <div class="choice-label">Oto</div>
                             <div class="marker-circle"></div>
                         </div>
-                        <div class="choice-card" data-correct="true" data-activity="3" onclick="toggleChoice(this)" style="position:relative; overflow:visible;">
+                        <div class="choice-card" data-correct="true" data-activity="3" onclick="toggleChoice(this)"
+                            style="position:relative; overflow:visible;">
                             <div class="choice-emoji-box" style="font-size:3.5rem;">🏥</div>
                             <div class="choice-label">Ospital</div>
                             <div class="marker-circle"></div>
                         </div>
-                        <div class="choice-card" data-correct="false" data-activity="3" onclick="toggleChoice(this)" style="position:relative; overflow:visible;">
+                        <div class="choice-card" data-correct="false" data-activity="3" onclick="toggleChoice(this)"
+                            style="position:relative; overflow:visible;">
                             <div class="choice-emoji-box" style="font-size:3.5rem;">🍃</div>
                             <div class="choice-label">Dahon</div>
                             <div class="marker-circle"></div>
@@ -1806,9 +2051,11 @@
             <div class="unit-slide" id="unit-6">
                 <div class="section-card">
                     <div class="section-badge badge-green">📝 Pagsasanay 1</div>
-                    <h2 class="activity-title mt-3">Bigkasin ang ngalan ng mga larawan. Lagyan ng tsek (✔) kung nasa hulihan ang tunog ng letrang Oo.</h2>
-                    
-                    <div class="choices-grid mt-4" id="act3-grid" style="grid-template-columns: repeat(5, 1fr); max-width:1050px; margin: 0 auto; gap:15px;">
+                    <h2 class="activity-title mt-3">Bigkasin ang ngalan ng mga larawan. Lagyan ng tsek (✔) kung nasa
+                        hulihan ang tunog ng letrang Oo.</h2>
+
+                    <div class="choices-grid mt-4" id="act3-grid"
+                        style="grid-template-columns: repeat(5, 1fr); max-width:1050px; margin: 0 auto; gap:15px;">
                         <div class="choice-card" data-correct="true" data-activity="4" onclick="toggleChoice(this)">
                             <div class="choice-emoji-box" style="font-size:3.5rem;">🥥</div>
                             <div class="choice-label">Buko</div>
@@ -1958,7 +2205,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         (function () {
-            
+
             // ── Interactive Activities (Unit 6 & 7) ──
             window.toggleChoice = function (card) {
                 // If it's act 3 (Alamin Natin), we use the circled class
@@ -1967,23 +2214,23 @@
                         card.classList.remove('circled');
                     } else {
                         card.classList.add('circled');
-                        try { new Audio('/static/core/audio/pop.mp3').play(); } catch(e){}
+                        try { new Audio('/static/core/audio/pop.mp3').play(); } catch (e) { }
                     }
                 } else {
                     // Standard checkbox toggle for act 4
                     card.classList.toggle('selected');
                     const cb = card.querySelector('.choice-checkbox');
                     if (cb) cb.classList.toggle('checked');
-                    try { new Audio('/static/core/audio/pop.mp3').play(); } catch(e){}
+                    try { new Audio('/static/core/audio/pop.mp3').play(); } catch (e) { }
                 }
             };
 
             window.checkActivity = function (actNum) {
                 if (state[actNum].checked) return;
-                
+
                 const isAct3 = (actNum === 3 || actNum === "3");
                 const selectedClass = isAct3 ? 'circled' : 'selected';
-                
+
                 const cards = document.querySelectorAll(`.choice-card[data-activity="${actNum}"]`);
                 let allCorrect = true;
                 let selectedCount = 0;
@@ -2031,13 +2278,13 @@
                     document.getElementById(`check-act${actNum}`).disabled = true;
 
                     updateNextBtn();
-                    try { new Audio('/static/core/audio/correct.mp3').play(); } catch(e){}
+                    try { new Audio('/static/core/audio/correct.mp3').play(); } catch (e) { }
                     launchConfetti();
                 } else {
                     banner.className = 'feedback-banner show error-fb';
                     icon.innerHTML = '❌';
                     text.innerHTML = 'Oops! May mali sa iyong pinili, subukan ulit.';
-                    try { new Audio('/static/core/audio/wrong.mp3').play(); } catch(e){}
+                    try { new Audio('/static/core/audio/wrong.mp3').play(); } catch (e) { }
                 }
             };
 
@@ -2148,7 +2395,7 @@
                         nextBtn.onclick = async () => {
                             nextBtn.disabled = true;
                             nextBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Ina-unlock...';
-                            
+
                             try {
                                 const response = await fetch('{% url "core:save_progress" %}', {
                                     method: 'POST',
@@ -2222,20 +2469,99 @@
                 }
             };
 
+            // ── Unit 1 Shared Controls (two-column layout) ──
+            window._u1ActivePad = 'upper'; // track which canvas was last touched
+
+            window.setU1Color = function (color, el) {
+                document.querySelectorAll('.u1-color').forEach(s => s.classList.remove('active'));
+                if (el) el.classList.add('active');
+                ['upper', 'lower'].forEach(id => {
+                    if (pads[id]) {
+                        pads[id].color = color;
+                        updateCursor(id, color);
+                    }
+                });
+            };
+
+            window.setU1Brush = function (size, el) {
+                document.querySelectorAll('.u1-brush').forEach(b => b.classList.remove('active'));
+                if (el) el.classList.add('active');
+                ['upper', 'lower'].forEach(id => {
+                    if (pads[id]) pads[id].brush = size;
+                });
+            };
+
+            window.markU1Done = async function () {
+                const btn = document.getElementById('u1-tapos-btn');
+                if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sinusuri...'; }
+
+                // validate both pads
+                const vUpper = await validateDrawingAI('upper');
+                const vLower = await validateDrawingAI('lower');
+
+                if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-check"></i> Tapos na!'; }
+
+                // Show feedback for upper
+                const tickU = document.getElementById('doneTick-upper');
+                const frameU = document.getElementById('frameUpper');
+                if (!vUpper.valid) {
+                    if (frameU) { frameU.style.border = '4px solid #f44336'; setTimeout(() => frameU.style.border = '4px solid #90CAF9', 700); }
+                    if (tickU) {
+                        tickU.className = 'pad-done-tick show error-tick';
+                        tickU.style.cssText = 'display:flex; border-color:#f44336; color:#b71c1c; background:#FFEBEE;';
+                        tickU.innerHTML = '⚠️ ' + (vUpper.reason || 'Subukan ulit!') + (vUpper.tip ? ' — ' + vUpper.tip : '');
+                    }
+                } else {
+                    pads['upper'].done = true;
+                    if (tickU) {
+                        tickU.className = 'pad-done-tick show';
+                        tickU.style.cssText = 'display:flex; border-color:var(--green); color:#1b5e20; background:#E9FBEE;';
+                        tickU.innerHTML = '✅ ' + (vUpper.encouragement_fil || 'Napakahusay! Sinulatan mo na ang malaking O!');
+                    }
+                }
+
+                // Show feedback for lower
+                const tickL = document.getElementById('doneTick-lower');
+                const frameL = document.getElementById('frameLower');
+                if (!vLower.valid) {
+                    if (frameL) { frameL.style.border = '4px solid #f44336'; setTimeout(() => frameL.style.border = '4px solid #90CAF9', 700); }
+                    if (tickL) {
+                        tickL.className = 'pad-done-tick show error-tick';
+                        tickL.style.cssText = 'display:flex; border-color:#f44336; color:#b71c1c; background:#FFEBEE;';
+                        tickL.innerHTML = '⚠️ ' + (vLower.reason || 'Subukan ulit!') + (vLower.tip ? ' — ' + vLower.tip : '');
+                    }
+                } else {
+                    pads['lower'].done = true;
+                    if (tickL) {
+                        tickL.className = 'pad-done-tick show';
+                        tickL.style.cssText = 'display:flex; border-color:var(--green); color:#1b5e20; background:#E9FBEE;';
+                        tickL.innerHTML = '✅ ' + (vLower.encouragement_fil || 'Magaling! Sinulatan mo na ang maliit na o!');
+                    }
+                }
+
+                // If both done, unlock next
+                if (pads['upper'].done && pads['lower'].done && !state[1].checked) {
+                    state[1].checked = true; state[1].score = 1;
+                    const cur = parseInt(document.getElementById('starCount').textContent);
+                    document.getElementById('starCount').textContent = cur + 1;
+                    launchConfetti(); updateNextBtn();
+                }
+            };
+
             // ── Pagsasanay (Unit 3/2) Drawing Pads ──
             window.act2CurrentColor = '#4A90E2';
             window.act2BrushSize = 5;
             window.act2IsEraser = false;
 
-            window.setAct2Color = function(swatch) {
+            window.setAct2Color = function (swatch) {
                 document.querySelectorAll('#colorPalette .color-swatch').forEach(s => s.classList.remove('active'));
                 swatch.classList.add('active');
                 window.act2CurrentColor = swatch.dataset.color;
-                
+
                 if (window.act2IsEraser) {
                     window.toggleAct2Eraser(); // turn off eraser
                 }
-                
+
                 ['exA', 'exB', 'exC'].forEach(id => {
                     if (pads[id]) {
                         pads[id].color = window.act2CurrentColor;
@@ -2244,7 +2570,7 @@
                 });
             };
 
-            window.setAct2BrushSize = function(val) {
+            window.setAct2BrushSize = function (val) {
                 window.act2BrushSize = val;
                 ['exA', 'exB', 'exC'].forEach(id => {
                     if (pads[id]) {
@@ -2254,7 +2580,7 @@
                 });
             };
 
-            window.toggleAct2Eraser = function() {
+            window.toggleAct2Eraser = function () {
                 window.act2IsEraser = !window.act2IsEraser;
                 const btn = document.getElementById('btnEraser');
                 if (window.act2IsEraser) {
@@ -2460,7 +2786,7 @@
                     const capId = id.charAt(0).toUpperCase() + id.slice(1);
                     const ghostContainer = document.getElementById('ghost' + capId);
                     const spans = ghostContainer ? ghostContainer.querySelectorAll('.ghost-letter') : [];
-                    
+
                     if (spans.length > 0) {
                         const canvasRect = canvas.getBoundingClientRect();
                         const scaleX = canvas.width / canvasRect.width;
@@ -2473,7 +2799,7 @@
                             const by1 = Math.max(0, Math.floor((r.top - canvasRect.top) * scaleY) - 10);
                             const bx2 = Math.min(canvas.width, Math.ceil((r.right - canvasRect.left) * scaleX) + 10);
                             const by2 = Math.min(canvas.height, Math.ceil((r.bottom - canvasRect.top) * scaleY) + 10);
-                            
+
                             let hits = 0;
                             for (let sy = by1; sy <= by2; sy += 4) {
                                 for (let sx = bx1; sx <= bx2; sx += 4) {
@@ -2589,7 +2915,7 @@
                 updateNextBtn();
             };
 
-window.checkUnit5Pagsasanay = async function () {
+            window.checkUnit5Pagsasanay = async function () {
                 // Determine if all three pads have drawings
                 let allValid = true;
                 for (const pid of ['p1', 'p2', 'p3']) {
@@ -2742,9 +3068,8 @@ window.checkUnit5Pagsasanay = async function () {
                 <div class="settings-row">
                     <div class="settings-row-label"><span class="s-icon">🔊</span> Lakas ng Tunog</div>
                     <div style="display:flex;align-items:center;gap:12px;">
-                        <input type="range" id="tt-vol-slider" class="tt-slider volume-slider"
-                            min="0" max="100" step="1" value="80"
-                            oninput="onVolChange(this.value)">
+                        <input type="range" id="tt-vol-slider" class="tt-slider volume-slider" min="0" max="100"
+                            step="1" value="80" oninput="onVolChange(this.value)">
                         <span class="slider-val" id="tt-vol-label">80%</span>
                     </div>
                 </div>
@@ -2752,24 +3077,12 @@ window.checkUnit5Pagsasanay = async function () {
                 <div class="settings-row">
                     <div class="settings-row-label"><span class="s-icon">☀️</span> Liwanag ng Screen</div>
                     <div style="display:flex;align-items:center;gap:12px;">
-                        <input type="range" id="tt-br-slider" class="tt-slider brightness-slider"
-                            min="50" max="150" step="1" value="100"
-                            oninput="onBrChange(this.value)">
+                        <input type="range" id="tt-br-slider" class="tt-slider brightness-slider" min="50" max="150"
+                            step="1" value="100" oninput="onBrChange(this.value)">
                         <span class="slider-val" id="tt-br-label">100%</span>
                     </div>
                 </div>
-                <!-- 🎮 Low Graphics -->
-                <div class="settings-row">
-                    <div class="settings-row-label"><span class="s-icon">🎮</span> Kalidad ng Laro</div>
-                    <div class="tt-toggle-row">
-                        <span class="tt-toggle-label">I-off ang mga Galaw (Low Graphics)</span>
-                        <label class="tt-switch">
-                            <input type="checkbox" id="tt-lowgfx-toggle" onchange="onLowGfxChange(this.checked)">
-                            <span class="tt-switch-slider"></span>
-                        </label>
-                    </div>
-                </div>
-                <!-- 🟫 Pixelated -->
+                <!-- 🟫 Pixel Mode -->
                 <div class="settings-row">
                     <div class="settings-row-label"><span class="s-icon">🟫</span> Pixel Mode</div>
                     <div class="tt-toggle-row">
@@ -2783,90 +3096,73 @@ window.checkUnit5Pagsasanay = async function () {
                 <!-- ⛶ Fullscreen -->
                 <div class="settings-row">
                     <div class="settings-row-label"><span class="s-icon">⛶</span> Full Screen</div>
-                    <button class="tt-fullscreen-btn" id="tt-fs-btn" onclick="toggleFullscreen()">⛶ I-bukas ang Full Screen</button>
+                    <button class="tt-fullscreen-btn" id="tt-fs-btn" onclick="toggleFullscreen()">⛶ I-bukas ang Full
+                        Screen</button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Pixel overlay -->
-    <div id="tt-pixel-overlay"></div>
+
 
 
     <script>
-    // ═══════════════════════════════════════════════════════
-    // SETTINGS MODAL CONTROLLER (Lesson Pages)
-    // ═══════════════════════════════════════════════════════
-    function openSettings() {
-        var vol = window.TTSettings ? window.TTSettings.getVolume() : 80;
-        var br  = window.TTSettings ? window.TTSettings.getBrightness() : 100;
-        var lg  = window.TTSettings ? window.TTSettings.getLowGraphics() : false;
-        var px  = window.TTSettings ? window.TTSettings.getPixelated() : 0;
-        var vs = document.getElementById('tt-vol-slider');
-        var ps = document.getElementById('tt-pixel-slider');
-        if (ps) { ps.value = px; updateSliderBg(ps, px, 0, 100); }
-        var bs = document.getElementById('tt-br-slider');
-        if (vs) { vs.value = vol; updateSliderBg(vs, vol, 0, 100); }
-        if (bs) { bs.value = br;  updateSliderBg(bs, br, 50, 150); }
-        var vl = document.getElementById('tt-vol-label');
-        var bl = document.getElementById('tt-br-label');
-        if (vl) vl.textContent = vol + '%';
-        if (bl) bl.textContent = br  + '%';
-        var pl = document.getElementById('tt-pixel-label');
-        if (pl) pl.textContent = px + '%';
-        var lt = document.getElementById('tt-lowgfx-toggle');
-        if (lt) lt.checked = lg;
-        updateFSBtn();
-        document.getElementById('settings-modal').classList.add('open');
-        document.body.style.overflow = 'hidden';
-    }
-    window.openSettings = openSettings;
-    window.closeSettings = function() {
-        document.getElementById('settings-modal').classList.remove('open');
-        document.body.style.overflow = '';
-    };
-    function updateSliderBg(input, val, min, max) {
-        var pct = ((val - min) / (max - min) * 100).toFixed(1) + '%';
-        if (input.classList.contains('volume-slider'))     input.style.setProperty('--vol-pct', pct);
-        if (input.classList.contains('brightness-slider')) input.style.setProperty('--br-pct',  pct);
-        if (input.classList.contains('pixel-slider'))      input.style.setProperty('--px-pct',  pct);
-    }
-    window.onVolChange = function(val) {
-        val = parseInt(val, 10);
-        if (window.TTSettings) window.TTSettings.setVolume(val);
-        var el = document.getElementById('tt-vol-label');
-        if (el) el.textContent = val + '%';
-        updateSliderBg(document.getElementById('tt-vol-slider'), val, 0, 100);
-    };
-    window.onBrChange = function(val) {
-        val = parseInt(val, 10);
-        if (window.TTSettings) window.TTSettings.setBrightness(val);
-        var el = document.getElementById('tt-br-label');
-        if (el) el.textContent = val + '%';
-        updateSliderBg(document.getElementById('tt-br-slider'), val, 50, 150);
-    };
-    window.onLowGfxChange = function(checked) {
-        if (window.TTSettings) window.TTSettings.setLowGraphics(checked);
-    };
-    window.onPixelChange = function(val) {
-        val = parseInt(val, 10);
-        if (window.TTSettings) window.TTSettings.setPixelated(val);
-        var el = document.getElementById('tt-pixel-label');
-        if (el) el.textContent = val + '%';
-        updateSliderBg(document.getElementById('tt-pixel-slider'), val, 0, 100);
-    };
-    function updateFSBtn() {
-        var btn = document.getElementById('tt-fs-btn');
-        if (!btn) return;
-        btn.textContent = document.fullscreenElement ? '⎋ Lumabas sa Full Screen' : '⛶ I-bukas ang Full Screen';
-    }
-    window.toggleFullscreen = function() {
-        if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen().catch(function(){});
-        } else {
-            document.exitFullscreen().catch(function(){});
+        // ═══════════════════════════════════════════════════════
+        // SETTINGS MODAL CONTROLLER (Lesson Pages)
+        // ═══════════════════════════════════════════════════════
+        function openSettings() {
+            var vol = window.TTSettings ? window.TTSettings.getVolume() : 80;
+            var br = window.TTSettings ? window.TTSettings.getBrightness() : 100;
+            var vs = document.getElementById('tt-vol-slider');
+            var bs = document.getElementById('tt-br-slider');
+            if (vs) { vs.value = vol; updateSliderBg(vs, vol, 0, 100); }
+            if (bs) { bs.value = br; updateSliderBg(bs, br, 50, 150); }
+            var vl = document.getElementById('tt-vol-label');
+            var bl = document.getElementById('tt-br-label');
+            if (vl) vl.textContent = vol + '%';
+            if (bl) bl.textContent = br + '%';
+            document.getElementById('settings-modal').classList.add('open');
+            document.body.style.overflow = 'hidden';
         }
-    };
-    document.addEventListener('fullscreenchange', updateFSBtn);
+        window.openSettings = openSettings;
+        window.closeSettings = function () {
+            document.getElementById('settings-modal').classList.remove('open');
+            document.body.style.overflow = '';
+        };
+        function updateSliderBg(input, val, min, max) {
+            var pct = ((val - min) / (max - min) * 100).toFixed(1) + '%';
+            if (input.classList.contains('volume-slider')) input.style.setProperty('--vol-pct', pct);
+            if (input.classList.contains('brightness-slider')) input.style.setProperty('--br-pct', pct);
+        }
+        window.onVolChange = function (val) {
+            val = parseInt(val, 10);
+            if (window.TTSettings) window.TTSettings.setVolume(val);
+            var el = document.getElementById('tt-vol-label');
+            if (el) el.textContent = val + '%';
+            updateSliderBg(document.getElementById('tt-vol-slider'), val, 0, 100);
+        };
+        window.onBrChange = function (val) {
+            val = parseInt(val, 10);
+            if (window.TTSettings) window.TTSettings.setBrightness(val);
+            var el = document.getElementById('tt-br-label');
+            if (el) el.textContent = val + '%';
+            updateSliderBg(document.getElementById('tt-br-slider'), val, 50, 150);
+        };
+        window.onPixelChange = function (checked) {
+            if (window.TTSettings) window.TTSettings.setPixelated(checked);
+        };
+        function updateFSBtn() {
+            var btn = document.getElementById('tt-fs-btn');
+            if (!btn) return;
+            btn.textContent = document.fullscreenElement ? '⎋ Lumabas sa Full Screen' : '⛶ I-bukas ang Full Screen';
+        }
+        window.toggleFullscreen = function () {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(function () { });
+            } else {
+                document.exitFullscreen().catch(function () { });
+            }
+        };
+        document.addEventListener('fullscreenchange', updateFSBtn);
     </script>
 
 </body>
