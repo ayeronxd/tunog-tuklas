@@ -1903,6 +1903,10 @@
             window.toggleChoice = function (card) {
                 const act = card.dataset.activity;
                 if (state[act].checked) return;
+
+                // Reset any previous feedback classes so the user can try again
+                card.classList.remove('correct', 'wrong', 'missed');
+
                 card.classList.toggle('selected');
                 card.querySelector('.choice-checkbox').innerHTML =
                     card.classList.contains('selected') ? '✔' : '';
@@ -1911,25 +1915,39 @@
             // ── Check activity ──
             window.checkActivity = function (actNum) {
                 if (state[actNum].checked) return;
-                state[actNum].checked = true;
 
                 const cards = document.querySelectorAll(`.choice-card[data-activity="${actNum}"]`);
                 let correct = 0;
                 let wrongOrMissed = 0;
+                let selectedCount = 0;
                 const total = state[actNum].total;
+
+                cards.forEach(card => {
+                    if (card.classList.contains('selected')) selectedCount++;
+                });
+
+                if (selectedCount === 0) {
+                    const banner = document.getElementById(`feedback-act${actNum}`);
+                    const icon = document.getElementById(`feedback-icon-${actNum}`);
+                    const text = document.getElementById(`feedback-text-${actNum}`);
+                    banner.className = 'feedback-banner show wrong-fb';
+                    icon.textContent = '⚠️';
+                    text.innerHTML = `<strong>Pumili muna!</strong> Pindutin ang mga larawan.`;
+                    return;
+                }
 
                 cards.forEach(card => {
                     const isCorrect = card.dataset.correct === 'true';
                     const isSelected = card.classList.contains('selected');
-                    card.onclick = null;
+
+                    // Reset previous feedback classes
+                    card.classList.remove('correct', 'wrong', 'missed');
 
                     if (isCorrect && isSelected) {
-                        card.classList.remove('selected');
                         card.classList.add('correct');
                         card.querySelector('.choice-checkbox').innerHTML = '✔';
                         correct++;
                     } else if (!isCorrect && isSelected) {
-                        card.classList.remove('selected');
                         card.classList.add('wrong');
                         card.querySelector('.choice-checkbox').innerHTML = '✖';
                         wrongOrMissed++;
@@ -1937,34 +1955,40 @@
                         card.classList.add('missed');
                         card.querySelector('.choice-checkbox').innerHTML = '!';
                         wrongOrMissed++;
+                    } else {
+                        card.querySelector('.choice-checkbox').innerHTML = '';
                     }
                 });
 
                 const pts = (correct === total && wrongOrMissed === 0) ? 1 : 0;
-                state[actNum].score = pts;
 
                 const banner = document.getElementById(`feedback-act${actNum}`);
                 const icon = document.getElementById(`feedback-icon-${actNum}`);
                 const text = document.getElementById(`feedback-text-${actNum}`);
-                banner.classList.add('show');
 
                 if (pts === 1) {
-                    banner.classList.add('correct-fb');
+                    state[actNum].checked = true;
+                    state[actNum].score = 1;
+                    
+                    banner.className = 'feedback-banner show correct-fb';
                     icon.textContent = '🌟';
                     text.innerHTML = `<strong>Mahusay!</strong> Tama ang lahat! <em>(+1 punto)</em>`;
+                    
+                    // Disable clicks ONLY on success
+                    cards.forEach(card => card.onclick = null);
+                    document.getElementById(`check-act${actNum}`).disabled = true;
+
+                    // Update star count
+                    const cur = parseInt(document.getElementById('starCount').textContent);
+                    document.getElementById('starCount').textContent = cur + 1;
+
                     launchConfetti();
+                    updateNextBtn();
                 } else {
-                    banner.classList.add('wrong-fb');
+                    banner.className = 'feedback-banner show wrong-fb';
                     icon.textContent = '💪';
-                    text.innerHTML = `<strong>Subukan Muli!</strong> May mali o nakaligtaan. <em>(0 puntos)</em>`;
+                    text.innerHTML = `<strong>Subukan Muli!</strong> May mali o nakaligtaan.`;
                 }
-
-                const cur = parseInt(document.getElementById('starCount').textContent);
-                document.getElementById('starCount').textContent = cur + pts;
-
-                document.getElementById(`check-act${actNum}`).disabled = true;
-
-                updateNextBtn();
             };
 
             // ── Drawing Pads ──

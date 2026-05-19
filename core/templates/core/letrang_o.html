@@ -592,8 +592,8 @@
             border-radius: 28px;
             border: 4px solid var(--dark);
             box-shadow: 0 8px 0 var(--dark), 0 16px 40px rgba(0, 0, 0, 0.08);
-            padding: 40px 40px;
-            max-width: 1000px;
+            padding: 60px 50px;
+            max-width: 1100px;
             margin: 0 auto;
             position: relative;
         }
@@ -693,23 +693,23 @@
         .activity-title {
             font-family: 'Nunito', sans-serif;
             font-weight: 900;
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             color: var(--dark);
             margin-bottom: 6px;
         }
 
         .activity-instruction {
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: 700;
             color: #666;
             line-height: 1.6;
-            margin-bottom: 18px;
+            margin-bottom: 22px;
         }
 
         .choices-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 14px;
+            gap: 28px;
             justify-content: center;
         }
 
@@ -723,15 +723,15 @@
         }
 
         .choice-emoji-box {
-            width: 105px;
-            height: 105px;
-            border-radius: 22px;
+            width: 150px;
+            height: 150px;
+            border-radius: 26px;
             border: 4px solid #ddd;
             background: #f9f9f9;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3.8rem;
+            font-size: 7.5rem;
             transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: 0 5px 0 #ccc;
         }
@@ -742,21 +742,21 @@
 
         .choice-label {
             font-weight: 900;
-            font-size: 0.88rem;
+            font-size: 1.1rem;
             color: #555;
             text-align: center;
         }
 
         .choice-checkbox {
-            width: 34px;
-            height: 34px;
-            border-radius: 10px;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
             border: 4px solid #ccc;
             background: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.6rem;
             transition: all 0.2s;
             box-shadow: 0 3px 0 #ccc;
         }
@@ -861,10 +861,10 @@
             background: linear-gradient(135deg, var(--green), #2e7d32);
             border: 4px solid var(--dark);
             border-radius: 50px;
-            padding: 11px 24px;
+            padding: 18px 30px;
             font-family: 'Nunito', sans-serif;
             font-weight: 900;
-            font-size: 1.1rem;
+            font-size: 1.4rem;
             color: white;
             cursor: pointer;
             box-shadow: 0 7px 0 var(--dark);
@@ -873,7 +873,7 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            margin-top: 20px;
+            margin-top: 24px;
         }
 
         .check-btn:hover {
@@ -1984,7 +1984,7 @@
                         transform: translateY(2px);
                     }
                 </style>
-                <div class="section-card" style="max-width: 1050px;">
+                <div class="section-card" style="max-width: 1150px; padding: 60px 40px;">
                     <div class="section-badge badge-blue">🎯 Alamin Natin</div>
 
                     <h2 class="activity-title mt-3">Sabihin ang ngalan ng mga larawan. Alin ang
@@ -1995,40 +1995,40 @@
                     </p>
 
                     <div class="choices-grid" id="act1-grid"
-                        style="grid-template-columns: repeat(6, 1fr); gap:15px; margin-top:30px;">
+                        style="grid-template-columns: repeat(6, 1fr); gap: 12px; margin-top: 30px; flex-wrap: nowrap;">
                         <div class="choice-card" data-correct="true" data-activity="3" onclick="toggleChoice(this)"
                             style="position:relative; overflow:visible;">
-                            <div class="choice-emoji-box" style="font-size:3.5rem;">🥒</div>
+                            <div class="choice-emoji-box">🥒</div>
                             <div class="choice-label">Okra</div>
                             <div class="marker-circle"></div>
                         </div>
                         <div class="choice-card" data-correct="true" data-activity="3" onclick="toggleChoice(this)"
                             style="position:relative; overflow:visible;">
-                            <div class="choice-emoji-box" style="font-size:3.5rem;">⏰</div>
+                            <div class="choice-emoji-box">⏰</div>
                             <div class="choice-label">Orasan</div>
                             <div class="marker-circle"></div>
                         </div>
                         <div class="choice-card" data-correct="true" data-activity="3" onclick="toggleChoice(this)"
                             style="position:relative; overflow:visible;">
-                            <div class="choice-emoji-box" style="font-size:3.5rem;">🐻</div>
+                            <div class="choice-emoji-box">🐻</div>
                             <div class="choice-label">Oso</div>
                             <div class="marker-circle"></div>
                         </div>
                         <div class="choice-card" data-correct="true" data-activity="3" onclick="toggleChoice(this)"
                             style="position:relative; overflow:visible;">
-                            <div class="choice-emoji-box" style="font-size:3.5rem;">🚗</div>
+                            <div class="choice-emoji-box">🚗</div>
                             <div class="choice-label">Oto</div>
                             <div class="marker-circle"></div>
                         </div>
                         <div class="choice-card" data-correct="true" data-activity="3" onclick="toggleChoice(this)"
                             style="position:relative; overflow:visible;">
-                            <div class="choice-emoji-box" style="font-size:3.5rem;">🏥</div>
+                            <div class="choice-emoji-box">🏥</div>
                             <div class="choice-label">Ospital</div>
                             <div class="marker-circle"></div>
                         </div>
                         <div class="choice-card" data-correct="false" data-activity="3" onclick="toggleChoice(this)"
                             style="position:relative; overflow:visible;">
-                            <div class="choice-emoji-box" style="font-size:3.5rem;">🍃</div>
+                            <div class="choice-emoji-box">🍃</div>
                             <div class="choice-label">Dahon</div>
                             <div class="marker-circle"></div>
                         </div>
