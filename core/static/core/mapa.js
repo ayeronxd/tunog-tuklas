@@ -8,7 +8,7 @@ const mapApp = createApp({
         const currentPlayer = ref("Juan");
         const starsCollected = ref(15);
         const levelsCompleted = ref(3);
-        const totalLevels = ref(16);
+        const totalLevels = ref(18);
         const activeLetter = ref("B");
 
         // Methods

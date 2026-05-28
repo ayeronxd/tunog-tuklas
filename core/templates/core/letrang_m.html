@@ -2575,19 +2575,34 @@
             }
 
             // ── Sound ──
-            window.playMSound = function () {
-                const btn = document.getElementById('soundBtn');
-                btn.style.transform = 'scale(0.93) translateY(5px)';
-                btn.style.boxShadow = '0 0 0 #000';
-                setTimeout(() => { btn.style.transform = ''; btn.style.boxShadow = ''; }, 180);
+            // ── Sound ──
+    window.playMSound = function () {
+    const btn = document.getElementById('soundBtn');
+    
+    // UI Button Animation
+    btn.style.transform = 'scale(0.93) translateY(5px)';
+    btn.style.boxShadow = '0 0 0 #000';
+    setTimeout(() => { btn.style.transform = ''; btn.style.boxShadow = ''; }, 180);
 
-                if ('speechSynthesis' in window) {
-                    const utter = new SpeechSynthesisUtterance('mmm… mangga… mata… manok');
-                    utter.lang = 'tl-PH'; utter.rate = 0.75; utter.pitch = 1.1;
-                    window.speechSynthesis.cancel();
-                    window.speechSynthesis.speak(utter);
-                }
-            };
+    // 1. Initialize both audio assets using Django static tags
+    const introAudio = new Audio("{% static 'core/audio/m_intro.mp3' %}");
+    const wordsAudio = new Audio("{% static 'core/audio/m_pronunce.mp3' %}");
+
+    // 2. Apply the global volume settings to both files
+    if (window.TTSettings) {
+        const currentVolume = window.TTSettings.getVolume() / 100;
+        introAudio.volume = currentVolume;
+        wordsAudio.volume = currentVolume;
+    }
+
+    // 3. Chain the audio: When intro finishes, play the words
+    introAudio.addEventListener('ended', function() {
+        wordsAudio.play();
+    });
+
+    // 4. Start the sequence
+    introAudio.play();
+};
 
             // ── Confetti ──
             function launchConfetti() {
