@@ -1059,31 +1059,28 @@
 
 <body>
 
-    <!-- ── REVERSE RAINBOW TRANSITION OUT ── -->
     <div id="transition-out"
-        style="position:fixed; inset:0; z-index:99999; pointer-events:none; display:flex; align-items:center; justify-content:center; overflow:hidden; animation: outOverlay 0.1s 2.4s forwards;">
-        <!-- Pinwheel spins backwards and shrinks -->
+        style="position:fixed; inset:0; z-index:99999; pointer-events:none; display:flex; align-items:center; justify-content:center; overflow:hidden; animation: outOverlay 0.1s 1.4s forwards;">
+        
         <div
-            style="position:absolute; width:250vw; height:250vw; border-radius:50%; background: conic-gradient(#FF5252 0deg 60deg, #FF9800 60deg 120deg, #FFEB3B 120deg 180deg, #4CAF50 180deg 240deg, #2196F3 240deg 300deg, #9C27B0 300deg 360deg); animation: reversePinwheel 1.8s cubic-bezier(0.6, 0, 0.2, 1) forwards;">
+            style="position:absolute; width:250vw; height:250vw; border-radius:50%; background: conic-gradient(#FF5252 0deg 60deg, #FF9800 60deg 120deg, #FFEB3B 120deg 180deg, #4CAF50 180deg 240deg, #2196F3 240deg 300deg, #9C27B0 300deg 360deg); animation: reversePinwheel 0.8s cubic-bezier(0.6, 0, 0.2, 1) forwards;">
         </div>
 
-        <!-- Stars shrink and rotate -->
-        <div style="position:absolute; inset:0; z-index:10001; animation: outOverlay 0.1s 2s forwards;">
+        <div style="position:absolute; inset:0; z-index:10001; animation: outOverlay 0.1s 1s forwards;">
             <i class="fa-solid fa-star text-warning"
-                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:15%; left:15%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0s;"></i>
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:15%; left:15%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.5s cubic-bezier(0.6, 0, 0.2, 1) forwards 0s;"></i>
             <i class="fa-solid fa-star text-warning"
-                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:20%; left:80%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.15s;"></i>
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:20%; left:80%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.5s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.1s;"></i>
             <i class="fa-solid fa-star text-warning"
-                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:75%; left:20%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.3s;"></i>
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:75%; left:20%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.5s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.2s;"></i>
             <i class="fa-solid fa-star text-warning"
-                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:80%; left:75%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.15s;"></i>
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:80%; left:75%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.5s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.1s;"></i>
             <i class="fa-solid fa-star text-warning"
-                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:10%; left:50%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.45s;"></i>
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:10%; left:50%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.5s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.3s;"></i>
         </div>
 
-        <!-- Mascot hides -->
         <div
-            style="position:absolute; z-index:10002; display:flex; flex-direction:column; align-items:center; justify-content:center; animation: reverseContent 1.4s cubic-bezier(0.6, 0, 0.2, 1) forwards;">
+            style="position:absolute; z-index:10002; display:flex; flex-direction:column; align-items:center; justify-content:center; animation: reverseContent 0.4s cubic-bezier(0.6, 0, 0.2, 1) forwards;">
             <div id="transition-mascot-emoji" style="font-size:8rem; filter:drop-shadow(0 10px 0 rgba(0,0,0,0.15)); line-height:1;">🐒</div>
             <div
                 style="font-family:'Bubblegum Sans',cursive; font-size:5rem; color:white; text-shadow:4px 6px 0 rgba(0,0,0,0.2); margin-top:-20px; transform:rotate(-5deg);">
@@ -1307,18 +1304,16 @@
         .btn-lesson-settings:active { transform: translateY(2px); }
     </style>
 
-    <!-- Confetti -->
     <div class="confetti-wrap" id="confettiWrap" aria-hidden="true"></div>
 
-    <!-- Floating background decorations -->
     <div class="floating-deco" style="top:10%; left:3%;">⭐</div>
     <div class="floating-deco" style="top:30%; right:4%;">🌸</div>
     <div class="floating-deco" style="top:55%; left:2%;">🌈</div>
     <div class="floating-deco" style="bottom:15%; right:3%;">✨</div>
 
-    <!-- ══ HEADER ══ -->
     <header class="lesson-header">
-        <a href="{% url 'core:mapa' %}" class="header-back-btn" title="Bumalik sa Mapa">
+        <a href="{% url 'core:mapa' %}" class="header-back-btn" title="Bumalik sa Mapa"
+           onclick="event.preventDefault(); const target = this.href; if(window.AudioManager) AudioManager.playSFX('click'); setTimeout(() => window.location.href = target, 350);">
             <i class="fa-solid fa-chevron-left"></i>
         </a>
         <h1 class="header-title">🔤 Letrang Mm</h1>
@@ -1328,7 +1323,6 @@
         </div>
     </header>
 
-    <!-- ══ UNIT PROGRESS DOTS ══ -->
     <div class="unit-progress-bar">
         <span class="progress-label">Yunit</span>
         <div class="progress-dot active" id="dot-0"></div>
@@ -1338,13 +1332,9 @@
         <div class="progress-dot" id="dot-4"></div>
     </div>
 
-    <!-- ══ SLIDING UNITS VIEWPORT ══ -->
     <div class="units-viewport">
         <div class="units-track" id="unitsTrack">
 
-            <!-- ═══════════════════════════════════
-             UNIT 1: Kilalanin Natin (Intro)
-        ═══════════════════════════════════ -->
             <div class="unit-slide" id="unit-0">
                 <div class="section-card">
                     <div class="section-badge badge-pink">📖 Kilalanin Natin</div>
@@ -1381,9 +1371,6 @@
                 </div>
             </div>
 
-            <!-- ═══════════════════════════════════
-             UNIT 2: Gawain 1 – Starting /m/
-        ═══════════════════════════════════ -->
             <div class="unit-slide" id="unit-1">
                 <div class="section-card">
                     <div class="section-badge badge-blue">🎯 Alamin Natin – Gawain 1</div>
@@ -1394,31 +1381,26 @@
                     </p>
 
                     <div class="choices-grid" id="act1-grid">
-                        <!-- Tandang – hindi /m/ -->
                         <div class="choice-card" data-correct="false" data-activity="1" onclick="toggleChoice(this)">
                             <div class="choice-emoji-box">🐓</div>
                             <div class="choice-label">Tandang</div>
                             <div class="choice-checkbox"></div>
                         </div>
-                        <!-- Mais – /m/ ✓ -->
                         <div class="choice-card" data-correct="true" data-activity="1" onclick="toggleChoice(this)">
                             <div class="choice-emoji-box">🌽</div>
                             <div class="choice-label">Mais</div>
                             <div class="choice-checkbox"></div>
                         </div>
-                        <!-- Mansanas – /m/ ✓ -->
                         <div class="choice-card" data-correct="true" data-activity="1" onclick="toggleChoice(this)">
                             <div class="choice-emoji-box">🍎</div>
                             <div class="choice-label">Mansanas</div>
                             <div class="choice-checkbox"></div>
                         </div>
-                        <!-- Bola – hindi /m/ -->
                         <div class="choice-card" data-correct="false" data-activity="1" onclick="toggleChoice(this)">
                             <div class="choice-emoji-box">🏀</div>
                             <div class="choice-label">Bola</div>
                             <div class="choice-checkbox"></div>
                         </div>
-                        <!-- Medyas – /m/ ✓ -->
                         <div class="choice-card" data-correct="true" data-activity="1" onclick="toggleChoice(this)">
                             <div class="choice-emoji-box">🧦</div>
                             <div class="choice-label">Medyas</div>
@@ -1437,9 +1419,6 @@
                 </div>
             </div>
 
-            <!-- ═══════════════════════════════════
-             UNIT 3: Gawain 2 – Ending /m/
-        ═══════════════════════════════════ -->
             <div class="unit-slide" id="unit-2">
                 <div class="section-card">
                     <div class="section-badge badge-purple">🎯 Alamin Natin – Gawain 2</div>
@@ -1450,31 +1429,26 @@
                     </p>
 
                     <div class="choices-grid" id="act2-grid">
-                        <!-- Sinulid – hindi /m/ -->
                         <div class="choice-card" data-correct="false" data-activity="2" onclick="toggleChoice(this)">
                             <div class="choice-emoji-box">🧵</div>
                             <div class="choice-label">Sinulid</div>
                             <div class="choice-checkbox"></div>
                         </div>
-                        <!-- Itlog – hindi /m/ -->
                         <div class="choice-card" data-correct="false" data-activity="2" onclick="toggleChoice(this)">
                             <div class="choice-emoji-box">🥚</div>
                             <div class="choice-label">Itlog</div>
                             <div class="choice-checkbox"></div>
                         </div>
-                        <!-- Langgam – /m/ ✓ -->
                         <div class="choice-card" data-correct="true" data-activity="2" onclick="toggleChoice(this)">
                             <div class="choice-emoji-box">🐜</div>
                             <div class="choice-label">Langgam</div>
                             <div class="choice-checkbox"></div>
                         </div>
-                        <!-- Pinya – hindi /m/ -->
                         <div class="choice-card" data-correct="false" data-activity="2" onclick="toggleChoice(this)">
                             <div class="choice-emoji-box">🍍</div>
                             <div class="choice-label">Pinya</div>
                             <div class="choice-checkbox"></div>
                         </div>
-                        <!-- Siyam – /m/ ✓ -->
                         <div class="choice-card" data-correct="true" data-activity="2" onclick="toggleChoice(this)">
                             <div class="choice-emoji-box"
                                 style="font-family:'Bubblegum Sans',cursive;font-size:3.2rem;color:var(--purple);">9
@@ -1494,7 +1468,6 @@
                         <span id="feedback-text-2"></span>
                     </div>
 
-                    <!-- Final score (only visible after both checked) -->
                     <div id="score-section" style="display:none; margin-top: 28px;">
                         <div class="score-card">
                             <div class="score-title">🎉 Napakahusay!</div>
@@ -1507,9 +1480,6 @@
                 </div>
             </div>
 
-            <!-- ═══════════════════════════════════════════
-             UNIT 4: Pagsulat ng letrang Mm
-        ═══════════════════════════════════════════ -->
             <div class="unit-slide" id="unit-3">
                 <div class="section-card">
                     <div class="section-badge badge-orange">✏️ Pagsulat ng Mm</div>
@@ -1518,16 +1488,13 @@
                     <p class="activity-instruction">Gamitin ang iyong daliri o mouse para magsulat ng malaki at maliit
                         na <strong>Mm</strong> sa loob ng kahon. Sundin ang guhit-gabay! ✍️</p>
 
-                    <!-- Instruction reminder (Visual Stroke Guide) -->
                     <div class="visual-guide-box"
                         style="margin-bottom:20px; padding: 15px; background: white; border: 2px dashed #FF9F43; border-radius: 15px; text-align: center;">
                         <p style="font-weight: 800; color: #FF9F43; margin-bottom: 10px; font-size: 1.1rem;">💡 Paano
                             isulat ang Mm? (Sundin ang mga numero!)</p>
                         <svg viewBox="0 0 400 120"
                             style="width: 100%; max-width: 450px; height: auto; overflow: visible;">
-                            <!-- M Uppercase -->
                             <g transform="translate(40, 0)">
-                                <!-- Guidelines -->
                                 <line x1="-10" y1="10" x2="110" y2="10" stroke="#f0f0f0" stroke-width="2"
                                     stroke-dasharray="6" />
                                 <line x1="-10" y1="55" x2="110" y2="55" stroke="#f0f0f0" stroke-width="2"
@@ -1535,32 +1502,27 @@
                                 <line x1="-10" y1="100" x2="110" y2="100" stroke="#f0f0f0" stroke-width="2"
                                     stroke-dasharray="6" />
 
-                                <!-- Skeleton M -->
                                 <path d="M 10,100 L 10,10 L 50,60 L 90,10 L 90,100" fill="none" stroke="#f0f0f0"
                                     stroke-width="14" stroke-linecap="round" stroke-linejoin="round" />
 
-                                <!-- Arrow 1 (Down) -->
                                 <path d="M 10,10 L 10,95" fill="none" stroke="#FF6B9D" stroke-width="4"
                                     stroke-linecap="round" />
                                 <polygon points="5,85 15,85 10,98" fill="#FF6B9D" />
                                 <circle cx="10" cy="5" r="8" fill="#FF6B9D" /><text x="10" y="9" fill="white"
                                     font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">1</text>
 
-                                <!-- Arrow 2 (Diagonal Down) -->
                                 <path d="M 10,10 L 48,58" fill="none" stroke="#4D96FF" stroke-width="4"
                                     stroke-linecap="round" />
                                 <polygon points="40,58 48,50 50,60" fill="#4D96FF" />
                                 <circle cx="20" cy="20" r="8" fill="#4D96FF" /><text x="20" y="24" fill="white"
                                     font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">2</text>
 
-                                <!-- Arrow 3 (Diagonal Up) -->
                                 <path d="M 50,60 L 88,12" fill="none" stroke="#6BCB77" stroke-width="4"
                                     stroke-linecap="round" />
                                 <polygon points="80,12 88,20 90,10" fill="#6BCB77" />
                                 <circle cx="68" cy="40" r="8" fill="#6BCB77" /><text x="68" y="44" fill="white"
                                     font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">3</text>
 
-                                <!-- Arrow 4 (Down) -->
                                 <path d="M 90,10 L 90,95" fill="none" stroke="#FF9F43" stroke-width="4"
                                     stroke-linecap="round" />
                                 <polygon points="85,85 95,85 90,98" fill="#FF9F43" />
@@ -1568,9 +1530,7 @@
                                     font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">4</text>
                             </g>
 
-                            <!-- m Lowercase -->
                             <g transform="translate(260, 0)">
-                                <!-- Guidelines -->
                                 <line x1="-10" y1="10" x2="110" y2="10" stroke="#f0f0f0" stroke-width="2"
                                     stroke-dasharray="6" />
                                 <line x1="-10" y1="55" x2="110" y2="55" stroke="#f0f0f0" stroke-width="2"
@@ -1578,7 +1538,6 @@
                                 <line x1="-10" y1="100" x2="110" y2="100" stroke="#f0f0f0" stroke-width="2"
                                     stroke-dasharray="6" />
 
-                                <!-- Skeleton m -->
                                 <path d="M 10,55 L 10,100" fill="none" stroke="#f0f0f0" stroke-width="14"
                                     stroke-linecap="round" />
                                 <path d="M 10,75 C 10,50 48,45 50,70 L 50,100" fill="none" stroke="#f0f0f0"
@@ -1586,21 +1545,18 @@
                                 <path d="M 50,75 C 50,50 88,45 90,70 L 90,100" fill="none" stroke="#f0f0f0"
                                     stroke-width="14" stroke-linecap="round" />
 
-                                <!-- Arrow 1 (Down) -->
                                 <path d="M 10,55 L 10,95" fill="none" stroke="#FF6B9D" stroke-width="4"
                                     stroke-linecap="round" />
                                 <polygon points="5,85 15,85 10,98" fill="#FF6B9D" />
                                 <circle cx="10" cy="50" r="8" fill="#FF6B9D" /><text x="10" y="54" fill="white"
                                     font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">1</text>
 
-                                <!-- Arrow 2 (Curve Down) -->
                                 <path d="M 10,75 C 15,55 45,55 48,70 L 48,95" fill="none" stroke="#4D96FF"
                                     stroke-width="4" stroke-linecap="round" />
                                 <polygon points="43,85 53,85 48,98" fill="#4D96FF" />
                                 <circle cx="30" cy="50" r="8" fill="#4D96FF" /><text x="30" y="54" fill="white"
                                     font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">2</text>
 
-                                <!-- Arrow 3 (Curve Down) -->
                                 <path d="M 50,75 C 55,55 85,55 88,70 L 88,95" fill="none" stroke="#6BCB77"
                                     stroke-width="4" stroke-linecap="round" />
                                 <polygon points="83,85 93,85 88,98" fill="#6BCB77" />
@@ -1610,7 +1566,6 @@
                         </svg>
                     </div>
 
-                    <!-- ── Uppercase M Drawing Pad ── -->
                     <div class="draw-pad-wrapper">
                         <div class="draw-pad-label">
                             <span class="letter-preview upper">M</span>
@@ -1626,13 +1581,11 @@
                             <canvas id="canvasUpper" height="180"></canvas>
                         </div>
 
-                        <!-- Toolbar -->
                         <div class="pad-toolbar">
                             <button class="pad-tool-btn undo-btn" onclick="undoStroke('upper')">↩ Burahin huli</button>
                             <button class="pad-tool-btn erase" onclick="clearCanvas('upper')">🗑 I-clear</button>
                             <button class="pad-tool-btn done-draw" onclick="markDone('upper')">✓ Tapos na!</button>
                         </div>
-                        <!-- Color row -->
                         <div class="color-row">
                             <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Kulay:</span>
                             <div class="color-swatch active" style="background:#4D96FF;"
@@ -1648,7 +1601,6 @@
                             <div class="color-swatch" style="background:#2C2F33;"
                                 onclick="setColor('upper','#2C2F33',this)"></div>
                         </div>
-                        <!-- Brush size -->
                         <div class="brush-row">
                             <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Laki ng panulat:</span>
                             <div class="brush-btn active" onclick="setBrush('upper',5,this)">
@@ -1665,7 +1617,6 @@
                         </div>
                     </div>
 
-                    <!-- ── Lowercase m Drawing Pad ── -->
                     <div class="draw-pad-wrapper">
                         <div class="draw-pad-label">
                             <span class="letter-preview lower">m</span>
@@ -1681,13 +1632,11 @@
                             <canvas id="canvasLower" height="160"></canvas>
                         </div>
 
-                        <!-- Toolbar -->
                         <div class="pad-toolbar">
                             <button class="pad-tool-btn undo-btn" onclick="undoStroke('lower')">↩ Burahin huli</button>
                             <button class="pad-tool-btn erase" onclick="clearCanvas('lower')">🗑 I-clear</button>
                             <button class="pad-tool-btn done-draw" onclick="markDone('lower')">✓ Tapos na!</button>
                         </div>
-                        <!-- Color row -->
                         <div class="color-row">
                             <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Kulay:</span>
                             <div class="color-swatch" style="background:#4D96FF;"
@@ -1703,7 +1652,6 @@
                             <div class="color-swatch" style="background:#2C2F33;"
                                 onclick="setColor('lower','#2C2F33',this)"></div>
                         </div>
-                        <!-- Brush size -->
                         <div class="brush-row">
                             <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Laki ng panulat:</span>
                             <div class="brush-btn active" onclick="setBrush('lower',5,this)">
@@ -1722,20 +1670,15 @@
                 </div>
             </div>
 
-            <!-- ═══════════════════════════════════════════
-             UNIT 5: Pagsasanay 1 at Sagutin Natin
-        ═══════════════════════════════════════════ -->
             <div class="unit-slide" id="unit-4">
                 <div class="section-card">
                     <div class="section-badge badge-green">📝 Pagsasanay 1</div>
 
-                    <!-- Pagsasanay 1: count lowercase -->
                     <h2 class="activity-title mt-3">Pindutin at piliing mabuti ang maliit na letrang m</h2>
                     <p class="activity-instruction" id="p1-instruction">
                         <strong>PAALALA :</strong> Huwag pindutin ang malaking M
                     </p>
 
-                    <!-- Clickable letter tokens -->
                     <div class="letter-tokens" id="letterTokens1">
                         <div class="letter-token" onclick="tapSmallM(this,'M')">M</div>
                         <div class="letter-token" onclick="tapSmallM(this,'m')">m</div>
@@ -1749,7 +1692,6 @@
                         <div class="letter-token" onclick="tapSmallM(this,'M')">M</div>
                     </div>
 
-                    <!-- Lives display -->
                     <div class="hearts-display" id="heartsLowerContainer" style="display:flex; justify-content:center; gap:8px; margin:20px 0;">
                         <i class="fa-solid fa-heart text-danger" style="font-size:2.2rem; transition:all 0.3s;" id="heartLower1"></i>
                         <i class="fa-solid fa-heart text-danger" style="font-size:2.2rem; transition:all 0.3s;" id="heartLower2"></i>
@@ -1784,7 +1726,6 @@
                     </div>
 
 
-                    <!-- Final score -->
                     <div id="score-section" style="display:none; margin-top: 28px;">
                         <div class="score-card">
                             <div class="score-title">🎉 Napakahusay!</div>
@@ -1797,29 +1738,21 @@
                 </div>
             </div>
 
-        </div><!-- end units-track -->
-    </div><!-- end units-viewport -->
-
-    <!-- ══ BOTTOM NAVIGATION BAR ══ -->
-    <div class="nav-bar" id="navBar">
-        <!-- Back button -->
+        </div></div><div class="nav-bar" id="navBar">
         <button class="nav-btn prev-btn" id="prevBtn" onclick="goBack()" style="visibility:hidden;">
             <i class="fa-solid fa-arrow-left"></i> Bumalik
         </button>
 
-        <!-- Unit counter -->
         <div class="unit-counter">
             <strong id="unitNum">1</strong> / 5<br>
             <span id="unitName" style="font-size:0.8rem;">Kilalanin Natin</span>
         </div>
 
         <div style="display: flex; gap: 10px;">
-            <!-- Skip button -->
             <button class="nav-btn prev-btn" id="skipBtn" onclick="goSkip()">
                 Laktawan <i class="fa-solid fa-forward-step"></i>
             </button>
 
-            <!-- Next button -->
             <button class="nav-btn next-btn" id="nextBtn" onclick="goNext()">
                 Susunod <i class="fa-solid fa-arrow-right"></i>
             </button>
@@ -1835,25 +1768,22 @@
             const totalUnits = 5;
 
             const state = {
-                1: { checked: false, score: 0, total: 0 }, // Gawain 1
-                2: { checked: false, score: 0, total: 0 }, // Gawain 2
-                4: { checked: false, score: 0 },   // Pagsulat
-                5: { checked: false, score: 0 },   // Pagsasanay 1 (maliit na m)
-                6: { checked: false, score: 0 }    // Pagsasanay 2 (Malaking M)
+                1: { checked: false, score: 0, total: 0 },
+                2: { checked: false, score: 0, total: 0 },
+                4: { checked: false, score: 0 },
+                5: { checked: false, score: 0 },
+                6: { checked: false, score: 0 }
             };
 
-            // Count correct answers per activity
             document.querySelectorAll('.choice-card[data-correct="true"]').forEach(card => {
                 const act = card.dataset.activity;
                 if (state[act]) state[act].total++;
             });
 
-            // ── Navigation ──
             function updateUI() {
                 const track = document.getElementById('unitsTrack');
                 track.style.transform = `translateX(-${currentUnit * (100 / 5)}%)`;
 
-                // Dots
                 for (let i = 0; i < totalUnits; i++) {
                     const dot = document.getElementById(`dot-${i}`);
                     dot.classList.remove('active', 'done');
@@ -1861,21 +1791,15 @@
                     else if (i === currentUnit) dot.classList.add('active');
                 }
 
-                // Counter
                 document.getElementById('unitNum').textContent = currentUnit + 1;
                 document.getElementById('unitName').textContent = UNIT_NAMES[currentUnit];
 
-                // Prev btn
                 const prevBtn = document.getElementById('prevBtn');
                 prevBtn.style.visibility = currentUnit === 0 ? 'hidden' : 'visible';
 
-                // Skip btn
                 const skipBtn = document.getElementById('skipBtn');
-                if (skipBtn) {
-                    skipBtn.style.display = (currentUnit === totalUnits - 1) ? 'none' : 'flex';
-                }
+                if (skipBtn) skipBtn.style.display = (currentUnit === totalUnits - 1) ? 'none' : 'flex';
 
-                // Next / Finish btn
                 updateNextBtn();
             }
 
@@ -1886,7 +1810,6 @@
             function updateNextBtn() {
                 const nextBtn = document.getElementById('nextBtn');
                 if (currentUnit === totalUnits - 1) {
-                    // On last unit (unit 5)
                     if (allActivitiesDone()) {
                         nextBtn.className = 'nav-btn finish-btn';
                         nextBtn.innerHTML = '<i class="fa-solid fa-flag-checkered"></i> Tapos Na!';
@@ -1919,18 +1842,11 @@
                         nextBtn.innerHTML = 'Susunod <i class="fa-solid fa-lock"></i>';
                         nextBtn.disabled = true;
                     }
-                } else if (currentUnit === 1 && !state[1].checked) {
-                    // Unit 2: must check Gawain 1 first
-                    nextBtn.className = 'nav-btn next-btn';
-                    nextBtn.innerHTML = 'Susunod <i class="fa-solid fa-lock"></i>';
-                    nextBtn.disabled = true;
-                } else if (currentUnit === 2 && !state[2].checked) {
-                    // Unit 3: must check Gawain 2 first
+                } else if ((currentUnit === 1 && !state[1].checked) || (currentUnit === 2 && !state[2].checked)) {
                     nextBtn.className = 'nav-btn next-btn';
                     nextBtn.innerHTML = 'Susunod <i class="fa-solid fa-lock"></i>';
                     nextBtn.disabled = true;
                 } else {
-                    // Units 0 (intro), 3 (pagsulat) are freely passable; Unit 4 with Sagutin Natin locks itself
                     nextBtn.className = 'nav-btn next-btn';
                     nextBtn.innerHTML = 'Susunod <i class="fa-solid fa-arrow-right"></i>';
                     nextBtn.disabled = false;
@@ -1942,7 +1858,8 @@
                 if (currentUnit < totalUnits - 1) {
                     currentUnit++;
                     updateUI();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    const activeSlide = document.getElementById('unit-' + currentUnit);
+                    if (activeSlide) activeSlide.scrollTo({ top: 0, behavior: 'smooth' });
                 }
             };
 
@@ -1950,51 +1867,42 @@
                 if (currentUnit > 0) {
                     currentUnit--;
                     updateUI();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    const activeSlide = document.getElementById('unit-' + currentUnit);
+                    if (activeSlide) activeSlide.scrollTo({ top: 0, behavior: 'smooth' });
                 }
             };
 
             window.goSkip = function () {
                 if (currentUnit < totalUnits - 1) {
-                    // Force complete validation for current unit
                     if (currentUnit === 1) state[1].checked = true;
                     if (currentUnit === 2) state[2].checked = true;
                     if (currentUnit === 3) state[4].checked = true;
-
                     currentUnit++;
                     updateUI();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    const activeSlide = document.getElementById('unit-' + currentUnit);
+                    if (activeSlide) activeSlide.scrollTo({ top: 0, behavior: 'smooth' });
                 }
             };
 
-            // ── Toggle selection ──
             window.toggleChoice = function (card) {
+                if(window.AudioManager) AudioManager.playSFX('click');
                 const act = card.dataset.activity;
                 if (state[act].checked) return;
-
-                // Reset any previous feedback classes so the user can try again
                 card.classList.remove('correct', 'wrong', 'missed');
-
                 card.classList.toggle('selected');
-                card.querySelector('.choice-checkbox').innerHTML =
-                    card.classList.contains('selected') ? '✔' : '';
+                card.querySelector('.choice-checkbox').innerHTML = card.classList.contains('selected') ? '✔' : '';
             };
 
-            // ── Check activity ──
             window.checkActivity = function (actNum) {
                 if (state[actNum].checked) return;
-
                 const cards = document.querySelectorAll(`.choice-card[data-activity="${actNum}"]`);
-                let correct = 0;
-                let wrongOrMissed = 0;
-                let selectedCount = 0;
+                let correct = 0, wrongOrMissed = 0, selectedCount = 0;
                 const total = state[actNum].total;
 
-                cards.forEach(card => {
-                    if (card.classList.contains('selected')) selectedCount++;
-                });
+                cards.forEach(card => { if (card.classList.contains('selected')) selectedCount++; });
 
                 if (selectedCount === 0) {
+                    if(window.AudioManager) AudioManager.playSFX('failed');
                     const banner = document.getElementById(`feedback-act${actNum}`);
                     const icon = document.getElementById(`feedback-icon-${actNum}`);
                     const text = document.getElementById(`feedback-text-${actNum}`);
@@ -2007,8 +1915,6 @@
                 cards.forEach(card => {
                     const isCorrect = card.dataset.correct === 'true';
                     const isSelected = card.classList.contains('selected');
-
-                    // Reset previous feedback classes
                     card.classList.remove('correct', 'wrong', 'missed');
 
                     if (isCorrect && isSelected) {
@@ -2029,84 +1935,51 @@
                 });
 
                 const pts = (correct === total && wrongOrMissed === 0) ? 1 : 0;
-
                 const banner = document.getElementById(`feedback-act${actNum}`);
                 const icon = document.getElementById(`feedback-icon-${actNum}`);
                 const text = document.getElementById(`feedback-text-${actNum}`);
 
                 if (pts === 1) {
+                    if(window.AudioManager) AudioManager.playSFX('correct');
                     state[actNum].checked = true;
                     state[actNum].score = 1;
-                    
                     banner.className = 'feedback-banner show correct-fb';
                     icon.textContent = '🌟';
                     text.innerHTML = `<strong>Mahusay!</strong> Tama ang lahat! <em>(+1 punto)</em>`;
-                    
-                    // Disable clicks ONLY on success
                     cards.forEach(card => card.onclick = null);
                     document.getElementById(`check-act${actNum}`).disabled = true;
-
-                    // Update star count
-                    const cur = parseInt(document.getElementById('starCount').textContent);
-                    document.getElementById('starCount').textContent = cur + 1;
-
+                    document.getElementById('starCount').textContent = parseInt(document.getElementById('starCount').textContent) + 1;
                     launchConfetti();
                     updateNextBtn();
                 } else {
+                    if(window.AudioManager) AudioManager.playSFX('failed');
                     banner.className = 'feedback-banner show wrong-fb';
                     icon.textContent = '💪';
                     text.innerHTML = `<strong>Subukan Muli!</strong> May mali o nakaligtaan.`;
                 }
             };
 
-            // ── Unit 4: Interactive Canvas Drawing Pads ──
+            // ── Unit 4: Drawing Pads ──
             const pads = {};
-
             function initPad(id) {
                 const canvas = document.getElementById('canvas' + (id === 'upper' ? 'Upper' : 'Lower'));
                 const frame = document.getElementById('frame' + (id === 'upper' ? 'Upper' : 'Lower'));
-                // Resize canvas to fill frame width
                 function resizeCanvas() {
-                    const w = frame.clientWidth;
-                    canvas.width = w;
-                    // height is set via HTML attribute
-                    if (pads[id] && pads[id].snapshots.length) {
-                        restoreSnapshot(id);
-                    }
+                    canvas.width = frame.clientWidth;
+                    if (pads[id] && pads[id].snapshots.length) restoreSnapshot(id);
                 }
                 resizeCanvas();
                 new ResizeObserver(resizeCanvas).observe(frame);
 
-                pads[id] = {
-                    canvas,
-                    ctx: canvas.getContext('2d'),
-                    drawing: false,
-                    color: id === 'upper' ? '#4D96FF' : '#FF6B9D',
-                    brush: 5,
-                    snapshots: [],
-                    strokeCount: 0,
-                    maxStrokes: id === 'upper' ? 4 : 3,
-                    done: false
-                };
-
+                pads[id] = { canvas, ctx: canvas.getContext('2d'), drawing: false, color: id === 'upper' ? '#4D96FF' : '#FF6B9D', brush: 5, snapshots: [], strokeCount: 0, maxStrokes: id === 'upper' ? 4 : 3, done: false };
                 const ctx = pads[id].ctx;
-                ctx.lineCap = 'round';
-                ctx.lineJoin = 'round';
+                ctx.lineCap = 'round'; ctx.lineJoin = 'round';
 
                 function getPos(e) {
                     const rect = canvas.getBoundingClientRect();
                     const scaleX = canvas.width / rect.width;
                     const scaleY = canvas.height / rect.height;
-                    if (e.touches) {
-                        return {
-                            x: (e.touches[0].clientX - rect.left) * scaleX,
-                            y: (e.touches[0].clientY - rect.top) * scaleY
-                        };
-                    }
-                    return {
-                        x: (e.clientX - rect.left) * scaleX,
-                        y: (e.clientY - rect.top) * scaleY
-                    };
+                    return e.touches ? { x: (e.touches[0].clientX - rect.left) * scaleX, y: (e.touches[0].clientY - rect.top) * scaleY } : { x: (e.clientX - rect.left) * scaleX, y: (e.clientY - rect.top) * scaleY };
                 }
 
                 function startDraw(e) {
@@ -2130,7 +2003,6 @@
                 function endDraw(e) {
                     if (!pads[id].drawing) return;
                     pads[id].drawing = false;
-                    // Count stroke
                     pads[id].strokeCount = Math.min(pads[id].strokeCount + 1, pads[id].maxStrokes);
                 }
 
@@ -2142,22 +2014,17 @@
                 canvas.addEventListener('touchmove', draw, { passive: false });
                 canvas.addEventListener('touchend', endDraw);
 
-                // Init cursor
                 updateCursor(id, pads[id].color);
             }
 
             function updateCursor(id, color) {
-                // Generate an SVG pencil cursor filled with the selected color
                 const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="${color}" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>`;
-                const encoded = encodeURIComponent(svg);
-                // The pencil tip in this SVG is at the bottom-left, approximately at (2, 22)
-                pads[id].canvas.style.cursor = `url('data:image/svg+xml;utf8,${encoded}') 2 22, crosshair`;
+                pads[id].canvas.style.cursor = `url('data:image/svg+xml;utf8,${encodeURIComponent(svg)}') 2 22, crosshair`;
             }
 
             function saveSnapshot(id) {
-                const { canvas, snapshots } = pads[id];
-                snapshots.push(canvas.toDataURL());
-                if (snapshots.length > 30) snapshots.shift();
+                pads[id].snapshots.push(pads[id].canvas.toDataURL());
+                if (pads[id].snapshots.length > 30) pads[id].snapshots.shift();
             }
 
             function restoreSnapshot(id) {
@@ -2167,8 +2034,6 @@
                 img.onload = () => ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                 img.src = snapshots[snapshots.length - 1];
             }
-
-            // Removed updateStrokeDots since stroke UI was removed
 
             window.undoStroke = function (id) {
                 const p = pads[id];
@@ -2187,18 +2052,12 @@
             window.clearCanvas = function (id) {
                 const p = pads[id];
                 p.ctx.clearRect(0, 0, p.canvas.width, p.canvas.height);
-                p.snapshots = [];
-                p.strokeCount = 0;
-                p.done = false;
-
+                p.snapshots = []; p.strokeCount = 0; p.done = false;
                 const tick = document.getElementById('doneTick-' + id);
                 tick.className = 'pad-done-tick';
-                tick.style.borderColor = 'var(--green)';
-                tick.style.color = '#1b5e20';
-                tick.style.background = '#E9FBEE';
+                tick.style.borderColor = 'var(--green)'; tick.style.color = '#1b5e20'; tick.style.background = '#E9FBEE';
             };
 
-            // -- AI Handwriting Validation --
             function getTargetLetterForPad(id) {
                 const capId = id.charAt(0).toUpperCase() + id.slice(1);
                 const ghostContainer = document.getElementById('ghost' + capId);
@@ -2211,210 +2070,137 @@
             }
 
             async function validateDrawingAI(id) {
-                const p = pads[id];
-                const ctx = p.ctx;
-                const canvas = p.canvas;
-
-                // 1. Fast empty-canvas check first
+                const p = pads[id], ctx = p.ctx, canvas = p.canvas;
                 const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
                 let totalInk = 0;
-                for (let i = 0; i < imgData.length; i += 4) {
-                    if (imgData[i + 3] > 20) totalInk++;
-                }
+                for (let i = 0; i < imgData.length; i += 4) if (imgData[i + 3] > 20) totalInk++;
+                
                 if (totalInk < 50) {
-                    return {
-                        valid: false,
-                        reason: 'Walang guhit pa. Subukang sumulat!',
-                        encouragement_fil: 'Subukan mo ulit! Kaya mo yan!',
-                        tip: 'Gumuhit ng malaking letra sa loob ng kahon.'
-                    };
+                    return { valid: false, reason: 'Walang guhit pa. Subukang sumulat!', encouragement_fil: 'Subukan mo ulit! Kaya mo yan!', tip: 'Gumuhit ng malaking letra sa loob ng kahon.' };
                 }
 
-                // 2. Local Completeness Check (Verify all ghost letter boxes have ink)
                 try {
                     const capId = id.charAt(0).toUpperCase() + id.slice(1);
                     const ghostContainer = document.getElementById('ghost' + capId);
                     const spans = ghostContainer ? ghostContainer.querySelectorAll('.ghost-letter') : [];
-                    
                     if (spans.length > 0) {
                         const canvasRect = canvas.getBoundingClientRect();
-                        const scaleX = canvas.width / canvasRect.width;
-                        const scaleY = canvas.height / canvasRect.height;
+                        const scaleX = canvas.width / canvasRect.width, scaleY = canvas.height / canvasRect.height;
                         let coveredZones = 0;
-
                         spans.forEach(span => {
                             const r = span.getBoundingClientRect();
-                            const bx1 = Math.max(0, Math.floor((r.left - canvasRect.left) * scaleX) - 10);
-                            const by1 = Math.max(0, Math.floor((r.top - canvasRect.top) * scaleY) - 10);
-                            const bx2 = Math.min(canvas.width, Math.ceil((r.right - canvasRect.left) * scaleX) + 10);
-                            const by2 = Math.min(canvas.height, Math.ceil((r.bottom - canvasRect.top) * scaleY) + 10);
-                            
+                            const bx1 = Math.max(0, Math.floor((r.left - canvasRect.left) * scaleX) - 10), by1 = Math.max(0, Math.floor((r.top - canvasRect.top) * scaleY) - 10);
+                            const bx2 = Math.min(canvas.width, Math.ceil((r.right - canvasRect.left) * scaleX) + 10), by2 = Math.min(canvas.height, Math.ceil((r.bottom - canvasRect.top) * scaleY) + 10);
                             let hits = 0;
                             for (let sy = by1; sy <= by2; sy += 4) {
                                 for (let sx = bx1; sx <= bx2; sx += 4) {
-                                    const idx = (sy * canvas.width + sx) * 4;
-                                    if (imgData[idx + 3] > 20) hits++;
+                                    if (imgData[(sy * canvas.width + sx) * 4 + 3] > 20) hits++;
                                 }
                             }
                             if (hits >= 8) coveredZones++;
                         });
-
                         if (coveredZones < spans.length) {
-                            return {
-                                valid: false,
-                                reason: 'Hindi pa po tapos ang lahat!',
-                                encouragement_fil: 'Sige pa, punan ang lahat ng gabay na letra! 😊',
-                                tip: `May mga kahon pa na wala pang sulat. Trace mo lahat sila!`
-                            };
+                            return { valid: false, reason: 'Hindi pa po tapos ang lahat!', encouragement_fil: 'Sige pa, punan ang lahat ng gabay na letra! 😊', tip: `May mga kahon pa na wala pang sulat.` };
                         }
                     }
-                } catch (e) {
-                    console.warn('[Completeness check] error:', e);
-                }
-                const image_b64 = p.canvas.toDataURL('image/png');
-                const target_letter = getTargetLetterForPad(id) || '?';
+                } catch (e) { console.warn('[Completeness check] error:', e); }
+
                 try {
                     const resp = await fetch('/api/validate-handwriting/', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': '{{ csrf_token }}'
-                        },
-                        body: JSON.stringify({ image_b64, target_letter })
+                        method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}' },
+                        body: JSON.stringify({ image_b64: p.canvas.toDataURL('image/png'), target_letter: getTargetLetterForPad(id) || '?' })
                     });
                     if (!resp.ok) throw new Error('HTTP ' + resp.status);
                     return await resp.json();
                 } catch (err) {
-                    console.warn('[AI validate] fallback:', err);
-                    return {
-                        valid: true,
-                        confidence: 0.70,
-                        reason: 'Offline validation - accepted.',
-                        encouragement_fil: 'Magaling! Napakaganda ng iyong pagsulat!',
-                        tip: null
-                    };
+                    return { valid: true, confidence: 0.70, reason: 'Offline validation - accepted.', encouragement_fil: 'Magaling! Napakaganda ng iyong pagsulat!', tip: null };
                 }
             }
 
             window.markDone = async function (id) {
-                const p = pads[id];
-                const tick = document.getElementById('doneTick-' + id);
-                const capId = id.charAt(0).toUpperCase() + id.slice(1);
-                const frame = document.getElementById('frame' + capId);
-
+                const p = pads[id], tick = document.getElementById('doneTick-' + id), capId = id.charAt(0).toUpperCase() + id.slice(1), frame = document.getElementById('frame' + capId);
                 const doneBtn = document.querySelector(`[onclick="markDone('${id}')"]`);
                 if (doneBtn) { doneBtn.disabled = true; doneBtn.innerHTML = '⏳ Sinusuri...'; }
 
                 const validation = await validateDrawingAI(id);
-
                 if (doneBtn) { doneBtn.disabled = false; doneBtn.innerHTML = '✓ Tapos na!'; }
 
                 if (!validation.valid) {
-                    if (frame) {
-                        frame.style.border = '4px solid #f44336';
-                        setTimeout(() => { frame.style.border = '4px solid #90CAF9'; }, 700);
-                    }
+                    if(window.AudioManager) AudioManager.playSFX('failed');
+                    if (frame) { frame.style.border = '4px solid #f44336'; setTimeout(() => { frame.style.border = '4px solid #90CAF9'; }, 700); }
                     if (tick) {
-                        tick.className = 'pad-done-tick show error-tick';
-                        tick.style.borderColor = '#f44336';
-                        tick.style.color = '#b71c1c';
-                        tick.style.background = '#FFEBEE';
-                        const tipMsg = validation.tip ? ' 💡 ' + validation.tip : '';
-                        tick.innerHTML = '⚠️ ' + (validation.reason || 'Subukan ulit!') + tipMsg;
+                        tick.className = 'pad-done-tick show error-tick'; tick.style.borderColor = '#f44336'; tick.style.color = '#b71c1c'; tick.style.background = '#FFEBEE';
+                        tick.innerHTML = '⚠️ ' + (validation.reason || 'Subukan ulit!') + (validation.tip ? ' 💡 ' + validation.tip : '');
                     }
                     return;
                 }
 
+                if(window.AudioManager) AudioManager.playSFX('correct');
                 p.done = true;
                 if (tick) {
-                    tick.className = 'pad-done-tick show';
-                    tick.style.borderColor = 'var(--green)';
-                    tick.style.color = '#1b5e20';
-                    tick.style.background = '#E9FBEE';
-                    const defMsg = id === 'upper' ? 'Napakahusay! Sinulatan mo na ang malaking M!' : 'Magaling! Sinulatan mo na ang maliit na m!';
-                    tick.innerHTML = '✅ ' + (validation.encouragement_fil || defMsg);
+                    tick.className = 'pad-done-tick show'; tick.style.borderColor = 'var(--green)'; tick.style.color = '#1b5e20'; tick.style.background = '#E9FBEE';
+                    tick.innerHTML = '✅ ' + (validation.encouragement_fil || (id === 'upper' ? 'Napakahusay! Sinulatan mo na ang malaking M!' : 'Magaling! Sinulatan mo na ang maliit na m!'));
                     tick.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 }
 
                 if (pads['upper']?.done && pads['lower']?.done && !state[4].checked) {
-                    state[4].checked = true;
-                    state[4].score = 1;
-                    const cur = parseInt(document.getElementById('starCount').textContent);
-                    document.getElementById('starCount').textContent = cur + 1;
+                    state[4].checked = true; state[4].score = 1;
+                    document.getElementById('starCount').textContent = parseInt(document.getElementById('starCount').textContent) + 1;
                     launchConfetti();
                 }
                 updateNextBtn();
             };
 
             window.setColor = function (id, color, swatch) {
+                if(window.AudioManager) AudioManager.playSFX('click');
                 pads[id].color = color;
-                const siblings = swatch.parentElement.querySelectorAll('.color-swatch');
-                siblings.forEach(s => s.classList.remove('active'));
+                swatch.parentElement.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
                 swatch.classList.add('active');
                 updateCursor(id, color);
             };
 
             window.setBrush = function (id, size, btn) {
+                if(window.AudioManager) AudioManager.playSFX('click');
                 pads[id].brush = size;
-                const siblings = btn.parentElement.querySelectorAll('.brush-btn');
-                siblings.forEach(b => b.classList.remove('active'));
+                btn.parentElement.querySelectorAll('.brush-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
             };
 
-            // Init both pads after DOM is ready
-            initPad('upper');
-            initPad('lower');
+            initPad('upper'); initPad('lower');
 
-            // ── Unit 5: Token tapping (Hunting Game 1 and 2) ──
-            let lowerCount = 0;
-            let upperCount = 0;
-            let lowerLives = 3;
-            let upperLives = 3;
-            const totalLower = 5;
-            const totalUpper = 6;
+            // ── Unit 5: Token tapping ──
+            let lowerCount = 0, upperCount = 0, lowerLives = 3, upperLives = 3;
+            const totalLower = 5, totalUpper = 6;
 
             function updateHearts(type, lives) {
                 for (let i = 1; i <= 3; i++) {
                     const h = document.getElementById(`heart${type}${i}`);
                     if (h) {
                         if (i <= lives) {
-                            h.className = 'fa-solid fa-heart text-danger';
-                            h.style.transform = 'scale(1.1)';
+                            h.className = 'fa-solid fa-heart text-danger'; h.style.transform = 'scale(1.1)';
                             setTimeout(() => h.style.transform = 'scale(1)', 200);
                         } else {
-                            h.className = 'fa-solid fa-heart-crack text-secondary';
-                            h.style.transform = 'scale(0.9)';
-                            h.style.opacity = '0.5';
+                            h.className = 'fa-solid fa-heart-crack text-secondary'; h.style.transform = 'scale(0.9)'; h.style.opacity = '0.5';
                         }
                     }
                 }
             }
 
             function resetGame(type) {
+                if(window.AudioManager) AudioManager.playSFX('click');
                 if (type === 'Lower') {
-                    lowerLives = 3;
-                    lowerCount = 0;
-                    updateHearts('Lower', lowerLives);
+                    lowerLives = 3; lowerCount = 0; updateHearts('Lower', lowerLives);
                     document.getElementById('p1-instruction').innerHTML = '<strong>PAALALA :</strong> Huwag pindutin ang malaking M! Subukan muli!';
                     document.getElementById('p1-instruction').style.color = 'var(--dark)';
-                    document.querySelectorAll('#letterTokens1 .letter-token').forEach(el => {
-                        el.className = 'letter-token'; // reset
-                        el.innerHTML = el.dataset.origtext || el.textContent;
-                        if (!el.dataset.origtext && el.textContent === '⭐') el.innerHTML = 'm'; // fallback
-                    });
+                    document.querySelectorAll('#letterTokens1 .letter-token').forEach(el => { el.className = 'letter-token'; el.innerHTML = el.dataset.origtext || el.textContent; if (!el.dataset.origtext && el.textContent === '⭐') el.innerHTML = 'm'; });
                 } else {
-                    upperLives = 3;
-                    upperCount = 0;
-                    updateHearts('Upper', upperLives);
+                    upperLives = 3; upperCount = 0; updateHearts('Upper', upperLives);
                     document.getElementById('p2-instruction').innerHTML = '<strong>PAALALA :</strong> Huwag pindutin ang maliit na m! Subukan muli!';
                     document.getElementById('p2-instruction').style.color = 'var(--dark)';
-                    document.querySelectorAll('#letterTokens2 .letter-token').forEach(el => {
-                        el.className = 'letter-token'; // reset
-                        el.innerHTML = el.dataset.origtext || el.textContent;
-                        if (!el.dataset.origtext && el.textContent === '⭐') el.innerHTML = 'M'; // fallback
-                    });
+                    document.querySelectorAll('#letterTokens2 .letter-token').forEach(el => { el.className = 'letter-token'; el.innerHTML = el.dataset.origtext || el.textContent; if (!el.dataset.origtext && el.textContent === '⭐') el.innerHTML = 'M'; });
                 }
             }
+            window.resetGame = resetGame;
 
             const playError = (el) => {
                 el.animate([
@@ -2429,114 +2215,91 @@
 
             window.tapSmallM = function (el, letter) {
                 if (el.classList.contains('counted')) return;
-
                 if (!el.dataset.origtext) el.dataset.origtext = el.innerHTML;
 
                 if (letter !== 'm') {
+                    if(window.AudioManager) AudioManager.playSFX('failed');
                     playError(el);
-                    if (lowerLives > 0) {
-                        lowerLives--;
-                        updateHearts('Lower', lowerLives);
-                    } else if (lowerLives === 0) {
-                        // 4th Mistake -> Game Over State
-                        lowerLives = -1; // Lock the game
+                    if (lowerLives > 0) { lowerLives--; updateHearts('Lower', lowerLives); }
+                    else if (lowerLives === 0) {
+                        lowerLives = -1;
                         const instruction = document.getElementById('p1-instruction');
                         instruction.innerHTML = '❌ Ubos na ang pagkakataon! <button onclick="resetGame(\'Lower\')" style="padding: 4px 12px; margin-left: 10px; border-radius: 8px; border: none; background: #FFEBEE; color: #b71c1c; font-weight: bold; cursor: pointer;">Ulitin muli</button>';
                         instruction.style.color = '#b71c1c';
-                        playError(document.getElementById('letterTokens1')); // Shake the whole board
+                        playError(document.getElementById('letterTokens1'));
                     }
                     return;
                 }
 
+                if(window.AudioManager) AudioManager.playSFX('click');
                 el.classList.add('counted', 'lowercase');
                 el.innerHTML = '⭐';
                 lowerCount++;
 
                 if (lowerCount >= totalLower) {
+                    if(window.AudioManager) AudioManager.playSFX('correct');
                     const instruction = document.getElementById('p1-instruction');
                     instruction.innerHTML = 'Magaling! Nahanap mo lahat ng maliit na m! 🎉';
                     instruction.style.color = 'var(--green)';
                     launchConfetti();
 
                     if (!state[5].checked) {
-                        state[5].checked = true;
-                        state[5].score = 1;
-                        const cur = parseInt(document.getElementById('starCount').textContent);
-                        document.getElementById('starCount').textContent = cur + 1;
+                        state[5].checked = true; state[5].score = 1;
+                        document.getElementById('starCount').textContent = parseInt(document.getElementById('starCount').textContent) + 1;
                     }
 
-                    if (upperCount >= totalUpper) {
-                        setTimeout(showFinalScore, 1500);
-                    }
-                }
-
-                if ('speechSynthesis' in window) {
-                    const u = new SpeechSynthesisUtterance(letter);
-                    u.lang = 'tl-PH'; u.rate = 0.8;
-                    window.speechSynthesis.cancel();
-                    window.speechSynthesis.speak(u);
+                    if (upperCount >= totalUpper) setTimeout(showFinalScore, 1500);
+                    else setTimeout(() => { document.getElementById('game-big-m').scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 1200); // ── AUTO SCROLL DOWN BONUS ──
                 }
             };
 
             window.tapBigM = function (el, letter) {
                 if (el.classList.contains('counted')) return;
-
                 if (!el.dataset.origtext) el.dataset.origtext = el.innerHTML;
 
                 if (letter !== 'M') {
+                    if(window.AudioManager) AudioManager.playSFX('failed');
                     playError(el);
-                    if (upperLives > 0) {
-                        upperLives--;
-                        updateHearts('Upper', upperLives);
-                    } else if (upperLives === 0) {
-                        // 4th Mistake -> Game Over State
-                        upperLives = -1; // Lock the game
+                    if (upperLives > 0) { upperLives--; updateHearts('Upper', upperLives); }
+                    else if (upperLives === 0) {
+                        upperLives = -1;
                         const instruction = document.getElementById('p2-instruction');
                         instruction.innerHTML = '❌ Ubos na ang pagkakataon! <button onclick="resetGame(\'Upper\')" style="padding: 4px 12px; margin-left: 10px; border-radius: 8px; border: none; background: #FFEBEE; color: #b71c1c; font-weight: bold; cursor: pointer;">Ulitin muli</button>';
                         instruction.style.color = '#b71c1c';
-                        playError(document.getElementById('letterTokens2')); // Shake the whole board
+                        playError(document.getElementById('letterTokens2'));
                     }
                     return;
                 }
 
+                if(window.AudioManager) AudioManager.playSFX('click');
                 el.classList.add('counted', 'uppercase');
                 el.innerHTML = '⭐';
                 upperCount++;
 
                 if (upperCount >= totalUpper) {
+                    if(window.AudioManager) AudioManager.playSFX('correct');
                     const instruction = document.getElementById('p2-instruction');
                     instruction.innerHTML = 'Napakahusay! Nahanap mo lahat ng Malaking M! 🎉';
                     instruction.style.color = 'var(--green)';
                     launchConfetti();
 
                     if (!state[6].checked) {
-                        state[6].checked = true;
-                        state[6].score = 1;
-                        const cur = parseInt(document.getElementById('starCount').textContent);
-                        document.getElementById('starCount').textContent = cur + 1;
+                        state[6].checked = true; state[6].score = 1;
+                        document.getElementById('starCount').textContent = parseInt(document.getElementById('starCount').textContent) + 1;
                     }
 
-                    if (lowerCount >= totalLower) {
-                        setTimeout(showFinalScore, 1500);
-                    }
-                }
-
-                if ('speechSynthesis' in window) {
-                    const u = new SpeechSynthesisUtterance(letter);
-                    u.lang = 'tl-PH'; u.rate = 0.8;
-                    window.speechSynthesis.cancel();
-                    window.speechSynthesis.speak(u);
+                    if (lowerCount >= totalLower) setTimeout(showFinalScore, 1500);
+                    else setTimeout(() => { document.getElementById('unit-4').scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 1200); // ── AUTO SCROLL UP BONUS ──
                 }
             };
-
 
             // ── Final Score ──
             function showFinalScore() {
                 const totalScore = state[1].score + state[2].score + state[4].score + state[5].score + state[6].score;
-                const maxScore = 5; // 1 pt per unit (Gawain 1, Gawain 2, Pagsulat, Pagsasanay 1, Pagsasanay 2)
+                const maxScore = 5;
                 const section = document.getElementById('score-section');
                 section.style.display = 'block';
-                section.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                setTimeout(() => section.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
 
                 const pct = totalScore / maxScore;
                 let starsCount, msg;
@@ -2550,59 +2313,33 @@
                 document.getElementById('scoreText').textContent = msg;
                 document.getElementById('scoreDetail').textContent = `Puntos: ${totalScore} / ${maxScore}`;
 
-                // Update finish button
                 updateNextBtn();
                 launchConfetti();
 
-                // Save progress to backend
                 const levelId = "{{ level_id|default:'' }}";
                 if (levelId) {
                     fetch('{% url "core:save_progress" %}', {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': '{{ csrf_token }}'
-                        },
-                        body: JSON.stringify({
-                            level_id: parseInt(levelId),
-                            stars: starsCount,
-                            is_completed: true
-                        })
-                    }).then(res => res.json()).then(data => {
-                        console.log("Progress saved:", data);
+                        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}' },
+                        body: JSON.stringify({ level_id: parseInt(levelId), stars: starsCount, is_completed: true })
                     }).catch(err => console.error("Error saving progress:", err));
                 }
             }
 
             // ── Sound ──
-            // ── Sound ──
-    window.playMSound = function () {
-    const btn = document.getElementById('soundBtn');
-    
-    // UI Button Animation
-    btn.style.transform = 'scale(0.93) translateY(5px)';
-    btn.style.boxShadow = '0 0 0 #000';
-    setTimeout(() => { btn.style.transform = ''; btn.style.boxShadow = ''; }, 180);
-
-    // 1. Initialize both audio assets using Django static tags
-    const introAudio = new Audio("{% static 'core/audio/m_intro.mp3' %}");
-    const wordsAudio = new Audio("{% static 'core/audio/m_pronunce.mp3' %}");
-
-    // 2. Apply the global volume settings to both files
-    if (window.TTSettings) {
-        const currentVolume = window.TTSettings.getVolume() / 100;
-        introAudio.volume = currentVolume;
-        wordsAudio.volume = currentVolume;
-    }
-
-    // 3. Chain the audio: When intro finishes, play the words
-    introAudio.addEventListener('ended', function() {
-        wordsAudio.play();
-    });
-
-    // 4. Start the sequence
-    introAudio.play();
-};
+            window.playMSound = function () {
+                const btn = document.getElementById('soundBtn');
+                btn.style.transform = 'scale(0.93) translateY(5px)'; btn.style.boxShadow = '0 0 0 #000';
+                setTimeout(() => { btn.style.transform = ''; btn.style.boxShadow = ''; }, 180);
+                const introAudio = new Audio("{% static 'core/audio/m_intro.mp3' %}");
+                const wordsAudio = new Audio("{% static 'core/audio/m_pronounce.mp3' %}");
+                if (window.TTSettings) {
+                    const currentVolume = window.TTSettings.getVolume() / 100;
+                    introAudio.volume = currentVolume; wordsAudio.volume = currentVolume;
+                }
+                introAudio.addEventListener('ended', function() { wordsAudio.play(); });
+                introAudio.play();
+            };
 
             // ── Confetti ──
             function launchConfetti() {
@@ -2614,139 +2351,18 @@
                     el.className = 'confetti-particle';
                     el.style.left = Math.random() * 100 + 'vw';
                     el.style.background = colors[Math.floor(Math.random() * colors.length)];
-                    el.style.width = (8 + Math.random() * 10) + 'px';
-                    el.style.height = (8 + Math.random() * 10) + 'px';
-                    el.style.animationDuration = (1.5 + Math.random() * 2) + 's';
-                    el.style.animationDelay = Math.random() * 0.8 + 's';
+                    el.style.width = (8 + Math.random() * 10) + 'px'; el.style.height = (8 + Math.random() * 10) + 'px';
+                    el.style.animationDuration = (1.5 + Math.random() * 2) + 's'; el.style.animationDelay = Math.random() * 0.8 + 's';
                     wrap.appendChild(el);
                 }
                 setTimeout(() => { wrap.classList.remove('active'); wrap.innerHTML = ''; }, 4000);
             }
 
-            // ── Init ──
             updateUI();
         })();
     </script>
 
-    <!-- ══ SETTINGS MODAL ══ -->
-    <div class="settings-overlay" id="settings-modal">
-        <div class="settings-panel">
-            <div class="settings-header">
-                <h2>⚙️ Mga Setting</h2>
-                <button class="settings-close-btn" onclick="closeSettings()">✕</button>
-            </div>
-            <div class="settings-body">
-                <!-- 🔊 Volume -->
-                <div class="settings-row">
-                    <div class="settings-row-label"><span class="s-icon">🔊</span> Lakas ng Tunog</div>
-                    <div style="display:flex;align-items:center;gap:12px;">
-                        <input type="range" id="tt-vol-slider" class="tt-slider volume-slider"
-                            min="0" max="100" step="1" value="80"
-                            oninput="onVolChange(this.value)">
-                        <span class="slider-val" id="tt-vol-label">80%</span>
-                    </div>
-                </div>
-                <!-- ☀️ Brightness -->
-                <div class="settings-row">
-                    <div class="settings-row-label"><span class="s-icon">☀️</span> Liwanag ng Screen</div>
-                    <div style="display:flex;align-items:center;gap:12px;">
-                        <input type="range" id="tt-br-slider" class="tt-slider brightness-slider"
-                            min="50" max="150" step="1" value="100"
-                            oninput="onBrChange(this.value)">
-                        <span class="slider-val" id="tt-br-label">100%</span>
-                    </div>
-                </div>
-                <!-- 🟫 Pixel Mode -->
-                <div class="settings-row">
-                    <div class="settings-row-label"><span class="s-icon">🟫</span> Pixel Mode</div>
-                    <div style="display:flex;align-items:center;gap:12px;">
-                        <input type="range" id="tt-pixel-slider" class="tt-slider pixel-slider"
-                            min="0" max="100" step="1" value="0"
-                            oninput="onPixelChange(this.value)">
-                        <span class="slider-val" id="tt-pixel-label">0%</span>
-                    </div>
-                </div>
-                <!-- ⛶ Fullscreen -->
-                <div class="settings-row">
-                    <div class="settings-row-label"><span class="s-icon">⛶</span> Full Screen</div>
-                    <button class="tt-fullscreen-btn" id="tt-fs-btn" onclick="toggleFullscreen()">⛶ I-bukas ang Full Screen</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-
-
-    <script>
-    // ═══════════════════════════════════════════════════════
-    // SETTINGS MODAL CONTROLLER (Lesson Pages)
-    // ═══════════════════════════════════════════════════════
-    function openSettings() {
-        var vol = window.TTSettings ? window.TTSettings.getVolume() : 80;
-        var br  = window.TTSettings ? window.TTSettings.getBrightness() : 100;
-        var px  = window.TTSettings ? window.TTSettings.getPixelated() : 0;
-        var vs = document.getElementById('tt-vol-slider');
-        var bs = document.getElementById('tt-br-slider');
-        var ps = document.getElementById('tt-pixel-slider');
-        if (vs) { vs.value = vol; updateSliderBg(vs, vol, 0, 100); }
-        if (bs) { bs.value = br;  updateSliderBg(bs, br, 50, 150); }
-        if (ps) { ps.value = px;  updateSliderBg(ps, px, 0, 100); }
-        var vl = document.getElementById('tt-vol-label');
-        var bl = document.getElementById('tt-br-label');
-        var pl = document.getElementById('tt-pixel-label');
-        if (vl) vl.textContent = vol + '%';
-        if (bl) bl.textContent = br  + '%';
-        if (pl) pl.textContent = px  + '%';
-        document.getElementById('settings-modal').classList.add('open');
-        document.body.style.overflow = 'hidden';
-    }
-    window.openSettings = openSettings;
-    window.closeSettings = function() {
-        document.getElementById('settings-modal').classList.remove('open');
-        document.body.style.overflow = '';
-    };
-    function updateSliderBg(input, val, min, max) {
-        var pct = ((val - min) / (max - min) * 100).toFixed(1) + '%';
-        if (input.classList.contains('volume-slider'))     input.style.setProperty('--vol-pct', pct);
-        if (input.classList.contains('brightness-slider')) input.style.setProperty('--br-pct',  pct);
-        if (input.classList.contains('pixel-slider'))      input.style.setProperty('--px-pct',  pct);
-    }
-    window.onVolChange = function(val) {
-        val = parseInt(val, 10);
-        if (window.TTSettings) window.TTSettings.setVolume(val);
-        var el = document.getElementById('tt-vol-label');
-        if (el) el.textContent = val + '%';
-        updateSliderBg(document.getElementById('tt-vol-slider'), val, 0, 100);
-    };
-    window.onBrChange = function(val) {
-        val = parseInt(val, 10);
-        if (window.TTSettings) window.TTSettings.setBrightness(val);
-        var el = document.getElementById('tt-br-label');
-        if (el) el.textContent = val + '%';
-        updateSliderBg(document.getElementById('tt-br-slider'), val, 50, 150);
-    };
-    window.onPixelChange = function(val) {
-        val = parseInt(val, 10);
-        if (window.TTSettings) window.TTSettings.setPixelated(val);
-        var el = document.getElementById('tt-pixel-label');
-        if (el) el.textContent = val + '%';
-        updateSliderBg(document.getElementById('tt-pixel-slider'), val, 0, 100);
-    };
-    function updateFSBtn() {
-        var btn = document.getElementById('tt-fs-btn');
-        if (!btn) return;
-        btn.textContent = document.fullscreenElement ? '⎋ Lumabas sa Full Screen' : '⛶ I-bukas ang Full Screen';
-    }
-    window.toggleFullscreen = function() {
-        if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen().catch(function(){});
-        } else {
-            document.exitFullscreen().catch(function(){});
-        }
-    };
-    document.addEventListener('fullscreenchange', updateFSBtn);
-    </script>
-
+    <script src="{% static 'core/audio_manager.js' %}"></script>
 </body>
 
 </html>

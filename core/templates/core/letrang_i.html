@@ -1104,31 +1104,29 @@
 
 <body>
 
-    <!-- ── REVERSE RAINBOW TRANSITION OUT ── -->
+   
     <div id="transition-out"
-        style="position:fixed; inset:0; z-index:99999; pointer-events:none; display:flex; align-items:center; justify-content:center; overflow:hidden; animation: outOverlay 0.1s 2.4s forwards;">
-        <!-- Pinwheel spins backwards and shrinks -->
+        style="position:fixed; inset:0; z-index:99999; pointer-events:none; display:flex; align-items:center; justify-content:center; overflow:hidden; animation: outOverlay 0.1s 1.4s forwards;">
+        
         <div
-            style="position:absolute; width:250vw; height:250vw; border-radius:50%; background: conic-gradient(#FF5252 0deg 60deg, #FF9800 60deg 120deg, #FFEB3B 120deg 180deg, #4CAF50 180deg 240deg, #2196F3 240deg 300deg, #9C27B0 300deg 360deg); animation: reversePinwheel 1.8s cubic-bezier(0.6, 0, 0.2, 1) forwards;">
+            style="position:absolute; width:250vw; height:250vw; border-radius:50%; background: conic-gradient(#FF5252 0deg 60deg, #FF9800 60deg 120deg, #FFEB3B 120deg 180deg, #4CAF50 180deg 240deg, #2196F3 240deg 300deg, #9C27B0 300deg 360deg); animation: reversePinwheel 0.8s cubic-bezier(0.6, 0, 0.2, 1) forwards;">
         </div>
 
-        <!-- Stars shrink and rotate -->
-        <div style="position:absolute; inset:0; z-index:10001; animation: outOverlay 0.1s 2s forwards;">
+        <div style="position:absolute; inset:0; z-index:10001; animation: outOverlay 0.1s 1s forwards;">
             <i class="fa-solid fa-star text-warning"
-                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:15%; left:15%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0s;"></i>
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:15%; left:15%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.5s cubic-bezier(0.6, 0, 0.2, 1) forwards 0s;"></i>
             <i class="fa-solid fa-star text-warning"
-                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:20%; left:80%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.15s;"></i>
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:20%; left:80%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.5s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.1s;"></i>
             <i class="fa-solid fa-star text-warning"
-                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:75%; left:20%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.3s;"></i>
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:75%; left:20%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.5s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.2s;"></i>
             <i class="fa-solid fa-star text-warning"
-                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:80%; left:75%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.15s;"></i>
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:80%; left:75%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.5s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.1s;"></i>
             <i class="fa-solid fa-star text-warning"
-                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:10%; left:50%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.45s;"></i>
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:10%; left:50%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 0.5s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.3s;"></i>
         </div>
 
-        <!-- Mascot hides -->
         <div
-            style="position:absolute; z-index:10002; display:flex; flex-direction:column; align-items:center; justify-content:center; animation: reverseContent 1.4s cubic-bezier(0.6, 0, 0.2, 1) forwards;">
+            style="position:absolute; z-index:10002; display:flex; flex-direction:column; align-items:center; justify-content:center; animation: reverseContent 0.4s cubic-bezier(0.6, 0, 0.2, 1) forwards;">
             <div id="transition-mascot-emoji" style="font-size:8rem; filter:drop-shadow(0 10px 0 rgba(0,0,0,0.15)); line-height:1;">🐒</div>
             <div
                 style="font-family:'Bubblegum Sans',cursive; font-size:5rem; color:white; text-shadow:4px 6px 0 rgba(0,0,0,0.2); margin-top:-20px; transform:rotate(-5deg);">
@@ -1954,30 +1952,26 @@
         (function () {
             // ── State ──
             const UNIT_NAMES = ['Kilalanin Natin', 'Gawain 1', 'Gawain 2', 'Pagsulat', 'Pagsasanay', 'Sagutin Natin'];
-            let currentUnit = 0;  // 0-indexed
+            let currentUnit = 0;  
             const totalUnits = 6;
 
             const state = {
-                1: { checked: false, score: 0, total: 0 }, // Gawain 1
-                2: { checked: false, score: 0, total: 0 }, // Gawain 2
-                4: { checked: false, score: 0 },   // Pagsulat
-                5: { checked: false, score: 0 },   // Pagsasanay 1 (maliit na m)
-                6: { checked: false, score: 0 },   // Pagsasanay 2 (Malaking M)
-                blanks: { checked: false }         // Sagutin Natin
+                1: { checked: false, score: 0, total: 0 },
+                2: { checked: false, score: 0, total: 0 },
+                4: { checked: false, score: 0 },   
+                5: { checked: false, score: 0 },   
+                blanks: { checked: false, score: 0 }          
             };
 
-            // Count correct answers per activity
             document.querySelectorAll('.choice-card[data-correct="true"]').forEach(card => {
                 const act = card.dataset.activity;
                 if (state[act]) state[act].total++;
             });
 
-            // ── Navigation ──
             function updateUI() {
                 const track = document.getElementById('unitsTrack');
                 track.style.transform = `translateX(-${currentUnit * (100 / 6)}%)`;
 
-                // Dots
                 for (let i = 0; i < totalUnits; i++) {
                     const dot = document.getElementById(`dot-${i}`);
                     dot.classList.remove('active', 'done');
@@ -1985,76 +1979,57 @@
                     else if (i === currentUnit) dot.classList.add('active');
                 }
 
-                // Counter
                 document.getElementById('unitNum').textContent = currentUnit + 1;
                 document.getElementById('unitName').textContent = UNIT_NAMES[currentUnit];
 
-                // Prev btn
                 const prevBtn = document.getElementById('prevBtn');
                 prevBtn.style.visibility = currentUnit === 0 ? 'hidden' : 'visible';
 
-                // Skip btn
                 const skipBtn = document.getElementById('skipBtn');
-                if (skipBtn) {
-                    skipBtn.style.display = (currentUnit === totalUnits - 1) ? 'none' : 'flex';
-                }
+                if (skipBtn) skipBtn.style.display = (currentUnit === totalUnits - 1) ? 'none' : 'flex';
 
-                // Next / Finish btn
                 updateNextBtn();
             }
 
             function updateNextBtn() {
                 const nextBtn = document.getElementById('nextBtn');
-                if (currentUnit === totalUnits - 1) { // Unit 6 (Sagutin Natin)
+                if (currentUnit === totalUnits - 1) { 
                     if (state['blanks'].checked) {
                         nextBtn.className = 'nav-btn finish-btn';
                         nextBtn.innerHTML = '<i class="fa-solid fa-flag-checkered"></i> Bumalik sa Mapa';
                         nextBtn.disabled = false;
                         nextBtn.onclick = async () => {
+                            if(window.AudioManager) AudioManager.playSFX('click');
                             nextBtn.disabled = true;
                             nextBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Ina-unlock...';
-                            
                             try {
-                                const response = await fetch('{% url "core:save_progress" %}', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                        'X-CSRFToken': '{{ csrf_token }}'
-                                    },
-                                    body: JSON.stringify({
-                                        level_id: '{{ level_id }}',
-                                        stars: parseInt(document.getElementById('starCount').textContent),
-                                        is_completed: true
-                                    })
+                                await fetch('{% url "core:save_progress" %}', {
+                                    method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}' },
+                                    body: JSON.stringify({ level_id: '{{ level_id }}', stars: parseInt(document.getElementById('starCount').textContent), is_completed: true })
                                 });
                                 localStorage.setItem('tunog_tuklas_pending_unlock', 'I');
-                            } catch (e) {
-                                console.error("Error saving progress:", e);
-                            }
-                            window.location.href = "{% url 'core:mapa' %}";
+                            } catch (e) { console.error("Error saving progress:", e); }
+                            
+                            setTimeout(() => { window.location.href = "{% url 'core:mapa' %}"; }, 350);
                         };
                     } else {
                         nextBtn.className = 'nav-btn next-btn';
                         nextBtn.innerHTML = 'Susunod <i class="fa-solid fa-lock"></i>';
                         nextBtn.disabled = true;
                     }
-                } else if (currentUnit === 4 && (!state[5] || !state[5].checked)) {
-                    // Unit 5: must finish Pagsasanay
+                } else if (currentUnit === 4 && !state[5].checked) {
                     nextBtn.className = 'nav-btn next-btn';
                     nextBtn.innerHTML = 'Susunod <i class="fa-solid fa-lock"></i>';
                     nextBtn.disabled = true;
                 } else if (currentUnit === 1 && !state[1].checked) {
-                    // Unit 2: must check Gawain 1 first
                     nextBtn.className = 'nav-btn next-btn';
                     nextBtn.innerHTML = 'Susunod <i class="fa-solid fa-lock"></i>';
                     nextBtn.disabled = true;
                 } else if (currentUnit === 2 && !state[2].checked) {
-                    // Unit 3: must check Gawain 2 first
                     nextBtn.className = 'nav-btn next-btn';
                     nextBtn.innerHTML = 'Susunod <i class="fa-solid fa-lock"></i>';
                     nextBtn.disabled = true;
                 } else if (currentUnit === 3 && !state[4].checked) {
-                    // Unit 4: Pagsulat
                     nextBtn.className = 'nav-btn next-btn';
                     nextBtn.innerHTML = 'Susunod <i class="fa-solid fa-lock"></i>';
                     nextBtn.disabled = true;
@@ -2062,559 +2037,279 @@
                     nextBtn.className = 'nav-btn next-btn';
                     nextBtn.innerHTML = 'Susunod <i class="fa-solid fa-arrow-right"></i>';
                     nextBtn.disabled = false;
-                    nextBtn.onclick = goNext;
+                    nextBtn.onclick = window.goNext;
                 }
             }
 
+            // ── EXPOSE TO WINDOW FOR ONCLICK ACCESS ──
             window.goNext = function () {
+                if(window.AudioManager) AudioManager.playSFX('click');
                 if (currentUnit < totalUnits - 1) {
-                    currentUnit++;
-                    updateUI();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    currentUnit++; updateUI();
+                    document.getElementById('unit-' + currentUnit).scrollTo({ top: 0, behavior: 'smooth' });
                 }
             };
 
             window.goBack = function () {
+                if(window.AudioManager) AudioManager.playSFX('click');
                 if (currentUnit > 0) {
-                    currentUnit--;
-                    updateUI();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    currentUnit--; updateUI();
+                    document.getElementById('unit-' + currentUnit).scrollTo({ top: 0, behavior: 'smooth' });
                 }
             };
 
             window.goSkip = function () {
+                if(window.AudioManager) AudioManager.playSFX('click');
                 if (currentUnit < totalUnits - 1) {
-                    // Force complete validation for current unit
                     if (currentUnit === 1) state[1].checked = true;
                     if (currentUnit === 2) state[2].checked = true;
                     if (currentUnit === 3) state[4].checked = true;
                     if (currentUnit === 4) state[5].checked = true;
-
-                    currentUnit++;
-                    updateUI();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    currentUnit++; updateUI();
+                    document.getElementById('unit-' + currentUnit).scrollTo({ top: 0, behavior: 'smooth' });
                 }
             };
 
-            // ── Toggle selection ──
             window.toggleChoice = function (card) {
+                if(window.AudioManager) AudioManager.playSFX('click');
                 const act = card.dataset.activity;
                 if (state[act].checked) return;
-
-                // Reset any previous feedback classes so the user can try again
                 card.classList.remove('correct', 'wrong', 'missed');
-
                 card.classList.toggle('selected');
-                card.querySelector('.choice-checkbox').innerHTML =
-                    card.classList.contains('selected') ? '✔' : '';
+                card.querySelector('.choice-checkbox').innerHTML = card.classList.contains('selected') ? '✔' : '';
             };
 
-            // ── Check Fill Blanks ──
-            window.checkFillBlanks = function () {
-                if (state['blanks'].checked) return;
-
-                const inputs = [
-                    document.getElementById('blank1'),
-                    document.getElementById('blank2'),
-                    document.getElementById('blank3'),
-                    document.getElementById('blank4'),
-                    document.getElementById('blank5-1'),
-                    document.getElementById('blank5-2')
-                ];
-
-                let allCorrect = true;
-
-                inputs.forEach(input => {
-                    const val = input.value.trim().toLowerCase();
-                    const ans = input.dataset.answer.toLowerCase();
-                    if (val === ans) {
-                        input.style.borderColor = 'var(--green)';
-                        input.style.color = 'var(--green)';
-                    } else {
-                        input.style.borderColor = '#f44336';
-                        input.style.color = '#f44336';
-                        allCorrect = false;
-                    }
-                });
-
-                const banner = document.getElementById('feedback-blanks');
-                const icon = document.getElementById('feedback-icon-blanks');
-                const text = document.getElementById('feedback-text-blanks');
-
-                if (allCorrect) {
-                    state['blanks'].checked = true;
-                    state['blanks'].score = 1; // 1 point for Sagutin Natin
-                    const cur = parseInt(document.getElementById('starCount').textContent);
-                    document.getElementById('starCount').textContent = cur + 1;
-
-                    inputs.forEach(input => input.disabled = true);
-                    banner.className = 'feedback-banner show correct-fb';
-                    icon.innerHTML = '🌟';
-                    text.innerHTML = 'Napakagaling! Tama ang lahat ng letra.';
-                    document.getElementById('check-act-blanks').disabled = true;
-
-                    updateNextBtn();
-                    try { new Audio('/static/core/audio/correct.mp3').play(); } catch (e) { }
-
-                    setTimeout(() => {
-                        showFinalScore();
-                    }, 500);
-                } else {
-                    banner.className = 'feedback-banner show wrong-fb';
-                    icon.innerHTML = '❌';
-                    text.innerHTML = 'Mayroong mali. Subukan muli!';
-                    try { new Audio('/static/core/audio/wrong.mp3').play(); } catch (e) { }
-                }
-            };
-
-            // ── Check activity ──
             window.checkActivity = function (actNum) {
                 if (state[actNum].checked) return;
-
                 const cards = document.querySelectorAll(`.choice-card[data-activity="${actNum}"]`);
-                let correct = 0;
-                let wrongOrMissed = 0;
-                let selectedCount = 0;
+                let correct = 0, wrongOrMissed = 0, selectedCount = 0;
                 const total = state[actNum].total;
 
-                cards.forEach(card => {
-                    if (card.classList.contains('selected')) selectedCount++;
-                });
+                cards.forEach(card => { if (card.classList.contains('selected')) selectedCount++; });
 
                 if (selectedCount === 0) {
-                    const banner = document.getElementById(`feedback-act${actNum}`);
-                    const icon = document.getElementById(`feedback-icon-${actNum}`);
-                    const text = document.getElementById(`feedback-text-${actNum}`);
-                    banner.className = 'feedback-banner show wrong-fb';
-                    icon.textContent = '⚠️';
-                    text.innerHTML = `<strong>Pumili muna!</strong> Pindutin ang mga larawan.`;
+                    if(window.AudioManager) AudioManager.playSFX('failed');
+                    document.getElementById(`feedback-act${actNum}`).className = 'feedback-banner show wrong-fb';
+                    document.getElementById(`feedback-icon-${actNum}`).textContent = '⚠️';
+                    document.getElementById(`feedback-text-${actNum}`).innerHTML = `<strong>Pumili muna!</strong> Pindutin ang mga larawan.`;
                     return;
                 }
 
                 cards.forEach(card => {
                     const isCorrect = card.dataset.correct === 'true';
                     const isSelected = card.classList.contains('selected');
-
-                    // Reset previous feedback classes
                     card.classList.remove('correct', 'wrong', 'missed');
-
-                    if (isCorrect && isSelected) {
-                        card.classList.add('correct');
-                        card.querySelector('.choice-checkbox').innerHTML = '✔';
-                        correct++;
-                    } else if (!isCorrect && isSelected) {
-                        card.classList.add('wrong');
-                        card.querySelector('.choice-checkbox').innerHTML = '✖';
-                        wrongOrMissed++;
-                    } else if (isCorrect && !isSelected) {
-                        card.classList.add('missed');
-                        card.querySelector('.choice-checkbox').innerHTML = '!';
-                        wrongOrMissed++;
-                    } else {
-                        card.querySelector('.choice-checkbox').innerHTML = '';
-                    }
+                    if (isCorrect && isSelected) { card.classList.add('correct'); card.querySelector('.choice-checkbox').innerHTML = '✔'; correct++; }
+                    else if (!isCorrect && isSelected) { card.classList.add('wrong'); card.querySelector('.choice-checkbox').innerHTML = '✖'; wrongOrMissed++; }
+                    else if (isCorrect && !isSelected) { card.classList.add('missed'); card.querySelector('.choice-checkbox').innerHTML = '!'; wrongOrMissed++; }
+                    else { card.querySelector('.choice-checkbox').innerHTML = ''; }
                 });
 
-                const pts = (correct === total && wrongOrMissed === 0) ? 1 : 0;
-
-                const banner = document.getElementById(`feedback-act${actNum}`);
-                const icon = document.getElementById(`feedback-icon-${actNum}`);
-                const text = document.getElementById(`feedback-text-${actNum}`);
-
-                if (pts === 1) {
-                    state[actNum].checked = true;
-                    state[actNum].score = 1;
-                    
-                    banner.className = 'feedback-banner show correct-fb';
-                    icon.textContent = '🌟';
-                    text.innerHTML = `<strong>Mahusay!</strong> Tama ang lahat! <em>(+1 punto)</em>`;
-                    
-                    // Disable clicks ONLY on success
+                if (correct === total && wrongOrMissed === 0) {
+                    if(window.AudioManager) AudioManager.playSFX('correct');
+                    state[actNum].checked = true; state[actNum].score = 1;
+                    document.getElementById(`feedback-act${actNum}`).className = 'feedback-banner show correct-fb';
+                    document.getElementById(`feedback-icon-${actNum}`).textContent = '🌟';
+                    document.getElementById(`feedback-text-${actNum}`).innerHTML = `<strong>Mahusay!</strong> Tama ang lahat! <em>(+1 punto)</em>`;
                     cards.forEach(card => card.onclick = null);
                     document.getElementById(`check-act${actNum}`).disabled = true;
-
-                    // Update star count
-                    const cur = parseInt(document.getElementById('starCount').textContent);
-                    document.getElementById('starCount').textContent = cur + 1;
-
+                    document.getElementById('starCount').textContent = parseInt(document.getElementById('starCount').textContent) + 1;
                     launchConfetti();
                     updateNextBtn();
                 } else {
-                    banner.className = 'feedback-banner show wrong-fb';
-                    icon.textContent = '💪';
-                    text.innerHTML = `<strong>Subukan Muli!</strong> May mali o nakaligtaan.`;
+                    if(window.AudioManager) AudioManager.playSFX('failed');
+                    document.getElementById(`feedback-act${actNum}`).className = 'feedback-banner show wrong-fb';
+                    document.getElementById(`feedback-icon-${actNum}`).textContent = '💪';
+                    document.getElementById(`feedback-text-${actNum}`).innerHTML = `<strong>Subukan Muli!</strong> May mali o nakaligtaan.`;
                 }
             };
 
-            // ── Unit 4 & 5: Interactive Canvas Drawing Pads ──
-            const pads = {};
-
-            function initPad(id) {
-                const capId = id.charAt(0).toUpperCase() + id.slice(1);
-                const canvas = document.getElementById('canvas' + capId);
-                const frame = document.getElementById('frame' + capId);
-                // Resize canvas to fill frame width
-                function resizeCanvas() {
-                    const w = frame.clientWidth;
-                    canvas.width = w;
-                    // height is set via HTML attribute
-                    if (pads[id] && pads[id].snapshots.length) {
-                        restoreSnapshot(id);
+            window.checkFillBlanks = function () {
+                if (state['blanks'].checked) return;
+                const inputs = [ 'blank1', 'blank2', 'blank3', 'blank4', 'blank5-1', 'blank5-2' ].map(id => document.getElementById(id));
+                let allCorrect = true;
+                inputs.forEach(input => {
+                    if (input.value.trim().toLowerCase() === input.dataset.answer.toLowerCase()) {
+                        input.style.borderColor = 'var(--green)'; input.style.color = 'var(--green)';
+                    } else {
+                        input.style.borderColor = '#f44336'; input.style.color = '#f44336'; allCorrect = false;
                     }
+                });
+
+                if (allCorrect) {
+                    if(window.AudioManager) AudioManager.playSFX('correct');
+                    state['blanks'].checked = true; state['blanks'].score = 1;
+                    document.getElementById('starCount').textContent = parseInt(document.getElementById('starCount').textContent) + 1;
+                    inputs.forEach(input => input.disabled = true);
+                    document.getElementById('feedback-blanks').className = 'feedback-banner show correct-fb';
+                    document.getElementById('feedback-icon-blanks').innerHTML = '🌟';
+                    document.getElementById('feedback-text-blanks').innerHTML = 'Napakagaling! Tama ang lahat ng letra.';
+                    document.getElementById('check-act-blanks').disabled = true;
+                    updateNextBtn();
+                    setTimeout(() => { showFinalScore(); }, 500);
+                } else {
+                    if(window.AudioManager) AudioManager.playSFX('failed');
+                    document.getElementById('feedback-blanks').className = 'feedback-banner show wrong-fb';
+                    document.getElementById('feedback-icon-blanks').innerHTML = '❌';
+                    document.getElementById('feedback-text-blanks').innerHTML = 'Mayroong mali. Subukan muli!';
                 }
-                resizeCanvas();
-                new ResizeObserver(resizeCanvas).observe(frame);
+            };
 
-                pads[id] = {
-                    canvas,
-                    ctx: canvas.getContext('2d'),
-                    drawing: false,
-                    color: id === 'upper' ? '#4D96FF' : (id === 'lower' ? '#FF6B9D' : '#6BCB77'),
-                    brush: 5,
-                    snapshots: [],
-                    strokeCount: 0,
-                    maxStrokes: id === 'upper' ? 3 : (id === 'lower' ? 2 : 100),
-                    done: false
-                };
+            // ── Unit 4: Drawing Pads ──
+            const pads = {};
+            function initPad(id) {
+                const canvas = document.getElementById('canvas' + (id === 'p1' ? 'P1' : id === 'p2' ? 'P2' : id === 'p3' ? 'P3' : id === 'upper' ? 'Upper' : 'Lower'));
+                const frame = canvas.parentElement;
+                function resizeCanvas() { canvas.width = frame.clientWidth; if (pads[id] && pads[id].snapshots.length) restoreSnapshot(id); }
+                resizeCanvas(); new ResizeObserver(resizeCanvas).observe(frame);
 
-                const ctx = pads[id].ctx;
-                ctx.lineCap = 'round';
-                ctx.lineJoin = 'round';
+                pads[id] = { canvas, ctx: canvas.getContext('2d'), drawing: false, color: id === 'upper' ? '#4D96FF' : (id === 'lower' ? '#FF6B9D' : '#6BCB77'), brush: 5, snapshots: [], done: false };
+                const ctx = pads[id].ctx; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
 
                 function getPos(e) {
-                    const rect = canvas.getBoundingClientRect();
-                    const scaleX = canvas.width / rect.width;
-                    const scaleY = canvas.height / rect.height;
-                    if (e.touches) {
-                        return {
-                            x: (e.touches[0].clientX - rect.left) * scaleX,
-                            y: (e.touches[0].clientY - rect.top) * scaleY
-                        };
-                    }
-                    return {
-                        x: (e.clientX - rect.left) * scaleX,
-                        y: (e.clientY - rect.top) * scaleY
-                    };
+                    const rect = canvas.getBoundingClientRect(), scaleX = canvas.width / rect.width, scaleY = canvas.height / rect.height;
+                    return e.touches ? { x: (e.touches[0].clientX - rect.left) * scaleX, y: (e.touches[0].clientY - rect.top) * scaleY } : { x: (e.clientX - rect.left) * scaleX, y: (e.clientY - rect.top) * scaleY };
                 }
 
                 function startDraw(e) {
-                    e.preventDefault();
-                    if (pads[id].done) return;
-                    pads[id].drawing = true;
-                    saveSnapshot(id);
-                    const p = getPos(e);
-                    ctx.beginPath();
-                    ctx.strokeStyle = pads[id].color;
-                    ctx.lineWidth = pads[id].brush;
-                    ctx.moveTo(p.x, p.y);
+                    e.preventDefault(); if (pads[id].done) return;
+                    pads[id].drawing = true; saveSnapshot(id);
+                    const p = getPos(e); ctx.beginPath(); ctx.strokeStyle = pads[id].color; ctx.lineWidth = pads[id].brush; ctx.moveTo(p.x, p.y);
                 }
-                function draw(e) {
-                    e.preventDefault();
-                    if (!pads[id].drawing) return;
-                    const p = getPos(e);
-                    ctx.lineTo(p.x, p.y);
-                    ctx.stroke();
-                }
-                function endDraw(e) {
-                    if (!pads[id].drawing) return;
-                    pads[id].drawing = false;
-                    // Count stroke
-                    pads[id].strokeCount++;
-                }
+                function draw(e) { e.preventDefault(); if (!pads[id].drawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); }
+                function endDraw(e) { if (!pads[id].drawing) return; pads[id].drawing = false; }
 
-                canvas.addEventListener('mousedown', startDraw, { passive: false });
-                canvas.addEventListener('mousemove', draw, { passive: false });
-                canvas.addEventListener('mouseup', endDraw);
-                canvas.addEventListener('mouseleave', endDraw);
-                canvas.addEventListener('touchstart', startDraw, { passive: false });
-                canvas.addEventListener('touchmove', draw, { passive: false });
-                canvas.addEventListener('touchend', endDraw);
-
-                // Init cursor
+                canvas.addEventListener('mousedown', startDraw, { passive: false }); canvas.addEventListener('mousemove', draw, { passive: false }); canvas.addEventListener('mouseup', endDraw); canvas.addEventListener('mouseleave', endDraw);
+                canvas.addEventListener('touchstart', startDraw, { passive: false }); canvas.addEventListener('touchmove', draw, { passive: false }); canvas.addEventListener('touchend', endDraw);
                 updateCursor(id, pads[id].color);
             }
 
             function updateCursor(id, color) {
-                // Generate an SVG pencil cursor filled with the selected color
                 const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="${color}" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>`;
-                const encoded = encodeURIComponent(svg);
-                // The pencil tip in this SVG is at the bottom-left, approximately at (2, 22)
-                pads[id].canvas.style.cursor = `url('data:image/svg+xml;utf8,${encoded}') 2 22, crosshair`;
+                pads[id].canvas.style.cursor = `url('data:image/svg+xml;utf8,${encodeURIComponent(svg)}') 2 22, crosshair`;
             }
 
-            function saveSnapshot(id) {
-                const { canvas, snapshots } = pads[id];
-                snapshots.push(canvas.toDataURL());
-                if (snapshots.length > 30) snapshots.shift();
-            }
-
+            function saveSnapshot(id) { pads[id].snapshots.push(pads[id].canvas.toDataURL()); if (pads[id].snapshots.length > 30) pads[id].snapshots.shift(); }
             function restoreSnapshot(id) {
-                const { canvas, ctx, snapshots } = pads[id];
-                if (!snapshots.length) return;
-                const img = new Image();
-                img.onload = () => ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                img.src = snapshots[snapshots.length - 1];
+                if (!pads[id].snapshots.length) return;
+                const img = new Image(); img.onload = () => pads[id].ctx.drawImage(img, 0, 0, pads[id].canvas.width, pads[id].canvas.height);
+                img.src = pads[id].snapshots[pads[id].snapshots.length - 1];
             }
-
-            // Removed updateStrokeDots since stroke UI was removed
 
             window.undoStroke = function (id) {
-                const p = pads[id];
-                if (p.snapshots.length) {
-                    const img = new Image();
-                    p.snapshots.pop();
-                    p.ctx.clearRect(0, 0, p.canvas.width, p.canvas.height);
-                    if (p.snapshots.length) {
-                        img.onload = () => p.ctx.drawImage(img, 0, 0, p.canvas.width, p.canvas.height);
-                        img.src = p.snapshots[p.snapshots.length - 1];
+                if (pads[id].snapshots.length) {
+                    pads[id].snapshots.pop(); pads[id].ctx.clearRect(0, 0, pads[id].canvas.width, pads[id].canvas.height);
+                    if (pads[id].snapshots.length) {
+                        const img = new Image(); img.onload = () => pads[id].ctx.drawImage(img, 0, 0, pads[id].canvas.width, pads[id].canvas.height);
+                        img.src = pads[id].snapshots[pads[id].snapshots.length - 1];
                     }
-                    p.strokeCount = Math.max(0, p.strokeCount - 1);
                 }
             };
 
             window.clearCanvas = function (id) {
-                const p = pads[id];
-                p.ctx.clearRect(0, 0, p.canvas.width, p.canvas.height);
-                p.snapshots = [];
-                p.strokeCount = 0;
-                p.done = false;
-
-                const capId = id.charAt(0).toUpperCase() + id.slice(1);
-                const tick = document.getElementById('tick' + capId) || document.getElementById('doneTick-' + id);
-                if (tick) {
-                    tick.classList.remove('show', 'error-tick');
-                    tick.style.borderColor = 'var(--green)';
-                    tick.style.color = '#1b5e20';
-                    tick.style.background = '#E9FBEE';
-                }
+                pads[id].ctx.clearRect(0, 0, pads[id].canvas.width, pads[id].canvas.height); pads[id].snapshots = []; pads[id].done = false;
+                const tick = document.getElementById('doneTick-' + id);
+                if(tick) { tick.className = 'pad-done-tick'; tick.style.display = 'none'; }
             };
-            function getTargetLetterForPad(id) {
-                const capId = id.charAt(0).toUpperCase() + id.slice(1);
-                const ghostContainer = document.getElementById('ghost' + capId);
-                if (!ghostContainer) return null;
-                const wm = ghostContainer.querySelector('.watermark-letter');
-                if (wm) return wm.textContent.trim()[0];
-                const gl = ghostContainer.querySelector('.ghost-letter');
-                if (gl) return gl.textContent.trim()[0];
-                return null;
-            }
 
-            async function validateDrawingAI(id) {
-                const p = pads[id];
-                const ctx = p.ctx;
-                const canvas = p.canvas;
-
-                // 1. Fast empty-canvas check first
+            async function validateDrawingAI(id, expectedLetter) {
+                const p = pads[id], ctx = p.ctx, canvas = p.canvas;
                 const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
                 let totalInk = 0;
-                for (let i = 0; i < imgData.length; i += 4) {
-                    if (imgData[i + 3] > 20) totalInk++;
-                }
-                if (totalInk < 50) {
-                    return {
-                        valid: false,
-                        reason: 'Walang guhit pa. Subukang sumulat!',
-                        encouragement_fil: 'Subukan mo ulit! Kaya mo yan!',
-                        tip: 'Gumuhit ng malaking letra sa loob ng kahon.'
-                    };
-                }
-
-                // 2. Local Completeness Check (Verify all ghost letter boxes have ink)
-                try {
-                    const capId = id.charAt(0).toUpperCase() + id.slice(1);
-                    const ghostContainer = document.getElementById('ghost' + capId);
-                    const spans = ghostContainer ? ghostContainer.querySelectorAll('.ghost-letter') : [];
-                    
-                    if (spans.length > 0) {
-                        const canvasRect = canvas.getBoundingClientRect();
-                        const scaleX = canvas.width / canvasRect.width;
-                        const scaleY = canvas.height / canvasRect.height;
-                        let coveredZones = 0;
-
-                        spans.forEach(span => {
-                            const r = span.getBoundingClientRect();
-                            const bx1 = Math.max(0, Math.floor((r.left - canvasRect.left) * scaleX) - 10);
-                            const by1 = Math.max(0, Math.floor((r.top - canvasRect.top) * scaleY) - 10);
-                            const bx2 = Math.min(canvas.width, Math.ceil((r.right - canvasRect.left) * scaleX) + 10);
-                            const by2 = Math.min(canvas.height, Math.ceil((r.bottom - canvasRect.top) * scaleY) + 10);
-                            
-                            let hits = 0;
-                            for (let sy = by1; sy <= by2; sy += 4) {
-                                for (let sx = bx1; sx <= bx2; sx += 4) {
-                                    const idx = (sy * canvas.width + sx) * 4;
-                                    if (imgData[idx + 3] > 20) hits++;
-                                }
-                            }
-                            if (hits >= 8) coveredZones++;
-                        });
-
-                        if (coveredZones < spans.length) {
-                            return {
-                                valid: false,
-                                reason: 'Hindi pa po tapos ang lahat!',
-                                encouragement_fil: 'Sige pa, punan ang lahat ng gabay na letra! 😊',
-                                tip: `May mga kahon pa na wala pang sulat. Trace mo lahat sila!`
-                            };
-                        }
-                    }
-                } catch (e) {
-                    console.warn('[Completeness check] error:', e);
-                }
-
-                const image_b64 = canvas.toDataURL('image/png');
-                const target_letter = getTargetLetterForPad(id) || '?';
+                for (let i = 0; i < imgData.length; i += 4) if (imgData[i + 3] > 20) totalInk++;
+                if (totalInk < 50) return { valid: false, reason: 'Walang guhit pa. Subukang sumulat!', encouragement_fil: 'Subukan mo ulit!' };
                 try {
                     const resp = await fetch('/api/validate-handwriting/', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': '{{ csrf_token }}'
-                        },
-                        body: JSON.stringify({ image_b64, target_letter })
+                        method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}' },
+                        body: JSON.stringify({ image_b64: p.canvas.toDataURL('image/png'), target_letter: expectedLetter || 'I' })
                     });
                     if (!resp.ok) throw new Error('HTTP ' + resp.status);
                     return await resp.json();
-                } catch (err) {
-                    console.warn('[AI validate] fallback:', err);
-                    return {
-                        valid: true,
-                        confidence: 0.70,
-                        reason: 'Offline validation - accepted.',
-                        encouragement_fil: 'Magaling! Napakaganda ng iyong pagsulat!',
-                        tip: null
-                    };
-                }
+                } catch (err) { return { valid: true, confidence: 0.70, reason: 'Offline validation - accepted.', encouragement_fil: 'Magaling! Napakaganda ng iyong pagsulat!' }; }
             }
 
             window.markDone = async function (id) {
-                const p = pads[id];
-                const tick = document.getElementById('doneTick-' + id);
-                const capId = id.charAt(0).toUpperCase() + id.slice(1);
-                const frame = document.getElementById('frame' + capId);
-
+                const p = pads[id], tick = document.getElementById('doneTick-' + id), frame = document.getElementById('frame' + (id==='upper'?'Upper':'Lower'));
                 const doneBtn = document.querySelector(`[onclick="markDone('${id}')"]`);
                 if (doneBtn) { doneBtn.disabled = true; doneBtn.innerHTML = '⏳ Sinusuri...'; }
-
-                const validation = await validateDrawingAI(id);
-
+                const expected = id === 'upper' ? 'I' : 'i';
+                const validation = await validateDrawingAI(id, expected);
                 if (doneBtn) { doneBtn.disabled = false; doneBtn.innerHTML = '✓ Tapos na!'; }
 
                 if (!validation.valid) {
-                    if (frame) {
-                        frame.style.border = '4px solid #f44336';
-                        setTimeout(() => { frame.style.border = '4px solid #90CAF9'; }, 700);
-                    }
+                    if(window.AudioManager) AudioManager.playSFX('failed'); 
+                    if (frame) { frame.style.border = '4px solid #f44336'; setTimeout(() => { frame.style.border = '4px solid #90CAF9'; }, 700); }
                     if (tick) {
-                        tick.className = 'pad-done-tick show error-tick';
-                        tick.style.borderColor = '#f44336';
-                        tick.style.color = '#b71c1c';
-                        tick.style.background = '#FFEBEE';
-                        const tipMsg = validation.tip ? ' ?? ' + validation.tip : '';
-                        tick.innerHTML = '⚠️ ' + (validation.reason || 'Subukan ulit!') + tipMsg;
+                        tick.className = 'pad-done-tick show error-tick'; tick.style.borderColor = '#f44336'; tick.style.color = '#b71c1c'; tick.style.background = '#FFEBEE';
+                        tick.innerHTML = '⚠️ ' + (validation.reason || 'Subukan ulit!');
                     }
                     return;
                 }
-
+                if(window.AudioManager) AudioManager.playSFX('correct'); 
                 p.done = true;
                 if (tick) {
-                    tick.className = 'pad-done-tick show';
-                    tick.style.borderColor = 'var(--green)';
-                    tick.style.color = '#1b5e20';
-                    tick.style.background = '#E9FBEE';
-                    const defMsg = id === 'upper' ? 'Napakahusay! Sinulatan mo na ang malaking I!' : id === 'lower' ? 'Magaling! Sinulatan mo na ang maliit na i!' : 'Mahusay! Natapos mo ang pagsasanay!';
-                    tick.innerHTML = '✅ ' + (validation.encouragement_fil || defMsg);
+                    tick.className = 'pad-done-tick show'; tick.style.borderColor = 'var(--green)'; tick.style.color = '#1b5e20'; tick.style.background = '#E9FBEE';
+                    tick.innerHTML = '✅ ' + (validation.encouragement_fil || (id === 'upper' ? 'Napakahusay! Sinulatan mo na ang malaking I!' : 'Magaling! Sinulatan mo na ang maliit na i!'));
                     tick.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 }
-
-                if (pads['upper'] && pads['upper'].done && pads['lower'] && pads['lower'].done && !state[4].checked) {
-                    state[4].checked = true;
-                    state[4].score = 1;
-                    const cur = parseInt(document.getElementById('starCount').textContent);
-                    document.getElementById('starCount').textContent = cur + 1;
+                if (pads['upper']?.done && pads['lower']?.done && !state[4].checked) {
+                    state[4].checked = true; state[4].score = 1;
+                    document.getElementById('starCount').textContent = parseInt(document.getElementById('starCount').textContent) + 1;
                     launchConfetti();
-                    updateNextBtn();
                 }
                 updateNextBtn();
             };
 
-window.checkUnit5Pagsasanay = async function () {
-                // Lenient: count how many pads have valid drawings
-                let allValid = true;
-                let anyPadFailed = false;
+            window.checkUnit5Pagsasanay = async function () {
+                let allValid = true; let anyFailed = false;
                 for (const pid of ['p1', 'p2', 'p3']) {
-                    const v = await validateDrawingAI(pid);
+                    const expected = pid === 'p1' ? 'I' : pid === 'p2' ? 'i' : 'I';
+                    const v = await validateDrawingAI(pid, expected);
+                    const frame = document.getElementById('frame' + pid.toUpperCase());
+                    const tick = document.getElementById('doneTick-' + pid);
                     if (!v.valid) {
-                        allValid = false;
-                        anyPadFailed = true;
-                        const frame = document.getElementById('frame' + pid.charAt(0).toUpperCase() + pid.slice(1));
-                        frame.style.border = '4px solid #f44336';
-                        setTimeout(() => { frame.style.border = '4px solid #90CAF9'; }, 900);
-
-                        // Show friendly per-pad feedback via doneTick
-                        const tick = document.getElementById('doneTick-' + pid);
+                        allValid = false; anyFailed = true;
+                        if(frame) { frame.style.border = '4px solid #f44336'; setTimeout(() => { frame.style.border = '4px solid #90CAF9'; }, 900); }
                         if (tick) {
-                            tick.className = 'pad-done-tick show error-tick';
-                            tick.style.display = 'flex';
-                            tick.style.borderColor = '#f44336';
-                            tick.style.color = '#b71c1c';
-                            tick.style.background = '#FFEBEE';
+                            tick.className = 'pad-done-tick show error-tick'; tick.style.display = 'flex';
+                            tick.style.borderColor = '#f44336'; tick.style.color = '#b71c1c'; tick.style.background = '#FFEBEE';
                             tick.innerHTML = '⚠️ ' + v.reason + ' Subukan ulit!';
                         }
                     } else {
-                        // Mark pad as completed visually
-                        const tick = document.getElementById('doneTick-' + pid);
                         if (tick && !tick.classList.contains('show')) {
-                            tick.className = 'pad-done-tick show';
-                            tick.style.display = 'flex';
-                            tick.style.borderColor = 'var(--green)';
-                            tick.style.color = '#1b5e20';
-                            tick.style.background = '#E9FBEE';
+                            tick.className = 'pad-done-tick show'; tick.style.display = 'flex';
+                            tick.style.borderColor = 'var(--green)'; tick.style.color = '#1b5e20'; tick.style.background = '#E9FBEE';
                             tick.innerHTML = '✅ Magaling! Napakaganda ng iyong pagsulat! 🌟';
                         }
                     }
                 }
-
-                if (!anyPadFailed && !state[5].checked) {
-                    state[5].checked = true;
-                    state[5].score = 1;
-                    const cur = parseInt(document.getElementById('starCount').textContent);
-                    document.getElementById('starCount').textContent = cur + 1;
-                    launchConfetti();
-                    updateNextBtn();
-                } else if (anyPadFailed) {
-                    // Encourage the child — don't let them feel bad!
-                    try { new Audio('/static/core/audio/wrong.mp3').play(); } catch (e) { }
+                if (!anyFailed && !state[5].checked) {
+                    if(window.AudioManager) AudioManager.playSFX('correct'); 
+                    state[5].checked = true; state[5].score = 1;
+                    document.getElementById('starCount').textContent = parseInt(document.getElementById('starCount').textContent) + 1;
+                    launchConfetti(); updateNextBtn();
+                } else if (anyFailed) {
+                    if(window.AudioManager) AudioManager.playSFX('failed'); 
                 }
             };
 
-            window.setColor = function (id, color, swatch) {
-                pads[id].color = color;
-                const siblings = swatch.parentElement.querySelectorAll('.color-swatch');
-                siblings.forEach(s => s.classList.remove('active'));
-                swatch.classList.add('active');
-                updateCursor(id, color);
+            window.setColor = function (id, color, swatch) { 
+                if(window.AudioManager) AudioManager.playSFX('click');
+                pads[id].color = color; swatch.parentElement.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active')); swatch.classList.add('active'); updateCursor(id, color); 
+            };
+            window.setBrush = function (id, size, btn) { 
+                if(window.AudioManager) AudioManager.playSFX('click');
+                pads[id].brush = size; btn.parentElement.querySelectorAll('.brush-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); 
             };
 
-            window.setBrush = function (id, size, btn) {
-                pads[id].brush = size;
-                const siblings = btn.parentElement.querySelectorAll('.brush-btn');
-                siblings.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-            };
+            initPad('upper'); initPad('lower'); initPad('p1'); initPad('p2'); initPad('p3');
 
-            initPad('upper');
-            initPad('lower');
-            initPad('p1');
-            initPad('p2');
-            initPad('p3');
-
-            // ── Final Score ──
             function showFinalScore() {
-                const totalScore = state[1].score + state[2].score + state[4].score + state[5].score + (state['blanks'].score || 0);
-                const maxScore = 5; // 1 pt per unit (Gawain 1, Gawain 2, Pagsulat, Pagsasanay, Sagutin Natin)
+                const totalScore = state[1].score + state[2].score + state[4].score + state[5].score + state['blanks'].score;
+                const maxScore = 5; 
                 const section = document.getElementById('score-section');
                 section.style.display = 'block';
-                section.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                setTimeout(() => section.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
 
                 const pct = totalScore / maxScore;
                 let starsCount, msg;
@@ -2628,65 +2323,38 @@ window.checkUnit5Pagsasanay = async function () {
                 document.getElementById('scoreText').textContent = msg;
                 document.getElementById('scoreDetail').textContent = `Puntos: ${totalScore} / ${maxScore}`;
 
-                // Update finish button
-                updateNextBtn();
-                launchConfetti();
-
-                // Save progress to backend
-                const levelId = "{{ level_id|default:'' }}";
-                if (levelId) {
-                    fetch('{% url "core:save_progress" %}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': '{{ csrf_token }}'
-                        },
-                        body: JSON.stringify({
-                            level_id: parseInt(levelId),
-                            stars: starsCount,
-                            is_completed: true
-                        })
-                    }).then(res => res.json()).then(data => {
-                        console.log("Progress saved:", data);
-                    }).catch(err => console.error("Error saving progress:", err));
-                }
+                updateNextBtn(); launchConfetti();
             }
 
-            // ── Sound ──
             window.playISound = function () {
                 const btn = document.getElementById('soundBtn');
-                btn.style.transform = 'scale(0.93) translateY(5px)';
-                btn.style.boxShadow = '0 0 0 #000';
+                btn.style.transform = 'scale(0.93) translateY(5px)'; btn.style.boxShadow = '0 0 0 #000';
                 setTimeout(() => { btn.style.transform = ''; btn.style.boxShadow = ''; }, 180);
 
-                if ('speechSynthesis' in window) {
-                    const utter = new SpeechSynthesisUtterance('iii… ibon… itlog… ilog');
-                    utter.lang = 'tl-PH'; utter.rate = 0.75; utter.pitch = 1.1;
-                    window.speechSynthesis.cancel();
-                    window.speechSynthesis.speak(utter);
+                const introAudio = new Audio("{% static 'core/audio/i_intro.mp3' %}");
+                const wordsAudio = new Audio("{% static 'core/audio/i_pronounce.mp3' %}");
+                if (window.TTSettings) {
+                    const vol = window.TTSettings.getVolume() / 100;
+                    introAudio.volume = vol; wordsAudio.volume = vol;
                 }
+                introAudio.addEventListener('ended', () => wordsAudio.play());
+                introAudio.play();
             };
 
-            // ── Confetti ──
             function launchConfetti() {
                 const wrap = document.getElementById('confettiWrap');
                 wrap.innerHTML = ''; wrap.classList.add('active');
                 const colors = ['#FF6B9D', '#FFD93D', '#6BCB77', '#4D96FF', '#C77DFF', '#FF9F43'];
                 for (let i = 0; i < 60; i++) {
-                    const el = document.createElement('div');
-                    el.className = 'confetti-particle';
-                    el.style.left = Math.random() * 100 + 'vw';
-                    el.style.background = colors[Math.floor(Math.random() * colors.length)];
-                    el.style.width = (8 + Math.random() * 10) + 'px';
-                    el.style.height = (8 + Math.random() * 10) + 'px';
-                    el.style.animationDuration = (1.5 + Math.random() * 2) + 's';
-                    el.style.animationDelay = Math.random() * 0.8 + 's';
+                    const el = document.createElement('div'); el.className = 'confetti-particle';
+                    el.style.left = Math.random() * 100 + 'vw'; el.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    el.style.width = (8 + Math.random() * 10) + 'px'; el.style.height = (8 + Math.random() * 10) + 'px';
+                    el.style.animationDuration = (1.5 + Math.random() * 2) + 's'; el.style.animationDelay = Math.random() * 0.8 + 's';
                     wrap.appendChild(el);
                 }
                 setTimeout(() => { wrap.classList.remove('active'); wrap.innerHTML = ''; }, 4000);
             }
 
-            // ── Init ──
             updateUI();
         })();
     </script>
@@ -2800,7 +2468,7 @@ window.checkUnit5Pagsasanay = async function () {
     };
     document.addEventListener('fullscreenchange', updateFSBtn);
     </script>
-
+    <script src="{% static 'core/audio_manager.js' %}"></script>
 </body>
 
 </html>

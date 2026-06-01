@@ -904,7 +904,7 @@
             );
             border-radius: 50%;
             transform: scale(0) rotate(-180deg);
-            transition: transform 1.2s cubic-bezier(0.12, 0.8, 0.4, 1);
+            transition: transform 2.0s cubic-bezier(0.12, 0.8, 0.4, 1);
         }
 
         .magical-transition-overlay.active {
@@ -1151,13 +1151,13 @@
 <body>
     <div id="map-app">
 
-        <!-- ══ HEADER ══ -->
         <header class="map-header d-flex justify-content-between align-items-center" v-pre>
             <div class="header-banderitas"></div>
             <a href="{% url 'core:index' %}"
                 class="btn btn-map-nav text-danger bg-white shadow-sm d-flex align-items-center justify-content-center"
                 style="width:52px; height:52px; border-radius:15px; border:2px solid #2c2f33; text-decoration:none;"
-                id="btn-back">
+                id="btn-back"
+                onclick="event.preventDefault(); const target = this.href; if(window.AudioManager) AudioManager.playSFX('click'); setTimeout(() => window.location.href = target, 350);">
                 <i class="fa-solid fa-chevron-left fs-4"></i>
             </a>
 
@@ -1167,10 +1167,8 @@
             </h1>
 
             <div class="d-flex align-items-center gap-2">
-                <!-- 🎒 Backpack / Collection button -->
                 <button class="btn-backpack" onclick="openKoleksyon()" title="Aking Koleksyon">🎒</button>
 
-                <!-- Profile dropdown -->
                 <div class="dropdown">
                     <button
                         class="btn btn-map-nav bg-white p-0 overflow-hidden shadow-sm d-flex align-items-center justify-content-center"
@@ -1205,7 +1203,8 @@
                                 {% csrf_token %}
                                 <button type="submit"
                                     class="dropdown-item text-danger py-3 fw-black d-flex align-items-center justify-content-center gap-2"
-                                    style="font-size:1.15rem;">
+                                    style="font-size:1.15rem;"
+                                    onclick="event.preventDefault(); const form = this.closest('form'); if(window.AudioManager) AudioManager.playSFX('click'); setTimeout(() => form.submit(), 350);">
                                     <i class="fa-solid fa-right-from-bracket"></i> MAG-LOGOUT
                                 </button>
                             </form>
@@ -1215,23 +1214,18 @@
             </div>
         </header>
 
-        <!-- ══ MAIN SCROLL AREA ══ -->
         <div class="map-scroll-area" id="mapScrollArea">
 
-            <!-- 5500px wide canvas -->
             <div class="map-canvas" id="mapCanvas">
 
-                <!-- ══ BACKGROUND: sky-level floating elements ══ -->
                 <div class="scenery-layer" aria-hidden="true">
 
-                    <!-- Floating sky elements (sun, balloons, clouds) -->
                     <div style="position:absolute;top:5%;left:250px;font-size:9rem;animation:spinSlow 40s linear infinite;filter:drop-shadow(0 0 40px #FFEB3B);z-index: 0;">☀️</div>
                     <div style="position:absolute;top:15%;left:900px;font-size:6rem;animation:floatCloud 8s ease-in-out infinite;">🎈</div>
                     <div style="position:absolute;top:8%;left:2500px;font-size:7rem;animation:floatCloud 10s ease-in-out infinite;animation-delay:2s;">✈️</div>
                     <div style="position:absolute;top:20%;left:3800px;font-size:6.5rem;animation:floatCloud 9s ease-in-out infinite;">🦋</div>
                     <div style="position:absolute;top:10%;left:4800px;font-size:7.5rem;animation:floatCloud 12s ease-in-out infinite;">🚀</div>
 
-                    <!-- Floating clouds -->
                     <span style="position:absolute;top:4%;left:150px;font-size:6rem;opacity:0.9;animation:floatCloud 8s ease-in-out infinite;">☁️</span>
                     <span style="position:absolute;top:12%;left:550px;font-size:4.5rem;opacity:0.8;animation:floatCloud 11s ease-in-out infinite 1.5s;">☁️</span>
                     <span style="position:absolute;top:6%;left:1100px;font-size:5.5rem;opacity:0.85;animation:floatCloud 9s ease-in-out infinite 0.5s;">☁️</span>
@@ -1243,7 +1237,6 @@
                     <span style="position:absolute;top:12%;left:4700px;font-size:4.5rem;opacity:0.8;animation:floatCloud 10s ease-in-out infinite 0.5s;">☁️</span>
                     <span style="position:absolute;top:7%;left:5200px;font-size:6rem;opacity:0.9;animation:floatCloud 12s ease-in-out infinite 3.5s;">☁️</span>
                     
-                    <!-- Ground decorations (trees, houses, flowers) -->
                     <div style="position:absolute; bottom:18%; left:300px; font-size:7rem; z-index:2; pointer-events:none;">🌳</div>
                     <div style="position:absolute; bottom:10%; left:650px; font-size:5rem; z-index:2; pointer-events:none;">🌻</div>
                     <div style="position:absolute; bottom:25%; left:1100px; font-size:6rem; z-index:2; pointer-events:none;">🌲</div>
@@ -1257,17 +1250,12 @@
                     <div style="position:absolute; bottom:12%; left:5100px; font-size:6rem; z-index:2; pointer-events:none;">🏠</div>
                 </div>
 
-                <!-- ══ TERRAIN BACKGROUND ══ -->
                 <svg class="terrain-svg" viewBox="0 0 5500 400" preserveAspectRatio="none">
-                    <!-- Layer 1: Back Hills -->
                     <path fill="#A5D6A7" d="M0,400 L0,180 Q300,300 600,180 T1200,180 T1800,180 T2400,180 T3000,180 T3600,180 T4200,180 T4800,180 T5400,180 T6000,180 L6000,400 Z" />
-                    <!-- Layer 2: Mid Hills -->
                     <path fill="#81C784" d="M0,400 L0,240 Q400,100 800,240 T1600,240 T2400,240 T3200,240 T4000,240 T4800,240 T5600,240 L5600,400 Z" />
-                    <!-- Layer 3: Foreground Ground -->
                     <path fill="#66BB6A" d="M0,400 L0,320 Q250,420 500,320 T1000,320 T1500,320 T2000,320 T2500,320 T3000,320 T3500,320 T4000,320 T4500,320 T5000,320 T5500,320 Q5750,420 6000,320 L6000,400 Z" />
                 </svg>
 
-                <!-- ══ SVG PATH ══ -->
                 <svg class="map-path-svg" viewBox="0 0 5500 700" preserveAspectRatio="none">
                     <defs>
                         <filter id="glow">
@@ -1279,14 +1267,12 @@
                         </filter>
                     </defs>
 
-                    <!-- fill="none" must be set as SVG attribute AND CSS to override browser defaults -->
                     <path class="path-glow" fill="none" filter="url(#glow)" d="{{ svg_path_d }}" />
                     <path class="path-active" fill="none" d="{{ svg_path_d }}" />
                     <path class="path-inactive" fill="none" d="{{ svg_path_d }}" />
                     <path class="path-highlight" fill="none" d="{{ svg_path_d }}" />
                 </svg>
 
-                <!-- ══ NODES LAYER ══ -->
                 <div class="map-nodes-layer">
                     {% for node in map_nodes %}
                     {% if node.status == 'completed' %}
@@ -1324,15 +1310,7 @@
                     {% endif %}
                     {% endfor %}
                 </div>
-            </div><!-- end .map-canvas -->
-        </div><!-- end .map-scroll-area -->
-
-        <!-- ══ FIXED OVERLAYS ══ -->
-
-        <!-- Animal Avatar Pill removed per user request -->
-
-        <!-- ══ COLLECTION MODAL ══ -->
-        <div class="koleksyon-overlay" id="koleksyon-modal">
+            </div></div><div class="koleksyon-overlay" id="koleksyon-modal">
             <div class="koleksyon-panel">
                 <div class="koleksyon-header">
                     <h2>🎒 Aking Koleksyon</h2>
@@ -1345,15 +1323,12 @@
                     👆 I-tap ang hayop para piliin bilang iyong kasama!
                 </div>
                 <div class="koleksyon-grid" id="koleksyon-grid">
-                    <!-- Populated by JS -->
-                </div>
+                    </div>
             </div>
         </div>
 
-        <!-- ══ CELEBRATION MODAL ══ -->
         <div class="celebrate-overlay" id="celebrate-modal">
             <div class="celebrate-box">
-                <!-- Confetti pieces -->
                 <div id="confetti-container"></div>
                 <span class="celebrate-animal-emoji" id="celebrate-emoji">🐻</span>
                 <p class="celebrate-title">Nabuksan mo si</p>
@@ -1362,7 +1337,6 @@
             </div>
         </div>
 
-        <!-- ══ SETTINGS MODAL ══ -->
         <div class="settings-overlay" id="settings-modal">
             <div class="settings-panel">
                 <div class="settings-header">
@@ -1371,7 +1345,6 @@
                 </div>
                 <div class="settings-body">
 
-                    <!-- 🔊 Volume -->
                     <div class="settings-row">
                         <div class="settings-row-label"><span class="s-icon">🔊</span> Lakas ng Tunog</div>
                         <div style="display:flex;align-items:center;gap:12px;">
@@ -1382,7 +1355,6 @@
                         </div>
                     </div>
 
-                    <!-- ☀️ Brightness -->
                     <div class="settings-row">
                         <div class="settings-row-label"><span class="s-icon">☀️</span> Liwanag ng Screen</div>
                         <div style="display:flex;align-items:center;gap:12px;">
@@ -1393,7 +1365,6 @@
                         </div>
                     </div>
 
-                    <!-- 🟫 Pixel Mode -->
                     <div class="settings-row">
                         <div class="settings-row-label"><span class="s-icon">🟫</span> Pixel Mode</div>
                         <div style="display:flex;align-items:center;gap:12px;">
@@ -1404,7 +1375,6 @@
                         </div>
                     </div>
 
-                    <!-- ⛶ Fullscreen -->
                     <div class="settings-row">
                         <div class="settings-row-label"><span class="s-icon">⛶</span> Full Screen</div>
                         <button class="tt-fullscreen-btn" id="tt-fs-btn" onclick="toggleFullscreen()">⛶ I-bukas ang Full Screen</button>
@@ -1416,7 +1386,6 @@
 
         
 
-        <!-- Scroll arrows -->
         <button class="scroll-hint scroll-hint-left" id="btn-scroll-left" title="Scroll left" style="display: none;">
             <i class="fa-solid fa-chevron-left"></i>
         </button>
@@ -1424,12 +1393,10 @@
             <i class="fa-solid fa-chevron-right"></i>
         </button>
 
-        <!-- Scroll progress bar -->
         <div class="scroll-progress-bar">
             <div class="scroll-progress-fill" id="scrollProgressFill"></div>
         </div>
 
-        <!-- Continue Button -->
         <div class="continue-fixed">
             {% if active_node %}
             <button class="btn btn-warning fs-5 px-5 py-3 rounded-pill fw-bold border-3 continue-btn"
@@ -1440,12 +1407,10 @@
             {% endif %}
         </div>
 
-        <!-- Scroll hint -->
         <div class="drag-hint" id="dragHint">
             <i class="fa-solid fa-left-right"></i> Swipe para mag-scroll
         </div>
 
-        <!-- Magical Rainbow Pinwheel Transition -->
         <div id="magical-transition-overlay" class="magical-transition-overlay">
             <div class="rainbow-pinwheel"></div>
             
@@ -1463,11 +1428,7 @@
             </div>
         </div>
 
-        <!-- Fade Blocker Bridge (Removed) -->
-
-    </div><!-- end #map-app -->
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    </div><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
     // ═══════════════════════════════════════════════════════
     // ANIMAL COLLECTION SYSTEM
@@ -1528,8 +1489,6 @@
         if (!ANIMAL_MAP[key] || !isAnimalUnlocked(key)) return;
         localStorage.setItem(LS_ACTIVE, key);
         localStorage.setItem(LS_RECENT, key);
-        // Update avatar pill
-        updateAvatarPill();
         // Update mascot emoji on map
         const mascotEl = document.getElementById('mascot');
         if (mascotEl) mascotEl.textContent = ANIMAL_MAP[key].emoji;
@@ -1538,13 +1497,6 @@
         if (flyEl) flyEl.textContent = ANIMAL_MAP[key].emoji;
         // Rebuild grid to move checkmark
         buildKoleksyon();
-        // Quick flash on the pill to show change
-        const pill = document.getElementById('animalAvatarPill');
-        if (pill) {
-            pill.style.transform = 'scale(1.25)';
-            pill.style.transition = 'transform 0.2s';
-            setTimeout(() => { pill.style.transform = ''; }, 300);
-        }
     }
 
     // ── Ensure Matsing is always unlocked (default starter) ──
@@ -1563,15 +1515,6 @@
         });
         {% endif %}
     })();
-
-    // ── Animal avatar pill ──
-    function updateAvatarPill() {
-        const a = getMostRecentAnimal();
-        const emojiEl = document.getElementById('avatarEmoji');
-        const nameEl = document.getElementById('avatarName');
-        if (emojiEl) emojiEl.textContent = a.emoji || '🐒';
-        if (nameEl) nameEl.textContent = a.name || 'Matsing';
-    }
 
     // ── Collection modal ──
     function buildKoleksyon() {
@@ -1598,7 +1541,9 @@
             `;
             // Click to select — only unlocked animals
             if (!isLocked) {
-                card.addEventListener('click', () => setActivePet(key));
+                card.addEventListener('click', () => {
+                    setActivePet(key);
+                });
             }
             grid.appendChild(card);
         });
@@ -1644,20 +1589,31 @@
         const btn = document.getElementById('celebrate-dismiss-btn');
         btn.classList.remove('show');
         document.getElementById('celebrate-modal').classList.add('open');
+        
+        // ── Papatayin ang BGM at Papatunugin ang Congratulations ──
+        if (window.AudioManager) {
+            AudioManager.pauseBGM();
+            AudioManager.playSFX('congratulations');
+        }
+
         launchConfetti();
         setTimeout(() => btn.classList.add('show'), 3000);
     }
-    window.dismissCelebration = function() {
+   window.dismissCelebration = function() {
+        // ── Ibalik ang BGM kapag kinlick ang Salamat ──
+        if (window.AudioManager) {
+            AudioManager.resumeBGM();
+        }
+
         const modal = document.getElementById('celebrate-modal');
+        // ... (ang natitirang orihinal na code pababa)
         const emojiEl = document.getElementById('celebrate-emoji');
         const bagBtn = document.querySelector('.btn-backpack');
         
         if (emojiEl && bagBtn) {
-            // Get positions
             const emojiRect = emojiEl.getBoundingClientRect();
             const bagRect = bagBtn.getBoundingClientRect();
             
-            // Create a flying clone
             const clone = document.createElement('div');
             clone.textContent = emojiEl.textContent;
             clone.style.position = 'fixed';
@@ -1674,23 +1630,18 @@
             clone.style.pointerEvents = 'none';
             document.body.appendChild(clone);
             
-            // Hide the modal immediately
             modal.classList.remove('open');
             
-            // Calculate distance to center of the bag button
             const targetX = bagRect.left + bagRect.width / 2 - (emojiRect.left + emojiRect.width / 2);
             const targetY = bagRect.top + bagRect.height / 2 - (emojiRect.top + emojiRect.height / 2);
             
-            // Trigger animation
             requestAnimationFrame(() => {
                 clone.style.transform = `translate(${targetX}px, ${targetY}px) scale(0.1) rotate(360deg)`;
                 clone.style.opacity = '0.2';
             });
             
-            // Cleanup and bounce bag
             setTimeout(() => {
                 clone.remove();
-                // Bounce the backpack button to indicate receiving item
                 bagBtn.style.transform = 'scale(1.4) rotate(-10deg)';
                 bagBtn.style.transition = 'transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
                 setTimeout(() => { bagBtn.style.transform = ''; }, 250);
@@ -1706,26 +1657,26 @@
         if (pending && ANIMAL_MAP[pending]) {
             localStorage.removeItem(LS_PENDING);
             unlockAnimal(pending);
-            updateAvatarPill();
             setTimeout(() => showCelebration(pending), 600);
-        } else {
-            updateAvatarPill();
         }
     });
     </script>
     <script>
         // ── Magical Transition Animation Function ──
+        // ── Magical Transition Animation Function ──
         function goToNode(url) {
+            if (window.AudioManager) {
+                AudioManager.pauseBGM(); // Patayin agad ang BGM para hindi sumapaw!
+                AudioManager.playSFX('slide'); 
+            }
+
             const overlay = document.getElementById('magical-transition-overlay');
             if (overlay) {
-                // ── Sync mascot to chosen pet (fully self-contained, no cross-script deps) ──
                 const flyEl = overlay.querySelector('.mascot-fly');
                 if (flyEl) {
-                    // Read active pet key directly from localStorage
                     const petKey = localStorage.getItem('tunog_tuklas_active_pet')
                                 || localStorage.getItem('tunog_tuklas_recent_animal')
                                 || 'M';
-                    // Local emoji lookup — mirrors ANIMAL_MAP, no external dependency
                     const _emojiMap = {
                         A:'🦅', B:'🐗', K:'🐃', D:'🐭', E:'🐘',
                         G:'🪿', H:'🐢', I:'🐦', L:'🦁', M:'🐒',
@@ -1735,9 +1686,11 @@
                     flyEl.textContent = _emojiMap[petKey] || '🐒';
                 }
                 overlay.classList.add('active');
+                
+                
                 setTimeout(() => {
                     window.location.href = url;
-                }, 1450);
+                }, 4000);
             } else {
                 window.location.href = url;
             }
@@ -1771,11 +1724,15 @@
         // ── Scroll buttons event listeners ──
         if (btnScrollLeft) {
             btnScrollLeft.addEventListener('click', () => {
+                // INAYOS NA WHOOSH SOUND CALL
+                if (window.AudioManager) AudioManager.playSFX('whoosh');
                 scrollArea.scrollBy({ left: -600, behavior: 'smooth' });
             });
         }
         if (btnScrollRight) {
             btnScrollRight.addEventListener('click', () => {
+                // INAYOS NA WHOOSH SOUND CALL
+                if (window.AudioManager) AudioManager.playSFX('whoosh');
                 scrollArea.scrollBy({ left: 600, behavior: 'smooth' });
             });
         }
@@ -1814,6 +1771,8 @@
         // ── Mouse drag-to-scroll ──
         let isDown = false, startX = 0, scrollLeft = 0;
         scrollArea.addEventListener('mousedown', function (e) {
+            // INAYOS NA WHOOSH SOUND CALL (sa pag-drag)
+            if (window.AudioManager) AudioManager.playSFX('whoosh');
             isDown = true;
             scrollArea.classList.add('active');
             startX = e.pageX - scrollArea.offsetLeft;
@@ -1833,15 +1792,12 @@
             const mascot = document.getElementById('mascot');
             const activeNode = document.getElementById('active-node');
             if (mascot && activeNode) {
-                // Set the correct emoji from storage
                 const petKey = getActivePetKey();
                 if (ANIMAL_MAP[petKey]) mascot.textContent = ANIMAL_MAP[petKey].emoji;
-                // Adjust mascot position relative to the node
                 mascot.style.top = '-90px';
                 mascot.style.left = '5px';
                 mascot.style.fontSize = '4.5rem';
             }
-            // Also sync the transition overlay mascot
             const flyEl = document.querySelector('.mascot-fly');
             if (flyEl) {
                 const petKey = getActivePetKey();
@@ -1856,7 +1812,6 @@
     // ═══════════════════════════════════════════════════════
 
     function openSettings() {
-        // Sync sliders + toggles to saved values
         const vol = window.TTSettings.getVolume();
         const br  = window.TTSettings.getBrightness();
         const lg  = window.TTSettings.getLowGraphics();
@@ -1884,7 +1839,6 @@
 
         document.getElementById('settings-modal').classList.add('open');
         document.body.style.overflow = 'hidden';
-        // Close Bootstrap dropdown first
         document.querySelector('[data-bs-toggle="dropdown"]')?.click();
     }
 
@@ -1935,6 +1889,15 @@
         }
     };
     document.addEventListener('fullscreenchange', updateFSBtn);
+    </script>
+    
+    <script src="{% static 'core/audio_manager.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.AudioManager) {
+                AudioManager.playBGM('bg-music-lobby.mp3');
+            }
+        });
     </script>
 </body>
 
