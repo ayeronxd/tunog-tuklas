@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-_&16qp#he756iz_@=jcy5x4(qh8*d-1^*q*g-npj_p-l(p-y4f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -144,11 +144,12 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 # Log in using Google
+# Log in using Google
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'APP': {
-            'client_id': os.environ.get('GOOGLE_CLIENT_ID'),
-            'secret': os.environ.get('GOOGLE_CLIENT_SECRET'),
+            'client_id': os.environ.get('GOOGLE_CLIENT_ID', ''),
+            'secret': os.environ.get('GOOGLE_SECRET_KEY', ''),
             'key': ''
         }
     }
@@ -159,3 +160,5 @@ LOGOUT_REDIRECT_URL = '/'
 
 # Bypass the "Sign in via Google" intermediate page
 SOCIALACCOUNT_LOGIN_ON_GET = True
+#Automatic Login
+SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
