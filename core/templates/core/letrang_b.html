@@ -2008,127 +2008,108 @@
 
 
             window.goNext = function () {
+                if (window.AudioManager) AudioManager.playSFX('click');
                 if (currentUnit < totalUnits - 1) {
                     currentUnit++;
                     updateUI();
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
             };
-
             window.goBack = function () {
-                if (currentUnit > 0) {
-                    currentUnit--;
-                    updateUI();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-            };
+    if (window.AudioManager) AudioManager.playSFX('click');
+    if (currentUnit > 0) {
+        currentUnit--;
+        updateUI();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+};
 
             window.goSkip = function () {
-                if (currentUnit < totalUnits - 1) {
-                    // Force complete validation for current unit
-                    if (currentUnit === 1) state[1].checked = true;
-                    if (currentUnit === 2) state[2].checked = true;
-                    if (currentUnit === 3) state[3].checked = true;
-                    if (currentUnit === 4) state[4].checked = true;
-                    if (currentUnit === 5) state[5].checked = true;
-
-                    currentUnit++;
-                    updateUI();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-            };
+    if (window.AudioManager) AudioManager.playSFX('click');
+    if (currentUnit < totalUnits - 1) {
+        if (currentUnit === 1) state[1].checked = true;
+        if (currentUnit === 2) state[2].checked = true;
+        if (currentUnit === 3) state[3].checked = true;
+        if (currentUnit === 4) state[4].checked = true;
+        if (currentUnit === 5) state[5].checked = true;
+        currentUnit++;
+        updateUI();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+};
 
             // ── Toggle selection ──
             window.toggleChoice = function (card) {
-                const act = card.dataset.activity;
-                if (state[act].checked) return;
-
-                // Reset any previous feedback classes so the user can try again
-                card.classList.remove('correct', 'wrong', 'missed');
-
-                card.classList.toggle('selected');
-                card.querySelector('.choice-checkbox').innerHTML =
-                    card.classList.contains('selected') ? '✔' : '';
-            };
+    if (window.AudioManager) AudioManager.playSFX('click');
+    const act = card.dataset.activity;
+    if (state[act].checked) return;
+    card.classList.remove('correct', 'wrong', 'missed');
+    card.classList.toggle('selected');
+    card.querySelector('.choice-checkbox').innerHTML =
+        card.classList.contains('selected') ? '✔' : '';
+};
 
             // ── Check activity ──
             window.checkActivity = function (actNum) {
-                if (state[actNum].checked) return;
+    if (state[actNum].checked) return;
 
-                const cards = document.querySelectorAll(`.choice-card[data-activity="${actNum}"]`);
-                let correct = 0;
-                let wrongOrMissed = 0;
-                let selectedCount = 0;
-                const total = state[actNum].total;
+    const cards = document.querySelectorAll(`.choice-card[data-activity="${actNum}"]`);
+    let allCorrect = true;
+    let selectedCount = 0;
 
-                cards.forEach(card => {
-                    if (card.classList.contains('selected')) selectedCount++;
-                });
+    cards.forEach(card => {
+        const isSelected = card.classList.contains('selected');
+        const isCorrect = card.dataset.correct === 'true';
+        if (isSelected) selectedCount++;
 
-                if (selectedCount === 0) {
-                    const banner = document.getElementById(`feedback-act${actNum}`);
-                    const icon = document.getElementById(`feedback-icon-${actNum}`);
-                    const text = document.getElementById(`feedback-text-${actNum}`);
-                    banner.className = 'feedback-banner show wrong-fb';
-                    icon.textContent = '⚠️';
-                    text.innerHTML = `<strong>Pumili muna!</strong> Pindutin ang mga larawan.`;
-                    return;
-                }
+        if (isSelected && isCorrect) {
+            card.style.borderColor = 'var(--green)';
+            card.style.background = '#E8F5E9';
+        } else if (isSelected && !isCorrect) {
+            card.style.borderColor = '#f44336';
+            card.style.background = '#FFEBEE';
+            card.classList.add('shake');
+            setTimeout(() => card.classList.remove('shake'), 500);
+            allCorrect = false;
+        } else if (!isSelected && isCorrect) {
+            allCorrect = false;
+        }
+    });
 
-                cards.forEach(card => {
-                    const isCorrect = card.dataset.correct === 'true';
-                    const isSelected = card.classList.contains('selected');
+    const banner = document.getElementById(`feedback-act${actNum}`);
+    const icon   = document.getElementById(`feedback-icon-${actNum}`);
+    const text   = document.getElementById(`feedback-text-${actNum}`);
 
-                    // Reset previous feedback classes
-                    card.classList.remove('correct', 'wrong', 'missed');
+    if (selectedCount === 0) {
+        if (window.AudioManager) AudioManager.playSFX('failed');
+        banner.className = 'feedback-banner show wrong-fb';
+        icon.innerHTML = '⚠️';
+        text.innerHTML = '<strong>Pumili muna!</strong> Pindutin ang mga larawan.';
+        return;
+    }
 
-                    if (isCorrect && isSelected) {
-                        card.classList.add('correct');
-                        card.querySelector('.choice-checkbox').innerHTML = '✔';
-                        correct++;
-                    } else if (!isCorrect && isSelected) {
-                        card.classList.add('wrong');
-                        card.querySelector('.choice-checkbox').innerHTML = '✖';
-                        wrongOrMissed++;
-                    } else if (isCorrect && !isSelected) {
-                        card.classList.add('missed');
-                        card.querySelector('.choice-checkbox').innerHTML = '!';
-                        wrongOrMissed++;
-                    } else {
-                        card.querySelector('.choice-checkbox').innerHTML = '';
-                    }
-                });
+    if (allCorrect) {
+        if (window.AudioManager) AudioManager.playSFX('correct');
+        state[actNum].checked = true;
+        state[actNum].score = 1;
+        document.getElementById('starCount').textContent =
+            parseInt(document.getElementById('starCount').textContent) + 1;
 
-                const pts = (correct === total && wrongOrMissed === 0) ? 1 : 0;
+        cards.forEach(card => card.style.pointerEvents = 'none');
+        banner.className = 'feedback-banner show correct-fb';
+        icon.innerHTML = '🌟';
+        text.innerHTML = 'Napakagaling! Tama ang lahat ng iyong pinili.';
+        document.getElementById(`check-act${actNum}`).disabled = true;
 
-                const banner = document.getElementById(`feedback-act${actNum}`);
-                const icon = document.getElementById(`feedback-icon-${actNum}`);
-                const text = document.getElementById(`feedback-text-${actNum}`);
-
-                if (pts === 1) {
-                    state[actNum].checked = true;
-                    state[actNum].score = 1;
-                    
-                    banner.className = 'feedback-banner show correct-fb';
-                    icon.textContent = '🌟';
-                    text.innerHTML = `<strong>Mahusay!</strong> Tama ang lahat! <em>(+1 punto)</em>`;
-                    
-                    // Disable clicks ONLY on success
-                    cards.forEach(card => card.onclick = null);
-                    document.getElementById(`check-act${actNum}`).disabled = true;
-
-                    // Update star count
-                    const cur = parseInt(document.getElementById('starCount').textContent);
-                    document.getElementById('starCount').textContent = cur + 1;
-
-                    launchConfetti();
-                    updateNextBtn();
-                } else {
-                    banner.className = 'feedback-banner show wrong-fb';
-                    icon.textContent = '💪';
-                    text.innerHTML = `<strong>Subukan Muli!</strong> May mali o nakaligtaan.`;
-                }
-            };
+        updateNextBtn();
+        launchConfetti();
+    } else {
+        if (window.AudioManager) AudioManager.playSFX('failed');
+        banner.className = 'feedback-banner show wrong-fb';
+        icon.innerHTML = '❌';
+        text.innerHTML = 'Oops! May mali sa iyong pinili, subukan ulit.';
+    }
+};
 
             // ── Unit 4: Interactive Canvas Drawing Pads ──
             const pads = {};
@@ -2242,18 +2223,19 @@
             // Removed updateStrokeDots since stroke UI was removed
 
             window.undoStroke = function (id) {
-                const p = pads[id];
-                if (p.snapshots.length) {
-                    const img = new Image();
-                    p.snapshots.pop();
-                    p.ctx.clearRect(0, 0, p.canvas.width, p.canvas.height);
-                    if (p.snapshots.length) {
-                        img.onload = () => p.ctx.drawImage(img, 0, 0, p.canvas.width, p.canvas.height);
-                        img.src = p.snapshots[p.snapshots.length - 1];
-                    }
-                    p.strokeCount = Math.max(0, p.strokeCount - 1);
-                }
-            };
+    if (window.AudioManager) AudioManager.playSFX('click');
+    const p = pads[id];
+    if (p.snapshots.length) {
+        const img = new Image();
+        p.snapshots.pop();
+        p.ctx.clearRect(0, 0, p.canvas.width, p.canvas.height);
+        if (p.snapshots.length) {
+            img.onload = () => p.ctx.drawImage(img, 0, 0, p.canvas.width, p.canvas.height);
+            img.src = p.snapshots[p.snapshots.length - 1];
+        }
+        p.strokeCount = Math.max(0, p.strokeCount - 1);
+    }
+};
 
             window.clearCanvas = function (id) {
                 const p = pads[id];
@@ -2377,74 +2359,70 @@
             }
 
             window.markDone = async function (id) {
-                const p = pads[id];
-                const tick = document.getElementById('doneTick-' + id);
-                const capId = id.charAt(0).toUpperCase() + id.slice(1);
-                const frame = document.getElementById('frame' + capId);
+    const p = pads[id];
+    const tick = document.getElementById('doneTick-' + id);
+    const capId = id.charAt(0).toUpperCase() + id.slice(1);
+    const frame = document.getElementById('frame' + capId);
 
-                // Find and disable the "Tapos na!" button, show spinner
-                const doneBtn = document.querySelector(`[onclick="markDone('${id}')"]`);
-                if (doneBtn) {
-                    doneBtn.disabled = true;
-                    doneBtn.innerHTML = '⏳ Sinusuri...';
-                }
+    const doneBtn = document.querySelector(`[onclick="markDone('${id}')"]`);
+    if (doneBtn) {
+        doneBtn.disabled = true;
+        doneBtn.innerHTML = '⏳ Sinusuri...';
+    }
 
-                const validation = await validateDrawingAI(id);
+    const validation = await validateDrawingAI(id);
 
-                if (doneBtn) {
-                    doneBtn.disabled = false;
-                    doneBtn.innerHTML = '✓ Tapos na!';
-                }
+    if (doneBtn) {
+        doneBtn.disabled = false;
+        doneBtn.innerHTML = '✓ Tapos na!';
+    }
 
-                if (!validation.valid) {
-                    if (frame) {
-                        frame.style.border = '4px solid #f44336';
-                        setTimeout(() => { frame.style.border = '4px solid #90CAF9'; }, 700);
-                    }
-                    if (tick) {
-                        tick.className = 'pad-done-tick show error-tick';
-                        tick.style.borderColor = '#f44336';
-                        tick.style.color = '#b71c1c';
-                        tick.style.background = '#FFEBEE';
-                        const tipMsg = validation.tip ? ` 💡 ${validation.tip}` : '';
-                        tick.innerHTML = `⚠️ ${validation.reason || 'Subukan ulit!'}${tipMsg}`;
-                    }
-                    return;
-                }
+    if (!validation.valid) {
+        if (window.AudioManager) AudioManager.playSFX('failed');
+        if (frame) {
+            frame.style.border = '4px solid #f44336';
+            setTimeout(() => { frame.style.border = '4px solid #90CAF9'; }, 700);
+        }
+        if (tick) {
+            tick.className = 'pad-done-tick show error-tick';
+            tick.style.borderColor = '#f44336';
+            tick.style.color = '#b71c1c';
+            tick.style.background = '#FFEBEE';
+            const tipMsg = validation.tip ? ` 💡 ${validation.tip}` : '';
+            tick.innerHTML = `⚠️ ${validation.reason || 'Subukan ulit!'}${tipMsg}`;
+        }
+        return;
+    }
 
-                // ── Valid! ──
-                p.done = true;
-                if (tick) {
-                    tick.className = 'pad-done-tick show';
-                    tick.style.borderColor = 'var(--green)';
-                    tick.style.color = '#1b5e20';
-                    tick.style.background = '#E9FBEE';
-                    const msg = validation.encouragement_fil
-                        || (id === 'upper' ? '✅ Napakahusay! Sinulatan mo na ang malaking B!'
-                           : id === 'lower' ? '✅ Magaling! Sinulatan mo na ang maliit na b!'
-                           : '✅ Mahusay! Natapos mo ang pagsasanay!');
-                    tick.innerHTML = '✅ ' + msg;
-                    tick.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                }
+    if (window.AudioManager) AudioManager.playSFX('correct');
+    p.done = true;
+    if (tick) {
+        tick.className = 'pad-done-tick show';
+        tick.style.borderColor = 'var(--green)';
+        tick.style.color = '#1b5e20';
+        tick.style.background = '#E9FBEE';
+        const msg = validation.encouragement_fil
+            || (id === 'upper' ? '✅ Napakahusay! Sinulatan mo na ang malaking B!'
+               : id === 'lower' ? '✅ Magaling! Sinulatan mo na ang maliit na b!'
+               : '✅ Mahusay! Natapos mo ang pagsasanay!');
+        tick.innerHTML = '✅ ' + msg;
+        tick.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
 
-                if (pads['upper']?.done && pads['lower']?.done && !state[1].checked) {
-                    state[1].checked = true;
-                    launchConfetti();
-                }
-                if (pads['act3a']?.done && pads['act3b']?.done && !state[2].checked) {
-                    state[2].checked = true; state[2].score = 1;
-                    const cur = parseInt(document.getElementById('starCount').textContent);
-                    document.getElementById('starCount').textContent = cur + 1;
-                    launchConfetti();
-                }
-                if (pads['act4c']?.done && !state[3].checked) {
-                    state[3].checked = true; state[3].score = 1;
-                    const cur = parseInt(document.getElementById('starCount').textContent);
-                    document.getElementById('starCount').textContent = cur + 1;
-                    launchConfetti();
-                }
-                updateNextBtn();
-            };
+    if (pads['act3a']?.done && pads['act3b']?.done && !state[2].checked) {
+        state[2].checked = true; state[2].score = 1;
+        const cur = parseInt(document.getElementById('starCount').textContent);
+        document.getElementById('starCount').textContent = cur + 1;
+        launchConfetti();
+    }
+    if (pads['act4c']?.done && !state[3].checked) {
+        state[3].checked = true; state[3].score = 1;
+        const cur = parseInt(document.getElementById('starCount').textContent);
+        document.getElementById('starCount').textContent = cur + 1;
+        launchConfetti();
+    }
+    updateNextBtn();
+};
 
             window.setColor = function (id, color, swatch) {
                 pads[id].color = color;
@@ -2487,88 +2465,92 @@
                 if(pads['lower']) pads['lower'].brush = size;
             };
 
-            window.markU1Done = async function() {
-                const doneBtn = document.getElementById('u1-tapos-btn');
-                if (doneBtn) {
-                    doneBtn.disabled = true;
-                    doneBtn.innerHTML = '⏳ Sinusuri...';
-                }
+            window.markU1Done = async function () {
+    const doneBtn = document.getElementById('u1-tapos-btn');
+    if (doneBtn) {
+        doneBtn.disabled = true;
+        doneBtn.innerHTML = '⏳ Sinusuri...';
+    }
 
-                // Validate both upper and lower
-                const [valUpper, valLower] = await Promise.all([
-                    validateDrawingAI('upper'),
-                    validateDrawingAI('lower')
-                ]);
+    const [valUpper, valLower] = await Promise.all([
+        validateDrawingAI('upper'),
+        validateDrawingAI('lower')
+    ]);
 
-                if (doneBtn) {
-                    doneBtn.disabled = false;
-                    doneBtn.innerHTML = '<i class="fa-solid fa-check"></i> Tapos na!';
-                }
+    if (doneBtn) {
+        doneBtn.disabled = false;
+        doneBtn.innerHTML = '<i class="fa-solid fa-check"></i> Tapos na!';
+    }
 
-                // Handle Upper errors
-                if (!valUpper.valid) {
-                    const frame = document.getElementById('frameUpper');
-                    const tick = document.getElementById('doneTick-upper');
-                    if (frame) {
-                        frame.style.border = '4px solid #f44336';
-                        setTimeout(() => { frame.style.border = '4px solid #90CAF9'; }, 700);
-                    }
-                    if (tick) {
-                        tick.className = 'pad-done-tick show error-tick';
-                        tick.style.borderColor = '#f44336';
-                        tick.style.color = '#b71c1c';
-                        tick.style.background = '#FFEBEE';
-                        tick.innerHTML = `⚠️ ${valUpper.reason || 'Subukan ulit!'}`;
-                    }
-                } else {
-                    pads['upper'].done = true;
-                    const tick = document.getElementById('doneTick-upper');
-                    if (tick) {
-                        tick.className = 'pad-done-tick show';
-                        tick.style.borderColor = 'var(--green)';
-                        tick.style.color = '#1b5e20';
-                        tick.style.background = '#E9FBEE';
-                        tick.innerHTML = '✅ Napakahusay! Sinulatan mo na ang malaking B!';
-                    }
-                }
+    let failed = false;
 
-                // Handle Lower errors
-                if (!valLower.valid) {
-                    const frame = document.getElementById('frameLower');
-                    const tick = document.getElementById('doneTick-lower');
-                    if (frame) {
-                        frame.style.border = '4px solid #f44336';
-                        setTimeout(() => { frame.style.border = '4px solid #F48FB1'; }, 700);
-                    }
-                    if (tick) {
-                        tick.className = 'pad-done-tick show error-tick';
-                        tick.style.borderColor = '#f44336';
-                        tick.style.color = '#b71c1c';
-                        tick.style.background = '#FFEBEE';
-                        tick.innerHTML = `⚠️ ${valLower.reason || 'Subukan ulit!'}`;
-                    }
-                } else {
-                    pads['lower'].done = true;
-                    const tick = document.getElementById('doneTick-lower');
-                    if (tick) {
-                        tick.className = 'pad-done-tick show';
-                        tick.style.borderColor = 'var(--green)';
-                        tick.style.color = '#1b5e20';
-                        tick.style.background = '#E9FBEE';
-                        tick.innerHTML = '✅ Magaling! Sinulatan mo na ang maliit na b!';
-                    }
-                }
+    // Handle Upper errors
+    if (!valUpper.valid) {
+        failed = true;
+        const frame = document.getElementById('frameUpper');
+        const tick = document.getElementById('doneTick-upper');
+        if (frame) {
+            frame.style.border = '4px solid #f44336';
+            setTimeout(() => { frame.style.border = '4px solid #90CAF9'; }, 700);
+        }
+        if (tick) {
+            tick.className = 'pad-done-tick show error-tick';
+            tick.style.borderColor = '#f44336';
+            tick.style.color = '#b71c1c';
+            tick.style.background = '#FFEBEE';
+            tick.innerHTML = `⚠️ ${valUpper.reason || 'Subukan ulit!'}`;
+        }
+    } else {
+        pads['upper'].done = true;
+        const tick = document.getElementById('doneTick-upper');
+        if (tick) {
+            tick.className = 'pad-done-tick show';
+            tick.style.borderColor = 'var(--green)';
+            tick.style.color = '#1b5e20';
+            tick.style.background = '#E9FBEE';
+            tick.innerHTML = '✅ Napakahusay! Sinulatan mo na ang malaking B!';
+        }
+    }
 
-                if (pads['upper'].done && pads['lower'].done) {
-                    if (!state[1].checked) {
-                        state[1].checked = true;
-                        launchConfetti();
-                        updateNextBtn();
-                    }
-                    // Scroll to doneBtn
-                    if(doneBtn) doneBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                }
-            };
+    // Handle Lower errors
+    if (!valLower.valid) {
+        failed = true;
+        const frame = document.getElementById('frameLower');
+        const tick = document.getElementById('doneTick-lower');
+        if (frame) {
+            frame.style.border = '4px solid #f44336';
+            setTimeout(() => { frame.style.border = '4px solid #F48FB1'; }, 700);
+        }
+        if (tick) {
+            tick.className = 'pad-done-tick show error-tick';
+            tick.style.borderColor = '#f44336';
+            tick.style.color = '#b71c1c';
+            tick.style.background = '#FFEBEE';
+            tick.innerHTML = `⚠️ ${valLower.reason || 'Subukan ulit!'}`;
+        }
+    } else {
+        pads['lower'].done = true;
+        const tick = document.getElementById('doneTick-lower');
+        if (tick) {
+            tick.className = 'pad-done-tick show';
+            tick.style.borderColor = 'var(--green)';
+            tick.style.color = '#1b5e20';
+            tick.style.background = '#E9FBEE';
+            tick.innerHTML = '✅ Magaling! Sinulatan mo na ang maliit na b!';
+        }
+    }
+
+    if (failed) {
+        if (window.AudioManager) AudioManager.playSFX('failed');
+    } else {
+        if (window.AudioManager) AudioManager.playSFX('correct');
+        if (pads['upper'].done && pads['lower'].done && !state[1].checked) {
+            state[1].checked = true;
+            launchConfetti();
+            updateNextBtn();
+        }
+    }
+};
 
             // Init both pads after DOM is ready
             initPad('upper');
@@ -2788,19 +2770,22 @@
             }
 
             // ── Sound ──
-            window.playMSound = function () {
-                const btn = document.getElementById('soundBtn');
-                btn.style.transform = 'scale(0.93) translateY(5px)';
-                btn.style.boxShadow = '0 0 0 #000';
-                setTimeout(() => { btn.style.transform = ''; btn.style.boxShadow = ''; }, 180);
+            window.playBSound = function () {
+    const btn = document.getElementById('soundBtn');
+    btn.style.transform = 'scale(0.93) translateY(5px)';
+    btn.style.boxShadow = '0 0 0 #000';
+    setTimeout(() => { btn.style.transform = ''; btn.style.boxShadow = ''; }, 180);
 
-                if ('speechSynthesis' in window) {
-                    const utter = new SpeechSynthesisUtterance('buh... babae... baboy... bola');
-                    utter.lang = 'tl-PH'; utter.rate = 0.75; utter.pitch = 1.1;
-                    window.speechSynthesis.cancel();
-                    window.speechSynthesis.speak(utter);
-                }
-            };
+    const introAudio = new Audio("{% static 'core/audio/b_intro.mp3' %}");
+    const wordsAudio = new Audio("{% static 'core/audio/b_pronounce.mp3' %}");
+    if (window.TTSettings) {
+        const vol = window.TTSettings.getVolume() / 100;
+        introAudio.volume = vol;
+        wordsAudio.volume = vol;
+    }
+    introAudio.addEventListener('ended', () => wordsAudio.play());
+    introAudio.play();
+};
 
             // ── Confetti ──
             function launchConfetti() {
@@ -2904,13 +2889,14 @@
         if (input.classList.contains('volume-slider'))     input.style.setProperty('--vol-pct', pct);
         if (input.classList.contains('brightness-slider')) input.style.setProperty('--br-pct',  pct);
     }
-    window.onVolChange = function(val) {
-        val = parseInt(val, 10);
-        if (window.TTSettings) window.TTSettings.setVolume(val);
-        var el = document.getElementById('tt-vol-label');
-        if (el) el.textContent = val + '%';
-        updateSliderBg(document.getElementById('tt-vol-slider'), val, 0, 100);
-    };
+    window.onVolChange = function (val) {
+    val = parseInt(val, 10);
+    if (window.TTSettings) window.TTSettings.setVolume(val);
+    if (window.AudioManager) AudioManager.updateVolume();   // ← ADD THIS LINE
+    var el = document.getElementById('tt-vol-label');
+    if (el) el.textContent = val + '%';
+    updateSliderBg(document.getElementById('tt-vol-slider'), val, 0, 100);
+};
     window.onBrChange = function(val) {
         val = parseInt(val, 10);
         if (window.TTSettings) window.TTSettings.setBrightness(val);
@@ -2935,6 +2921,8 @@
     };
     document.addEventListener('fullscreenchange', updateFSBtn);
     </script>
+
+    <script src="{% static 'core/audio_manager.js' %}"></script>
 
 </body>
 

@@ -51,26 +51,18 @@ def mapa(request):
                 node_status = "active"
                 found_active = True
             else:
-                # Technically unlocked but waiting for previous to finish? 
-                 # We'll treat it as active or just unlocked based on UI needs. 
-                 # For Tunog Tuklas, only one is "Dito ka na" (Orange) at a time.
                 node_status = "unlocked_pending"
                 
-        # Handle the edge case where they unlocked it, but haven't played, 
-        # and we need to automatically unlock the FIRST node for brand new players.
         if index == 0 and not is_completed and not found_active:
              node_status = "active"
              found_active = True
 
-        # Map pos_left (range ~10-490) to pixel position on 5500px canvas
-        # Reserve 250px padding on each side: usable range 250–5250px
         CANVAS_WIDTH = 5500
         CANVAS_PAD = 250
         POS_MIN, POS_MAX = 10, 490
         pos_left_px = int(
             CANVAS_PAD + (level.pos_left - POS_MIN) / (POS_MAX - POS_MIN) * (CANVAS_WIDTH - 2 * CANVAS_PAD)
         )
-        # SVG Y coordinate: viewBox height is 700 units
         svg_x = pos_left_px
         svg_y = int(level.pos_top / 100 * 700)
 
@@ -86,8 +78,6 @@ def mapa(request):
             'stars': stars
         })
 
-    # ── Build SVG path connecting every node to the next with smooth cubic beziers ──
-    # Control points pull horizontally (1/3 of horizontal distance) to make organic S-curves
     svg_path_d = ""
     for i, node in enumerate(map_nodes):
         x, y = node['svg_x'], node['svg_y']
@@ -101,12 +91,9 @@ def mapa(request):
             cp2x, cp2y = round(x - dx), y
             svg_path_d += f" C {cp1x} {cp1y} {cp2x} {cp2y} {x} {y}"
 
-    # If all levels are completed, the last one might just stay completed, no active node.
     active_node = next((n for n in map_nodes if n['status'] == 'active'), None)
     active_node_scroll_px = active_node['pos_left_px'] if active_node else 0
 
-    # Get a list of all completed letter names to sync with localStorage.
-    # We take the first character of the name and uppercase it (e.g., "Ii" -> "I", "Mm" -> "M")
     completed_letters = [n['name'][0].upper() for n in map_nodes if n['status'] == 'completed' and n['name']]
 
     context = {
@@ -121,45 +108,105 @@ def mapa(request):
     
     return render(request, 'core/mapa.html', context)
 
+
+# ── VIEWS PARA SA BAWAT LETRA ──
+
 @login_required
 def letrang_m(request):
-    """View for the Letrang Mm interactive lesson page."""
     level = Level.objects.filter(name__icontains='M').first()
     context = {'level_id': level.id if level else ''}
     return render(request, 'core/letrang_m.html', context)
 
 @login_required
 def letrang_i(request):
-    """View for the Letrang Ii interactive lesson page."""
     level = Level.objects.filter(name__icontains='I').first()
     context = {'level_id': level.id if level else ''}
     return render(request, 'core/letrang_i.html', context)
 
 @login_required
 def letrang_o(request):
-    """View for the Letrang Oo interactive lesson page."""
     level = Level.objects.filter(name__icontains='O').first()
     context = {'level_id': level.id if level else ''}
     return render(request, 'core/letrang_o.html', context)
 
 @login_required
 def letrang_b(request):
-    """View for the Letrang Bb interactive lesson page."""
     level = Level.objects.filter(name__icontains='B').first()
     context = {'level_id': level.id if level else ''}
     return render(request, 'core/letrang_b.html', context)
 
 @login_required
 def letrang_e(request):
-    """View for the Letrang Ee interactive lesson page."""
     level = Level.objects.filter(name__icontains='E').first()
     context = {'level_id': level.id if level else ''}
     return render(request, 'core/letrang_e.html', context)
 
 @login_required
+def letrang_u(request):
+    level = Level.objects.filter(name__icontains='U').first()
+    context = {'level_id': level.id if level else ''}
+    return render(request, 'core/letrang_u.html', context)
+
+@login_required
+def letrang_t(request):
+    level = Level.objects.filter(name__icontains='T').first()
+    context = {'level_id': level.id if level else ''}
+    return render(request, 'core/letrang_t.html', context)
+
+@login_required
+def letrang_k(request):
+    level = Level.objects.filter(name__icontains='K').first()
+    context = {'level_id': level.id if level else ''}
+    return render(request, 'core/letrang_k.html', context)
+
+@login_required
+def letrang_l(request):
+    level = Level.objects.filter(name__icontains='L').first()
+    context = {'level_id': level.id if level else ''}
+    return render(request, 'core/letrang_l.html', context)
+
+@login_required
+def letrang_y(request):
+    level = Level.objects.filter(name__icontains='Y').first()
+    context = {'level_id': level.id if level else ''}
+    return render(request, 'core/letrang_y.html', context)
+
+@login_required
+def letrang_n(request):
+    level = Level.objects.filter(name__icontains=' N').first()
+    context = {'level_id': level.id if level else ''}
+    return render(request, 'core/letrang_n.html', context)
+
+@login_required
+def letrang_ng(request):
+    level = Level.objects.filter(name__icontains='NG').first()
+    context = {'level_id': level.id if level else ''}
+    return render(request, 'core/letrang_ng.html', context)
+
+@login_required
+def letrang_p(request):
+    level = Level.objects.filter(name__icontains='P').first()
+    context = {'level_id': level.id if level else ''}
+    return render(request, 'core/letrang_p.html', context)
+
+@login_required
+def letrang_r(request):
+    level = Level.objects.filter(name__icontains='R').first()
+    context = {'level_id': level.id if level else ''}
+    return render(request, 'core/letrang_r.html', context)
+
+@login_required
+def letrang_d(request):
+    level = Level.objects.filter(name__icontains='D').first()
+    context = {'level_id': level.id if level else ''}
+    return render(request, 'core/letrang_d.html', context)
+
+
+# ── APIs ──
+
+@login_required
 @require_POST
 def save_progress(request):
-    """AJAX endpoint to save user progress and stars for a level."""
     try:
         data = json.loads(request.body)
         level_id = data.get('level_id')
@@ -181,7 +228,6 @@ def save_progress(request):
         if is_completed:
             progress.is_completed = True
             
-            # Unlock next level
             next_level = Level.objects.filter(order__gt=level.order).order_by('order').first()
             if next_level:
                 next_prog, _ = UserLevelProgress.objects.get_or_create(
@@ -195,9 +241,6 @@ def save_progress(request):
         return JsonResponse({'status': 'success'})
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
-
-
-# ── AI Handwriting Validator ──────────────────────────────────────────────────
 
 HANDWRITING_SYSTEM_PROMPT = """You are a handwriting validator for kindergarten students (ages 4–7).
 
@@ -246,14 +289,8 @@ You will receive a canvas image and a target letter to validate.
 
 Passing threshold: confidence >= 0.45"""
 
-
 @require_POST
 def validate_handwriting(request):
-    """
-    AI handwriting validation endpoint using Gemini 2.0 Flash.
-    Accepts: { image_b64: <data-url or raw base64>, target_letter: "B" }
-    Returns: JSON matching the handwriting rubric schema.
-    """
     try:
         data = json.loads(request.body)
         image_b64 = data.get('image_b64', '')
@@ -262,13 +299,11 @@ def validate_handwriting(request):
         if not image_b64:
             return JsonResponse({'error': 'No image provided'}, status=400)
 
-        # Strip the data URL prefix if present (data:image/png;base64,...)
         if ',' in image_b64:
             image_b64 = image_b64.split(',', 1)[1]
 
         api_key = os.getenv('GEMINI_API_KEY', '')
         if not api_key:
-            # No key configured — return a permissive fallback
             return JsonResponse({
                 'valid': True,
                 'confidence': 0.75,
@@ -280,7 +315,6 @@ def validate_handwriting(request):
                 'tip': None,
             })
 
-        # Call Gemini
         try:
             from google import genai
             from google.genai import types
@@ -309,7 +343,6 @@ def validate_handwriting(request):
             )
 
             result_text = response.text.strip()
-            # Strip markdown code fences if present
             if result_text.startswith('```'):
                 result_text = result_text.split('\n', 1)[1]
                 result_text = result_text.rsplit('```', 1)[0]
@@ -318,7 +351,6 @@ def validate_handwriting(request):
             return JsonResponse(result)
 
         except Exception as gemini_err:
-            # Gemini call failed (quota, network, etc.) — fallback to permissive pass
             print(f"[validate_handwriting] Gemini error: {gemini_err}")
             return JsonResponse({
                 'valid': True,

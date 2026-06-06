@@ -1914,82 +1914,81 @@
 
             // ── Check activity ──
             window.checkActivity = function (actNum) {
-                if (state[actNum].checked) return;
+    if (state[actNum].checked) return;
 
-                const cards = document.querySelectorAll(`.choice-card[data-activity="${actNum}"]`);
-                let correct = 0;
-                let wrongOrMissed = 0;
-                let selectedCount = 0;
-                const total = state[actNum].total;
+    const cards = document.querySelectorAll(`.choice-card[data-activity="${actNum}"]`);
+    let correct = 0;
+    let wrongOrMissed = 0;
+    let selectedCount = 0;
+    const total = state[actNum].total;
 
-                cards.forEach(card => {
-                    if (card.classList.contains('selected')) selectedCount++;
-                });
+    cards.forEach(card => {
+        if (card.classList.contains('selected')) selectedCount++;
+    });
 
-                if (selectedCount === 0) {
-                    const banner = document.getElementById(`feedback-act${actNum}`);
-                    const icon = document.getElementById(`feedback-icon-${actNum}`);
-                    const text = document.getElementById(`feedback-text-${actNum}`);
-                    banner.className = 'feedback-banner show wrong-fb';
-                    icon.textContent = '⚠️';
-                    text.innerHTML = `<strong>Pumili muna!</strong> Pindutin ang mga larawan.`;
-                    return;
-                }
+    if (selectedCount === 0) {
+        if (window.AudioManager) AudioManager.playSFX('failed');
+        const banner = document.getElementById(`feedback-act${actNum}`);
+        const icon = document.getElementById(`feedback-icon-${actNum}`);
+        const text = document.getElementById(`feedback-text-${actNum}`);
+        banner.className = 'feedback-banner show wrong-fb';
+        icon.innerHTML = '⚠️';
+        text.innerHTML = '<strong>Pumili muna!</strong> Pindutin ang mga larawan.';
+        return;
+    }
 
-                cards.forEach(card => {
-                    const isCorrect = card.dataset.correct === 'true';
-                    const isSelected = card.classList.contains('selected');
+    cards.forEach(card => {
+        const isCorrect = card.dataset.correct === 'true';
+        const isSelected = card.classList.contains('selected');
 
-                    // Reset previous feedback classes
-                    card.classList.remove('correct', 'wrong', 'missed');
+        card.classList.remove('correct', 'wrong', 'missed');
 
-                    if (isCorrect && isSelected) {
-                        card.classList.add('correct');
-                        card.querySelector('.choice-checkbox').innerHTML = '✔';
-                        correct++;
-                    } else if (!isCorrect && isSelected) {
-                        card.classList.add('wrong');
-                        card.querySelector('.choice-checkbox').innerHTML = '✖';
-                        wrongOrMissed++;
-                    } else if (isCorrect && !isSelected) {
-                        card.classList.add('missed');
-                        card.querySelector('.choice-checkbox').innerHTML = '!';
-                        wrongOrMissed++;
-                    } else {
-                        card.querySelector('.choice-checkbox').innerHTML = '';
-                    }
-                });
+        if (isCorrect && isSelected) {
+            card.classList.add('correct');
+            card.querySelector('.choice-checkbox').innerHTML = '✔';
+            correct++;
+        } else if (!isCorrect && isSelected) {
+            card.classList.add('wrong');
+            card.querySelector('.choice-checkbox').innerHTML = '✖';
+            wrongOrMissed++;
+        } else if (isCorrect && !isSelected) {
+            card.classList.add('missed');
+            card.querySelector('.choice-checkbox').innerHTML = '!';
+            wrongOrMissed++;
+        } else {
+            card.querySelector('.choice-checkbox').innerHTML = '';
+        }
+    });
 
-                const pts = (correct === total && wrongOrMissed === 0) ? 1 : 0;
+    const pts = (correct === total && wrongOrMissed === 0) ? 1 : 0;
+    const banner = document.getElementById(`feedback-act${actNum}`);
+    const icon = document.getElementById(`feedback-icon-${actNum}`);
+    const text = document.getElementById(`feedback-text-${actNum}`);
 
-                const banner = document.getElementById(`feedback-act${actNum}`);
-                const icon = document.getElementById(`feedback-icon-${actNum}`);
-                const text = document.getElementById(`feedback-text-${actNum}`);
+    if (pts === 1) {
+        if (window.AudioManager) AudioManager.playSFX('correct');
+        state[actNum].checked = true;
+        state[actNum].score = 1;
 
-                if (pts === 1) {
-                    state[actNum].checked = true;
-                    state[actNum].score = 1;
-                    
-                    banner.className = 'feedback-banner show correct-fb';
-                    icon.textContent = '🌟';
-                    text.innerHTML = `<strong>Mahusay!</strong> Tama ang lahat! <em>(+1 punto)</em>`;
-                    
-                    // Disable clicks ONLY on success
-                    cards.forEach(card => card.onclick = null);
-                    document.getElementById(`check-act${actNum}`).disabled = true;
+        banner.className = 'feedback-banner show correct-fb';
+        icon.innerHTML = '🌟';
+        text.innerHTML = `<strong>Mahusay!</strong> Tama ang lahat! <em>(+1 punto)</em>`;
 
-                    // Update star count
-                    const cur = parseInt(document.getElementById('starCount').textContent);
-                    document.getElementById('starCount').textContent = cur + 1;
+        cards.forEach(card => card.onclick = null);
+        document.getElementById(`check-act${actNum}`).disabled = true;
 
-                    launchConfetti();
-                    updateNextBtn();
-                } else {
-                    banner.className = 'feedback-banner show wrong-fb';
-                    icon.textContent = '💪';
-                    text.innerHTML = `<strong>Subukan Muli!</strong> May mali o nakaligtaan.`;
-                }
-            };
+        const cur = parseInt(document.getElementById('starCount').textContent);
+        document.getElementById('starCount').textContent = cur + 1;
+
+        launchConfetti();
+        updateNextBtn();
+    } else {
+        if (window.AudioManager) AudioManager.playSFX('failed');
+        banner.className = 'feedback-banner show wrong-fb';
+        icon.innerHTML = '💪';
+        text.innerHTML = `<strong>Subukan Muli!</strong> May mali o nakaligtaan.`;
+    }
+};
 
             // ── Drawing Pads ──
             const pads = {};
@@ -2226,73 +2225,74 @@
             }
 
             window.markDone = async function (id) {
-                const p = pads[id];
-                const tick = document.getElementById('doneTick-' + id);
-                const capId = id.charAt(0).toUpperCase() + id.slice(1);
-                const frame = document.getElementById('frame' + capId);
+    const p = pads[id];
+    const tick = document.getElementById('doneTick-' + id);
+    const capId = id.charAt(0).toUpperCase() + id.slice(1);
+    const frame = document.getElementById('frame' + capId);
 
-                const doneBtn = document.querySelector(`[onclick="markDone('${id}')"]`);
-                if (doneBtn) {
-                    doneBtn.disabled = true;
-                    doneBtn.innerHTML = '⏳ Sinusuri...';
-                }
+    const doneBtn = document.querySelector(`[onclick="markDone('${id}')"]`);
+    if (doneBtn) {
+        doneBtn.disabled = true;
+        doneBtn.innerHTML = '⏳ Sinusuri...';
+    }
 
-                const validation = await validateDrawingAI(id);
+    const validation = await validateDrawingAI(id);
 
-                if (doneBtn) {
-                    doneBtn.disabled = false;
-                    doneBtn.innerHTML = '✓ Tapos na!';
-                }
+    if (doneBtn) {
+        doneBtn.disabled = false;
+        doneBtn.innerHTML = '✓ Tapos na!';
+    }
 
-                if (!validation.valid) {
-                    if (frame) {
-                        frame.style.border = '4px solid #f44336';
-                        setTimeout(() => { frame.style.border = '4px solid #90CAF9'; }, 700);
-                    }
-                    if (tick) {
-                        tick.className = 'pad-done-tick show error-tick';
-                        tick.style.borderColor = '#f44336';
-                        tick.style.color = '#b71c1c';
-                        tick.style.background = '#FFEBEE';
-                        const tipMsg = validation.tip ? ` 💡 ${validation.tip}` : '';
-                        tick.innerHTML = `⚠️ ${validation.reason || 'Subukan ulit!'}${tipMsg}`;
-                    }
-                    return;
-                }
+    if (!validation.valid) {
+        if (window.AudioManager) AudioManager.playSFX('failed');
+        if (frame) {
+            frame.style.border = '4px solid #f44336';
+            setTimeout(() => { frame.style.border = '4px solid #90CAF9'; }, 700);
+        }
+        if (tick) {
+            tick.className = 'pad-done-tick show error-tick';
+            tick.style.borderColor = '#f44336';
+            tick.style.color = '#b71c1c';
+            tick.style.background = '#FFEBEE';
+            const tipMsg = validation.tip ? ` 💡 ${validation.tip}` : '';
+            tick.innerHTML = `⚠️ ${validation.reason || 'Subukan ulit!'}${tipMsg}`;
+        }
+        return;
+    }
 
-                // ── Valid! ──
-                p.done = true;
-                if (tick) {
-                    tick.className = 'pad-done-tick show';
-                    tick.style.borderColor = 'var(--green)';
-                    tick.style.color = '#1b5e20';
-                    tick.style.background = '#E9FBEE';
-                    const msg = validation.encouragement_fil
-                        || (id === 'upper' ? '✅ Napakahusay! Sinulatan mo na ang malaking E!'
-                           : id === 'lower' ? '✅ Magaling! Sinulatan mo na ang maliit na e!'
-                           : '✅ Mahusay! Natapos mo ang pagsasanay!');
-                    tick.innerHTML = '✅ ' + msg;
-                    tick.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                }
+    if (window.AudioManager) AudioManager.playSFX('correct');
+    p.done = true;
+    if (tick) {
+        tick.className = 'pad-done-tick show';
+        tick.style.borderColor = 'var(--green)';
+        tick.style.color = '#1b5e20';
+        tick.style.background = '#E9FBEE';
+        const msg = validation.encouragement_fil
+            || (id === 'upper' ? '✅ Napakahusay! Sinulatan mo na ang malaking E!'
+               : id === 'lower' ? '✅ Magaling! Sinulatan mo na ang maliit na e!'
+               : '✅ Mahusay! Natapos mo ang pagsasanay!');
+        tick.innerHTML = '✅ ' + msg;
+        tick.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
 
-                if (pads['upper']?.done && pads['lower']?.done && !state[1].checked) {
-                    state[1].checked = true;
-                    launchConfetti();
-                }
-                if (pads['act3a']?.done && pads['act3b']?.done && !state[2].checked) {
-                    state[2].checked = true; state[2].score = 1;
-                    const cur = parseInt(document.getElementById('starCount').textContent);
-                    document.getElementById('starCount').textContent = cur + 1;
-                    launchConfetti();
-                }
-                if (pads['act4c']?.done && !state[3].checked) {
-                    state[3].checked = true; state[3].score = 1;
-                    const cur = parseInt(document.getElementById('starCount').textContent);
-                    document.getElementById('starCount').textContent = cur + 1;
-                    launchConfetti();
-                }
-                updateNextBtn();
-            };
+    if (pads['upper']?.done && pads['lower']?.done && !state[1].checked) {
+        state[1].checked = true;
+        launchConfetti();
+    }
+    if (pads['act3a']?.done && pads['act3b']?.done && !state[2].checked) {
+        state[2].checked = true; state[2].score = 1;
+        const cur = parseInt(document.getElementById('starCount').textContent);
+        document.getElementById('starCount').textContent = cur + 1;
+        launchConfetti();
+    }
+    if (pads['act4c']?.done && !state[3].checked) {
+        state[3].checked = true; state[3].score = 1;
+        const cur = parseInt(document.getElementById('starCount').textContent);
+        document.getElementById('starCount').textContent = cur + 1;
+        launchConfetti();
+    }
+    updateNextBtn();
+};
 
             window.setColor = function (id, color, swatch) {
                 pads[id].color = color;
@@ -2318,18 +2318,21 @@
 
             // ── Sound ──
             window.playESound = function () {
-                const btn = document.getElementById('soundBtn');
-                btn.style.transform = 'scale(0.93) translateY(5px)';
-                btn.style.boxShadow = '0 0 0 #000';
-                setTimeout(() => { btn.style.transform = ''; btn.style.boxShadow = ''; }, 180);
+    const btn = document.getElementById('soundBtn');
+    btn.style.transform = 'scale(0.93) translateY(5px)';
+    btn.style.boxShadow = '0 0 0 #000';
+    setTimeout(() => { btn.style.transform = ''; btn.style.boxShadow = ''; }, 180);
 
-                if ('speechSynthesis' in window) {
-                    const utter = new SpeechSynthesisUtterance('eh... elepante... eroplano... eskwela');
-                    utter.lang = 'tl-PH'; utter.rate = 0.75; utter.pitch = 1.1;
-                    window.speechSynthesis.cancel();
-                    window.speechSynthesis.speak(utter);
-                }
-            };
+    const introAudio = new Audio("{% static 'core/audio/e_intro.mp3' %}");
+    const wordsAudio = new Audio("{% static 'core/audio/e_pronounce.mp3' %}");
+    if (window.TTSettings) {
+        const vol = window.TTSettings.getVolume() / 100;
+        introAudio.volume = vol;
+        wordsAudio.volume = vol;
+    }
+    introAudio.addEventListener('ended', () => wordsAudio.play());
+    introAudio.play();
+};
 
             // ── Confetti ──
             function launchConfetti() {
@@ -2434,12 +2437,13 @@
         if (input.classList.contains('brightness-slider')) input.style.setProperty('--br-pct',  pct);
     }
     window.onVolChange = function(val) {
-        val = parseInt(val, 10);
-        if (window.TTSettings) window.TTSettings.setVolume(val);
-        var el = document.getElementById('tt-vol-label');
-        if (el) el.textContent = val + '%';
-        updateSliderBg(document.getElementById('tt-vol-slider'), val, 0, 100);
-    };
+    val = parseInt(val, 10);
+    if (window.TTSettings) window.TTSettings.setVolume(val);
+    if (window.AudioManager) AudioManager.updateVolume();
+    var el = document.getElementById('tt-vol-label');
+    if (el) el.textContent = val + '%';
+    updateSliderBg(document.getElementById('tt-vol-slider'), val, 0, 100);
+};
     window.onBrChange = function(val) {
         val = parseInt(val, 10);
         if (window.TTSettings) window.TTSettings.setBrightness(val);
@@ -2464,6 +2468,7 @@
     };
     document.addEventListener('fullscreenchange', updateFSBtn);
     </script>
+    <script src="{% static 'core/audio_manager.js' %}"></script>
 
 </body>
 
