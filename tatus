@@ -1,0 +1,23 @@
+[33mcommit 021b8561dc531b02e3635df8286c1ea91f331412[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/interactive-audio[m[33m)[m
+Author: Menard <menardagodo@gmail.com>
+Date:   Sun Jun 7 19:23:17 2026 +0800
+
+    feat: register routes and views for all remaining letters (U, T, K, L, Y, N, NG, P, R, D, H)
+
+core/templates/core/letrang_d.html
+core/templates/core/letrang_g.html
+core/templates/core/letrang_h.html
+core/templates/core/letrang_k.html
+core/templates/core/letrang_l.html
+core/templates/core/letrang_n.html
+core/templates/core/letrang_ng.html
+core/templates/core/letrang_p.html
+core/templates/core/letrang_r.html
+core/templates/core/letrang_t.html
+core/templates/core/letrang_u.html
+core/templates/core/letrang_w.html
+core/templates/core/letrang_y.html
+core/templates/core/mapa.html
+core/urls.py
+core/views.py
+generate_audio.py
