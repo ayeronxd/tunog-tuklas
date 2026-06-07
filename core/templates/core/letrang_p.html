@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+{% load static socialaccount %}
+<html lang="tl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letrang Pp – Tunog Tuklas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&family=Bubblegum+Sans&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="{% static 'core/settings.js' %}"></script>
+
+    <style>
+        :root {
+            --pink: #FF6B9D;
+            --yellow: #FFD93D;
+            --green: #6BCB77;
+            --blue: #4D96FF;
+            --purple: #C77DFF;
+            --orange: #FF9F43;
+            --dark: #2C2F33;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #FFF8F0 0%, #FFF0F5 50%, #F0F8FF 100%);
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ── HEADER ── */
+        .lesson-header {
+            background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            flex-shrink: 0;
+        }
+
+        .header-back-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.25);
+            border: 3px solid rgba(255, 255, 255, 0.6);
+            color: white;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .header-back-btn:hover {
+            background: rgba(255, 255, 255, 0.45);
+            color: white;
+        }
+
+        .header-title {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            font-size: 1.6rem;
+            color: white;
+            text-shadow: 2px 3px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .header-stars {
+            display: none !important;
+            background: rgba(255, 255, 255, 0.25);
+            border: 3px solid rgba(255, 255, 255, 0.6);
+            border-radius: 40px;
+            padding: 5px 16px;
+            color: white;
+            font-weight: 900;
+            font-size: 1rem;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* ── PROGRESS BAR ── */
+        .unit-progress-bar {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: white;
+            border-bottom: 3px solid #eee;
+            flex-shrink: 0;
+        }
+
+        .progress-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #ddd;
+            border: 3px solid #ccc;
+            transition: all 0.3s;
+        }
+
+        .progress-dot.active {
+            background: var(--pink);
+            border-color: #c0004f;
+            transform: scale(1.3);
+        }
+
+        .progress-dot.done {
+            background: var(--green);
+            border-color: #2e7d32;
+        }
+
+        .progress-label {
+            font-weight: 900;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        /* ── UNIT SLIDER WRAPPER ── */
+        .units-viewport {
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+            flex-grow: 1;
+            min-height: 0;
+        }
+
+        .units-track {
+            display: flex;
+            width: 600%; /* For 6 units */
+            height: 100%;
+            transition: transform 0.45s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .unit-slide {
+            width: calc(100% / 6);
+            height: 100%;
+            overflow-y: auto;
+            padding: 28px 20px 100px;
+            flex-shrink: 0;
+        }
+
+        /* ── UNIT STYLES ── */
+        .badge-orange { background: var(--orange); color: white; }
+        .badge-green { background: var(--green); color: white; }
+        .badge-pink { background: var(--pink); color: white; }
+        .badge-blue { background: var(--blue); color: white; }
+        .badge-purple { background: var(--purple); color: white; }
+
+        /* Sagutin Natin (Fill in the blanks) */
+        .fill-blank-input {
+            border: none;
+            border-bottom: 4px solid var(--dark);
+            background: transparent;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            font-size: 1.4rem;
+            text-align: center;
+            color: var(--purple);
+            outline: none;
+            padding: 2px 6px;
+            transition: border-color 0.2s;
+        }
+
+        .fill-blank-input:focus { border-bottom-color: var(--pink); }
+
+        .sagutin-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin: 15px 0;
+            justify-content: center;
+        }
+
+        .sagutin-emoji { font-size: 3rem; width: 60px; text-align: center; }
+
+        .sagutin-word {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Drawing pad wrapper */
+        .draw-pad-wrapper { margin-bottom: 24px; }
+        .draw-pad-label {
+            font-family: 'Nunito', sans-serif; font-size: 1.1rem; font-weight: 900; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;
+        }
+        .draw-pad-label .letter-preview {
+            font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.6rem; padding: 2px 14px; border-radius: 12px; border: 3px solid var(--dark); box-shadow: 0 3px 0 var(--dark);
+        }
+        .draw-pad-label .letter-preview.upper { background: #EEF5FF; color: var(--blue); border-color: var(--blue); box-shadow: 0 3px 0 #1565c0; }
+        .draw-pad-label .letter-preview.lower { background: #FFF0F5; color: var(--pink); border-color: var(--pink); box-shadow: 0 3px 0 #c0004f; }
+
+        /* Canvas frame */
+        .canvas-frame {
+            position: relative; border-radius: 18px; border: 4px solid #90CAF9; overflow: hidden;
+            background: linear-gradient(180deg, #e8f4fd 0%, #fff 30%, #fff 70%, #fce4ec 100%);
+            box-shadow: 0 6px 0 #90CAF9, 0 10px 30px rgba(0, 0, 0, 0.06); touch-action: none;
+        }
+        .canvas-ghost {
+            position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 7rem; color: rgba(0, 0, 0, 0.055); pointer-events: none; z-index: 0; user-select: none; letter-spacing: 18px;
+        }
+        .canvas-frame canvas { position: relative; z-index: 2; display: block; width: 100%; cursor: crosshair; }
+
+        /* Pad toolbar */
+        .pad-toolbar { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+        .pad-tool-btn {
+            display: flex; align-items: center; gap: 6px; padding: 7px 16px; border-radius: 30px; border: 3px solid var(--dark); background: white; font-weight: 900; font-size: 0.88rem; cursor: pointer; box-shadow: 0 3px 0 var(--dark); transition: all 0.15s; font-family: 'Nunito', sans-serif;
+        }
+        .pad-tool-btn:active { transform: translateY(3px); box-shadow: 0 0 0 var(--dark); }
+        .pad-tool-btn.erase { color: #f44336; border-color: #f44336; box-shadow: 0 3px 0 #b71c1c; }
+        .pad-tool-btn.erase:active { box-shadow: 0 0 0 #b71c1c; }
+        .pad-tool-btn.done-draw { background: linear-gradient(135deg, var(--green), #2e7d32); color: white; border-color: #1b5e20; box-shadow: 0 3px 0 #1b5e20; }
+        .pad-tool-btn.done-draw:active { box-shadow: 0 0 0 #1b5e20; }
+        .pad-tool-btn.undo-btn { color: var(--orange); border-color: var(--orange); box-shadow: 0 3px 0 #e65100; }
+        .pad-tool-btn.undo-btn:active { box-shadow: 0 0 0 #e65100; }
+
+        /* Color picker & Brush */
+        .color-row { display: flex; gap: 7px; margin-top: 8px; align-items: center; }
+        .color-swatch { width: 26px; height: 26px; border-radius: 50%; border: 3px solid transparent; cursor: pointer; transition: all 0.15s; }
+        .color-swatch.active { border-color: var(--dark); transform: scale(1.25); }
+        .pad-done-tick { display: none; align-items: center; gap: 8px; background: #E9FBEE; border: 3px solid var(--green); border-radius: 14px; padding: 8px 16px; font-weight: 900; color: #1b5e20; font-size: 0.95rem; margin-top: 10px; }
+        .pad-done-tick.show { display: flex; }
+        .brush-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+        .brush-btn { width: 32px; height: 32px; border-radius: 50%; border: 3px solid #ccc; background: white; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s; }
+        .brush-btn.active { border-color: var(--dark); background: var(--dark); }
+        .brush-dot { border-radius: 50%; background: #555; }
+        .brush-btn.active .brush-dot { background: white; }
+
+        /* ── SECTION CARD ── */
+        .section-card {
+            background: white; border-radius: 28px; border: 4px solid var(--dark); box-shadow: 0 8px 0 var(--dark), 0 16px 40px rgba(0, 0, 0, 0.08); padding: 60px 50px; max-width: 1100px; margin: 0 auto; position: relative;
+        }
+        .section-badge {
+            position: absolute; top: -14px; left: 20px; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 0.9rem; padding: 4px 14px; border-radius: 20px; border: 3px solid var(--dark); box-shadow: 0 3px 0 var(--dark); text-transform: uppercase;
+        }
+
+        /* ── INTRO STYLES ── */
+        .big-letter {
+            font-family: 'Bubblegum Sans', cursive; font-size: 5.5rem; line-height: 1;
+            background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            filter: drop-shadow(3px 4px 0 rgba(0, 0, 0, 0.12)); animation: letterPulse 2.2s ease-in-out infinite;
+        }
+        @keyframes letterPulse {
+            0%, 100% { transform: scale(1) rotate(-2deg); }
+            50% { transform: scale(1.07) rotate(2deg); }
+        }
+        .intro-instruction {
+            background: linear-gradient(135deg, #FFF3CD, #FFF0F5); border: 3px solid var(--yellow); border-radius: 18px; padding: 12px 16px; font-size: 0.95rem; font-weight: 700; color: #5A3E00; line-height: 1.65;
+        }
+        .sound-btn {
+            background: linear-gradient(135deg, var(--yellow), var(--orange)); border: 4px solid var(--dark); border-radius: 50px; padding: 10px 24px; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1rem; color: var(--dark); cursor: pointer; box-shadow: 0 6px 0 var(--dark); transition: all 0.15s; display: inline-flex; align-items: center; gap: 10px;
+        }
+        .sound-btn:hover { filter: brightness(1.07); }
+        .sound-btn:active { transform: translateY(6px); box-shadow: 0 0 0 var(--dark); }
+
+        /* ── ACTIVITY ── */
+        .activity-title { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.5rem; color: var(--dark); margin-bottom: 6px; }
+        .activity-instruction { font-size: 1rem; font-weight: 700; color: #666; line-height: 1.6; margin-bottom: 22px; }
+        .choices-grid { display: flex; flex-wrap: wrap; gap: 28px; justify-content: center; }
+        .choice-card { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
+        .choice-emoji-box { width: 150px; height: 150px; border-radius: 26px; border: 4px solid #ddd; background: #f9f9f9; display: flex; align-items: center; justify-content: center; font-size: 7.5rem; transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 5px 0 #ccc; }
+        .choice-card:hover .choice-emoji-box { transform: scale(1.08) translateY(-3px); }
+        .choice-label { font-weight: 900; font-size: 1.1rem; color: #555; text-align: center; }
+        .choice-checkbox { width: 44px; height: 44px; border-radius: 12px; border: 4px solid #ccc; background: white; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; transition: all 0.2s; box-shadow: 0 3px 0 #ccc; }
+
+        /* States */
+        .choice-card.selected .choice-emoji-box { border-color: var(--blue); background: #EEF5FF; box-shadow: 0 5px 0 var(--blue); transform: scale(1.1) translateY(-4px); }
+        .choice-card.selected .choice-checkbox { background: var(--blue); border-color: #1565c0; box-shadow: 0 3px 0 #1565c0; color: white; }
+        .choice-card.correct .choice-emoji-box { border-color: var(--green); background: #E9FBEd; box-shadow: 0 5px 0 var(--green); animation: correctBounce 0.45s ease; }
+        .choice-card.correct .choice-checkbox { background: var(--green); border-color: #2e7d32; box-shadow: 0 3px 0 #2e7d32; color: white; }
+        .choice-card.wrong .choice-emoji-box { border-color: #f44336; background: #FFEBEE; box-shadow: 0 5px 0 #f44336; animation: wrongShake 0.4s ease; }
+        .choice-card.wrong .choice-checkbox { background: #f44336; border-color: #b71c1c; box-shadow: 0 3px 0 #b71c1c; color: white; }
+        .choice-card.missed .choice-emoji-box { border-color: var(--orange); background: #FFF8E1; box-shadow: 0 5px 0 var(--orange); }
+        .choice-card.missed .choice-checkbox { background: var(--orange); border-color: #e65100; box-shadow: 0 3px 0 #e65100; color: white; }
+
+        @keyframes correctBounce { 0% { transform: scale(1.1) translateY(-4px); } 40% { transform: scale(1.28) translateY(-12px); } 70% { transform: scale(1.05) translateY(-2px); } 100% { transform: scale(1.1) translateY(-4px); } }
+        @keyframes wrongShake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-8px); } 60% { transform: translateX(8px); } 80% { transform: translateX(-4px); } }
+
+        /* Interactive Circle Styles (Alamin Natin) */
+        .marker-circle {
+            position: absolute; top: 50%; left: 50%; width: 140%; height: 140%; transform: translate(-50%, -50%) scale(0); pointer-events: none; z-index: 10; opacity: 0; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50,15 C80,10 90,30 85,60 C80,90 40,85 20,70 C5,55 10,25 40,20 C50,18 60,20 70,25' fill='none' stroke='%23ff1744' stroke-width='6' stroke-linecap='round'/></svg>");
+            background-size: 100% 100%; background-repeat: no-repeat;
+        }
+        .choice-card.circled { transform: scale(1.05); border-color: transparent !important; box-shadow: none !important; }
+        .choice-card.circled .marker-circle { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        .choice-card.shake { animation: wrongShake 0.5s cubic-bezier(.36, .07, .19, .97) both; }
+
+        /* ── CHECK BUTTON ── */
+        .check-btn { width: 100%; background: linear-gradient(135deg, var(--green), #2e7d32); border: 4px solid var(--dark); border-radius: 50px; padding: 18px 30px; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.4rem; color: white; cursor: pointer; box-shadow: 0 7px 0 var(--dark); transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 24px; }
+        .check-btn:hover { filter: brightness(1.07); transform: translateY(-2px); box-shadow: 0 10px 0 var(--dark); }
+        .check-btn:active { transform: translateY(8px); box-shadow: 0 0 0 var(--dark); }
+        .check-btn:disabled { background: #eee; border-color: #ccc; box-shadow: 0 4px 0 #ccc; color: #aaa; cursor: not-allowed; transform: none !important; }
+
+        /* ── FEEDBACK BANNER ── */
+        .feedback-banner { display: none; border-radius: 18px; border: 4px solid; padding: 13px 20px; margin-top: 16px; font-weight: 900; font-size: 1.05rem; align-items: center; gap: 12px; }
+        .feedback-banner.show { display: flex; }
+        .feedback-banner.correct-fb { background: #E9FBEE; border-color: var(--green); color: #1b5e20; }
+        .feedback-banner.wrong-fb { background: #FFEBEE; border-color: #f44336; color: #b71c1c; }
+        .feedback-icon { font-size: 1.8rem; }
+
+        /* ── FIXED BOTTOM NAVIGATION ── */
+        .nav-bar { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 4px solid var(--dark); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; z-index: 300; box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1); }
+        .nav-btn { display: flex; align-items: center; gap: 10px; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.15rem; padding: 11px 26px; border-radius: 50px; border: 4px solid var(--dark); cursor: pointer; box-shadow: 0 5px 0 var(--dark); transition: all 0.15s; text-decoration: none; }
+        .nav-btn:active { transform: translateY(5px); box-shadow: 0 0 0 var(--dark); }
+        .nav-btn.prev-btn { background: white; color: var(--dark); }
+        .nav-btn.prev-btn:hover { background: #f5f5f5; color: var(--dark); }
+        .nav-btn.next-btn { background: linear-gradient(135deg, var(--pink), var(--purple)); color: white; }
+        .nav-btn.next-btn:hover { filter: brightness(1.07); color: white; }
+        .nav-btn.next-btn:disabled { background: #ddd; border-color: #aaa; box-shadow: 0 3px 0 #aaa; cursor: not-allowed; color: #aaa; }
+        .nav-btn.finish-btn { background: linear-gradient(135deg, var(--green), #2e7d32); color: white; }
+        .nav-btn.finish-btn:hover { filter: brightness(1.07); color: white; }
+        .unit-counter { font-family: 'Bubblegum Sans', cursive; font-size: 1rem; color: #888; text-align: center; line-height: 1.3; }
+        .unit-counter strong { font-size: 1.3rem; color: var(--dark); }
+
+        /* ── FINAL SCORE ── */
+        .score-card { background: linear-gradient(135deg, #FFF8F0, #F5F0FF); border: 5px solid var(--dark); border-radius: 28px; box-shadow: 0 10px 0 var(--dark), 0 20px 50px rgba(0, 0, 0, 0.1); padding: 40px 28px; text-align: center; max-width: 760px; margin: 0 auto; }
+        .score-title { font-family: 'Bubblegum Sans', cursive; font-size: 2.4rem; background: linear-gradient(135deg, var(--pink), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .score-stars { font-size: 3.2rem; letter-spacing: 5px; margin: 14px 0; animation: starPop 0.5s ease; }
+        @keyframes starPop { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        /* ── CONFETTI ── */
+        .confetti-wrap { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; overflow: hidden; display: none; }
+        .confetti-wrap.active { display: block; }
+        .confetti-particle { position: absolute; width: 12px; height: 12px; border-radius: 3px; animation: confettiFall linear forwards; }
+        @keyframes confettiFall { 0% { top: -20px; opacity: 1; transform: rotate(0deg) scale(1); } 100% { top: 110vh; opacity: 0; transform: rotate(720deg) scale(0.5); } }
+        .floating-deco { position: fixed; font-size: 2.5rem; opacity: 0.1; pointer-events: none; z-index: 0; }
+    </style>
+</head>
+
+<body>
+
+    <!-- ── REVERSE RAINBOW TRANSITION OUT ── -->
+    <div id="transition-out"
+        style="position:fixed; inset:0; z-index:99999; pointer-events:none; display:flex; align-items:center; justify-content:center; overflow:hidden; animation: outOverlay 0.1s 2.4s forwards;">
+        <!-- Pinwheel spins backwards and shrinks -->
+        <div
+            style="position:absolute; width:250vw; height:250vw; border-radius:50%; background: conic-gradient(#FF5252 0deg 60deg, #FF9800 60deg 120deg, #FFEB3B 120deg 180deg, #4CAF50 180deg 240deg, #2196F3 240deg 300deg, #9C27B0 300deg 360deg); animation: reversePinwheel 1.8s cubic-bezier(0.6, 0, 0.2, 1) forwards;">
+        </div>
+
+        <!-- Stars shrink and rotate -->
+        <div style="position:absolute; inset:0; z-index:10001; animation: outOverlay 0.1s 2s forwards;">
+            <i class="fa-solid fa-star text-warning"
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:15%; left:15%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0s;"></i>
+            <i class="fa-solid fa-star text-warning"
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:20%; left:80%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.15s;"></i>
+            <i class="fa-solid fa-star text-warning"
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:75%; left:20%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.3s;"></i>
+            <i class="fa-solid fa-star text-warning"
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:80%; left:75%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.15s;"></i>
+            <i class="fa-solid fa-star text-warning"
+                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:10%; left:50%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.45s;"></i>
+        </div>
+
+        <!-- Mascot hides -->
+        <div
+            style="position:absolute; z-index:10002; display:flex; flex-direction:column; align-items:center; justify-content:center; animation: reverseContent 1.4s cubic-bezier(0.6, 0, 0.2, 1) forwards;">
+            <div id="transition-mascot-emoji"
+                style="font-size:8rem; filter:drop-shadow(0 10px 0 rgba(0,0,0,0.15)); line-height:1;">🐒</div>
+            <div
+                style="font-family:'Bubblegum Sans',cursive; font-size:5rem; color:white; text-shadow:4px 6px 0 rgba(0,0,0,0.2); margin-top:-20px; transform:rotate(-5deg);">
+                Maglaro Tayo!</div>
+        </div>
+    </div>
+    <script>
+        (function() {
+            var _em = { A:'🦅',B:'🐗',K:'🐃',D:'🐭',E:'🐘',G:'🪿',H:'🐢',I:'🐦',L:'🦁',M:'🐒',N:'🦬',NG:'🐊',O:'🐻',P:'🐸',R:'🐠',S:'🐍',T:'🦊',U:'🐦‍⬛',W:'✨',Y:'🦬' };
+            var _k = localStorage.getItem('tunog_tuklas_active_pet') || localStorage.getItem('tunog_tuklas_recent_animal') || 'M';
+            var _el = document.getElementById('transition-mascot-emoji');
+            if (_el && _em[_k]) _el.textContent = _em[_k];
+        })();
+    </script>
+    <style>
+        @keyframes outOverlay { to { opacity: 0; visibility: hidden; } }
+        @keyframes reversePinwheel { 0% { transform: scale(1) rotate(0deg); opacity: 1; filter: brightness(1); } 60% { opacity: 1; filter: brightness(1.2); } 100% { transform: scale(0) rotate(-270deg); opacity: 0; filter: brightness(1.5); } }
+        @keyframes reverseStar { 0% { opacity: 1; transform: scale(1) rotate(15deg); } 40% { opacity: 0.8; } 100% { opacity: 0; transform: scale(0) rotate(-135deg); } }
+        @keyframes reverseContent { 0% { opacity: 1; transform: scale(1) translateY(0); } 50% { opacity: 0.9; transform: scale(0.9) translateY(30px); } 100% { opacity: 0; transform: scale(0.4) translateY(250px); } }
+    </style>
+
+    <!-- Confetti -->
+    <div class="confetti-wrap" id="confettiWrap" aria-hidden="true"></div>
+
+    <!-- Floating background decorations -->
+    <div class="floating-deco" style="top:10%; left:3%;">⭐</div>
+    <div class="floating-deco" style="top:30%; right:4%;">🌸</div>
+    <div class="floating-deco" style="top:55%; left:2%;">🌈</div>
+    <div class="floating-deco" style="bottom:15%; right:3%;">✨</div>
+
+    <!-- ══ HEADER ══ -->
+    <header class="lesson-header">
+        <a href="{% url 'core:mapa' %}" class="header-back-btn" title="Bumalik sa Mapa">
+            <i class="fa-solid fa-chevron-left"></i>
+        </a>
+        <h1 class="header-title">🔤 Letrang Pp</h1>
+        <div class="header-stars">
+            <i class="fa-solid fa-star" style="color:#FFD93D;"></i>
+            <span id="starCount">0</span> / 5
+        </div>
+    </header>
+
+    <!-- ══ UNIT PROGRESS DOTS ══ -->
+    <div class="unit-progress-bar">
+        <span class="progress-label">Yunit</span>
+        <div class="progress-dot active" id="dot-0"></div>
+        <div class="progress-dot" id="dot-1"></div>
+        <div class="progress-dot" id="dot-2"></div>
+        <div class="progress-dot" id="dot-3"></div>
+        <div class="progress-dot" id="dot-4"></div>
+        <div class="progress-dot" id="dot-5"></div>
+    </div>
+
+    <!-- ══ SLIDING UNITS VIEWPORT ══ -->
+    <div class="units-viewport">
+        <div class="units-track" id="unitsTrack">
+
+            <!-- ═══════════════════════════════════
+             UNIT 0: Kilalanin Natin (Intro)
+            ═══════════════════════════════════ -->
+            <div class="unit-slide" id="unit-0">
+                <div class="section-card">
+                    <div class="section-badge badge-pink">📖 Kilalanin Natin</div>
+
+                    <div class="text-center mt-3 mb-4">
+                        <div class="big-letter" style="font-family:'Bubblegum Sans',cursive;font-size:7rem;">Pp</div>
+                    </div>
+
+                    <div class="text-center mb-4">
+                        <p style="font-weight:800; color:var(--pink); font-size:1.1rem; margin-bottom:4px;">
+                            Pagpapakilala at Pagbigkas ng Pp
+                        </p>
+                        <p style="font-weight:700; color:#c0392b; font-size:0.95rem;">
+                            Ipakita ang larawan ng malaki at maliit na letrang Pp.
+                        </p>
+                    </div>
+
+                    <div class="intro-instruction">
+                        <i class="fa-solid fa-lips" style="color:var(--pink); margin-right:6px;"></i>
+                        <strong>Paano bigkasin?</strong> Isara ang mga labi. Ibuka ito nang walang ingay upang malikha ang tunog ng <strong>/p/</strong>. Ulitin hanggang sa maging pamilyar.
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button class="sound-btn" onclick="playPSound()" id="soundBtn">
+                            <i class="fa-solid fa-volume-high"></i> Pakinggan ang /p/
+                        </button>
+                    </div>
+
+                    <div class="text-center mt-3" style="font-size:0.95rem; font-weight:700; color:#888;">
+                        🌳 Halimbawa ng salita:
+                        <strong style="color:var(--purple);">Puno &nbsp;•&nbsp; Puso &nbsp;•&nbsp; Pera</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════
+             UNIT 1: Pagsulat ng Pp
+            ═══════════════════════════════════ -->
+            <div class="unit-slide" id="unit-1">
+                <div class="section-card">
+                    <div class="section-badge badge-orange">✏️ Pagsulat ng Pp</div>
+
+                    <h2 class="activity-title mt-3" style="color:var(--orange);">Sumulat ng Letrang Pp!</h2>
+                    <p class="activity-instruction">Gamitin ang iyong daliri o mouse para magsulat ng malaki at maliit na <strong>Pp</strong> sa loob ng kahon. Sundin ang guhit-gabay! ✍️</p>
+
+                    <!-- ── TWO-COLUMN LAYOUT ── -->
+                    <div style="display:flex; gap:0; align-items:stretch; margin-top:8px;">
+
+                        <!-- LEFT PANEL: Stroke guides + shared controls -->
+                        <div style="width:200px; flex-shrink:0; display:flex; flex-direction:column; gap:14px; padding-right:18px; border-right:2px solid #eee;">
+                            
+                            <!-- Stroke guide: P uppercase -->
+                            <div style="background:#fff9f5; border:2px dashed #FF9F43; border-radius:14px; padding:10px; text-align:center;">
+                                <p style="font-weight:800; color:#FF9F43; font-size:0.78rem; margin-bottom:6px;">💡 Malaking P</p>
+                                <svg viewBox="0 0 100 110" style="width:100%; max-width:110px; height:auto; overflow:visible; display:block; margin:0 auto;">
+                                    <line x1="-5" y1="10" x2="105" y2="10" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="5" />
+                                    <line x1="-5" y1="55" x2="105" y2="55" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="5" />
+                                    <line x1="-5" y1="100" x2="105" y2="100" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="5" />
+
+                                    <path d="M 30,10 L 30,100" fill="none" stroke="#f0e0e8" stroke-width="14" stroke-linecap="round" />
+                                    <path d="M 30,10 C 80,10 80,55 30,55" fill="none" stroke="#f0e0e8" stroke-width="14" stroke-linecap="round" />
+
+                                    <path d="M 30,10 L 30,100" fill="none" stroke="#FF6B9D" stroke-width="4" stroke-linecap="round" />
+                                    <polygon points="25,90 35,90 30,100" fill="#FF6B9D" />
+                                    <circle cx="30" cy="15" r="9" fill="#FF6B9D" /><text x="30" y="19" fill="white" font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">1</text>
+
+                                    <path d="M 30,10 C 80,10 80,55 30,55" fill="none" stroke="#4D96FF" stroke-width="4" stroke-linecap="round" />
+                                    <polygon points="35,50 35,60 25,55" fill="#4D96FF" />
+                                    <circle cx="45" cy="10" r="9" fill="#4D96FF" /><text x="45" y="14" fill="white" font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">2</text>
+                                </svg>
+                            </div>
+
+                            <!-- Stroke guide: p lowercase -->
+                            <div style="background:#fff5f9; border:2px dashed #FF6B9D; border-radius:14px; padding:10px; text-align:center;">
+                                <p style="font-weight:800; color:#FF6B9D; font-size:0.78rem; margin-bottom:6px;">💡 Maliit na p</p>
+                                <svg viewBox="0 0 100 130" style="width:100%; max-width:110px; height:auto; overflow:visible; display:block; margin:0 auto;">
+                                    <line x1="-5" y1="10" x2="105" y2="10" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="5" />
+                                    <line x1="-5" y1="55" x2="105" y2="55" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="5" />
+                                    <line x1="-5" y1="100" x2="105" y2="100" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="5" />
+
+                                    <path d="M 30,55 L 30,120" fill="none" stroke="#f0e0e8" stroke-width="14" stroke-linecap="round" />
+                                    <path d="M 30,55 C 75,55 75,100 30,100" fill="none" stroke="#f0e0e8" stroke-width="14" stroke-linecap="round" />
+
+                                    <path d="M 30,55 L 30,120" fill="none" stroke="#FF6B9D" stroke-width="4" stroke-linecap="round" />
+                                    <polygon points="25,110 35,110 30,120" fill="#FF6B9D" />
+                                    <circle cx="30" cy="65" r="9" fill="#FF6B9D" /><text x="30" y="69" fill="white" font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">1</text>
+
+                                    <path d="M 30,55 C 75,55 75,100 30,100" fill="none" stroke="#4D96FF" stroke-width="4" stroke-linecap="round" />
+                                    <polygon points="35,95 35,105 25,100" fill="#4D96FF" />
+                                    <circle cx="45" cy="55" r="9" fill="#4D96FF" /><text x="45" y="59" fill="white" font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">2</text>
+                                </svg>
+                            </div>
+
+                            <!-- Shared toolbar -->
+                            <div style="display:flex; flex-direction:column; gap:7px;">
+                                <button class="pad-tool-btn undo-btn" style="width:100%; justify-content:center;" onclick="undoStroke(window._u1ActivePad || 'upper')">↩ Burahin huli</button>
+                                <button class="pad-tool-btn erase" style="width:100%; justify-content:center;" onclick="clearCanvas(window._u1ActivePad || 'upper')">🗑 I-clear</button>
+                            </div>
+
+                            <!-- Shared color row -->
+                            <div>
+                                <div style="font-size:0.78rem; font-weight:800; color:#aaa; margin-bottom:5px;">Kulay:</div>
+                                <div style="display:flex; flex-wrap:wrap; gap:6px;">
+                                    <div class="color-swatch u1-color active" style="background:#4D96FF;" onclick="setU1Color('#4D96FF',this)"></div>
+                                    <div class="color-swatch u1-color" style="background:#FF6B9D;" onclick="setU1Color('#FF6B9D',this)"></div>
+                                    <div class="color-swatch u1-color" style="background:#6BCB77;" onclick="setU1Color('#6BCB77',this)"></div>
+                                    <div class="color-swatch u1-color" style="background:#FF9F43;" onclick="setU1Color('#FF9F43',this)"></div>
+                                </div>
+                            </div>
+
+                            <!-- Shared brush size row -->
+                            <div>
+                                <div style="font-size:0.78rem; font-weight:800; color:#aaa; margin-bottom:5px;">Laki ng panulat:</div>
+                                <div style="display:flex; gap:7px; align-items:center;">
+                                    <div class="brush-btn active u1-brush" onclick="setU1Brush(5,this)"><div class="brush-dot" style="width:6px;height:6px;"></div></div>
+                                    <div class="brush-btn u1-brush" onclick="setU1Brush(10,this)"><div class="brush-dot" style="width:11px;height:11px;"></div></div>
+                                    <div class="brush-btn u1-brush" onclick="setU1Brush(18,this)"><div class="brush-dot" style="width:18px;height:18px;"></div></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT PANEL: Canvases + Tapos na! -->
+                        <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:14px; padding-left:18px;">
+                            <div class="draw-pad-wrapper" style="margin-bottom:0;">
+                                <div class="draw-pad-label">
+                                    <span class="letter-preview upper">P</span><span style="color:var(--blue); font-weight:900;">Malaking P</span>
+                                </div>
+                                <div class="canvas-frame" id="frameUpper" style="margin-top:10px;" onclick="window._u1ActivePad='upper'">
+                                    <div class="canvas-ghost" id="ghostUpper" style="gap:15%;">
+                                        <span class="ghost-letter">P</span><span class="ghost-letter">P</span><span class="ghost-letter">P</span>
+                                    </div>
+                                    <canvas id="canvasUpper" height="150"></canvas>
+                                </div>
+                                <div class="pad-done-tick" id="doneTick-upper">✅ Napakahusay! Sinulatan mo na ang malaking P!</div>
+                            </div>
+
+                            <div class="draw-pad-wrapper" style="margin-bottom:0;">
+                                <div class="draw-pad-label">
+                                    <span class="letter-preview lower">p</span><span style="color:var(--pink); font-weight:900;">Maliit na p</span>
+                                </div>
+                                <div class="canvas-frame" id="frameLower" style="margin-top:10px;" onclick="window._u1ActivePad='lower'">
+                                    <div class="canvas-ghost" id="ghostLower" style="gap:15%;">
+                                        <span class="ghost-letter">p</span><span class="ghost-letter">p</span><span class="ghost-letter">p</span>
+                                    </div>
+                                    <canvas id="canvasLower" height="130"></canvas>
+                                </div>
+                                <div class="pad-done-tick" id="doneTick-lower">✅ Magaling! Sinulatan mo na ang maliit na p!</div>
+                            </div>
+
+                            <div style="display:flex; justify-content:center; padding-top:4px;">
+                                <button class="pad-tool-btn done-draw" id="u1-tapos-btn" style="padding:14px 44px; font-size:1.15rem; border-radius:50px; box-shadow:0 6px 0 #1b5e20; gap:10px;" onclick="markU1Done()">
+                                    <i class="fa-solid fa-check"></i> Tapos na!
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════
+             UNIT 2: Pagsasanay 1 A at B
+            ═══════════════════════════════════ -->
+            <div class="unit-slide" id="unit-2">
+                <div class="section-card">
+                    <div class="section-badge badge-purple">📝 Pagsasanay</div>
+                    <div class="pagsasanay-label text-center mt-3" style="font-size: 1.5rem; font-weight: 700; color: #333; margin-bottom: 5px;">A. Sumulat ng malalaking P at maliliit na p.</div>
+
+                    <div class="draw-pad-wrapper" style="margin-top:20px;">
+                        <div class="canvas-frame" id="frameExA">
+                            <div class="canvas-ghost" id="ghostExA" style="gap: 15%;">
+                                <span class="ghost-letter">P</span><span class="ghost-letter">P</span><span class="ghost-letter">P</span><span class="ghost-letter">P</span>
+                            </div>
+                            <canvas id="canvasExA" height="160"></canvas>
+                        </div>
+                        <div class="pad-toolbar mt-2">
+                            <button class="pad-tool-btn undo-btn" onclick="undoStroke('exA')">↩ Burahin huli</button>
+                            <button class="pad-tool-btn erase" onclick="clearCanvas('exA')">🗑 I-clear</button>
+                            <button class="pad-tool-btn done-draw" onclick="markDone('exA')">✓ Tapos na!</button>
+                        </div>
+                        <div class="pad-done-tick" id="doneTick-exA">✅ Napakahusay sa malalaking P!</div>
+                    </div>
+
+                    <div class="draw-pad-wrapper" style="margin-top:40px;">
+                        <div class="canvas-frame" id="frameExB">
+                            <div class="canvas-ghost" id="ghostExB" style="gap: 15%;">
+                                <span class="ghost-letter">p</span><span class="ghost-letter">p</span><span class="ghost-letter">p</span><span class="ghost-letter">p</span>
+                            </div>
+                            <canvas id="canvasExB" height="140"></canvas>
+                        </div>
+                        <div class="pad-toolbar mt-2">
+                            <button class="pad-tool-btn undo-btn" onclick="undoStroke('exB')">↩ Burahin huli</button>
+                            <button class="pad-tool-btn erase" onclick="clearCanvas('exB')">🗑 I-clear</button>
+                            <button class="pad-tool-btn done-draw" onclick="markDone('exB')">✓ Tapos na!</button>
+                        </div>
+                        <div class="pad-done-tick" id="doneTick-exB">✅ Magaling sa maliliit na p!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════
+             UNIT 3: Pagsasanay 1 C (Pairs)
+            ═══════════════════════════════════ -->
+            <div class="unit-slide" id="unit-3">
+                <div class="section-card">
+                    <div class="section-badge badge-purple">📝 Pagsasanay</div>
+                    <div class="pagsasanay-label text-center mt-3" style="font-size: 1.5rem; font-weight: 700; color: #333; margin-bottom: 5px;">B. Pagsamahin sa guhit ang malaki at maliit na letrang Pp.</div>
+
+                    <div class="draw-pad-wrapper" style="margin-top:20px;">
+                        <div class="canvas-frame" id="frameExC">
+                            <div class="canvas-ghost" id="ghostExC" style="gap: 8%; font-size: 4.5rem; letter-spacing: 4px;">
+                                <span class="ghost-letter">Pp</span><span class="ghost-letter">Pp</span><span class="ghost-letter">Pp</span>
+                            </div>
+                            <canvas id="canvasExC" height="180"></canvas>
+                        </div>
+                        <div class="pad-toolbar mt-3">
+                            <button class="pad-tool-btn undo-btn" onclick="undoStroke('exC')">↩ Burahin huli</button>
+                            <button class="pad-tool-btn erase" onclick="clearCanvas('exC')">🗑 I-clear</button>
+                            <button class="pad-tool-btn done-draw" onclick="markDone('exC')">✓ Tapos na!</button>
+                        </div>
+                        <div class="pad-done-tick" id="doneTick-exC">✅ Napakahusay! Natapos mo na lahat!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════
+             UNIT 4: Alamin Natin (Bilugan)
+            ═══════════════════════════════════ -->
+            <div class="unit-slide" id="unit-4">
+                <div class="section-card" style="max-width: 1150px; padding: 60px 40px;">
+                    <div class="section-badge badge-blue">🎯 Alamin Natin</div>
+
+                    <h2 class="activity-title mt-3">Sabihin ang ngalan ng mga larawan. Alin ang may tunog ng <strong>Pp</strong>? Bilugan ito.</h2>
+                    <p class="activity-instruction">Pindutin ang mga larawan na nagtataglay ng letrang Pp at pindutin ang <strong>SURIIN ANG AKING SAGOT</strong>.</p>
+
+                    <div class="choices-grid" id="act4-grid" style="grid-template-columns: repeat(6, 1fr); gap: 12px; margin-top: 30px; flex-wrap: nowrap;">
+                        <div class="choice-card" data-correct="true" data-activity="4" onclick="toggleChoice(this)" style="position:relative; overflow:visible;">
+                            <div class="choice-emoji-box">🌳</div><div class="choice-label">Puno</div><div class="marker-circle"></div>
+                        </div>
+                        <div class="choice-card" data-correct="true" data-activity="4" onclick="toggleChoice(this)" style="position:relative; overflow:visible;">
+                            <div class="choice-emoji-box">❤️</div><div class="choice-label">Puso</div><div class="marker-circle"></div>
+                        </div>
+                        <div class="choice-card" data-correct="true" data-activity="4" onclick="toggleChoice(this)" style="position:relative; overflow:visible;">
+                            <div class="choice-emoji-box">🔥</div><div class="choice-label">Apoy</div><div class="marker-circle"></div>
+                        </div>
+                        <div class="choice-card" data-correct="false" data-activity="4" onclick="toggleChoice(this)" style="position:relative; overflow:visible;">
+                            <div class="choice-emoji-box">🛞</div><div class="choice-label">Gulong</div><div class="marker-circle"></div>
+                        </div>
+                        <div class="choice-card" data-correct="true" data-activity="4" onclick="toggleChoice(this)" style="position:relative; overflow:visible;">
+                            <div class="choice-emoji-box">☁️</div><div class="choice-label">Ulap</div><div class="marker-circle"></div>
+                        </div>
+                        <div class="choice-card" data-correct="false" data-activity="4" onclick="toggleChoice(this)" style="position:relative; overflow:visible;">
+                            <div class="choice-emoji-box">🐶</div><div class="choice-label">Aso</div><div class="marker-circle"></div>
+                        </div>
+                    </div>
+
+                    <button class="check-btn mt-5" id="check-act4" onclick="checkActivity(4)">
+                        <i class="fa-solid fa-check-circle"></i> Suriin ang Aking Sagot
+                    </button>
+                    <div class="feedback-banner" id="feedback-act4">
+                        <span class="feedback-icon" id="feedback-icon-4"></span><span id="feedback-text-4"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════
+             UNIT 5: Sagutin Natin (Fill in the Blanks)
+            ═══════════════════════════════════ -->
+            <div class="unit-slide" id="unit-5">
+                <div class="section-card">
+                    <div class="section-badge badge-blue">🧠 Sagutin Natin</div>
+
+                    <h2 class="activity-title mt-3">Sagutin Natin!</h2>
+                    <p class="activity-instruction">Isulat ang nawawalang tunog upang mabuo ang ngalan ng mga larawan.</p>
+
+                    <div style="max-width: 400px; margin: 0 auto; margin-top:20px;">
+                        <!-- Unahan -->
+                        <div class="sagutin-item">
+                            <span class="sagutin-emoji">🌳</span>
+                            <div class="sagutin-word">
+                                <input type="text" class="fill-blank-input" id="blank1" maxlength="1" data-answer="p" autocomplete="off" style="width: 45px; margin-right: 5px;">uno
+                            </div>
+                        </div>
+                        <!-- Gitna -->
+                        <div class="sagutin-item">
+                            <span class="sagutin-emoji">🔥</span>
+                            <div class="sagutin-word">
+                                a<input type="text" class="fill-blank-input" id="blank2" maxlength="1" data-answer="p" autocomplete="off" style="width: 45px; margin: 0 5px;">oy
+                            </div>
+                        </div>
+                        <!-- Hulihan -->
+                        <div class="sagutin-item">
+                            <span class="sagutin-emoji">☁️</span>
+                            <div class="sagutin-word">
+                                ula<input type="text" class="fill-blank-input" id="blank3" maxlength="1" data-answer="p" autocomplete="off" style="width: 45px; margin-left: 5px;">
+                            </div>
+                        </div>
+                        <!-- Unahan -->
+                        <div class="sagutin-item">
+                            <span class="sagutin-emoji">❤️</span>
+                            <div class="sagutin-word">
+                                <input type="text" class="fill-blank-input" id="blank4" maxlength="1" data-answer="p" autocomplete="off" style="width: 45px; margin-right: 5px;">uso
+                            </div>
+                        </div>
+                        <!-- Gitna -->
+                        <div class="sagutin-item">
+                            <span class="sagutin-emoji">🥒</span>
+                            <div class="sagutin-word">
+                                u<input type="text" class="fill-blank-input" id="blank5" maxlength="1" data-answer="p" autocomplete="off" style="width: 45px; margin: 0 5px;">o
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="check-btn mt-4" id="check-act5" onclick="checkFillBlanksAct5()" style="background:linear-gradient(135deg,var(--blue),#1565c0);">
+                        <i class="fa-solid fa-check-circle"></i> Suriin ang Aking Sagot
+                    </button>
+                    <div class="feedback-banner" id="feedback-act5">
+                        <span class="feedback-icon" id="feedback-icon-5"></span><span id="feedback-text-5"></span>
+                    </div>
+
+                    <!-- FINAL SCORE BANNER -->
+                    <div id="score-section" style="display:none; margin-top: 28px;">
+                        <div class="score-card">
+                            <div class="score-title">🎉 Napakahusay!</div>
+                            <div class="score-stars" id="scoreStars">⭐⭐⭐⭐⭐</div>
+                            <p style="font-size:1.1rem;font-weight:800;color:#555;" id="scoreText"></p>
+                            <p style="font-size:0.95rem;color:#888;font-weight:700;margin-top:6px;" id="scoreDetail"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ══ BOTTOM NAVIGATION BAR ══ -->
+    <div class="nav-bar" id="navBar">
+        <button class="nav-btn prev-btn" id="prevBtn" onclick="goBack()" style="visibility:hidden;">
+            <i class="fa-solid fa-arrow-left"></i> Bumalik
+        </button>
+        <div class="unit-counter">
+            <strong id="unitNum">1</strong> / 6<br>
+            <span id="unitName" style="font-size:0.8rem;">Kilalanin Natin</span>
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <button class="nav-btn prev-btn" id="skipBtn" onclick="goSkip()">Laktawan <i class="fa-solid fa-forward-step"></i></button>
+            <button class="nav-btn next-btn" id="nextBtn" onclick="goNext()">Susunod <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- ── JAVASCRIPT LOGIC ── -->
+    <script>
+        (function () {
+            // ── State ──
+            const UNIT_NAMES = ['Kilalanin Natin', 'Pagsulat ng Pp', 'Pagsasanay 1 A & B', 'Pagsasanay 1 C', 'Alamin Natin', 'Sagutin Natin'];
+            let currentUnit = 0;  
+            const totalUnits = 6;
+
+            const state = {
+                1: { checked: false, score: 0 },       // Unit 1 (Upper & Lower Pad)
+                2: { checked: false, score: 0 },       // Unit 2 (Big P & Small p pads)
+                3: { checked: false, score: 0 },       // Unit 3 (Pp Pairs Pad)
+                4: { checked: false, score: 0, total: 0 }, // Unit 4 (Bilugan)
+                5: { checked: false, score: 0 }        // Unit 5 (Fill in the blanks)
+            };
+
+            document.querySelectorAll('.choice-card[data-correct="true"]').forEach(card => {
+                const act = card.dataset.activity;
+                if (state[act]) state[act].total++;
+            });
+
+            function updateUI() {
+                const track = document.getElementById('unitsTrack');
+                if(track) track.style.transform = `translateX(-${currentUnit * (100 / 6)}%)`;
+
+                for (let i = 0; i < totalUnits; i++) {
+                    const dot = document.getElementById(`dot-${i}`);
+                    if(dot) {
+                        dot.classList.remove('active', 'done');
+                        if (i < currentUnit) dot.classList.add('done');
+                        else if (i === currentUnit) dot.classList.add('active');
+                    }
+                }
+
+                const un = document.getElementById('unitNum');
+                if(un) un.textContent = currentUnit + 1;
+                const uname = document.getElementById('unitName');
+                if(uname) uname.textContent = UNIT_NAMES[currentUnit];
+
+                const prevBtn = document.getElementById('prevBtn');
+                if(prevBtn) prevBtn.style.visibility = currentUnit === 0 ? 'hidden' : 'visible';
+
+                const skipBtn = document.getElementById('skipBtn');
+                if (skipBtn) skipBtn.style.display = (currentUnit === totalUnits - 1) ? 'none' : 'flex';
+
+                updateNextBtn();
+            }
+
+            function updateNextBtn() {
+                const nextBtn = document.getElementById('nextBtn');
+                if(!nextBtn) return;
+
+                if (currentUnit === totalUnits - 1) { 
+                    if (state[5].checked) {
+                        nextBtn.className = 'nav-btn finish-btn';
+                        nextBtn.innerHTML = '<i class="fa-solid fa-flag-checkered"></i> Bumalik sa Mapa';
+                        nextBtn.disabled = false;
+                        nextBtn.onclick = async () => {
+                            if(window.AudioManager) window.AudioManager.playSFX('click');
+                            nextBtn.disabled = true;
+                            nextBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Ina-unlock...';
+                            try {
+                                await fetch('{% url "core:save_progress" %}', {
+                                    method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}' },
+                                    body: JSON.stringify({ level_id: '{{ level_id }}', stars: parseInt(document.getElementById('starCount').textContent), is_completed: true })
+                                });
+                                localStorage.setItem('tunog_tuklas_pending_unlock', 'P');
+                            } catch (e) { console.error("Error saving progress:", e); }
+                            
+                            setTimeout(() => { window.location.href = "{% url 'core:mapa' %}"; }, 350);
+                        };
+                    } else {
+                        nextBtn.className = 'nav-btn next-btn';
+                        nextBtn.innerHTML = 'Susunod <i class="fa-solid fa-lock"></i>';
+                        nextBtn.disabled = true;
+                    }
+                } else if (currentUnit > 0 && currentUnit < 5 && !state[currentUnit].checked) {
+                    nextBtn.className = 'nav-btn next-btn'; nextBtn.innerHTML = 'Susunod <i class="fa-solid fa-lock"></i>'; nextBtn.disabled = true;
+                } else {
+                    nextBtn.className = 'nav-btn next-btn';
+                    nextBtn.innerHTML = 'Susunod <i class="fa-solid fa-arrow-right"></i>';
+                    nextBtn.disabled = false;
+                    nextBtn.onclick = window.goNext;
+                }
+            }
+
+            window.goNext = function () {
+                if(window.AudioManager) window.AudioManager.playSFX('click');
+                if (currentUnit < totalUnits - 1) {
+                    currentUnit++; updateUI();
+                    document.getElementById('unit-' + currentUnit).scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            };
+
+            window.goBack = function () {
+                if(window.AudioManager) window.AudioManager.playSFX('click');
+                if (currentUnit > 0) {
+                    currentUnit--; updateUI();
+                    document.getElementById('unit-' + currentUnit).scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            };
+
+            window.goSkip = function () {
+                if(window.AudioManager) window.AudioManager.playSFX('click');
+                if (currentUnit < totalUnits - 1) {
+                    if (currentUnit > 0) state[currentUnit].checked = true;
+                    currentUnit++; updateUI();
+                    document.getElementById('unit-' + currentUnit).scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            };
+
+            // ── Interactive Activities (Unit 4 & 5) ──
+            window.toggleChoice = function (card) {
+                if(window.AudioManager) window.AudioManager.playSFX('click');
+                const act = card.dataset.activity;
+                if (state[act] && state[act].checked) return;
+                
+                if (card.classList.contains('circled')) card.classList.remove('circled');
+                else card.classList.add('circled');
+            };
+
+            window.checkActivity = function (actNum) {
+                if (state[actNum].checked) return;
+                const selectedClass = 'circled';
+                const cards = document.querySelectorAll(`.choice-card[data-activity="${actNum}"]`);
+                
+                let correct = 0, wrongOrMissed = 0, selectedCount = 0;
+                const total = state[actNum].total;
+
+                cards.forEach(card => { if (card.classList.contains(selectedClass)) selectedCount++; });
+
+                if (selectedCount === 0) {
+                    if(window.AudioManager) window.AudioManager.playSFX('failed');
+                    document.getElementById(`feedback-act${actNum}`).className = 'feedback-banner show wrong-fb';
+                    document.getElementById(`feedback-icon-${actNum}`).textContent = '⚠️';
+                    document.getElementById(`feedback-text-${actNum}`).innerHTML = `<strong>Pumili muna!</strong> Pindutin ang mga larawan.`;
+                    return;
+                }
+
+                cards.forEach(card => {
+                    const isSelected = card.classList.contains(selectedClass);
+                    const isCorrect = card.dataset.correct === 'true';
+
+                    if (isSelected && isCorrect) {
+                        card.style.borderColor = 'var(--green)'; card.style.background = '#E8F5E9';
+                        correct++;
+                    } else if (isSelected && !isCorrect) {
+                        card.style.borderColor = '#f44336'; card.style.background = '#FFEBEE';
+                        card.classList.add('shake'); setTimeout(() => card.classList.remove('shake'), 500);
+                        wrongOrMissed++;
+                    } else if (!isSelected && isCorrect) {
+                        wrongOrMissed++;
+                    }
+                });
+
+                if (correct === total && wrongOrMissed === 0) {
+                    if(window.AudioManager) window.AudioManager.playSFX('correct');
+                    state[actNum].checked = true; state[actNum].score = 1;
+                    document.getElementById(`feedback-act${actNum}`).className = 'feedback-banner show correct-fb';
+                    document.getElementById(`feedback-icon-${actNum}`).textContent = '🌟';
+                    document.getElementById(`feedback-text-${actNum}`).innerHTML = `<strong>Mahusay!</strong> Tama ang lahat! <em>(+1 punto)</em>`;
+                    cards.forEach(card => card.style.pointerEvents = 'none');
+                    document.getElementById(`check-act${actNum}`).disabled = true;
+                    document.getElementById('starCount').textContent = parseInt(document.getElementById('starCount').textContent) + 1;
+                    launchConfetti(); updateNextBtn();
+                } else {
+                    if(window.AudioManager) window.AudioManager.playSFX('failed');
+                    document.getElementById(`feedback-act${actNum}`).className = 'feedback-banner show wrong-fb';
+                    document.getElementById(`feedback-icon-${actNum}`).textContent = '💪';
+                    document.getElementById(`feedback-text-${actNum}`).innerHTML = `<strong>Subukan Muli!</strong> May mali o nakaligtaan.`;
+                }
+            };
+
+            window.checkFillBlanksAct5 = function () {
+                if (state[5].checked) return;
+                const inputs = document.querySelectorAll('#unit-5 .fill-blank-input');
+                let allCorrect = true;
+
+                inputs.forEach(input => {
+                    if (input.value.trim().toLowerCase() === input.dataset.answer.toLowerCase()) {
+                        input.style.borderColor = 'var(--green)'; input.style.color = 'var(--green)';
+                        input.style.borderBottomColor = 'var(--green)';
+                    } else {
+                        input.style.borderColor = '#f44336'; input.style.color = '#f44336';
+                        input.style.borderBottomColor = '#f44336';
+                        allCorrect = false;
+                    }
+                });
+
+                const banner = document.getElementById('feedback-act5');
+                const icon = document.getElementById('feedback-icon-5');
+                const text = document.getElementById('feedback-text-5');
+
+                if (allCorrect) {
+                    if(window.AudioManager) window.AudioManager.playSFX('correct');
+                    state[5].checked = true; state[5].score = 1;
+                    document.getElementById('starCount').textContent = parseInt(document.getElementById('starCount').textContent) + 1;
+                    inputs.forEach(input => input.disabled = true);
+                    banner.className = 'feedback-banner show correct-fb';
+                    icon.innerHTML = '🌟';
+                    text.innerHTML = 'Napakagaling! Tama ang lahat ng letra.';
+                    document.getElementById('check-act5').disabled = true;
+                    updateNextBtn();
+                    setTimeout(() => { showFinalScore(); }, 500);
+                } else {
+                    if(window.AudioManager) window.AudioManager.playSFX('failed');
+                    banner.className = 'feedback-banner show wrong-fb';
+                    icon.innerHTML = '❌';
+                    text.innerHTML = 'Mayroong mali. Subukan muli!';
+                }
+            };
+
+            // ── Drawing Pads Setup ──
+            const pads = {};
+            function initPad(id) {
+                const capId = id.charAt(0).toUpperCase() + id.slice(1);
+                const canvas = document.getElementById('canvas' + capId);
+                const frame = document.getElementById('frame' + capId);
+                if(!canvas || !frame) return;
+                
+                function resizeCanvas() {
+                    canvas.width = frame.clientWidth;
+                    if (pads[id] && pads[id].snapshots.length) restoreSnapshot(id);
+                }
+                resizeCanvas(); new ResizeObserver(resizeCanvas).observe(frame);
+
+                pads[id] = { 
+                    canvas, ctx: canvas.getContext('2d'), drawing: false, 
+                    color: id === 'upper' ? '#4D96FF' : (id === 'lower' ? '#FF6B9D' : '#4D96FF'), 
+                    brush: 5, snapshots: [], done: false 
+                };
+                const ctx = pads[id].ctx; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+
+                function getPos(e) {
+                    const rect = canvas.getBoundingClientRect(), scaleX = canvas.width / rect.width, scaleY = canvas.height / rect.height;
+                    return e.touches ? { x: (e.touches[0].clientX - rect.left) * scaleX, y: (e.touches[0].clientY - rect.top) * scaleY } : { x: (e.clientX - rect.left) * scaleX, y: (e.clientY - rect.top) * scaleY };
+                }
+                function startDraw(e) {
+                    e.preventDefault(); if (pads[id].done) return;
+                    pads[id].drawing = true; saveSnapshot(id);
+                    const p = getPos(e); ctx.beginPath(); ctx.strokeStyle = pads[id].color; ctx.lineWidth = pads[id].brush; ctx.moveTo(p.x, p.y);
+                }
+                function draw(e) { e.preventDefault(); if (!pads[id].drawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); }
+                function endDraw(e) { if (!pads[id].drawing) return; pads[id].drawing = false; }
+
+                canvas.addEventListener('mousedown', startDraw, { passive: false }); canvas.addEventListener('mousemove', draw, { passive: false }); canvas.addEventListener('mouseup', endDraw); canvas.addEventListener('mouseleave', endDraw);
+                canvas.addEventListener('touchstart', startDraw, { passive: false }); canvas.addEventListener('touchmove', draw, { passive: false }); canvas.addEventListener('touchend', endDraw);
+                updateCursor(id, pads[id].color);
+            }
+
+            function updateCursor(id, color) {
+                const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="${color}" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>`;
+                pads[id].canvas.style.cursor = `url('data:image/svg+xml;utf8,${encodeURIComponent(svg)}') 2 22, crosshair`;
+            }
+
+            function saveSnapshot(id) { pads[id].snapshots.push(pads[id].canvas.toDataURL()); if (pads[id].snapshots.length > 30) pads[id].snapshots.shift(); }
+            function restoreSnapshot(id) {
+                if (!pads[id].snapshots.length) return;
+                const img = new Image(); img.onload = () => pads[id].ctx.drawImage(img, 0, 0, pads[id].canvas.width, pads[id].canvas.height);
+                img.src = pads[id].snapshots[pads[id].snapshots.length - 1];
+            }
+
+            window.undoStroke = function (id) {
+                if (pads[id].snapshots.length) {
+                    pads[id].snapshots.pop(); pads[id].ctx.clearRect(0, 0, pads[id].canvas.width, pads[id].canvas.height);
+                    if (pads[id].snapshots.length) {
+                        const img = new Image(); img.onload = () => pads[id].ctx.drawImage(img, 0, 0, pads[id].canvas.width, pads[id].canvas.height);
+                        img.src = pads[id].snapshots[pads[id].snapshots.length - 1];
+                    }
+                }
+            };
+
+            window.clearCanvas = function (id) {
+                if(window.AudioManager) window.AudioManager.playSFX('click');
+                pads[id].ctx.clearRect(0, 0, pads[id].canvas.width, pads[id].canvas.height); pads[id].snapshots = []; pads[id].done = false;
+                const tick = document.getElementById('doneTick-' + id);
+                if(tick) { tick.className = 'pad-done-tick'; tick.style.display = 'none'; }
+            };
+
+            window.setU1Color = function (color, swatch) { 
+                if(window.AudioManager) window.AudioManager.playSFX('click');
+                document.querySelectorAll('.u1-color').forEach(s => s.classList.remove('active'));
+                if (swatch) swatch.classList.add('active');
+                ['upper', 'lower'].forEach(id => {
+                    if (pads[id]) { pads[id].color = color; updateCursor(id, color); }
+                });
+            };
+
+            window.setU1Brush = function (size, btn) { 
+                if(window.AudioManager) window.AudioManager.playSFX('click');
+                document.querySelectorAll('.u1-brush').forEach(b => b.classList.remove('active'));
+                if (btn) btn.classList.add('active');
+                ['upper', 'lower'].forEach(id => { if (pads[id]) pads[id].brush = size; });
+            };
+
+            window.setColor = function (id, color, swatch) { 
+                if(window.AudioManager) window.AudioManager.playSFX('click');
+                pads[id].color = color; swatch.parentElement.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active')); swatch.classList.add('active'); updateCursor(id, color); 
+            };
+
+            window.setBrush = function (id, size, btn) { 
+                if(window.AudioManager) window.AudioManager.playSFX('click');
+                pads[id].brush = size; btn.parentElement.querySelectorAll('.brush-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); 
+            };
+
+            async function validateDrawingAI(id, expectedLetter) {
+                const p = pads[id], ctx = p.ctx, canvas = p.canvas;
+                const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+                let totalInk = 0;
+                for (let i = 0; i < imgData.length; i += 4) if (imgData[i + 3] > 20) totalInk++;
+                if (totalInk < 50) return { valid: false, reason: 'Walang guhit pa. Subukang sumulat!' };
+                try {
+                    const resp = await fetch('/api/validate-handwriting/', {
+                        method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}' },
+                        body: JSON.stringify({ image_b64: p.canvas.toDataURL('image/png'), target_letter: expectedLetter || 'P' })
+                    });
+                    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+                    return await resp.json();
+                } catch (err) { return { valid: true, confidence: 0.70, reason: 'Offline fallback.', encouragement_fil: 'Napakaganda ng iyong pagsulat!' }; }
+            }
+
+            window.markU1Done = async function () {
+                const btn = document.getElementById('u1-tapos-btn');
+                if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sinusuri...'; }
+                const vUpper = await validateDrawingAI('upper', 'P');
+                const vLower = await validateDrawingAI('lower', 'p');
+                if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-check"></i> Tapos na!'; }
+
+                const tickU = document.getElementById('doneTick-upper'), frameU = document.getElementById('frameUpper');
+                let uFail = false, lFail = false;
+
+                if (!vUpper.valid) {
+                    uFail = true;
+                    if (frameU) { frameU.style.border = '4px solid #f44336'; setTimeout(() => frameU.style.border = '4px solid #90CAF9', 700); }
+                    if (tickU) {
+                        tickU.className = 'pad-done-tick show error-tick';
+                        tickU.style.cssText = 'display:flex; border-color:#f44336; color:#b71c1c; background:#FFEBEE; margin-top:10px;';
+                        tickU.innerHTML = '⚠️ ' + (vUpper.reason || 'Subukan ulit!');
+                    }
+                } else {
+                    pads['upper'].done = true;
+                    if (tickU) {
+                        tickU.className = 'pad-done-tick show';
+                        tickU.style.cssText = 'display:flex; border-color:var(--green); color:#1b5e20; background:#E9FBEE; margin-top:10px;';
+                        tickU.innerHTML = '✅ Napakahusay!';
+                    }
+                }
+
+                const tickL = document.getElementById('doneTick-lower'), frameL = document.getElementById('frameLower');
+                if (!vLower.valid) {
+                    lFail = true;
+                    if (frameL) { frameL.style.border = '4px solid #f44336'; setTimeout(() => frameL.style.border = '4px solid #90CAF9', 700); }
+                    if (tickL) {
+                        tickL.className = 'pad-done-tick show error-tick';
+                        tickL.style.cssText = 'display:flex; border-color:#f44336; color:#b71c1c; background:#FFEBEE; margin-top:10px;';
+                        tickL.innerHTML = '⚠️ ' + (vLower.reason || 'Subukan ulit!');
+                    }
+                } else {
+                    pads['lower'].done = true;
+                    if (tickL) {
+                        tickL.className = 'pad-done-tick show';
+                        tickL.style.cssText = 'display:flex; border-color:var(--green); color:#1b5e20; background:#E9FBEE; margin-top:10px;';
+                        tickL.innerHTML = '✅ Magaling!';
+                    }
+                }
+
+                if (uFail || lFail) {
+                    if(window.AudioManager) window.AudioManager.playSFX('failed');
+                } else {
+                    if(window.AudioManager) window.AudioManager.playSFX('correct');
+                    if (!state[1].checked) {
+                        state[1].checked = true; state[1].score = 1;
+                        document.getElementById('starCount').textContent = parseInt(document.getElementById('starCount').textContent) + 1;
+                        launchConfetti(); updateNextBtn();
+                    }
+                }
+            };
+
+            window.markDone = async function (id) {
+                const p = pads[id], tick = document.getElementById('doneTick-' + id), frame = document.getElementById('frame' + (id==='exA'?'ExA':id==='exB'?'ExB':'ExC'));
+                const doneBtn = document.querySelector(`[onclick="markDone('${id}')"]`);
+                if (doneBtn) { doneBtn.disabled = true; doneBtn.innerHTML = '⏳ Sinusuri...'; }
+                const expected = (id === 'exA') ? 'P' : (id === 'exB' ? 'p' : 'P');
+                const validation = await validateDrawingAI(id, expected);
+                if (doneBtn) { doneBtn.disabled = false; doneBtn.innerHTML = '✓ Tapos na!'; }
+
+                if (!validation.valid) {
+                    if(window.AudioManager) window.AudioManager.playSFX('failed'); 
+                    if (frame) { frame.style.border = '4px solid #f44336'; setTimeout(() => { frame.style.border = '4px solid #90CAF9'; }, 700); }
+                    if (tick) {
+                        tick.className = 'pad-done-tick show error-tick'; tick.style.cssText = 'display:flex; border-color:#f44336; color:#b71c1c; background:#FFEBEE; margin-top:10px;';
+                        tick.innerHTML = '⚠️ ' + (validation.reason || 'Subukan ulit!');
+                    }
+                    return;
+                }
+                
+                if(window.AudioManager) window.AudioManager.playSFX('correct'); 
+                p.done = true;
+                if (tick) {
+                    tick.className = 'pad-done-tick show'; tick.style.cssText = 'display:flex; border-color:var(--green); color:#1b5e20; background:#E9FBEE; margin-top:10px;';
+                    tick.innerHTML = '✅ ' + (validation.encouragement_fil || 'Magaling!');
+                    tick.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+                
+                let targetState = 0;
+                if(id === 'exA' && pads['exB']?.done && !state[2].checked) targetState = 2;
+                if(id === 'exB' && pads['exA']?.done && !state[2].checked) targetState = 2;
+                if(id === 'exC' && !state[3].checked) targetState = 3;
+
+                if (targetState > 0) {
+                    state[targetState].checked = true; state[targetState].score = 1;
+                    document.getElementById('starCount').textContent = parseInt(document.getElementById('starCount').textContent) + 1;
+                    launchConfetti(); updateNextBtn();
+                }
+            };
+
+            initPad('upper'); initPad('lower'); initPad('exA'); initPad('exB'); initPad('exC');
+
+            function showFinalScore() {
+                const totalScore = state[1].score + state[2].score + state[3].score + state[4].score + state[5].score;
+                const maxScore = 5; 
+                const section = document.getElementById('score-section');
+                if(section) {
+                    section.style.display = 'block';
+                    setTimeout(() => section.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+                }
+
+                const pct = totalScore / maxScore;
+                let starsCount, msg;
+                if (pct >= 1) { starsCount = 5; msg = "Perpekto! Ikaw ang pinakamahusay! 🏆"; }
+                else if (pct >= 0.75) { starsCount = 4; msg = "Napakahusay! Halos perpekto! 🎉"; }
+                else if (pct >= 0.5) { starsCount = 3; msg = "Magaling! Patuloy ka! 💪"; }
+                else if (pct >= 0.25) { starsCount = 2; msg = "Ayos! Subukan mo ulit! 🌱"; }
+                else { starsCount = 1; msg = "Huwag sumuko! Subukan ulit! ⭐"; }
+
+                const sStars = document.getElementById('scoreStars');
+                if(sStars) sStars.textContent = '⭐'.repeat(starsCount) + '☆'.repeat(5 - starsCount);
+                const sText = document.getElementById('scoreText');
+                if(sText) sText.textContent = msg;
+                const sDetail = document.getElementById('scoreDetail');
+                if(sDetail) sDetail.textContent = `Puntos: ${totalScore} / ${maxScore}`;
+
+                updateNextBtn(); launchConfetti();
+            }
+
+            window.playPSound = function () {
+                const btn = document.getElementById('soundBtn');
+                if(btn) {
+                    btn.style.transform = 'scale(0.93) translateY(5px)'; btn.style.boxShadow = '0 0 0 #000';
+                    setTimeout(() => { btn.style.transform = ''; btn.style.boxShadow = ''; }, 180);
+                }
+
+                const introAudio = new Audio("{% static 'core/audio/p_intro.mp3' %}");
+                const wordsAudio = new Audio("{% static 'core/audio/p_pronounce.mp3' %}");
+                
+                introAudio.onerror = function() {
+                    if ('speechSynthesis' in window) {
+                        const utter = new SpeechSynthesisUtterance('p... p... puno... puso... pera');
+                        utter.lang = 'tl-PH'; utter.rate = 0.75; utter.pitch = 1.1;
+                        window.speechSynthesis.cancel();
+                        window.speechSynthesis.speak(utter);
+                    }
+                };
+
+                if (window.TTSettings) {
+                    const vol = window.TTSettings.getVolume() / 100;
+                    introAudio.volume = vol; wordsAudio.volume = vol;
+                }
+                introAudio.addEventListener('ended', () => wordsAudio.play().catch(e => {}));
+                introAudio.play().catch(e => introAudio.onerror());
+            };
+
+            function launchConfetti() {
+                const wrap = document.getElementById('confettiWrap');
+                if(!wrap) return;
+                wrap.innerHTML = ''; wrap.classList.add('active');
+                const colors = ['#FF6B9D', '#FFD93D', '#6BCB77', '#4D96FF', '#C77DFF', '#FF9F43'];
+                for (let i = 0; i < 60; i++) {
+                    const el = document.createElement('div'); el.className = 'confetti-particle';
+                    el.style.left = Math.random() * 100 + 'vw'; el.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    el.style.width = (8 + Math.random() * 10) + 'px'; el.style.height = (8 + Math.random() * 10) + 'px';
+                    el.style.animationDuration = (1.5 + Math.random() * 2) + 's'; el.style.animationDelay = Math.random() * 0.8 + 's';
+                    wrap.appendChild(el);
+                }
+                setTimeout(() => { wrap.classList.remove('active'); wrap.innerHTML = ''; }, 4000);
+            }
+
+            updateUI();
+        })();
+
+        // ── SETTINGS MODAL CONTROLLER ──
+        function openSettings() {
+            var vol = window.TTSettings ? window.TTSettings.getVolume() : 80;
+            var br = window.TTSettings ? window.TTSettings.getBrightness() : 100;
+            var vs = document.getElementById('tt-vol-slider');
+            var bs = document.getElementById('tt-br-slider');
+            if (vs) { vs.value = vol; updateSliderBg(vs, vol, 0, 100); }
+            if (bs) { bs.value = br; updateSliderBg(bs, br, 50, 150); }
+            var vl = document.getElementById('tt-vol-label');
+            var bl = document.getElementById('tt-br-label');
+            if (vl) vl.textContent = vol + '%';
+            if (bl) bl.textContent = br + '%';
+            document.getElementById('settings-modal').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        window.openSettings = openSettings;
+        
+        window.closeSettings = function () {
+            document.getElementById('settings-modal').classList.remove('open');
+            document.body.style.overflow = '';
+        };
+
+        function updateSliderBg(input, val, min, max) {
+            var pct = ((val - min) / (max - min) * 100).toFixed(1) + '%';
+            if (input.classList.contains('volume-slider')) input.style.setProperty('--vol-pct', pct);
+            if (input.classList.contains('brightness-slider')) input.style.setProperty('--br-pct', pct);
+        }
+
+        window.onVolChange = function (val) {
+            val = parseInt(val, 10);
+            if (window.TTSettings) window.TTSettings.setVolume(val);
+            var el = document.getElementById('tt-vol-label');
+            if (el) el.textContent = val + '%';
+            updateSliderBg(document.getElementById('tt-vol-slider'), val, 0, 100);
+        };
+
+        window.onBrChange = function (val) {
+            val = parseInt(val, 10);
+            if (window.TTSettings) window.TTSettings.setBrightness(val);
+            var el = document.getElementById('tt-br-label');
+            if (el) el.textContent = val + '%';
+            updateSliderBg(document.getElementById('tt-br-slider'), val, 50, 150);
+        };
+
+        window.onPixelChange = function (checked) {
+            if (window.TTSettings) window.TTSettings.setPixelated(checked);
+        };
+
+        function updateFSBtn() {
+            var btn = document.getElementById('tt-fs-btn');
+            if (!btn) return;
+            btn.textContent = document.fullscreenElement ? '⎋ Lumabas sa Full Screen' : '⛶ I-bukas ang Full Screen';
+        }
+
+        window.toggleFullscreen = function () {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(function () { });
+            } else {
+                document.exitFullscreen().catch(function () { });
+            }
+        };
+        document.addEventListener('fullscreenchange', updateFSBtn);
+    </script>
+
+    <!-- ── AUDIO MANAGER DEPENDENCY ── -->
+    <script src="{% static 'core/audio_manager.js' %}"></script>
+</body>
+</html>

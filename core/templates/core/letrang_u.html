@@ -461,7 +461,7 @@
 
                     <div class="text-center mt-3" style="font-size:0.95rem; font-weight:700; color:#888;">
                         🌧️ Halimbawa ng salita:
-                        <strong style="color:var(--purple);">Ulan &nbsp;•&nbsp; Usa &nbsp;•&nbsp; Uod</strong>
+                        <strong style="color:var(--purple);">Ulan &nbsp;•&nbsp; Ube &nbsp;•&nbsp; Usok</strong>
                     </div>
                 </div>
             </div>
@@ -964,6 +964,8 @@
 
             // ── Drawing Pads Setup ──
             const pads = {};
+            // Ensure Unit 1 erase/undo always targets a valid pad even if user hasn't clicked inside a frame yet.
+            window._u1ActivePad = window._u1ActivePad || 'upper';
             function initPad(id) {
                 const capId = id.charAt(0).toUpperCase() + id.slice(1);
                 const canvas = document.getElementById('canvas' + capId);

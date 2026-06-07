@@ -110,96 +110,116 @@ def mapa(request):
 
 
 # ── VIEWS PARA SA BAWAT LETRA ──
+# Use exact Level.name values seeded by 0003_seed_map_levels.py:
+#   name = f"Letrang {letter}" where letter can be "Ng" or single letters.
 
 @login_required
 def letrang_m(request):
-    level = Level.objects.filter(name__icontains='M').first()
+    level = Level.objects.filter(name='Letrang M').first()
     context = {'level_id': level.id if level else ''}
     return render(request, 'core/letrang_m.html', context)
 
 @login_required
 def letrang_i(request):
-    level = Level.objects.filter(name__icontains='I').first()
+    level = Level.objects.filter(name='Letrang I').first()
     context = {'level_id': level.id if level else ''}
     return render(request, 'core/letrang_i.html', context)
 
 @login_required
 def letrang_o(request):
-    level = Level.objects.filter(name__icontains='O').first()
+    level = Level.objects.filter(name='Letrang O').first()
     context = {'level_id': level.id if level else ''}
     return render(request, 'core/letrang_o.html', context)
 
 @login_required
 def letrang_b(request):
-    level = Level.objects.filter(name__icontains='B').first()
+    level = Level.objects.filter(name='Letrang B').first()
     context = {'level_id': level.id if level else ''}
     return render(request, 'core/letrang_b.html', context)
 
 @login_required
 def letrang_e(request):
-    level = Level.objects.filter(name__icontains='E').first()
+    level = Level.objects.filter(name='Letrang E').first()
     context = {'level_id': level.id if level else ''}
     return render(request, 'core/letrang_e.html', context)
 
 @login_required
 def letrang_u(request):
-    level = Level.objects.filter(name__icontains='U').first()
+    level = Level.objects.filter(name='Letrang U').first()
     context = {'level_id': level.id if level else ''}
     return render(request, 'core/letrang_u.html', context)
 
 @login_required
 def letrang_t(request):
-    level = Level.objects.filter(name__icontains='T').first()
+    level = Level.objects.filter(name='Letrang T').first()
     context = {'level_id': level.id if level else ''}
     return render(request, 'core/letrang_t.html', context)
 
 @login_required
 def letrang_k(request):
-    level = Level.objects.filter(name__icontains='K').first()
+    level = Level.objects.filter(name='Letrang K').first()
     context = {'level_id': level.id if level else ''}
     return render(request, 'core/letrang_k.html', context)
 
 @login_required
 def letrang_l(request):
-    level = Level.objects.filter(name__icontains='L').first()
+    level = Level.objects.filter(name='Letrang L').first()
     context = {'level_id': level.id if level else ''}
     return render(request, 'core/letrang_l.html', context)
 
 @login_required
 def letrang_y(request):
-    level = Level.objects.filter(name__icontains='Y').first()
+    level = Level.objects.filter(name='Letrang Y').first()
     context = {'level_id': level.id if level else ''}
     return render(request, 'core/letrang_y.html', context)
 
 @login_required
 def letrang_n(request):
-    level = Level.objects.filter(name__icontains=' N').first()
+    level = Level.objects.filter(name='Letrang N').first()
     context = {'level_id': level.id if level else ''}
     return render(request, 'core/letrang_n.html', context)
 
 @login_required
+def letrang_g(request):
+    level = Level.objects.filter(name='Letrang G').first()
+    context = {'level_id': level.id if level else ''}
+    return render(request, 'core/letrang_g.html', context)
+
+@login_required
 def letrang_ng(request):
-    level = Level.objects.filter(name__icontains='NG').first()
+    level = Level.objects.filter(name='Letrang Ng').first()
     context = {'level_id': level.id if level else ''}
     return render(request, 'core/letrang_ng.html', context)
 
 @login_required
 def letrang_p(request):
-    level = Level.objects.filter(name__icontains='P').first()
+    level = Level.objects.filter(name='Letrang P').first()
     context = {'level_id': level.id if level else ''}
     return render(request, 'core/letrang_p.html', context)
 
 @login_required
 def letrang_r(request):
-    level = Level.objects.filter(name__icontains='R').first()
+    level = Level.objects.filter(name='Letrang R').first()
     context = {'level_id': level.id if level else ''}
     return render(request, 'core/letrang_r.html', context)
 
 @login_required
 def letrang_d(request):
-    level = Level.objects.filter(name__icontains='D').first()
+    level = Level.objects.filter(name='Letrang D').first()
     context = {'level_id': level.id if level else ''}
     return render(request, 'core/letrang_d.html', context)
+
+@login_required
+def letrang_h(request):
+    level = Level.objects.filter(name='Letrang H').first()
+    context = {'level_id': level.id if level else ''}
+    return render(request, 'core/letrang_h.html', context)
+
+@login_required
+def letrang_w(request):
+    level = Level.objects.filter(name='Letrang W').first()
+    context = {'level_id': level.id if level else ''}
+    return render(request, 'core/letrang_w.html', context)
 
 
 # ── APIs ──

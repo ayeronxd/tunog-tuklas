@@ -19,10 +19,15 @@ urlpatterns = [
     path('letrang-ll/', views.letrang_l, name='letrang_l'),
     path('letrang-yy/', views.letrang_y, name='letrang_y'),
     path('letrang-nn/', views.letrang_n, name='letrang_n'),
+    path('letrang-gg/', views.letrang_g, name='letrang_g'),
     path('letrang-ngng/', views.letrang_ng, name='letrang_ng'),
     path('letrang-pp/', views.letrang_p, name='letrang_p'),
     path('letrang-rr/', views.letrang_r, name='letrang_r'),
     path('letrang-dd/', views.letrang_d, name='letrang_d'),
+
+    # ── MGA LETRA (agdag) ──
+    path('letrang-h/', views.letrang_h, name='letrang_h'),
+    path('letrang-w/', views.letrang_w, name='letrang_w'),
 
     # ── APIs ──
     path('api/save-progress/', views.save_progress, name='save_progress'),

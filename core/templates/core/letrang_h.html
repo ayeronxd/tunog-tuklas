@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Letrang Tt – Tunog Tuklas</title>
+    <title>Letrang Hh – Tunog Tuklas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -202,7 +202,7 @@
             font-weight: 900;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 4px;
         }
 
         /* Drawing pad wrapper */
@@ -357,12 +357,15 @@
 
 <body>
 
+    <!-- ── REVERSE RAINBOW TRANSITION OUT ── -->
     <div id="transition-out"
         style="position:fixed; inset:0; z-index:99999; pointer-events:none; display:flex; align-items:center; justify-content:center; overflow:hidden; animation: outOverlay 0.1s 2.4s forwards;">
+        <!-- Pinwheel spins backwards and shrinks -->
         <div
             style="position:absolute; width:250vw; height:250vw; border-radius:50%; background: conic-gradient(#FF5252 0deg 60deg, #FF9800 60deg 120deg, #FFEB3B 120deg 180deg, #4CAF50 180deg 240deg, #2196F3 240deg 300deg, #9C27B0 300deg 360deg); animation: reversePinwheel 1.8s cubic-bezier(0.6, 0, 0.2, 1) forwards;">
         </div>
 
+        <!-- Stars shrink and rotate -->
         <div style="position:absolute; inset:0; z-index:10001; animation: outOverlay 0.1s 2s forwards;">
             <i class="fa-solid fa-star text-warning"
                 style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:15%; left:15%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0s;"></i>
@@ -376,6 +379,7 @@
                 style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:10%; left:50%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.45s;"></i>
         </div>
 
+        <!-- Mascot hides -->
         <div
             style="position:absolute; z-index:10002; display:flex; flex-direction:column; align-items:center; justify-content:center; animation: reverseContent 1.4s cubic-bezier(0.6, 0, 0.2, 1) forwards;">
             <div id="transition-mascot-emoji"
@@ -400,24 +404,28 @@
         @keyframes reverseContent { 0% { opacity: 1; transform: scale(1) translateY(0); } 50% { opacity: 0.9; transform: scale(0.9) translateY(30px); } 100% { opacity: 0; transform: scale(0.4) translateY(250px); } }
     </style>
 
+    <!-- Confetti -->
     <div class="confetti-wrap" id="confettiWrap" aria-hidden="true"></div>
 
+    <!-- Floating background decorations -->
     <div class="floating-deco" style="top:10%; left:3%;">⭐</div>
     <div class="floating-deco" style="top:30%; right:4%;">🌸</div>
     <div class="floating-deco" style="top:55%; left:2%;">🌈</div>
     <div class="floating-deco" style="bottom:15%; right:3%;">✨</div>
 
+    <!-- ══ HEADER ══ -->
     <header class="lesson-header">
         <a href="{% url 'core:mapa' %}" class="header-back-btn" title="Bumalik sa Mapa">
             <i class="fa-solid fa-chevron-left"></i>
         </a>
-        <h1 class="header-title">🔤 Letrang Tt</h1>
+        <h1 class="header-title">🔤 Letrang Hh</h1>
         <div class="header-stars">
             <i class="fa-solid fa-star" style="color:#FFD93D;"></i>
             <span id="starCount">0</span> / 5
         </div>
     </header>
 
+    <!-- ══ UNIT PROGRESS DOTS ══ -->
     <div class="unit-progress-bar">
         <span class="progress-label">Yunit</span>
         <div class="progress-dot active" id="dot-0"></div>
@@ -428,100 +436,118 @@
         <div class="progress-dot" id="dot-5"></div>
     </div>
 
+    <!-- ══ SLIDING UNITS VIEWPORT ══ -->
     <div class="units-viewport">
         <div class="units-track" id="unitsTrack">
 
+            <!-- ═══════════════════════════════════
+             UNIT 0: Kilalanin Natin (Intro)
+            ═══════════════════════════════════ -->
             <div class="unit-slide" id="unit-0">
                 <div class="section-card">
                     <div class="section-badge badge-pink">📖 Kilalanin Natin</div>
 
                     <div class="text-center mt-3 mb-4">
-                        <div class="big-letter" style="font-family:'Bubblegum Sans',cursive;font-size:7rem;">Tt</div>
+                        <div class="big-letter" style="font-family:'Bubblegum Sans',cursive;font-size:7rem;">Hh</div>
                     </div>
 
                     <div class="text-center mb-4">
                         <p style="font-weight:800; color:var(--pink); font-size:1.1rem; margin-bottom:4px;">
-                            Pagpapakilala at Pagbigkas ng Tt
+                            Pagpapakilala at Pagbigkas ng Hh
                         </p>
                         <p style="font-weight:700; color:#c0392b; font-size:0.95rem;">
-                            Ipakita ang larawan ng malaki at maliit na letrang Tt.
+                            Ipakita ang larawan ng malaki at maliit na letrang Hh.
                         </p>
                     </div>
 
                     <div class="intro-instruction">
                         <i class="fa-solid fa-lips" style="color:var(--pink); margin-right:6px;"></i>
-                        <strong>Paano bigkasin?</strong> Sa paglikha ng tunog, idikit ang dulo ng dila sa likod ng mga ngipin sa itaas at biglang ibuga ang hangin upang malikha ang tunog ng <strong>/t/</strong>. Ulitin hanggang sa maging pamilyar.
+                        <strong>Paano bigkasin?</strong> Ibuka ang bibig. Magpalabas ng hangin mula sa lalamunan upang malikha ang tunog ng <strong>/h/</strong>. Ulitin hanggang sa maging pamilyar.
                     </div>
 
                     <div class="text-center mt-4">
-                        <button class="sound-btn" onclick="playTSound()" id="soundBtn">
-                            <i class="fa-solid fa-volume-high"></i> Pakinggan ang /t/
+                        <button class="sound-btn" onclick="playHSound()" id="soundBtn">
+                            <i class="fa-solid fa-volume-high"></i> Pakinggan ang /h/
                         </button>
                     </div>
 
                     <div class="text-center mt-3" style="font-size:0.95rem; font-weight:700; color:#888;">
-                        🍆 Halimbawa ng salita:
-                        <strong style="color:var(--purple);">Talong &nbsp;•&nbsp; Tuta &nbsp;•&nbsp; Tasa</strong>
+                        👑 Halimbawa ng salita:
+                        <strong style="color:var(--purple);">Hari &nbsp;•&nbsp; Halaman &nbsp;•&nbsp; Hangin</strong>
                     </div>
                 </div>
             </div>
 
+            <!-- ═══════════════════════════════════
+             UNIT 1: Pagsulat ng Hh
+            ═══════════════════════════════════ -->
             <div class="unit-slide" id="unit-1">
                 <div class="section-card">
-                    <div class="section-badge badge-orange">✏️ Pagsulat ng Tt</div>
+                    <div class="section-badge badge-orange">✏️ Pagsulat ng Hh</div>
 
-                    <h2 class="activity-title mt-3" style="color:var(--orange);">Sumulat ng Letrang Tt!</h2>
-                    <p class="activity-instruction">Gamitin ang iyong daliri o mouse para magsulat ng malaki at maliit na <strong>Tt</strong> sa loob ng kahon. Sundin ang guhit-gabay! ✍️</p>
+                    <h2 class="activity-title mt-3" style="color:var(--orange);">Sumulat ng Letrang Hh!</h2>
+                    <p class="activity-instruction">Gamitin ang iyong daliri o mouse para magsulat ng malaki at maliit na <strong>Hh</strong> sa loob ng kahon. Sundin ang guhit-gabay! ✍️</p>
 
+                    <!-- ── TWO-COLUMN LAYOUT ── -->
                     <div style="display:flex; gap:0; align-items:stretch; margin-top:8px;">
 
+                        <!-- LEFT PANEL: Stroke guides + shared controls -->
                         <div style="width:200px; flex-shrink:0; display:flex; flex-direction:column; gap:14px; padding-right:18px; border-right:2px solid #eee;">
                             
+                            <!-- Stroke guide: H uppercase -->
                             <div style="background:#fff9f5; border:2px dashed #FF9F43; border-radius:14px; padding:10px; text-align:center;">
-                                <p style="font-weight:800; color:#FF9F43; font-size:0.78rem; margin-bottom:6px;">💡 Malaking T</p>
+                                <p style="font-weight:800; color:#FF9F43; font-size:0.78rem; margin-bottom:6px;">💡 Malaking H</p>
                                 <svg viewBox="0 0 100 110" style="width:100%; max-width:110px; height:auto; overflow:visible; display:block; margin:0 auto;">
                                     <line x1="-5" y1="10" x2="105" y2="10" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="5" />
                                     <line x1="-5" y1="55" x2="105" y2="55" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="5" />
                                     <line x1="-5" y1="100" x2="105" y2="100" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="5" />
 
-                                    <path d="M 20,10 L 80,10" fill="none" stroke="#f0e0e8" stroke-width="14" stroke-linecap="round" />
-                                    <path d="M 50,10 L 50,100" fill="none" stroke="#f0e0e8" stroke-width="14" stroke-linecap="round" />
-
-                                    <path d="M 20,10 L 80,10" fill="none" stroke="#FF6B9D" stroke-width="4" stroke-linecap="round" />
-                                    <polygon points="75,5 85,10 75,15" fill="#FF6B9D" />
-                                    <circle cx="20" cy="10" r="9" fill="#FF6B9D" /><text x="20" y="14" fill="white" font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">1</text>
-
-                                    <path d="M 50,10 L 50,100" fill="none" stroke="#4D96FF" stroke-width="4" stroke-linecap="round" />
-                                    <polygon points="45,95 55,95 50,105" fill="#4D96FF" />
-                                    <circle cx="50" cy="25" r="9" fill="#4D96FF" /><text x="50" y="29" fill="white" font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">2</text>
-                                </svg>
-                            </div>
-
-                            <div style="background:#fff5f9; border:2px dashed #FF6B9D; border-radius:14px; padding:10px; text-align:center;">
-                                <p style="font-weight:800; color:#FF6B9D; font-size:0.78rem; margin-bottom:6px;">💡 Maliit na t</p>
-                                <svg viewBox="0 0 100 110" style="width:100%; max-width:110px; height:auto; overflow:visible; display:block; margin:0 auto;">
-                                    <line x1="-5" y1="10" x2="105" y2="10" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="5" />
-                                    <line x1="-5" y1="55" x2="105" y2="55" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="5" />
-                                    <line x1="-5" y1="100" x2="105" y2="100" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="5" />
-
-                                    <path d="M 50,10 L 50,90 C 50,100 65,100 70,95" fill="none" stroke="#f0e0e8" stroke-width="14" stroke-linecap="round" />
+                                    <path d="M 30,10 L 30,100" fill="none" stroke="#f0e0e8" stroke-width="14" stroke-linecap="round" />
+                                    <path d="M 70,10 L 70,100" fill="none" stroke="#f0e0e8" stroke-width="14" stroke-linecap="round" />
                                     <path d="M 30,55 L 70,55" fill="none" stroke="#f0e0e8" stroke-width="14" stroke-linecap="round" />
 
-                                    <path d="M 50,10 L 50,90 C 50,100 65,100 70,95" fill="none" stroke="#FF6B9D" stroke-width="4" stroke-linecap="round" />
-                                    <polygon points="65,90 75,90 70,100" fill="#FF6B9D" />
-                                    <circle cx="50" cy="15" r="9" fill="#FF6B9D" /><text x="50" y="19" fill="white" font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">1</text>
+                                    <path d="M 30,10 L 30,100" fill="none" stroke="#FF6B9D" stroke-width="4" stroke-linecap="round" />
+                                    <polygon points="25,90 35,90 30,100" fill="#FF6B9D" />
+                                    <circle cx="30" cy="15" r="9" fill="#FF6B9D" /><text x="30" y="19" fill="white" font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">1</text>
 
-                                    <path d="M 30,55 L 70,55" fill="none" stroke="#4D96FF" stroke-width="4" stroke-linecap="round" />
-                                    <polygon points="65,50 75,55 65,60" fill="#4D96FF" />
-                                    <circle cx="30" cy="55" r="9" fill="#4D96FF" /><text x="30" y="59" fill="white" font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">2</text>
+                                    <path d="M 70,10 L 70,100" fill="none" stroke="#4D96FF" stroke-width="4" stroke-linecap="round" />
+                                    <polygon points="65,90 75,90 70,100" fill="#4D96FF" />
+                                    <circle cx="70" cy="15" r="9" fill="#4D96FF" /><text x="70" y="19" fill="white" font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">2</text>
+
+                                    <path d="M 30,55 L 70,55" fill="none" stroke="#6BCB77" stroke-width="4" stroke-linecap="round" />
+                                    <polygon points="65,50 75,55 65,60" fill="#6BCB77" />
+                                    <circle cx="35" cy="55" r="9" fill="#6BCB77" /><text x="35" y="59" fill="white" font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">3</text>
                                 </svg>
                             </div>
 
+                            <!-- Stroke guide: h lowercase -->
+                            <div style="background:#fff5f9; border:2px dashed #FF6B9D; border-radius:14px; padding:10px; text-align:center;">
+                                <p style="font-weight:800; color:#FF6B9D; font-size:0.78rem; margin-bottom:6px;">💡 Maliit na h</p>
+                                <svg viewBox="0 0 100 110" style="width:100%; max-width:110px; height:auto; overflow:visible; display:block; margin:0 auto;">
+                                    <line x1="-5" y1="10" x2="105" y2="10" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="5" />
+                                    <line x1="-5" y1="55" x2="105" y2="55" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="5" />
+                                    <line x1="-5" y1="100" x2="105" y2="100" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="5" />
+
+                                    <path d="M 35,10 L 35,100" fill="none" stroke="#f0e0e8" stroke-width="14" stroke-linecap="round" />
+                                    <path d="M 35,55 C 50,45 65,55 65,70 L 65,100" fill="none" stroke="#f0e0e8" stroke-width="14" stroke-linecap="round" />
+
+                                    <path d="M 35,10 L 35,100" fill="none" stroke="#FF6B9D" stroke-width="4" stroke-linecap="round" />
+                                    <polygon points="30,90 40,90 35,100" fill="#FF6B9D" />
+                                    <circle cx="35" cy="15" r="9" fill="#FF6B9D" /><text x="35" y="19" fill="white" font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">1</text>
+
+                                    <path d="M 35,55 C 50,45 65,55 65,70 L 65,100" fill="none" stroke="#4D96FF" stroke-width="4" stroke-linecap="round" />
+                                    <polygon points="60,90 70,90 65,100" fill="#4D96FF" />
+                                    <circle cx="45" cy="55" r="9" fill="#4D96FF" /><text x="45" y="59" fill="white" font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">2</text>
+                                </svg>
+                            </div>
+
+                            <!-- Shared toolbar -->
                             <div style="display:flex; flex-direction:column; gap:7px;">
                                 <button class="pad-tool-btn undo-btn" style="width:100%; justify-content:center;" onclick="undoStroke(window._u1ActivePad || 'upper')">↩ Burahin huli</button>
                                 <button class="pad-tool-btn erase" style="width:100%; justify-content:center;" onclick="clearCanvas(window._u1ActivePad || 'upper')">🗑 I-clear</button>
                             </div>
 
+                            <!-- Shared color row -->
                             <div>
                                 <div style="font-size:0.78rem; font-weight:800; color:#aaa; margin-bottom:5px;">Kulay:</div>
                                 <div style="display:flex; flex-wrap:wrap; gap:6px;">
@@ -532,6 +558,7 @@
                                 </div>
                             </div>
 
+                            <!-- Shared brush size row -->
                             <div>
                                 <div style="font-size:0.78rem; font-weight:800; color:#aaa; margin-bottom:5px;">Laki ng panulat:</div>
                                 <div style="display:flex; gap:7px; align-items:center;">
@@ -542,31 +569,32 @@
                             </div>
                         </div>
 
+                        <!-- RIGHT PANEL: Canvases + Tapos na! -->
                         <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:14px; padding-left:18px;">
                             <div class="draw-pad-wrapper" style="margin-bottom:0;">
                                 <div class="draw-pad-label">
-                                    <span class="letter-preview upper">T</span><span style="color:var(--blue); font-weight:900;">Malaking T</span>
+                                    <span class="letter-preview upper">H</span><span style="color:var(--blue); font-weight:900;">Malaking H</span>
                                 </div>
                                 <div class="canvas-frame" id="frameUpper" style="margin-top:10px;" onclick="window._u1ActivePad='upper'">
                                     <div class="canvas-ghost" id="ghostUpper" style="gap:15%;">
-                                        <span class="ghost-letter">T</span><span class="ghost-letter">T</span><span class="ghost-letter">T</span>
+                                        <span class="ghost-letter">H</span><span class="ghost-letter">H</span><span class="ghost-letter">H</span>
                                     </div>
                                     <canvas id="canvasUpper" height="150"></canvas>
                                 </div>
-                                <div class="pad-done-tick" id="doneTick-upper">✅ Napakahusay! Sinulatan mo na ang malaking T!</div>
+                                <div class="pad-done-tick" id="doneTick-upper">✅ Napakahusay! Sinulatan mo na ang malaking H!</div>
                             </div>
 
                             <div class="draw-pad-wrapper" style="margin-bottom:0;">
                                 <div class="draw-pad-label">
-                                    <span class="letter-preview lower">t</span><span style="color:var(--pink); font-weight:900;">Maliit na t</span>
+                                    <span class="letter-preview lower">h</span><span style="color:var(--pink); font-weight:900;">Maliit na h</span>
                                 </div>
                                 <div class="canvas-frame" id="frameLower" style="margin-top:10px;" onclick="window._u1ActivePad='lower'">
                                     <div class="canvas-ghost" id="ghostLower" style="gap:15%;">
-                                        <span class="ghost-letter">t</span><span class="ghost-letter">t</span><span class="ghost-letter">t</span>
+                                        <span class="ghost-letter">h</span><span class="ghost-letter">h</span><span class="ghost-letter">h</span>
                                     </div>
                                     <canvas id="canvasLower" height="130"></canvas>
                                 </div>
-                                <div class="pad-done-tick" id="doneTick-lower">✅ Magaling! Sinulatan mo na ang maliit na t!</div>
+                                <div class="pad-done-tick" id="doneTick-lower">✅ Magaling! Sinulatan mo na ang maliit na h!</div>
                             </div>
 
                             <div style="display:flex; justify-content:center; padding-top:4px;">
@@ -579,15 +607,18 @@
                 </div>
             </div>
 
+            <!-- ═══════════════════════════════════
+             UNIT 2: Pagsasanay 1 A at B
+            ═══════════════════════════════════ -->
             <div class="unit-slide" id="unit-2">
                 <div class="section-card">
                     <div class="section-badge badge-purple">📝 Pagsasanay</div>
-                    <div class="pagsasanay-label text-center mt-3" style="font-size: 1.5rem; font-weight: 700; color: #333; margin-bottom: 5px;">A. Sumulat ng malalaking T at maliliit na t.</div>
+                    <div class="pagsasanay-label text-center mt-3" style="font-size: 1.5rem; font-weight: 700; color: #333; margin-bottom: 5px;">A. Sumulat ng malalaking H at maliliit na h.</div>
 
                     <div class="draw-pad-wrapper" style="margin-top:20px;">
                         <div class="canvas-frame" id="frameExA">
                             <div class="canvas-ghost" id="ghostExA" style="gap: 15%;">
-                                <span class="ghost-letter">T</span><span class="ghost-letter">T</span><span class="ghost-letter">T</span><span class="ghost-letter">T</span>
+                                <span class="ghost-letter">H</span><span class="ghost-letter">H</span><span class="ghost-letter">H</span><span class="ghost-letter">H</span>
                             </div>
                             <canvas id="canvasExA" height="160"></canvas>
                         </div>
@@ -596,13 +627,13 @@
                             <button class="pad-tool-btn erase" onclick="clearCanvas('exA')">🗑 I-clear</button>
                             <button class="pad-tool-btn done-draw" onclick="markDone('exA')">✓ Tapos na!</button>
                         </div>
-                        <div class="pad-done-tick" id="doneTick-exA">✅ Napakahusay sa malalaking T!</div>
+                        <div class="pad-done-tick" id="doneTick-exA">✅ Napakahusay sa malalaking H!</div>
                     </div>
 
                     <div class="draw-pad-wrapper" style="margin-top:40px;">
                         <div class="canvas-frame" id="frameExB">
                             <div class="canvas-ghost" id="ghostExB" style="gap: 15%;">
-                                <span class="ghost-letter">t</span><span class="ghost-letter">t</span><span class="ghost-letter">t</span><span class="ghost-letter">t</span>
+                                <span class="ghost-letter">h</span><span class="ghost-letter">h</span><span class="ghost-letter">h</span><span class="ghost-letter">h</span>
                             </div>
                             <canvas id="canvasExB" height="140"></canvas>
                         </div>
@@ -611,20 +642,23 @@
                             <button class="pad-tool-btn erase" onclick="clearCanvas('exB')">🗑 I-clear</button>
                             <button class="pad-tool-btn done-draw" onclick="markDone('exB')">✓ Tapos na!</button>
                         </div>
-                        <div class="pad-done-tick" id="doneTick-exB">✅ Magaling sa maliliit na t!</div>
+                        <div class="pad-done-tick" id="doneTick-exB">✅ Magaling sa maliliit na h!</div>
                     </div>
                 </div>
             </div>
 
+            <!-- ═══════════════════════════════════
+             UNIT 3: Pagsasanay 1 C (Pairs)
+            ═══════════════════════════════════ -->
             <div class="unit-slide" id="unit-3">
                 <div class="section-card">
                     <div class="section-badge badge-purple">📝 Pagsasanay</div>
-                    <div class="pagsasanay-label text-center mt-3" style="font-size: 1.5rem; font-weight: 700; color: #333; margin-bottom: 5px;">B. Pagsamahin sa guhit ang malaki at maliit na letrang Tt.</div>
+                    <div class="pagsasanay-label text-center mt-3" style="font-size: 1.5rem; font-weight: 700; color: #333; margin-bottom: 5px;">B. Pagsamahin sa guhit ang malaki at maliit na letrang Hh.</div>
 
                     <div class="draw-pad-wrapper" style="margin-top:20px;">
                         <div class="canvas-frame" id="frameExC">
                             <div class="canvas-ghost" id="ghostExC" style="gap: 8%; font-size: 4.5rem; letter-spacing: 4px;">
-                                <span class="ghost-letter">Tt</span><span class="ghost-letter">Tt</span><span class="ghost-letter">Tt</span>
+                                <span class="ghost-letter">Hh</span><span class="ghost-letter">Hh</span><span class="ghost-letter">Hh</span>
                             </div>
                             <canvas id="canvasExC" height="180"></canvas>
                         </div>
@@ -638,31 +672,34 @@
                 </div>
             </div>
 
+            <!-- ═══════════════════════════════════
+             UNIT 4: Alamin Natin (Bilugan)
+            ═══════════════════════════════════ -->
             <div class="unit-slide" id="unit-4">
                 <div class="section-card" style="max-width: 1150px; padding: 60px 40px;">
                     <div class="section-badge badge-blue">🎯 Alamin Natin</div>
 
-                    <h2 class="activity-title mt-3">Sabihin ang ngalan ng mga larawan. Alin ang may simulang tunog ng <strong>Tt</strong>? Bilugan ito.</h2>
-                    <p class="activity-instruction">Pindutin ang mga larawan at pindutin ang <strong>SURIIN ANG AKING SAGOT</strong> para malaman kung ikaw ay tama.</p>
+                    <h2 class="activity-title mt-3">Sabihin ang ngalan ng mga larawan. Alin ang may tunog ng <strong>Hh</strong>? Bilugan ito.</h2>
+                    <p class="activity-instruction">Pindutin ang mga larawan na nagtataglay ng letrang Hh at pindutin ang <strong>SURIIN ANG AKING SAGOT</strong>.</p>
 
                     <div class="choices-grid" id="act4-grid" style="grid-template-columns: repeat(6, 1fr); gap: 12px; margin-top: 30px; flex-wrap: nowrap;">
                         <div class="choice-card" data-correct="true" data-activity="4" onclick="toggleChoice(this)" style="position:relative; overflow:visible;">
-                            <div class="choice-emoji-box">🍆</div><div class="choice-label">Talong</div><div class="marker-circle"></div>
+                            <div class="choice-emoji-box">👑</div><div class="choice-label">Hari</div><div class="marker-circle"></div>
                         </div>
                         <div class="choice-card" data-correct="true" data-activity="4" onclick="toggleChoice(this)" style="position:relative; overflow:visible;">
-                            <div class="choice-emoji-box">🐶</div><div class="choice-label">Tuta</div><div class="marker-circle"></div>
+                            <div class="choice-emoji-box">🌿</div><div class="choice-label">Halaman</div><div class="marker-circle"></div>
                         </div>
                         <div class="choice-card" data-correct="true" data-activity="4" onclick="toggleChoice(this)" style="position:relative; overflow:visible;">
-                            <div class="choice-emoji-box">☕</div><div class="choice-label">Tasa</div><div class="marker-circle"></div>
+                            <div class="choice-emoji-box">💇</div><div class="choice-label">Buhok</div><div class="marker-circle"></div>
                         </div>
                         <div class="choice-card" data-correct="false" data-activity="4" onclick="toggleChoice(this)" style="position:relative; overflow:visible;">
-                            <div class="choice-emoji-box">🍎</div><div class="choice-label">Mansanas</div><div class="marker-circle"></div>
+                            <div class="choice-emoji-box">🌳</div><div class="choice-label">Puno</div><div class="marker-circle"></div>
                         </div>
                         <div class="choice-card" data-correct="true" data-activity="4" onclick="toggleChoice(this)" style="position:relative; overflow:visible;">
-                            <div class="choice-emoji-box">🍞</div><div class="choice-label">Tinapay</div><div class="marker-circle"></div>
+                            <div class="choice-emoji-box">💎</div><div class="choice-label">Hikaw</div><div class="marker-circle"></div>
                         </div>
                         <div class="choice-card" data-correct="false" data-activity="4" onclick="toggleChoice(this)" style="position:relative; overflow:visible;">
-                            <div class="choice-emoji-box">⚽</div><div class="choice-label">Bola</div><div class="marker-circle"></div>
+                            <div class="choice-emoji-box">🏀</div><div class="choice-label">Bola</div><div class="marker-circle"></div>
                         </div>
                     </div>
 
@@ -675,6 +712,9 @@
                 </div>
             </div>
 
+            <!-- ═══════════════════════════════════
+             UNIT 5: Sagutin Natin (Fill in the Blanks)
+            ═══════════════════════════════════ -->
             <div class="unit-slide" id="unit-5">
                 <div class="section-card">
                     <div class="section-badge badge-blue">🧠 Sagutin Natin</div>
@@ -683,34 +723,39 @@
                     <p class="activity-instruction">Isulat ang nawawalang tunog upang mabuo ang ngalan ng mga larawan.</p>
 
                     <div style="max-width: 400px; margin: 0 auto; margin-top:20px;">
+                        <!-- Unahan -->
                         <div class="sagutin-item">
-                            <span class="sagutin-emoji">🍆</span>
+                            <span class="sagutin-emoji">👑</span>
                             <div class="sagutin-word">
-                                <input type="text" class="fill-blank-input" id="blank1" maxlength="1" data-answer="t" autocomplete="off" style="width: 50px;">along
+                                <input type="text" class="fill-blank-input" id="blank1" maxlength="1" data-answer="h" autocomplete="off" style="width: 45px; margin-right: 5px;">ari
                             </div>
                         </div>
+                        <!-- Gitna -->
                         <div class="sagutin-item">
-                            <span class="sagutin-emoji">🐶</span>
+                            <span class="sagutin-emoji">💇</span>
                             <div class="sagutin-word">
-                                <input type="text" class="fill-blank-input" id="blank2" maxlength="1" data-answer="t" autocomplete="off" style="width: 50px;">uta
+                                bu<input type="text" class="fill-blank-input" id="blank2" maxlength="1" data-answer="h" autocomplete="off" style="width: 45px; margin: 0 5px;">ok
                             </div>
                         </div>
+                        <!-- Unahan -->
                         <div class="sagutin-item">
-                            <span class="sagutin-emoji">☕</span>
+                            <span class="sagutin-emoji">🌿</span>
                             <div class="sagutin-word">
-                                <input type="text" class="fill-blank-input" id="blank3" maxlength="1" data-answer="t" autocomplete="off" style="width: 50px;">asa
+                                <input type="text" class="fill-blank-input" id="blank3" maxlength="1" data-answer="h" autocomplete="off" style="width: 45px; margin-right: 5px;">alaman
                             </div>
                         </div>
+                        <!-- Gitna -->
                         <div class="sagutin-item">
-                            <span class="sagutin-emoji">🍞</span>
+                            <span class="sagutin-emoji">🪵</span>
                             <div class="sagutin-word">
-                                <input type="text" class="fill-blank-input" id="blank4" maxlength="1" data-answer="t" autocomplete="off" style="width: 50px;">inapay
+                                ka<input type="text" class="fill-blank-input" id="blank4" maxlength="1" data-answer="h" autocomplete="off" style="width: 45px; margin: 0 5px;">oy
                             </div>
                         </div>
+                        <!-- Unahan -->
                         <div class="sagutin-item">
-                            <span class="sagutin-emoji">🩴</span>
+                            <span class="sagutin-emoji">💎</span>
                             <div class="sagutin-word">
-                                <input type="text" class="fill-blank-input" id="blank5" maxlength="1" data-answer="t" autocomplete="off" style="width: 50px;">sinelas
+                                <input type="text" class="fill-blank-input" id="blank5" maxlength="1" data-answer="h" autocomplete="off" style="width: 45px; margin-right: 5px;">ikaw
                             </div>
                         </div>
                     </div>
@@ -722,6 +767,7 @@
                         <span class="feedback-icon" id="feedback-icon-5"></span><span id="feedback-text-5"></span>
                     </div>
 
+                    <!-- FINAL SCORE BANNER -->
                     <div id="score-section" style="display:none; margin-top: 28px;">
                         <div class="score-card">
                             <div class="score-title">🎉 Napakahusay!</div>
@@ -736,6 +782,7 @@
         </div>
     </div>
 
+    <!-- ══ BOTTOM NAVIGATION BAR ══ -->
     <div class="nav-bar" id="navBar">
         <button class="nav-btn prev-btn" id="prevBtn" onclick="goBack()" style="visibility:hidden;">
             <i class="fa-solid fa-arrow-left"></i> Bumalik
@@ -752,17 +799,18 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+    <!-- ── JAVASCRIPT LOGIC ── -->
     <script>
         (function () {
             // ── State ──
-            const UNIT_NAMES = ['Kilalanin Natin', 'Pagsulat ng Tt', 'Pagsasanay 1 A & B', 'Pagsasanay 1 C', 'Alamin Natin', 'Sagutin Natin'];
+            const UNIT_NAMES = ['Kilalanin Natin', 'Pagsulat ng Hh', 'Pagsasanay 1 A & B', 'Pagsasanay 1 C', 'Alamin Natin', 'Sagutin Natin'];
             let currentUnit = 0;  
             const totalUnits = 6;
 
             const state = {
                 1: { checked: false, score: 0 },       // Unit 1 (Upper & Lower Pad)
-                2: { checked: false, score: 0 },       // Unit 2 (Big T & Small t pads)
-                3: { checked: false, score: 0 },       // Unit 3 (Tt Pairs Pad)
+                2: { checked: false, score: 0 },       // Unit 2 (Big H & Small h pads)
+                3: { checked: false, score: 0 },       // Unit 3 (Hh Pairs Pad)
                 4: { checked: false, score: 0, total: 0 }, // Unit 4 (Bilugan)
                 5: { checked: false, score: 0 }        // Unit 5 (Fill in the blanks)
             };
@@ -817,7 +865,7 @@
                                     method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}' },
                                     body: JSON.stringify({ level_id: '{{ level_id }}', stars: parseInt(document.getElementById('starCount').textContent), is_completed: true })
                                 });
-                                localStorage.setItem('tunog_tuklas_pending_unlock', 'T');
+                                localStorage.setItem('tunog_tuklas_pending_unlock', 'H');
                             } catch (e) { console.error("Error saving progress:", e); }
                             
                             setTimeout(() => { window.location.href = "{% url 'core:mapa' %}"; }, 350);
@@ -965,8 +1013,6 @@
 
             // ── Drawing Pads Setup ──
             const pads = {};
-            // Ensure Unit 1 erase/undo always targets a valid pad even if user hasn't clicked inside a frame yet.
-            window._u1ActivePad = window._u1ActivePad || 'upper';
             function initPad(id) {
                 const capId = id.charAt(0).toUpperCase() + id.slice(1);
                 const canvas = document.getElementById('canvas' + capId);
@@ -1067,7 +1113,7 @@
                 try {
                     const resp = await fetch('/api/validate-handwriting/', {
                         method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}' },
-                        body: JSON.stringify({ image_b64: p.canvas.toDataURL('image/png'), target_letter: expectedLetter || 'T' })
+                        body: JSON.stringify({ image_b64: p.canvas.toDataURL('image/png'), target_letter: expectedLetter || 'H' })
                     });
                     if (!resp.ok) throw new Error('HTTP ' + resp.status);
                     return await resp.json();
@@ -1077,8 +1123,8 @@
             window.markU1Done = async function () {
                 const btn = document.getElementById('u1-tapos-btn');
                 if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sinusuri...'; }
-                const vUpper = await validateDrawingAI('upper', 'T');
-                const vLower = await validateDrawingAI('lower', 't');
+                const vUpper = await validateDrawingAI('upper', 'H');
+                const vLower = await validateDrawingAI('lower', 'h');
                 if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-check"></i> Tapos na!'; }
 
                 const tickU = document.getElementById('doneTick-upper'), frameU = document.getElementById('frameUpper');
@@ -1135,7 +1181,7 @@
                 const p = pads[id], tick = document.getElementById('doneTick-' + id), frame = document.getElementById('frame' + (id==='exA'?'ExA':id==='exB'?'ExB':'ExC'));
                 const doneBtn = document.querySelector(`[onclick="markDone('${id}')"]`);
                 if (doneBtn) { doneBtn.disabled = true; doneBtn.innerHTML = '⏳ Sinusuri...'; }
-                const expected = (id === 'exA') ? 'T' : (id === 'exB' ? 't' : 'T');
+                const expected = (id === 'exA') ? 'H' : (id === 'exB' ? 'h' : 'H');
                 const validation = await validateDrawingAI(id, expected);
                 if (doneBtn) { doneBtn.disabled = false; doneBtn.innerHTML = '✓ Tapos na!'; }
 
@@ -1198,19 +1244,19 @@
                 updateNextBtn(); launchConfetti();
             }
 
-            window.playTSound = function () {
+            window.playHSound = function () {
                 const btn = document.getElementById('soundBtn');
                 if(btn) {
                     btn.style.transform = 'scale(0.93) translateY(5px)'; btn.style.boxShadow = '0 0 0 #000';
                     setTimeout(() => { btn.style.transform = ''; btn.style.boxShadow = ''; }, 180);
                 }
 
-                const introAudio = new Audio("{% static 'core/audio/t_intro.mp3' %}");
-                const wordsAudio = new Audio("{% static 'core/audio/t_pronounce.mp3' %}");
+                const introAudio = new Audio("{% static 'core/audio/h_intro.mp3' %}");
+                const wordsAudio = new Audio("{% static 'core/audio/h_pronounce.mp3' %}");
                 
                 introAudio.onerror = function() {
                     if ('speechSynthesis' in window) {
-                        const utter = new SpeechSynthesisUtterance('t... t... talong... tuta... tasa');
+                        const utter = new SpeechSynthesisUtterance('h... h... hari... halaman... kahoy');
                         utter.lang = 'tl-PH'; utter.rate = 0.75; utter.pitch = 1.1;
                         window.speechSynthesis.cancel();
                         window.speechSynthesis.speak(utter);
@@ -1307,6 +1353,7 @@
         document.addEventListener('fullscreenchange', updateFSBtn);
     </script>
 
+    <!-- ── AUDIO MANAGER DEPENDENCY ── -->
     <script src="{% static 'core/audio_manager.js' %}"></script>
 </body>
 </html>
