@@ -24,9 +24,23 @@ def mapa(request):
     progress_dict = {p.level_id: p for p in user_progress}
     
     # Calculate total stars
+    # Calculate total stars
     total_earned_stars = sum(p.stars_earned for p in user_progress)
-    max_possible_stars = levels.count() * 5
-
+    
+    
+    LEGACY_STARS = {
+        'M': 5, 
+        'I': 5, 
+        'O': 5, 
+        'B': 5, 
+        'E': 5
+    }
+    
+    max_possible_stars = 0
+    for level in levels:
+        clean_name = level.name.replace("Letrang ", "").strip().upper()
+       
+        max_possible_stars += LEGACY_STARS.get(clean_name, 5)
     # Build rendering data for the template
     map_nodes = []
     

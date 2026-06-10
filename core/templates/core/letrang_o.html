@@ -148,7 +148,6 @@
             display: flex;
             width: 800%;
             height: 100%;
-            /* 8 units × 100% each */
             transition: transform 0.45s cubic-bezier(0.77, 0, 0.175, 1);
         }
 
@@ -160,16 +159,11 @@
             flex-shrink: 0;
         }
 
-        /* ── UNIT 4/5/6: Writing / Drawing / Blanks styles ── */
-        .badge-orange {
-            background: var(--orange);
-            color: white;
-        }
-
-        .badge-green {
-            background: var(--green);
-            color: white;
-        }
+        .badge-orange { background: var(--orange); color: white; }
+        .badge-green { background: var(--green); color: white; }
+        .badge-pink { background: var(--pink); color: white; }
+        .badge-blue { background: var(--blue); color: white; }
+        .badge-purple { background: var(--purple); color: white; }
 
         /* Sagutin Natin (Fill in the blanks) */
         .fill-blank-input {
@@ -186,9 +180,7 @@
             transition: border-color 0.2s;
         }
 
-        .fill-blank-input:focus {
-            border-bottom-color: var(--pink);
-        }
+        .fill-blank-input:focus { border-bottom-color: var(--pink); }
 
         .sagutin-item {
             display: flex;
@@ -201,11 +193,7 @@
             justify-content: center;
         }
 
-        .sagutin-emoji {
-            font-size: 3rem;
-            width: 60px;
-            text-align: center;
-        }
+        .sagutin-emoji { font-size: 3rem; width: 60px; text-align: center; }
 
         .sagutin-word {
             font-family: 'Nunito', sans-serif;
@@ -217,917 +205,191 @@
         }
 
         /* Drawing pad wrapper */
-        .draw-pad-wrapper {
-            margin-bottom: 24px;
-        }
+        .draw-pad-wrapper { margin-bottom: 24px; }
 
         .draw-pad-label {
-            font-family: 'Nunito', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 900;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-family: 'Nunito', sans-serif; font-size: 1.1rem; font-weight: 900; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;
         }
 
         .draw-pad-label .letter-preview {
-            font-family: 'Nunito', sans-serif;
-            font-weight: 900;
-            font-size: 1.6rem;
-            padding: 2px 14px;
-            border-radius: 12px;
-            border: 3px solid var(--dark);
-            box-shadow: 0 3px 0 var(--dark);
+            font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.6rem; padding: 2px 14px; border-radius: 12px; border: 3px solid var(--dark); box-shadow: 0 3px 0 var(--dark);
         }
 
-        .draw-pad-label .letter-preview.upper {
-            background: #EEF5FF;
-            color: var(--blue);
-            border-color: var(--blue);
-            box-shadow: 0 3px 0 #1565c0;
-        }
+        .draw-pad-label .letter-preview.upper { background: #EEF5FF; color: var(--blue); border-color: var(--blue); box-shadow: 0 3px 0 #1565c0; }
+        .draw-pad-label .letter-preview.lower { background: #FFF0F5; color: var(--pink); border-color: var(--pink); box-shadow: 0 3px 0 #c0004f; }
 
-        .draw-pad-label .letter-preview.lower {
-            background: #FFF0F5;
-            color: var(--pink);
-            border-color: var(--pink);
-            box-shadow: 0 3px 0 #c0004f;
-        }
-
-        /* The actual canvas frame */
+        /* Canvas frame */
         .canvas-frame {
-            position: relative;
-            border-radius: 18px;
-            border: 4px solid #90CAF9;
-            overflow: hidden;
+            position: relative; border-radius: 18px; border: 4px solid #90CAF9; overflow: hidden;
             background: linear-gradient(180deg, #e8f4fd 0%, #fff 30%, #fff 70%, #fce4ec 100%);
-            box-shadow: 0 6px 0 #90CAF9, 0 10px 30px rgba(0, 0, 0, 0.06);
-            touch-action: none;
+            box-shadow: 0 6px 0 #90CAF9, 0 10px 30px rgba(0, 0, 0, 0.06); touch-action: none;
         }
 
-        /* Ghost letter watermark */
         .canvas-ghost {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Nunito', sans-serif;
-            font-weight: 900;
-            font-size: 7rem;
-            color: rgba(0, 0, 0, 0.055);
-            pointer-events: none;
-            z-index: 0;
-            user-select: none;
-            letter-spacing: 18px;
+            position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 7rem; color: rgba(0, 0, 0, 0.055); pointer-events: none; z-index: 0; user-select: none; letter-spacing: 18px;
         }
 
-        .canvas-frame canvas {
-            position: relative;
-            z-index: 2;
-            display: block;
-            width: 100%;
-            cursor: crosshair;
-        }
-
-        /* Stroke hint bar */
-        .stroke-hint {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 10px 0 6px;
-            flex-wrap: wrap;
-        }
-
-        .stroke-dot {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            border: 3px solid var(--blue);
-            background: #EEF5FF;
-            font-size: 0.75rem;
-            font-weight: 900;
-            color: var(--blue);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.25s;
-        }
-
-        .stroke-dot.done {
-            background: var(--blue);
-            color: white;
-            border-color: #1565c0;
-            transform: scale(1.15);
-        }
-
-        .stroke-hint-label {
-            font-size: 0.82rem;
-            font-weight: 800;
-            color: #888;
-        }
+        .canvas-frame canvas { position: relative; z-index: 2; display: block; width: 100%; cursor: crosshair; }
 
         /* Pad toolbar */
-        .pad-toolbar {
-            display: flex;
-            gap: 8px;
-            margin-top: 10px;
-            flex-wrap: wrap;
-        }
+        .pad-toolbar { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
 
         .pad-tool-btn {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 7px 16px;
-            border-radius: 30px;
-            border: 3px solid var(--dark);
-            background: white;
-            font-weight: 900;
-            font-size: 0.88rem;
-            cursor: pointer;
-            box-shadow: 0 3px 0 var(--dark);
-            transition: all 0.15s;
-            font-family: 'Nunito', sans-serif;
+            display: flex; align-items: center; gap: 6px; padding: 7px 16px; border-radius: 30px; border: 3px solid var(--dark); background: white; font-weight: 900; font-size: 0.88rem; cursor: pointer; box-shadow: 0 3px 0 var(--dark); transition: all 0.15s; font-family: 'Nunito', sans-serif;
         }
 
-        .pad-tool-btn:active {
-            transform: translateY(3px);
-            box-shadow: 0 0 0 var(--dark);
-        }
+        .pad-tool-btn:active { transform: translateY(3px); box-shadow: 0 0 0 var(--dark); }
+        .pad-tool-btn.erase { color: #f44336; border-color: #f44336; box-shadow: 0 3px 0 #b71c1c; }
+        .pad-tool-btn.erase:active { box-shadow: 0 0 0 #b71c1c; }
+        .pad-tool-btn.done-draw { background: linear-gradient(135deg, var(--green), #2e7d32); color: white; border-color: #1b5e20; box-shadow: 0 3px 0 #1b5e20; }
+        .pad-tool-btn.done-draw:active { box-shadow: 0 0 0 #1b5e20; }
+        .pad-tool-btn.undo-btn { color: var(--orange); border-color: var(--orange); box-shadow: 0 3px 0 #e65100; }
+        .pad-tool-btn.undo-btn:active { box-shadow: 0 0 0 #e65100; }
 
-        .pad-tool-btn.erase {
-            color: #f44336;
-            border-color: #f44336;
-            box-shadow: 0 3px 0 #b71c1c;
-        }
-
-        .pad-tool-btn.erase:active {
-            box-shadow: 0 0 0 #b71c1c;
-        }
-
-        .pad-tool-btn.done-draw {
-            background: linear-gradient(135deg, var(--green), #2e7d32);
-            color: white;
-            border-color: #1b5e20;
-            box-shadow: 0 3px 0 #1b5e20;
-        }
-
-        .pad-tool-btn.done-draw:active {
-            box-shadow: 0 0 0 #1b5e20;
-        }
-
-        .pad-tool-btn.undo-btn {
-            color: var(--orange);
-            border-color: var(--orange);
-            box-shadow: 0 3px 0 #e65100;
-        }
-
-        .pad-tool-btn.undo-btn:active {
-            box-shadow: 0 0 0 #e65100;
-        }
-
-        /* Color picker row */
-        .color-row {
-            display: flex;
-            gap: 7px;
-            margin-top: 8px;
-            align-items: center;
-        }
-
-        .color-swatch {
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            border: 3px solid transparent;
-            cursor: pointer;
-            transition: all 0.15s;
-        }
-
-        .color-swatch.active {
-            border-color: var(--dark);
-            transform: scale(1.25);
-        }
-
-        /* Completion tick */
-        .pad-done-tick {
-            display: none;
-            align-items: center;
-            gap: 8px;
-            background: #E9FBEE;
-            border: 3px solid var(--green);
-            border-radius: 14px;
-            padding: 8px 16px;
-            font-weight: 900;
-            color: #1b5e20;
-            font-size: 0.95rem;
-            margin-top: 10px;
-        }
-
-        .pad-done-tick.show {
-            display: flex;
-        }
-
-        /* Brush size buttons */
-        .brush-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 8px;
-        }
-
-        .brush-btn {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            border: 3px solid #ccc;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.15s;
-        }
-
-        .brush-btn.active {
-            border-color: var(--dark);
-            background: var(--dark);
-        }
-
-        .brush-dot {
-            border-radius: 50%;
-            background: #555;
-        }
-
-        .brush-btn.active .brush-dot {
-            background: white;
-        }
-
-        /* Counting tokens */
-        .letter-tokens {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-            margin: 12px 0;
-        }
-
-        .letter-token {
-            font-family: 'Nunito', sans-serif;
-            font-weight: 900;
-            font-size: 2rem;
-            width: 56px;
-            height: 56px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 4px solid #ddd;
-            background: #f9f9f9;
-            box-shadow: 0 4px 0 #ccc;
-            cursor: pointer;
-            transition: all 0.2s;
-            user-select: none;
-        }
-
-        .letter-token:hover {
-            transform: scale(1.1) translateY(-3px);
-        }
-
-        .letter-token.uppercase {
-            color: var(--blue);
-            border-color: var(--blue);
-            background: #EEF5FF;
-            box-shadow: 0 4px 0 #1565c0;
-        }
-
-        .letter-token.lowercase {
-            color: var(--pink);
-            border-color: var(--pink);
-            background: #FFF0F5;
-            box-shadow: 0 4px 0 #c0004f;
-        }
-
-        .letter-token.counted {
-            opacity: 0.38;
-            transform: scale(0.88);
-            cursor: default;
-        }
-
-        .count-display {
-            display: flex;
-            gap: 14px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: 14px 0;
-        }
-
-        .count-box {
-            background: white;
-            border: 4px solid var(--dark);
-            border-radius: 18px;
-            padding: 12px 20px;
-            text-align: center;
-            min-width: 130px;
-            box-shadow: 0 5px 0 var(--dark);
-        }
-
-        .count-box label {
-            font-weight: 900;
-            font-size: 0.9rem;
-            color: #666;
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        .count-number {
-            font-family: 'Nunito', sans-serif;
-            font-weight: 900;
-            font-size: 2.8rem;
-            line-height: 1;
-        }
-
-        .count-number.m-upper {
-            color: var(--blue);
-        }
-
-        .count-number.m-lower {
-            color: var(--pink);
-        }
-
-        /* Sagutin Natin */
-        .fill-blank-input {
-            border: none;
-            border-bottom: 4px solid var(--dark);
-            background: transparent;
-            font-family: 'Nunito', sans-serif;
-            font-weight: 900;
-            font-size: 1.4rem;
-            width: 130px;
-            text-align: center;
-            color: var(--purple);
-            outline: none;
-            padding: 2px 6px;
-            transition: border-color 0.2s;
-        }
-
-        .fill-blank-input:focus {
-            border-bottom-color: var(--pink);
-        }
-
-        .sagutin-sentence {
-            font-size: 1.2rem;
-            font-weight: 800;
-            color: var(--dark);
-            line-height: 2.2;
-            text-align: center;
-        }
+        /* Color picker & Brush */
+        .color-row { display: flex; gap: 7px; margin-top: 8px; align-items: center; }
+        .color-swatch { width: 26px; height: 26px; border-radius: 50%; border: 3px solid transparent; cursor: pointer; transition: all 0.15s; }
+        .color-swatch.active { border-color: var(--dark); transform: scale(1.25); }
+        .pad-done-tick { display: none; align-items: center; gap: 8px; background: #E9FBEE; border: 3px solid var(--green); border-radius: 14px; padding: 8px 16px; font-weight: 900; color: #1b5e20; font-size: 0.95rem; margin-top: 10px; }
+        .pad-done-tick.show { display: flex; }
+        .brush-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+        .brush-btn { width: 32px; height: 32px; border-radius: 50%; border: 3px solid #ccc; background: white; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s; }
+        .brush-btn.active { border-color: var(--dark); background: var(--dark); }
+        .brush-dot { border-radius: 50%; background: #555; }
+        .brush-btn.active .brush-dot { background: white; }
 
         /* ── SECTION CARD ── */
         .section-card {
-            background: white;
-            border-radius: 28px;
-            border: 4px solid var(--dark);
-            box-shadow: 0 8px 0 var(--dark), 0 16px 40px rgba(0, 0, 0, 0.08);
-            padding: 60px 50px;
-            max-width: 1100px;
-            margin: 0 auto;
-            position: relative;
+            background: white; border-radius: 28px; border: 4px solid var(--dark); box-shadow: 0 8px 0 var(--dark), 0 16px 40px rgba(0, 0, 0, 0.08); padding: 60px 50px; max-width: 1100px; margin: 0 auto; position: relative;
         }
 
         .section-badge {
-            position: absolute;
-            top: -14px;
-            left: 20px;
-            font-family: 'Nunito', sans-serif;
-            font-weight: 900;
-            font-size: 0.9rem;
-            padding: 4px 14px;
-            border-radius: 20px;
-            border: 3px solid var(--dark);
-            box-shadow: 0 3px 0 var(--dark);
-            text-transform: uppercase;
-        }
-
-        .badge-pink {
-            background: var(--pink);
-            color: white;
-        }
-
-        .badge-blue {
-            background: var(--blue);
-            color: white;
-        }
-
-        .badge-purple {
-            background: var(--purple);
-            color: white;
+            position: absolute; top: -14px; left: 20px; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 0.9rem; padding: 4px 14px; border-radius: 20px; border: 3px solid var(--dark); box-shadow: 0 3px 0 var(--dark); text-transform: uppercase;
         }
 
         /* ── INTRO STYLES ── */
         .big-letter {
-            font-family: 'Bubblegum Sans', cursive;
-            font-size: 5.5rem;
-            line-height: 1;
+            font-family: 'Bubblegum Sans', cursive; font-size: 5.5rem; line-height: 1;
             background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            filter: drop-shadow(3px 4px 0 rgba(0, 0, 0, 0.12));
-            animation: letterPulse 2.2s ease-in-out infinite;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            filter: drop-shadow(3px 4px 0 rgba(0, 0, 0, 0.12)); animation: letterPulse 2.2s ease-in-out infinite;
         }
 
         @keyframes letterPulse {
-
-            0%,
-            100% {
-                transform: scale(1) rotate(-2deg);
-            }
-
-            50% {
-                transform: scale(1.07) rotate(2deg);
-            }
+            0%, 100% { transform: scale(1) rotate(-2deg); }
+            50% { transform: scale(1.07) rotate(2deg); }
         }
 
         .intro-instruction {
-            background: linear-gradient(135deg, #FFF3CD, #FFF0F5);
-            border: 3px solid var(--yellow);
-            border-radius: 18px;
-            padding: 12px 16px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: #5A3E00;
-            line-height: 1.65;
+            background: linear-gradient(135deg, #FFF3CD, #FFF0F5); border: 3px solid var(--yellow); border-radius: 18px; padding: 12px 16px; font-size: 0.95rem; font-weight: 700; color: #5A3E00; line-height: 1.65;
         }
 
         .sound-btn {
-            background: linear-gradient(135deg, var(--yellow), var(--orange));
-            border: 4px solid var(--dark);
-            border-radius: 50px;
-            padding: 10px 24px;
-            font-family: 'Nunito', sans-serif;
-            font-weight: 900;
-            font-size: 1rem;
-            color: var(--dark);
-            cursor: pointer;
-            box-shadow: 0 6px 0 var(--dark);
-            transition: all 0.15s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
+            background: linear-gradient(135deg, var(--yellow), var(--orange)); border: 4px solid var(--dark); border-radius: 50px; padding: 10px 24px; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1rem; color: var(--dark); cursor: pointer; box-shadow: 0 6px 0 var(--dark); transition: all 0.15s; display: inline-flex; align-items: center; gap: 10px;
         }
 
-        .sound-btn:hover {
-            filter: brightness(1.07);
-        }
-
-        .sound-btn:active {
-            transform: translateY(6px);
-            box-shadow: 0 0 0 var(--dark);
-        }
+        .sound-btn:hover { filter: brightness(1.07); }
+        .sound-btn:active { transform: translateY(6px); box-shadow: 0 0 0 var(--dark); }
 
         /* ── ACTIVITY ── */
-        .activity-title {
-            font-family: 'Nunito', sans-serif;
-            font-weight: 900;
-            font-size: 1.5rem;
-            color: var(--dark);
-            margin-bottom: 6px;
-        }
-
-        .activity-instruction {
-            font-size: 1rem;
-            font-weight: 700;
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 22px;
-        }
-
-        .choices-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 28px;
-            justify-content: center;
-        }
-
-        .choice-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .choice-emoji-box {
-            width: 150px;
-            height: 150px;
-            border-radius: 26px;
-            border: 4px solid #ddd;
-            background: #f9f9f9;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 7.5rem;
-            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 5px 0 #ccc;
-        }
-
-        .choice-card:hover .choice-emoji-box {
-            transform: scale(1.08) translateY(-3px);
-        }
-
-        .choice-label {
-            font-weight: 900;
-            font-size: 1.1rem;
-            color: #555;
-            text-align: center;
-        }
-
-        .choice-checkbox {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            border: 4px solid #ccc;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            transition: all 0.2s;
-            box-shadow: 0 3px 0 #ccc;
-        }
+        .activity-title { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.5rem; color: var(--dark); margin-bottom: 6px; }
+        .activity-instruction { font-size: 1rem; font-weight: 700; color: #666; line-height: 1.6; margin-bottom: 22px; }
+        
+        .choices-grid { display: flex; flex-wrap: wrap; gap: 28px; justify-content: center; }
+        .choice-card { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
+        .choice-emoji-box { width: 150px; height: 150px; border-radius: 26px; border: 4px solid #ddd; background: #f9f9f9; display: flex; align-items: center; justify-content: center; font-size: 7.5rem; transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 5px 0 #ccc; }
+        .choice-card:hover .choice-emoji-box { transform: scale(1.08) translateY(-3px); }
+        .choice-label { font-weight: 900; font-size: 1.1rem; color: #555; text-align: center; }
+        .choice-checkbox { width: 44px; height: 44px; border-radius: 12px; border: 4px solid #ccc; background: white; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; transition: all 0.2s; box-shadow: 0 3px 0 #ccc; }
 
         /* States */
-        .choice-card.selected .choice-emoji-box {
-            border-color: var(--blue);
-            background: #EEF5FF;
-            box-shadow: 0 5px 0 var(--blue);
-            transform: scale(1.1) translateY(-4px);
-        }
-
-        .choice-card.selected .choice-checkbox {
-            background: var(--blue);
-            border-color: #1565c0;
-            box-shadow: 0 3px 0 #1565c0;
-            color: white;
-        }
-
-        .choice-card.correct .choice-emoji-box {
-            border-color: var(--green);
-            background: #E9FBEd;
-            box-shadow: 0 5px 0 var(--green);
-            animation: correctBounce 0.45s ease;
-        }
-
-        .choice-card.correct .choice-checkbox {
-            background: var(--green);
-            border-color: #2e7d32;
-            box-shadow: 0 3px 0 #2e7d32;
-            color: white;
-        }
-
-        .choice-card.wrong .choice-emoji-box {
-            border-color: #f44336;
-            background: #FFEBEE;
-            box-shadow: 0 5px 0 #f44336;
-            animation: wrongShake 0.4s ease;
-        }
-
-        .choice-card.wrong .choice-checkbox {
-            background: #f44336;
-            border-color: #b71c1c;
-            box-shadow: 0 3px 0 #b71c1c;
-            color: white;
-        }
-
-        .choice-card.missed .choice-emoji-box {
-            border-color: var(--orange);
-            background: #FFF8E1;
-            box-shadow: 0 5px 0 var(--orange);
-        }
-
-        .choice-card.missed .choice-checkbox {
-            background: var(--orange);
-            border-color: #e65100;
-            box-shadow: 0 3px 0 #e65100;
-            color: white;
-        }
-
+        .choice-card.selected .choice-emoji-box { border-color: var(--blue); background: #EEF5FF; box-shadow: 0 5px 0 var(--blue); transform: scale(1.1) translateY(-4px); }
+        .choice-card.selected .choice-checkbox { background: var(--blue); border-color: #1565c0; box-shadow: 0 3px 0 #1565c0; color: white; }
+        .choice-card.correct .choice-emoji-box { border-color: var(--green); background: #E9FBEd; box-shadow: 0 5px 0 var(--green); animation: correctBounce 0.45s ease; }
+        .choice-card.correct .choice-checkbox { background: var(--green); border-color: #2e7d32; box-shadow: 0 3px 0 #2e7d32; color: white; }
+        .choice-card.wrong .choice-emoji-box { border-color: #f44336; background: #FFEBEE; box-shadow: 0 5px 0 #f44336; animation: wrongShake 0.4s ease; }
+        .choice-card.wrong .choice-checkbox { background: #f44336; border-color: #b71c1c; box-shadow: 0 3px 0 #b71c1c; color: white; }
+        
         @keyframes correctBounce {
-            0% {
-                transform: scale(1.1) translateY(-4px);
-            }
-
-            40% {
-                transform: scale(1.28) translateY(-12px);
-            }
-
-            70% {
-                transform: scale(1.05) translateY(-2px);
-            }
-
-            100% {
-                transform: scale(1.1) translateY(-4px);
-            }
+            0% { transform: scale(1.1) translateY(-4px); }
+            40% { transform: scale(1.28) translateY(-12px); }
+            70% { transform: scale(1.05) translateY(-2px); }
+            100% { transform: scale(1.1) translateY(-4px); }
         }
 
         @keyframes wrongShake {
-
-            0%,
-            100% {
-                transform: translateX(0);
-            }
-
-            20% {
-                transform: translateX(-8px);
-            }
-
-            60% {
-                transform: translateX(8px);
-            }
-
-            80% {
-                transform: translateX(-4px);
-            }
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-8px); }
+            60% { transform: translateX(8px); }
+            80% { transform: translateX(-4px); }
         }
+
+        /* Interactive Circle Styles */
+        .marker-circle {
+            position: absolute; top: 50%; left: 50%; width: 140%; height: 140%; transform: translate(-50%, -50%) scale(0); pointer-events: none; z-index: 10; opacity: 0; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50,15 C80,10 90,30 85,60 C80,90 40,85 20,70 C5,55 10,25 40,20 C50,18 60,20 70,25' fill='none' stroke='%23ff1744' stroke-width='6' stroke-linecap='round'/></svg>");
+            background-size: 100% 100%; background-repeat: no-repeat;
+        }
+        .choice-card.circled { transform: scale(1.05); border-color: transparent !important; box-shadow: none !important; }
+        .choice-card.circled .marker-circle { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        .choice-card.shake { animation: wrongShake 0.5s cubic-bezier(.36, .07, .19, .97) both; }
 
         /* ── CHECK BUTTON ── */
-        .check-btn {
-            width: 100%;
-            background: linear-gradient(135deg, var(--green), #2e7d32);
-            border: 4px solid var(--dark);
-            border-radius: 50px;
-            padding: 18px 30px;
-            font-family: 'Nunito', sans-serif;
-            font-weight: 900;
-            font-size: 1.4rem;
-            color: white;
-            cursor: pointer;
-            box-shadow: 0 7px 0 var(--dark);
-            transition: all 0.15s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 24px;
-        }
-
-        .check-btn:hover {
-            filter: brightness(1.07);
-        }
-
-        .check-btn:active {
-            transform: translateY(7px);
-            box-shadow: 0 0 0 var(--dark);
-        }
-
-        .check-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            box-shadow: 0 4px 0 #999;
-        }
+        .check-btn { width: 100%; background: linear-gradient(135deg, var(--green), #2e7d32); border: 4px solid var(--dark); border-radius: 50px; padding: 18px 30px; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.4rem; color: white; cursor: pointer; box-shadow: 0 7px 0 var(--dark); transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 24px; }
+        .check-btn:hover { filter: brightness(1.07); transform: translateY(-2px); box-shadow: 0 10px 0 var(--dark); }
+        .check-btn:active { transform: translateY(8px); box-shadow: 0 0 0 var(--dark); }
+        .check-btn:disabled { background: #eee; border-color: #ccc; box-shadow: 0 4px 0 #ccc; color: #aaa; cursor: not-allowed; transform: none !important; }
 
         /* ── FEEDBACK BANNER ── */
-        .feedback-banner {
-            display: none;
-            border-radius: 18px;
-            border: 4px solid;
-            padding: 13px 20px;
-            margin-top: 16px;
-            font-weight: 900;
-            font-size: 1.05rem;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .feedback-banner.show {
-            display: flex;
-        }
-
-        .feedback-banner.correct-fb {
-            background: #E9FBEE;
-            border-color: var(--green);
-            color: #1b5e20;
-        }
-
-        .feedback-banner.wrong-fb {
-            background: #FFEBEE;
-            border-color: #f44336;
-            color: #b71c1c;
-        }
-
-        .feedback-icon {
-            font-size: 1.8rem;
-        }
+        .feedback-banner { display: none; border-radius: 18px; border: 4px solid; padding: 13px 20px; margin-top: 16px; font-weight: 900; font-size: 1.05rem; align-items: center; gap: 12px; }
+        .feedback-banner.show { display: flex; }
+        .feedback-banner.correct-fb { background: #E9FBEE; border-color: var(--green); color: #1b5e20; }
+        .feedback-banner.error-fb { background: #FFEBEE; border-color: #f44336; color: #b71c1c; }
+        .feedback-icon { font-size: 1.8rem; }
 
         /* ── FIXED BOTTOM NAVIGATION ── */
-        .nav-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            border-top: 4px solid var(--dark);
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            z-index: 300;
-            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .nav-btn {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-family: 'Nunito', sans-serif;
-            font-weight: 900;
-            font-size: 1.15rem;
-            padding: 11px 26px;
-            border-radius: 50px;
-            border: 4px solid var(--dark);
-            cursor: pointer;
-            box-shadow: 0 5px 0 var(--dark);
-            transition: all 0.15s;
-            text-decoration: none;
-        }
-
-        .nav-btn:active {
-            transform: translateY(5px);
-            box-shadow: 0 0 0 var(--dark);
-        }
-
-        .nav-btn.prev-btn {
-            background: white;
-            color: var(--dark);
-        }
-
-        .nav-btn.prev-btn:hover {
-            background: #f5f5f5;
-            color: var(--dark);
-        }
-
-        .nav-btn.next-btn {
-            background: linear-gradient(135deg, var(--pink), var(--purple));
-            color: white;
-        }
-
-        .nav-btn.next-btn:hover {
-            filter: brightness(1.07);
-            color: white;
-        }
-
-        .nav-btn.next-btn:disabled {
-            background: #ddd;
-            border-color: #aaa;
-            box-shadow: 0 3px 0 #aaa;
-            cursor: not-allowed;
-            color: #aaa;
-        }
-
-        .nav-btn.finish-btn {
-            background: linear-gradient(135deg, var(--green), #2e7d32);
-            color: white;
-        }
-
-        .nav-btn.finish-btn:hover {
-            filter: brightness(1.07);
-            color: white;
-        }
-
-        .unit-counter {
-            font-family: 'Bubblegum Sans', cursive;
-            font-size: 1rem;
-            color: #888;
-            text-align: center;
-            line-height: 1.3;
-        }
-
-        .unit-counter strong {
-            font-size: 1.3rem;
-            color: var(--dark);
-        }
+        .nav-bar { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 4px solid var(--dark); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; z-index: 300; box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1); }
+        .nav-btn { display: flex; align-items: center; gap: 10px; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.15rem; padding: 11px 26px; border-radius: 50px; border: 4px solid var(--dark); cursor: pointer; box-shadow: 0 5px 0 var(--dark); transition: all 0.15s; text-decoration: none; }
+        .nav-btn:active { transform: translateY(5px); box-shadow: 0 0 0 var(--dark); }
+        .nav-btn.prev-btn { background: white; color: var(--dark); }
+        .nav-btn.prev-btn:hover { background: #f5f5f5; color: var(--dark); }
+        .nav-btn.next-btn { background: linear-gradient(135deg, var(--pink), var(--purple)); color: white; }
+        .nav-btn.next-btn:hover { filter: brightness(1.07); color: white; }
+        .nav-btn.next-btn:disabled { background: #ddd; border-color: #aaa; box-shadow: 0 3px 0 #aaa; cursor: not-allowed; color: #aaa; }
+        .nav-btn.finish-btn { background: linear-gradient(135deg, var(--green), #2e7d32); color: white; }
+        .nav-btn.finish-btn:hover { filter: brightness(1.07); color: white; }
+        .unit-counter { font-family: 'Bubblegum Sans', cursive; font-size: 1rem; color: #888; text-align: center; line-height: 1.3; }
+        .unit-counter strong { font-size: 1.3rem; color: var(--dark); }
 
         /* ── FINAL SCORE ── */
-        .score-card {
-            background: linear-gradient(135deg, #FFF8F0, #F5F0FF);
-            border: 5px solid var(--dark);
-            border-radius: 28px;
-            box-shadow: 0 10px 0 var(--dark), 0 20px 50px rgba(0, 0, 0, 0.1);
-            padding: 40px 28px;
-            text-align: center;
-            max-width: 760px;
-            margin: 0 auto;
-        }
-
-        .score-title {
-            font-family: 'Bubblegum Sans', cursive;
-            font-size: 2.4rem;
-            background: linear-gradient(135deg, var(--pink), var(--purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .score-stars {
-            font-size: 3.2rem;
-            letter-spacing: 5px;
-            margin: 14px 0;
-            animation: starPop 0.5s ease;
-        }
-
-        @keyframes starPop {
-            from {
-                transform: scale(0);
-                opacity: 0;
-            }
-
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
+        .score-card { background: linear-gradient(135deg, #FFF8F0, #F5F0FF); border: 5px solid var(--dark); border-radius: 28px; box-shadow: 0 10px 0 var(--dark), 0 20px 50px rgba(0, 0, 0, 0.1); padding: 40px 28px; text-align: center; max-width: 760px; margin: 0 auto; }
+        .score-title { font-family: 'Bubblegum Sans', cursive; font-size: 2.4rem; background: linear-gradient(135deg, var(--pink), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .score-stars { font-size: 3.2rem; letter-spacing: 5px; margin: 14px 0; animation: starPop 0.5s ease; }
+        @keyframes starPop { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
         /* ── CONFETTI ── */
-        .confetti-wrap {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-            overflow: hidden;
-            display: none;
-        }
-
-        .confetti-wrap.active {
-            display: block;
-        }
-
-        .confetti-particle {
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            border-radius: 3px;
-            animation: confettiFall linear forwards;
-        }
-
-        @keyframes confettiFall {
-            0% {
-                top: -20px;
-                opacity: 1;
-                transform: rotate(0deg) scale(1);
-            }
-
-            100% {
-                top: 110vh;
-                opacity: 0;
-                transform: rotate(720deg) scale(0.5);
-            }
-        }
-
-        /* Floating deco */
-        .floating-deco {
-            position: fixed;
-            font-size: 2.5rem;
-            opacity: 0.1;
-            pointer-events: none;
-            z-index: 0;
-        }
+        .confetti-wrap { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; overflow: hidden; display: none; }
+        .confetti-wrap.active { display: block; }
+        .confetti-particle { position: absolute; width: 12px; height: 12px; border-radius: 3px; animation: confettiFall linear forwards; }
+        @keyframes confettiFall { 0% { top: -20px; opacity: 1; transform: rotate(0deg) scale(1); } 100% { top: 110vh; opacity: 0; transform: rotate(720deg) scale(0.5); } }
+        .floating-deco { position: fixed; font-size: 2.5rem; opacity: 0.1; pointer-events: none; z-index: 0; }
     </style>
 </head>
 
 <body>
 
-    <div id="transition-out"
-        style="position:fixed; inset:0; z-index:99999; pointer-events:none; display:flex; align-items:center; justify-content:center; overflow:hidden; animation: outOverlay 0.1s 2.4s forwards;">
-        <div
-            style="position:absolute; width:250vw; height:250vw; border-radius:50%; background: conic-gradient(#FF5252 0deg 60deg, #FF9800 60deg 120deg, #FFEB3B 120deg 180deg, #4CAF50 180deg 240deg, #2196F3 240deg 300deg, #9C27B0 300deg 360deg); animation: reversePinwheel 1.8s cubic-bezier(0.6, 0, 0.2, 1) forwards;">
-        </div>
-
+    <div id="transition-out" style="position:fixed; inset:0; z-index:99999; pointer-events:none; display:flex; align-items:center; justify-content:center; overflow:hidden; animation: outOverlay 0.1s 2.4s forwards;">
+        <div style="position:absolute; width:250vw; height:250vw; border-radius:50%; background: conic-gradient(#FF5252 0deg 60deg, #FF9800 60deg 120deg, #FFEB3B 120deg 180deg, #4CAF50 180deg 240deg, #2196F3 240deg 300deg, #9C27B0 300deg 360deg); animation: reversePinwheel 1.8s cubic-bezier(0.6, 0, 0.2, 1) forwards;"></div>
         <div style="position:absolute; inset:0; z-index:10001; animation: outOverlay 0.1s 2s forwards;">
-            <i class="fa-solid fa-star text-warning"
-                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:15%; left:15%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0s;"></i>
-            <i class="fa-solid fa-star text-warning"
-                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:20%; left:80%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.15s;"></i>
-            <i class="fa-solid fa-star text-warning"
-                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:75%; left:20%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.3s;"></i>
-            <i class="fa-solid fa-star text-warning"
-                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:80%; left:75%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.15s;"></i>
-            <i class="fa-solid fa-star text-warning"
-                style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:10%; left:50%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.45s;"></i>
+            <i class="fa-solid fa-star text-warning" style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:15%; left:15%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0s;"></i>
+            <i class="fa-solid fa-star text-warning" style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:20%; left:80%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.15s;"></i>
+            <i class="fa-solid fa-star text-warning" style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:75%; left:20%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.3s;"></i>
+            <i class="fa-solid fa-star text-warning" style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:80%; left:75%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.15s;"></i>
+            <i class="fa-solid fa-star text-warning" style="position:absolute; font-size:5rem; text-shadow:0 6px 0 rgba(0,0,0,0.2); top:10%; left:50%; opacity:1; transform:scale(1) rotate(15deg); animation: reverseStar 1.2s cubic-bezier(0.6, 0, 0.2, 1) forwards 0.45s;"></i>
         </div>
-
-        <div
-            style="position:absolute; z-index:10002; display:flex; flex-direction:column; align-items:center; justify-content:center; animation: reverseContent 1.4s cubic-bezier(0.6, 0, 0.2, 1) forwards;">
-            <div id="transition-mascot-emoji"
-                style="font-size:8rem; filter:drop-shadow(0 10px 0 rgba(0,0,0,0.15)); line-height:1;">🐒</div>
-            <div
-                style="font-family:'Bubblegum Sans',cursive; font-size:5rem; color:white; text-shadow:4px 6px 0 rgba(0,0,0,0.2); margin-top:-20px; transform:rotate(-5deg);">
-                Maglaro Tayo!</div>
+        <div style="position:absolute; z-index:10002; display:flex; flex-direction:column; align-items:center; justify-content:center; animation: reverseContent 1.4s cubic-bezier(0.6, 0, 0.2, 1) forwards;">
+            <div id="transition-mascot-emoji" style="font-size:8rem; filter:drop-shadow(0 10px 0 rgba(0,0,0,0.15)); line-height:1;">🐒</div>
+            <div style="font-family:'Bubblegum Sans',cursive; font-size:5rem; color:white; text-shadow:4px 6px 0 rgba(0,0,0,0.2); margin-top:-20px; transform:rotate(-5deg);">Maglaro Tayo!</div>
         </div>
     </div>
     <script>
@@ -1139,64 +401,10 @@
         })();
     </script>
     <style>
-        @keyframes outOverlay {
-            to {
-                opacity: 0;
-                visibility: hidden;
-            }
-        }
-
-        @keyframes reversePinwheel {
-            0% {
-                transform: scale(1) rotate(0deg);
-                opacity: 1;
-                filter: brightness(1);
-            }
-
-            60% {
-                opacity: 1;
-                filter: brightness(1.2);
-            }
-
-            100% {
-                transform: scale(0) rotate(-270deg);
-                opacity: 0;
-                filter: brightness(1.5);
-            }
-        }
-
-        @keyframes reverseStar {
-            0% {
-                opacity: 1;
-                transform: scale(1) rotate(15deg);
-            }
-
-            40% {
-                opacity: 0.8;
-            }
-
-            100% {
-                opacity: 0;
-                transform: scale(0) rotate(-135deg);
-            }
-        }
-
-        @keyframes reverseContent {
-            0% {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-
-            50% {
-                opacity: 0.9;
-                transform: scale(0.9) translateY(30px);
-            }
-
-            100% {
-                opacity: 0;
-                transform: scale(0.4) translateY(250px);
-            }
-        }
+        @keyframes outOverlay { to { opacity: 0; visibility: hidden; } }
+        @keyframes reversePinwheel { 0% { transform: scale(1) rotate(0deg); opacity: 1; filter: brightness(1); } 60% { opacity: 1; filter: brightness(1.2); } 100% { transform: scale(0) rotate(-270deg); opacity: 0; filter: brightness(1.5); } }
+        @keyframes reverseStar { 0% { opacity: 1; transform: scale(1) rotate(15deg); } 40% { opacity: 0.8; } 100% { opacity: 0; transform: scale(0) rotate(-135deg); } }
+        @keyframes reverseContent { 0% { opacity: 1; transform: scale(1) translateY(0); } 50% { opacity: 0.9; transform: scale(0.9) translateY(30px); } 100% { opacity: 0; transform: scale(0.4) translateY(250px); } }
     </style>
 
     <div class="confetti-wrap" id="confettiWrap" aria-hidden="true"></div>
@@ -1213,7 +421,7 @@
         <h1 class="header-title">🔤 Letrang Oo</h1>
         <div class="header-stars">
             <i class="fa-solid fa-star" style="color:#FFD93D;"></i>
-            <span id="starCount">0</span> / 7
+            <span id="starCount">0</span> / 5
         </div>
     </header>
 
@@ -1279,118 +487,75 @@
 
                     <div style="display:flex; gap:0; align-items:stretch; margin-top:8px;">
 
-                        <div style="
-                            width:200px; flex-shrink:0;
-                            display:flex; flex-direction:column; gap:14px;
-                            padding-right:18px;
-                            border-right:2px solid #eee;
-                        ">
-                            <div
-                                style="background:#fff9f5; border:2px dashed #FF9F43; border-radius:14px; padding:10px; text-align:center;">
-                                <p style="font-weight:800; color:#FF9F43; font-size:0.78rem; margin-bottom:6px;">💡
-                                    Malaking O</p>
-                                <svg viewBox="0 0 100 110"
-                                    style="width:100%; max-width:110px; height:auto; overflow:visible; display:block; margin:0 auto;">
-                                    <line x1="-5" y1="10" x2="105" y2="10" stroke="#f0f0f0" stroke-width="2"
-                                        stroke-dasharray="5" />
-                                    <line x1="-5" y1="55" x2="105" y2="55" stroke="#f0f0f0" stroke-width="2"
-                                        stroke-dasharray="5" />
-                                    <line x1="-5" y1="100" x2="105" y2="100" stroke="#f0f0f0" stroke-width="2"
-                                        stroke-dasharray="5" />
-                                    <ellipse cx="50" cy="55" rx="38" ry="44" fill="none" stroke="#f0e0e8"
-                                        stroke-width="14" />
-                                    <path d="M 50,11 A 38,44 0 0 0 50,99 A 38,44 0 0 0 50,11" fill="none"
-                                        stroke="#FF6B9D" stroke-width="4" stroke-linecap="round" />
+                        <div style="width:200px; flex-shrink:0; display:flex; flex-direction:column; gap:14px; padding-right:18px; border-right:2px solid #eee;">
+                            <div style="background:#fff9f5; border:2px dashed #FF9F43; border-radius:14px; padding:10px; text-align:center;">
+                                <p style="font-weight:800; color:#FF9F43; font-size:0.78rem; margin-bottom:6px;">💡 Malaking O</p>
+                                <svg viewBox="0 0 100 110" style="width:100%; max-width:110px; height:auto; overflow:visible; display:block; margin:0 auto;">
+                                    <line x1="-5" y1="10" x2="105" y2="10" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="5" />
+                                    <line x1="-5" y1="55" x2="105" y2="55" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="5" />
+                                    <line x1="-5" y1="100" x2="105" y2="100" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="5" />
+                                    <ellipse cx="50" cy="55" rx="38" ry="44" fill="none" stroke="#f0e0e8" stroke-width="14" />
+                                    <path d="M 50,11 A 38,44 0 0 0 50,99 A 38,44 0 0 0 50,11" fill="none" stroke="#FF6B9D" stroke-width="4" stroke-linecap="round" />
                                     <polygon points="34,11 48,3 48,19" fill="#FF6B9D" />
                                     <polygon points="49,5 44,14 54,14" fill="#FF6B9D" />
                                     <circle cx="50" cy="5" r="9" fill="#FF6B9D" />
-                                    <text x="50" y="9" fill="white" font-size="10" font-family="Nunito"
-                                        font-weight="bold" text-anchor="middle">1</text>
+                                    <text x="50" y="9" fill="white" font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">1</text>
                                 </svg>
                             </div>
 
-                            <div
-                                style="background:#fff5f9; border:2px dashed #FF6B9D; border-radius:14px; padding:10px; text-align:center;">
-                                <p style="font-weight:800; color:#FF6B9D; font-size:0.78rem; margin-bottom:6px;">💡
-                                    Maliit na o</p>
-                                <svg viewBox="0 0 100 110"
-                                    style="width:100%; max-width:110px; height:auto; overflow:visible; display:block; margin:0 auto;">
-                                    <line x1="-5" y1="10" x2="105" y2="10" stroke="#f0f0f0" stroke-width="2"
-                                        stroke-dasharray="5" />
-                                    <line x1="-5" y1="55" x2="105" y2="55" stroke="#f0f0f0" stroke-width="2"
-                                        stroke-dasharray="5" />
-                                    <line x1="-5" y1="100" x2="105" y2="100" stroke="#f0f0f0" stroke-width="2"
-                                        stroke-dasharray="5" />
-                                    <ellipse cx="50" cy="77" rx="30" ry="26" fill="none" stroke="#f0e0e8"
-                                        stroke-width="14" />
-                                    <path d="M 50,51 A 30,26 0 0 0 50,103 A 30,26 0 0 0 50,51" fill="none"
-                                        stroke="#FF6B9D" stroke-width="4" stroke-linecap="round" />
+                            <div style="background:#fff5f9; border:2px dashed #FF6B9D; border-radius:14px; padding:10px; text-align:center;">
+                                <p style="font-weight:800; color:#FF6B9D; font-size:0.78rem; margin-bottom:6px;">💡 Maliit na o</p>
+                                <svg viewBox="0 0 100 110" style="width:100%; max-width:110px; height:auto; overflow:visible; display:block; margin:0 auto;">
+                                    <line x1="-5" y1="10" x2="105" y2="10" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="5" />
+                                    <line x1="-5" y1="55" x2="105" y2="55" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="5" />
+                                    <line x1="-5" y1="100" x2="105" y2="100" stroke="#f0f0f0" stroke-width="2" stroke-dasharray="5" />
+                                    <ellipse cx="50" cy="77" rx="30" ry="26" fill="none" stroke="#f0e0e8" stroke-width="14" />
+                                    <path d="M 50,51 A 30,26 0 0 0 50,103 A 30,26 0 0 0 50,51" fill="none" stroke="#FF6B9D" stroke-width="4" stroke-linecap="round" />
                                     <polygon points="34,51 48,43 48,59" fill="#FF6B9D" />
                                     <polygon points="49,45 44,54 54,54" fill="#FF6B9D" />
                                     <circle cx="50" cy="45" r="9" fill="#FF6B9D" />
-                                    <text x="50" y="49" fill="white" font-size="10" font-family="Nunito"
-                                        font-weight="bold" text-anchor="middle">1</text>
+                                    <text x="50" y="49" fill="white" font-size="10" font-family="Nunito" font-weight="bold" text-anchor="middle">1</text>
                                 </svg>
                             </div>
 
                             <div style="display:flex; flex-direction:column; gap:7px;">
-                                <button class="pad-tool-btn undo-btn" style="width:100%; justify-content:center;"
-                                    onclick="undoStroke(window._u1ActivePad || 'upper')">↩ Burahin huli</button>
-                                <button class="pad-tool-btn erase" style="width:100%; justify-content:center;"
-                                    onclick="clearCanvas(window._u1ActivePad || 'upper')">🗑 I-clear</button>
+                                <button class="pad-tool-btn undo-btn" style="width:100%; justify-content:center;" onclick="undoStroke(window._u1ActivePad || 'upper')">↩ Burahin huli</button>
+                                <button class="pad-tool-btn erase" style="width:100%; justify-content:center;" onclick="clearCanvas(window._u1ActivePad || 'upper')">🗑 I-clear</button>
                             </div>
 
                             <div>
-                                <div style="font-size:0.78rem; font-weight:800; color:#aaa; margin-bottom:5px;">Kulay:
-                                </div>
+                                <div style="font-size:0.78rem; font-weight:800; color:#aaa; margin-bottom:5px;">Kulay:</div>
                                 <div style="display:flex; flex-wrap:wrap; gap:6px;">
-                                    <div class="color-swatch u1-color active" style="background:#4D96FF;"
-                                        data-color="#4D96FF" onclick="setU1Color('#4D96FF',this)"></div>
-                                    <div class="color-swatch u1-color" style="background:#FF6B9D;" data-color="#FF6B9D"
-                                        onclick="setU1Color('#FF6B9D',this)"></div>
-                                    <div class="color-swatch u1-color" style="background:#6BCB77;" data-color="#6BCB77"
-                                        onclick="setU1Color('#6BCB77',this)"></div>
-                                    <div class="color-swatch u1-color" style="background:#FF9F43;" data-color="#FF9F43"
-                                        onclick="setU1Color('#FF9F43',this)"></div>
-                                    <div class="color-swatch u1-color" style="background:#C77DFF;" data-color="#C77DFF"
-                                        onclick="setU1Color('#C77DFF',this)"></div>
+                                    <div class="color-swatch u1-color active" style="background:#4D96FF;" onclick="setU1Color('#4D96FF',this)"></div>
+                                    <div class="color-swatch u1-color" style="background:#FF6B9D;" onclick="setU1Color('#FF6B9D',this)"></div>
+                                    <div class="color-swatch u1-color" style="background:#6BCB77;" onclick="setU1Color('#6BCB77',this)"></div>
+                                    <div class="color-swatch u1-color" style="background:#FF9F43;" onclick="setU1Color('#FF9F43',this)"></div>
                                 </div>
                             </div>
 
                             <div>
-                                <div style="font-size:0.78rem; font-weight:800; color:#aaa; margin-bottom:5px;">Laki ng
-                                    panulat:</div>
+                                <div style="font-size:0.78rem; font-weight:800; color:#aaa; margin-bottom:5px;">Laki ng panulat:</div>
                                 <div style="display:flex; gap:7px; align-items:center;">
-                                    <div class="brush-btn active u1-brush" data-size="5" onclick="setU1Brush(5,this)">
-                                        <div class="brush-dot" style="width:6px;height:6px;"></div>
-                                    </div>
-                                    <div class="brush-btn u1-brush" data-size="10" onclick="setU1Brush(10,this)">
-                                        <div class="brush-dot" style="width:11px;height:11px;"></div>
-                                    </div>
-                                    <div class="brush-btn u1-brush" data-size="18" onclick="setU1Brush(18,this)">
-                                        <div class="brush-dot" style="width:18px;height:18px;"></div>
-                                    </div>
+                                    <div class="brush-btn active u1-brush" onclick="setU1Brush(5,this)"><div class="brush-dot" style="width:6px;height:6px;"></div></div>
+                                    <div class="brush-btn u1-brush" onclick="setU1Brush(10,this)"><div class="brush-dot" style="width:11px;height:11px;"></div></div>
+                                    <div class="brush-btn u1-brush" onclick="setU1Brush(18,this)"><div class="brush-dot" style="width:18px;height:18px;"></div></div>
                                 </div>
                             </div>
-                        </div><div
-                            style="flex:1; min-width:0; display:flex; flex-direction:column; gap:14px; padding-left:18px;">
+                        </div>
 
+                        <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:14px; padding-left:18px;">
                             <div class="draw-pad-wrapper" style="margin-bottom:0;">
                                 <div class="draw-pad-label">
                                     <span class="letter-preview upper">O</span>
                                     <span style="color:var(--blue); font-weight:900;">Malaking O</span>
                                 </div>
-                                <div class="canvas-frame" id="frameUpper" style="margin-top:10px;"
-                                    onclick="window._u1ActivePad='upper'">
+                                <div class="canvas-frame" id="frameUpper" style="margin-top:10px;" onclick="window._u1ActivePad='upper'">
                                     <div class="canvas-ghost" id="ghostUpper" style="gap:15%;">
-                                        <span class="ghost-letter">O</span>
-                                        <span class="ghost-letter">O</span>
-                                        <span class="ghost-letter">O</span>
+                                        <span class="ghost-letter">O</span><span class="ghost-letter">O</span><span class="ghost-letter">O</span>
                                     </div>
                                     <canvas id="canvasUpper" height="150"></canvas>
                                 </div>
-                                <div class="pad-done-tick" id="doneTick-upper">✅ Napakahusay! Sinulatan mo na ang
-                                    malaking O!</div>
+                                <div class="pad-done-tick" id="doneTick-upper">✅ Napakahusay! Sinulatan mo na ang malaking O!</div>
                             </div>
 
                             <div class="draw-pad-wrapper" style="margin-bottom:0;">
@@ -1398,82 +563,43 @@
                                     <span class="letter-preview lower">o</span>
                                     <span style="color:var(--pink); font-weight:900;">Maliit na o</span>
                                 </div>
-                                <div class="canvas-frame" id="frameLower" style="margin-top:10px;"
-                                    onclick="window._u1ActivePad='lower'">
+                                <div class="canvas-frame" id="frameLower" style="margin-top:10px;" onclick="window._u1ActivePad='lower'">
                                     <div class="canvas-ghost" id="ghostLower" style="gap:15%;">
-                                        <span class="ghost-letter">o</span>
-                                        <span class="ghost-letter">o</span>
-                                        <span class="ghost-letter">o</span>
+                                        <span class="ghost-letter">o</span><span class="ghost-letter">o</span><span class="ghost-letter">o</span>
                                     </div>
                                     <canvas id="canvasLower" height="130"></canvas>
                                 </div>
-                                <div class="pad-done-tick" id="doneTick-lower">✅ Magaling! Sinulatan mo na ang maliit na
-                                    o!</div>
+                                <div class="pad-done-tick" id="doneTick-lower">✅ Magaling! Sinulatan mo na ang maliit na o!</div>
                             </div>
 
                             <div style="display:flex; justify-content:center; padding-top:4px;">
-                                <button class="pad-tool-btn done-draw" id="u1-tapos-btn"
-                                    style="padding:14px 44px; font-size:1.15rem; border-radius:50px; box-shadow:0 6px 0 #1b5e20; gap:10px;"
-                                    onclick="markU1Done()">
+                                <button class="pad-tool-btn done-draw" id="u1-tapos-btn" style="padding:14px 44px; font-size:1.15rem; border-radius:50px; box-shadow:0 6px 0 #1b5e20; gap:10px;" onclick="markU1Done()">
                                     <i class="fa-solid fa-check"></i> Tapos na!
                                 </button>
                             </div>
-
-                        </div></div></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
 
             <div class="unit-slide" id="unit-2">
                 <div class="section-card">
                     <div class="section-badge badge-purple">📝 Pagsasanay</div>
-                    <div class="pagsasanay-label text-center mt-3"
-                        style="font-size: 1.5rem; font-weight: 700; color: #333; margin-bottom: 5px;">A. Sumulat ng
-                        malalaking O.</div>
+                    <div class="pagsasanay-label text-center mt-3" style="font-size: 1.5rem; font-weight: 700; color: #333; margin-bottom: 5px;">A. Sumulat ng malalaking O.</div>
 
                     <div class="draw-pad-wrapper" style="margin-top:20px;">
                         <div class="canvas-frame" id="frameExA">
                             <div class="canvas-ghost" id="ghostExA" style="gap: 15%;">
-                                <span class="ghost-letter">O</span>
-                                <span class="ghost-letter">O</span>
-                                <span class="ghost-letter">O</span>
+                                <span class="ghost-letter">O</span><span class="ghost-letter">O</span><span class="ghost-letter">O</span>
                             </div>
                             <canvas id="canvasExA" height="180"></canvas>
                         </div>
-
                         <div class="pad-toolbar mt-3">
                             <button class="pad-tool-btn undo-btn" onclick="undoStroke('exA')">↩ Burahin huli</button>
                             <button class="pad-tool-btn erase" onclick="clearCanvas('exA')">🗑 I-clear</button>
                             <button class="pad-tool-btn done-draw" onclick="markDone('exA')">✓ Tapos na!</button>
                         </div>
-                        <div class="color-row">
-                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Kulay:</span>
-                            <div class="color-swatch active" style="background:#4A90E2;"
-                                onclick="setColor('exA','#4D96FF',this)"></div>
-                            <div class="color-swatch" style="background:#F44336;"
-                                onclick="setColor('exA','#FF6B9D',this)"></div>
-                            <div class="color-swatch" style="background:#4CAF50;"
-                                onclick="setColor('exA','#6BCB77',this)"></div>
-                            <div class="color-swatch" style="background:#FF9F43;"
-                                onclick="setColor('exA','#FF9F43',this)"></div>
-                            <div class="color-swatch" style="background:#C77DFF;"
-                                onclick="setColor('exA','#C77DFF',this)"></div>
-                            <div class="color-swatch" style="background:#2C2F33;"
-                                onclick="setColor('exA','#2C2F33',this)"></div>
-                        </div>
-                        <div class="brush-row">
-                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Laki ng panulat:</span>
-                            <div class="brush-btn active" onclick="setBrush('exA',5,this)">
-                                <div class="brush-dot" style="width:6px;height:6px;"></div>
-                            </div>
-                            <div class="brush-btn" onclick="setBrush('exA',10,this)">
-                                <div class="brush-dot" style="width:11px;height:11px;"></div>
-                            </div>
-                            <div class="brush-btn" onclick="setBrush('exA',18,this)">
-                                <div class="brush-dot" style="width:18px;height:18px;"></div>
-                            </div>
-                        </div>
-                        <div class="pad-done-tick" id="doneTick-exA">✅ Napakahusay! Sinulatan mo na lahat ng malaking O!
-                        </div>
+                        <div class="pad-done-tick" id="doneTick-exA">✅ Napakahusay! Sinulatan mo na lahat ng malaking O!</div>
                     </div>
                 </div>
             </div>
@@ -1481,51 +607,19 @@
             <div class="unit-slide" id="unit-3">
                 <div class="section-card">
                     <div class="section-badge badge-purple">📝 Pagsasanay</div>
-                    <div class="pagsasanay-label text-center mt-3"
-                        style="font-size: 1.5rem; font-weight: 700; color: #333; margin-bottom: 5px;">B. Sumulat ng
-                        maliliit na o.</div>
+                    <div class="pagsasanay-label text-center mt-3" style="font-size: 1.5rem; font-weight: 700; color: #333; margin-bottom: 5px;">B. Sumulat ng maliliit na o.</div>
 
                     <div class="draw-pad-wrapper" style="margin-top:20px;">
                         <div class="canvas-frame" id="frameExB">
                             <div class="canvas-ghost" id="ghostExB" style="gap: 15%;">
-                                <span class="ghost-letter">o</span>
-                                <span class="ghost-letter">o</span>
-                                <span class="ghost-letter">o</span>
+                                <span class="ghost-letter">o</span><span class="ghost-letter">o</span><span class="ghost-letter">o</span>
                             </div>
                             <canvas id="canvasExB" height="160"></canvas>
                         </div>
-
                         <div class="pad-toolbar mt-3">
                             <button class="pad-tool-btn undo-btn" onclick="undoStroke('exB')">↩ Burahin huli</button>
                             <button class="pad-tool-btn erase" onclick="clearCanvas('exB')">🗑 I-clear</button>
                             <button class="pad-tool-btn done-draw" onclick="markDone('exB')">✓ Tapos na!</button>
-                        </div>
-                        <div class="color-row">
-                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Kulay:</span>
-                            <div class="color-swatch active" style="background:#4A90E2;"
-                                onclick="setColor('exB','#4D96FF',this)"></div>
-                            <div class="color-swatch" style="background:#F44336;"
-                                onclick="setColor('exB','#FF6B9D',this)"></div>
-                            <div class="color-swatch" style="background:#4CAF50;"
-                                onclick="setColor('exB','#6BCB77',this)"></div>
-                            <div class="color-swatch" style="background:#FF9F43;"
-                                onclick="setColor('exB','#FF9F43',this)"></div>
-                            <div class="color-swatch" style="background:#C77DFF;"
-                                onclick="setColor('exB','#C77DFF',this)"></div>
-                            <div class="color-swatch" style="background:#2C2F33;"
-                                onclick="setColor('exB','#2C2F33',this)"></div>
-                        </div>
-                        <div class="brush-row">
-                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Laki ng panulat:</span>
-                            <div class="brush-btn active" onclick="setBrush('exB',5,this)">
-                                <div class="brush-dot" style="width:6px;height:6px;"></div>
-                            </div>
-                            <div class="brush-btn" onclick="setBrush('exB',10,this)">
-                                <div class="brush-dot" style="width:11px;height:11px;"></div>
-                            </div>
-                            <div class="brush-btn" onclick="setBrush('exB',18,this)">
-                                <div class="brush-dot" style="width:18px;height:18px;"></div>
-                            </div>
                         </div>
                         <div class="pad-done-tick" id="doneTick-exB">✅ Magaling! Sinulatan mo na ang maliit na o!</div>
                     </div>
@@ -1535,572 +629,54 @@
             <div class="unit-slide" id="unit-4">
                 <div class="section-card">
                     <div class="section-badge badge-purple">📝 Pagsasanay</div>
-                    <div class="pagsasanay-label text-center mt-3"
-                        style="font-size: 1.5rem; font-weight: 700; color: #333; margin-bottom: 5px;">C. Pagsamahin sa
-                        guhit ang malaki at maliit na letrang Oo.</div>
+                    <div class="pagsasanay-label text-center mt-3" style="font-size: 1.5rem; font-weight: 700; color: #333; margin-bottom: 5px;">C. Pagsamahin sa guhit ang malaki at maliit na letrang Oo.</div>
 
                     <div class="draw-pad-wrapper" style="margin-top:20px;">
                         <div class="canvas-frame" id="frameExC">
-                            <div class="canvas-ghost" id="ghostExC"
-                                style="gap: 8%; font-size: 4.5rem; letter-spacing: 4px;">
-                                <span class="ghost-letter">Oo</span>
-                                <span class="ghost-letter">Oo</span>
-                                <span class="ghost-letter">Oo</span>
+                            <div class="canvas-ghost" id="ghostExC" style="gap: 8%; font-size: 4.5rem; letter-spacing: 4px;">
+                                <span class="ghost-letter">Oo</span><span class="ghost-letter">Oo</span><span class="ghost-letter">Oo</span>
                             </div>
                             <canvas id="canvasExC" height="180"></canvas>
                         </div>
-
                         <div class="pad-toolbar mt-3">
                             <button class="pad-tool-btn undo-btn" onclick="undoStroke('exC')">↩ Burahin huli</button>
                             <button class="pad-tool-btn erase" onclick="clearCanvas('exC')">🗑 I-clear</button>
                             <button class="pad-tool-btn done-draw" onclick="markDone('exC')">✓ Tapos na!</button>
                         </div>
-                        <div class="color-row">
-                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Kulay:</span>
-                            <div class="color-swatch active" style="background:#4A90E2;"
-                                onclick="setColor('exC','#4D96FF',this)"></div>
-                            <div class="color-swatch" style="background:#F44336;"
-                                onclick="setColor('exC','#FF6B9D',this)"></div>
-                            <div class="color-swatch" style="background:#4CAF50;"
-                                onclick="setColor('exC','#6BCB77',this)"></div>
-                            <div class="color-swatch" style="background:#FF9F43;"
-                                onclick="setColor('exC','#FF9F43',this)"></div>
-                            <div class="color-swatch" style="background:#C77DFF;"
-                                onclick="setColor('exC','#C77DFF',this)"></div>
-                            <div class="color-swatch" style="background:#2C2F33;"
-                                onclick="setColor('exC','#2C2F33',this)"></div>
-                        </div>
-                        <div class="brush-row">
-                            <span style="font-size:0.8rem;font-weight:800;color:#aaa;">Laki ng panulat:</span>
-                            <div class="brush-btn active" onclick="setBrush('exC',5,this)">
-                                <div class="brush-dot" style="width:6px;height:6px;"></div>
-                            </div>
-                            <div class="brush-btn" onclick="setBrush('exC',10,this)">
-                                <div class="brush-dot" style="width:11px;height:11px;"></div>
-                            </div>
-                            <div class="brush-btn" onclick="setBrush('exC',18,this)">
-                                <div class="brush-dot" style="width:18px;height:18px;"></div>
-                            </div>
-                        </div>
                         <div class="pad-done-tick" id="doneTick-exC">✅ Napakahusay! Natapos mo na lahat!</div>
                     </div>
                 </div>
             </div>
+
             <div class="unit-slide" id="unit-5">
-                <style>
-                    /* Interactive Circle Styles */
-                    .marker-circle {
-                        position: absolute;
-                        top: 50%;
-                        left: 50%;
-                        width: 140%;
-                        height: 140%;
-                        transform: translate(-50%, -50%) scale(0);
-                        pointer-events: none;
-                        z-index: 10;
-                        opacity: 0;
-                        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50,15 C80,10 90,30 85,60 C80,90 40,85 20,70 C5,55 10,25 40,20 C50,18 60,20 70,25' fill='none' stroke='%23ff1744' stroke-width='6' stroke-linecap='round'/></svg>");
-                        background-size: 100% 100%;
-                        background-repeat: no-repeat;
-                    }
-
-                    .choice-card.circled {
-                        transform: scale(1.05);
-                        border-color: transparent !important;
-                        box-shadow: none !important;
-                    }
-
-                    .choice-card.circled .marker-circle {
-                        transform: translate(-50%, -50%) scale(1);
-                        opacity: 1;
-                    }
-
-                    .choice-card.shake {
-                        animation: wrongShake 0.5s cubic-bezier(.36, .07, .19, .97) both;
-                    }
-
-                    @keyframes wrongShake {
-
-                        10%,
-                        90% {
-                            transform: translate3d(-1px, 0, 0);
-                        }
-
-                        20%,
-                        80% {
-                            transform: translate3d(2px, 0, 0);
-                        }
-
-                        30%,
-                        50%,
-                        70% {
-                            transform: translate3d(-4px, 0, 0);
-                        }
-
-                        40%,
-                        60% {
-                            transform: translate3d(4px, 0, 0);
-                        }
-                    }
-
-                    /* ── SETTINGS MODAL (Tunog Tuklas) ── */
-                    .settings-overlay {
-                        position: fixed;
-                        inset: 0;
-                        z-index: 25000;
-                        background: rgba(0, 0, 0, 0.65);
-                        display: none;
-                        align-items: center;
-                        justify-content: center;
-                        backdrop-filter: blur(6px);
-                    }
-
-                    .settings-overlay.open {
-                        display: flex;
-                    }
-
-                    .settings-panel {
-                        background: linear-gradient(160deg, #fff9c4 0%, #fce4ec 50%, #e3f2fd 100%);
-                        border-radius: 32px;
-                        border: 5px solid #2c2f33;
-                        box-shadow: 0 14px 0 #2c2f33, 0 20px 50px rgba(0, 0, 0, 0.25);
-                        width: 92%;
-                        max-width: 460px;
-                        overflow: hidden;
-                        animation: settingsIn 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-                    }
-
-                    @keyframes settingsIn {
-                        from {
-                            transform: scale(0.6) rotate(-4deg);
-                            opacity: 0;
-                        }
-
-                        to {
-                            transform: scale(1) rotate(0deg);
-                            opacity: 1;
-                        }
-                    }
-
-                    .settings-header {
-                        background: linear-gradient(135deg, #7c4dff, #e040fb);
-                        padding: 18px 24px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-between;
-                        border-bottom: 4px solid #2c2f33;
-                    }
-
-                    .settings-header h2 {
-                        font-family: 'Nunito', sans-serif;
-                        font-weight: 900;
-                        font-size: 1.5rem;
-                        color: #fff;
-                        margin: 0;
-                        text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
-                    }
-
-                    .settings-close-btn {
-                        width: 42px;
-                        height: 42px;
-                        border-radius: 50%;
-                        border: 3px solid rgba(255, 255, 255, 0.7);
-                        background: rgba(255, 255, 255, 0.25);
-                        color: #fff;
-                        font-size: 1.3rem;
-                        font-weight: 900;
-                        cursor: pointer;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        transition: all 0.15s;
-                        line-height: 1;
-                    }
-
-                    .settings-close-btn:hover {
-                        background: rgba(255, 255, 255, 0.45);
-                    }
-
-                    .settings-body {
-                        padding: 22px 24px;
-                        display: flex;
-                        flex-direction: column;
-                        gap: 18px;
-                        max-height: 80vh;
-                        overflow-y: auto;
-                    }
-
-                    .settings-row {
-                        background: #fff;
-                        border: 3px solid #2c2f33;
-                        border-radius: 20px;
-                        padding: 14px 18px;
-                        box-shadow: 0 4px 0 #2c2f33;
-                    }
-
-                    .settings-row-label {
-                        font-family: 'Nunito', sans-serif;
-                        font-weight: 900;
-                        font-size: 1.05rem;
-                        color: #2c2f33;
-                        display: flex;
-                        align-items: center;
-                        gap: 8px;
-                        margin-bottom: 10px;
-                    }
-
-                    .settings-row-label .s-icon {
-                        font-size: 1.4rem;
-                    }
-
-                    .tt-slider {
-                        -webkit-appearance: none;
-                        appearance: none;
-                        width: 100%;
-                        height: 14px;
-                        border-radius: 20px;
-                        outline: none;
-                        cursor: pointer;
-                        border: 3px solid #2c2f33;
-                    }
-
-                    .tt-slider.volume-slider {
-                        background: linear-gradient(90deg, #4CAF50 var(--vol-pct, 80%), #ddd var(--vol-pct, 80%));
-                    }
-
-                    .tt-slider.brightness-slider {
-                        background: linear-gradient(90deg, #FDD835 var(--br-pct, 50%), #ddd var(--br-pct, 50%));
-                    }
-
-                    .tt-slider.pixel-slider {
-                        background: linear-gradient(90deg, #7c4dff var(--px-pct, 0%), #ddd var(--px-pct, 0%));
-                    }
-
-                    .tt-slider::-webkit-slider-thumb {
-                        -webkit-appearance: none;
-                        appearance: none;
-                        width: 28px;
-                        height: 28px;
-                        border-radius: 50%;
-                        background: #fff;
-                        border: 4px solid #2c2f33;
-                        box-shadow: 0 3px 0 #2c2f33;
-                        cursor: pointer;
-                    }
-
-                    .slider-val {
-                        font-family: 'Nunito', sans-serif;
-                        font-weight: 900;
-                        font-size: 1.1rem;
-                        color: #555;
-                        min-width: 44px;
-                        text-align: right;
-                    }
-
-                    .tt-toggle-row {
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-between;
-                        gap: 10px;
-                    }
-
-                    .tt-toggle-label {
-                        font-family: 'Nunito', sans-serif;
-                        font-weight: 800;
-                        font-size: 0.95rem;
-                        color: #555;
-                    }
-
-                    .tt-switch {
-                        position: relative;
-                        display: inline-block;
-                        width: 64px;
-                        height: 34px;
-                        flex-shrink: 0;
-                    }
-
-                    .tt-switch input {
-                        opacity: 0;
-                        width: 0;
-                        height: 0;
-                    }
-
-                    .tt-switch-slider {
-                        position: absolute;
-                        inset: 0;
-                        background: #ccc;
-                        border-radius: 34px;
-                        border: 3px solid #2c2f33;
-                        cursor: pointer;
-                        transition: background 0.3s;
-                    }
-
-                    .tt-switch-slider::before {
-                        content: '';
-                        position: absolute;
-                        width: 22px;
-                        height: 22px;
-                        left: 3px;
-                        top: 50%;
-                        transform: translateY(-50%);
-                        background: #fff;
-                        border-radius: 50%;
-                        border: 2px solid #2c2f33;
-                        transition: left 0.3s;
-                    }
-
-                    .tt-switch input:checked+.tt-switch-slider {
-                        background: #7c4dff;
-                    }
-
-                    .tt-switch input:checked+.tt-switch-slider::before {
-                        left: 33px;
-                    }
-
-                    .tt-fullscreen-btn {
-                        width: 100%;
-                        padding: 12px;
-                        background: linear-gradient(135deg, #FF9800, #F44336);
-                        border: 3px solid #2c2f33;
-                        border-radius: 14px;
-                        box-shadow: 0 4px 0 #2c2f33;
-                        font-family: 'Nunito', sans-serif;
-                        font-weight: 900;
-                        font-size: 1rem;
-                        color: #fff;
-                        cursor: pointer;
-                        transition: all 0.15s;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        gap: 8px;
-                    }
-
-                    .tt-fullscreen-btn:active {
-                        transform: translateY(4px);
-                        box-shadow: 0 0 0 #2c2f33;
-                    }
-
-                    #tt-pixel-overlay {
-                        position: fixed;
-                        inset: 0;
-                        z-index: 99999;
-                        pointer-events: none;
-                        display: none;
-                        image-rendering: pixelated;
-                        background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.04) 0px, rgba(0, 0, 0, 0.04) 1px, transparent 1px, transparent 3px),
-                            repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.04) 0px, rgba(0, 0, 0, 0.04) 1px, transparent 1px, transparent 3px);
-                    }
-
-                    body.tt-low-graphics *,
-                    body.tt-low-graphics *::before,
-                    body.tt-low-graphics *::after {
-                        animation-duration: 0.001ms !important;
-                        animation-iteration-count: 1 !important;
-                        transition-duration: 0.001ms !important;
-                    }
-
-                    body.tt-pixelated {
-                        image-rendering: pixelated;
-                    }
-
-                    body.tt-pixelated img,
-                    body.tt-pixelated canvas {
-                        image-rendering: pixelated;
-                    }
-
-                    /* ── Settings gear button on lesson header ── */
-                    .btn-lesson-settings {
-                        background: rgba(255, 255, 255, 0.25);
-                        border: 3px solid rgba(255, 255, 255, 0.6);
-                        border-radius: 50%;
-                        width: 44px;
-                        height: 44px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        font-size: 1.3rem;
-                        cursor: pointer;
-                        transition: all 0.15s;
-                        flex-shrink: 0;
-                    }
-
-                    .btn-lesson-settings:hover {
-                        background: rgba(255, 255, 255, 0.45);
-                    }
-
-                    .btn-lesson-settings:active {
-                        transform: translateY(2px);
-                    }
-                </style>
                 <div class="section-card" style="max-width: 1150px; padding: 60px 40px;">
                     <div class="section-badge badge-blue">🎯 Alamin Natin</div>
 
-                    <h2 class="activity-title mt-3">Sabihin ang ngalan ng mga larawan. Alin ang
-                        may simulang tunog ng <strong>Oo</strong>? Bilugan ito.</h2>
-                    <p class="activity-instruction">
-                        Pindutin ang mga larawan at pindutin ang <strong>SURIIN ANG AKING SAGOT</strong> para malaman
-                        kung ikaw ay tama.
-                    </p>
+                    <h2 class="activity-title mt-3">Sabihin ang ngalan ng mga larawan. Alin ang may simulang tunog ng <strong>Oo</strong>? Bilugan ito.</h2>
+                    <p class="activity-instruction">Pindutin ang mga larawan at pindutin ang <strong>SURIIN ANG AKING SAGOT</strong> para malaman kung ikaw ay tama.</p>
 
-                    <div class="choices-grid" id="act1-grid"
-                        style="grid-template-columns: repeat(6, 1fr); gap: 12px; margin-top: 30px; flex-wrap: nowrap;">
-                        <div class="choice-card" data-correct="true" data-activity="3" onclick="toggleChoice(this)"
-                            style="position:relative; overflow:visible;">
-                            <div class="choice-emoji-box">🥒</div>
-                            <div class="choice-label">Okra</div>
-                            <div class="marker-circle"></div>
+                    <div class="choices-grid" id="act5-grid" style="grid-template-columns: repeat(6, 1fr); gap: 12px; margin-top: 30px; flex-wrap: nowrap;">
+                        <div class="choice-card" data-correct="true" data-activity="5" onclick="toggleChoice(this)" style="position:relative; overflow:visible;">
+                            <div class="choice-emoji-box">🥒</div><div class="choice-label">Okra</div><div class="marker-circle"></div>
                         </div>
-                        <div class="choice-card" data-correct="true" data-activity="3" onclick="toggleChoice(this)"
-                            style="position:relative; overflow:visible;">
-                            <div class="choice-emoji-box">⏰</div>
-                            <div class="choice-label">Orasan</div>
-                            <div class="marker-circle"></div>
+                        <div class="choice-card" data-correct="true" data-activity="5" onclick="toggleChoice(this)" style="position:relative; overflow:visible;">
+                            <div class="choice-emoji-box">⏰</div><div class="choice-label">Orasan</div><div class="marker-circle"></div>
                         </div>
-                        <div class="choice-card" data-correct="true" data-activity="3" onclick="toggleChoice(this)"
-                            style="position:relative; overflow:visible;">
-                            <div class="choice-emoji-box">🐻</div>
-                            <div class="choice-label">Oso</div>
-                            <div class="marker-circle"></div>
+                        <div class="choice-card" data-correct="true" data-activity="5" onclick="toggleChoice(this)" style="position:relative; overflow:visible;">
+                            <div class="choice-emoji-box">🐻</div><div class="choice-label">Oso</div><div class="marker-circle"></div>
                         </div>
-                        <div class="choice-card" data-correct="true" data-activity="3" onclick="toggleChoice(this)"
-                            style="position:relative; overflow:visible;">
-                            <div class="choice-emoji-box">🚗</div>
-                            <div class="choice-label">Oto</div>
-                            <div class="marker-circle"></div>
+                        <div class="choice-card" data-correct="true" data-activity="5" onclick="toggleChoice(this)" style="position:relative; overflow:visible;">
+                            <div class="choice-emoji-box">🚗</div><div class="choice-label">Oto</div><div class="marker-circle"></div>
                         </div>
-                        <div class="choice-card" data-correct="true" data-activity="3" onclick="toggleChoice(this)"
-                            style="position:relative; overflow:visible;">
-                            <div class="choice-emoji-box">🏥</div>
-                            <div class="choice-label">Ospital</div>
-                            <div class="marker-circle"></div>
+                        <div class="choice-card" data-correct="true" data-activity="5" onclick="toggleChoice(this)" style="position:relative; overflow:visible;">
+                            <div class="choice-emoji-box">🏥</div><div class="choice-label">Ospital</div><div class="marker-circle"></div>
                         </div>
-                        <div class="choice-card" data-correct="false" data-activity="3" onclick="toggleChoice(this)"
-                            style="position:relative; overflow:visible;">
-                            <div class="choice-emoji-box">🍃</div>
-                            <div class="choice-label">Dahon</div>
-                            <div class="marker-circle"></div>
+                        <div class="choice-card" data-correct="false" data-activity="5" onclick="toggleChoice(this)" style="position:relative; overflow:visible;">
+                            <div class="choice-emoji-box">🍃</div><div class="choice-label">Dahon</div><div class="marker-circle"></div>
                         </div>
                     </div>
 
-                    <button class="check-btn mt-5" id="check-act3" onclick="checkActivity(3)">
-                        <i class="fa-solid fa-check-circle"></i> Suriin ang Aking Sagot
-                    </button>
-
-                    <div class="feedback-banner" id="feedback-act3">
-                        <span class="feedback-icon" id="feedback-icon-3"></span>
-                        <span id="feedback-text-3"></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="unit-slide" id="unit-6">
-                <div class="section-card">
-                    <div class="section-badge badge-green">📝 Pagsasanay 1</div>
-                    <h2 class="activity-title mt-3">Bigkasin ang ngalan ng mga larawan. Lagyan ng tsek (✔) kung nasa
-                        hulihan ang tunog ng letrang Oo.</h2>
-
-                    <div class="choices-grid mt-4" id="act3-grid"
-                        style="grid-template-columns: repeat(5, 1fr); max-width:1050px; margin: 0 auto; gap:15px;">
-                        <div class="choice-card" data-correct="true" data-activity="4" onclick="toggleChoice(this)">
-                            <div class="choice-emoji-box" style="font-size:3.5rem;">🥥</div>
-                            <div class="choice-label">Buko</div>
-                            <div class="choice-checkbox"></div>
-                        </div>
-                        <div class="choice-card" data-correct="false" data-activity="4" onclick="toggleChoice(this)">
-                            <div class="choice-emoji-box" style="font-size:3.5rem;">🔑</div>
-                            <div class="choice-label">Susi</div>
-                            <div class="choice-checkbox"></div>
-                        </div>
-                        <div class="choice-card" data-correct="true" data-activity="4" onclick="toggleChoice(this)">
-                            <div class="choice-emoji-box" style="font-size:3.5rem;">🐌</div>
-                            <div class="choice-label">Suso</div>
-                            <div class="choice-checkbox"></div>
-                        </div>
-                        <div class="choice-card" data-correct="true" data-activity="4" onclick="toggleChoice(this)">
-                            <div class="choice-emoji-box" style="font-size:3.5rem;">🪴</div>
-                            <div class="choice-label">Paso</div>
-                            <div class="choice-checkbox"></div>
-                        </div>
-                        <div class="choice-card" data-correct="true" data-activity="4" onclick="toggleChoice(this)">
-                            <div class="choice-emoji-box" style="font-size:3.5rem;">🐶</div>
-                            <div class="choice-label">Aso</div>
-                            <div class="choice-checkbox"></div>
-                        </div>
-                    </div>
-
-                    <button class="check-btn mt-5" id="check-act3" onclick="checkActivity(4)">
-                        <i class="fa-solid fa-check-circle"></i> Suriin ang Aking Sagot
-                    </button>
-                    <div class="feedback-banner" id="feedback-act4">
-                        <span class="feedback-icon" id="feedback-icon-4"></span>
-                        <span id="feedback-text-4"></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="unit-slide" id="unit-7">
-                <div class="section-card">
-                    <div class="section-badge badge-blue">🧠 Sagutin Natin</div>
-
-                    <h2 class="activity-title mt-3">Sagutin Natin!</h2>
-                    <p class="activity-instruction">
-                        Isulat ang nawawalang tunog upang mabuo ang ngalan ng mga larawan.
-                    </p>
-
-                    <div style="max-width: 400px; margin: 0 auto; margin-top:20px;">
-
-                        <div class="sagutin-item">
-                            <span class="sagutin-emoji">🐻</span>
-                            <div class="sagutin-word">
-                                <input type="text" class="fill-blank-input" id="blank1" maxlength="1" data-answer="o"
-                                    autocomplete="off" style="width: 50px;">
-                                so
-                            </div>
-                        </div>
-
-                        <div class="sagutin-item">
-                            <span class="sagutin-emoji">⏰</span>
-                            <div class="sagutin-word">
-                                <input type="text" class="fill-blank-input" id="blank2" maxlength="1" data-answer="o"
-                                    autocomplete="off" style="width: 50px;">
-                                rasan
-                            </div>
-                        </div>
-
-                        <div class="sagutin-item">
-                            <span class="sagutin-emoji">🐕</span>
-                            <div class="sagutin-word">
-                                as
-                                <input type="text" class="fill-blank-input" id="blank3" maxlength="1" data-answer="o"
-                                    autocomplete="off" style="width: 50px;">
-                            </div>
-                        </div>
-
-                        <div class="sagutin-item">
-                            <span class="sagutin-emoji">🥤</span>
-                            <div class="sagutin-word">
-                                bas
-                                <input type="text" class="fill-blank-input" id="blank4" maxlength="1" data-answer="o"
-                                    autocomplete="off" style="width: 50px;">
-                            </div>
-                        </div>
-
-                        <div class="sagutin-item">
-                            <span class="sagutin-emoji">🐔</span>
-                            <div class="sagutin-word">
-                                man
-                                <input type="text" class="fill-blank-input" id="blank5-1" maxlength="1" data-answer="o"
-                                    autocomplete="off" style="width: 40px; margin:0 4px;">
-                                k
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <button class="check-btn mt-4" id="check-act5" onclick="checkFillBlanksAct7()"
-                        style="background:linear-gradient(135deg,var(--blue),#1565c0);">
+                    <button class="check-btn mt-5" id="check-act5" onclick="checkActivity(5)">
                         <i class="fa-solid fa-check-circle"></i> Suriin ang Aking Sagot
                     </button>
 
@@ -2111,7 +687,113 @@
                 </div>
             </div>
 
-        </div></div><div class="nav-bar" id="navBar">
+            <div class="unit-slide" id="unit-6">
+                <div class="section-card">
+                    <div class="section-badge badge-green">📝 Pagsasanay 1</div>
+                    <h2 class="activity-title mt-3">Bigkasin ang ngalan ng mga larawan. Lagyan ng tsek (✔) kung nasa hulihan ang tunog ng letrang Oo.</h2>
+
+                    <div class="choices-grid mt-4" id="act6-grid" style="grid-template-columns: repeat(5, 1fr); max-width:1050px; margin: 0 auto; gap:15px;">
+                        <div class="choice-card" data-correct="true" data-activity="6" onclick="toggleChoice(this)">
+                            <div class="choice-emoji-box" style="font-size:3.5rem;">🥥</div>
+                            <div class="choice-label">Buko</div>
+                            <div class="choice-checkbox"></div>
+                        </div>
+                        <div class="choice-card" data-correct="false" data-activity="6" onclick="toggleChoice(this)">
+                            <div class="choice-emoji-box" style="font-size:3.5rem;">🔑</div>
+                            <div class="choice-label">Susi</div>
+                            <div class="choice-checkbox"></div>
+                        </div>
+                        <div class="choice-card" data-correct="true" data-activity="6" onclick="toggleChoice(this)">
+                            <div class="choice-emoji-box" style="font-size:3.5rem;">🐌</div>
+                            <div class="choice-label">Suso</div>
+                            <div class="choice-checkbox"></div>
+                        </div>
+                        <div class="choice-card" data-correct="true" data-activity="6" onclick="toggleChoice(this)">
+                            <div class="choice-emoji-box" style="font-size:3.5rem;">🪴</div>
+                            <div class="choice-label">Paso</div>
+                            <div class="choice-checkbox"></div>
+                        </div>
+                        <div class="choice-card" data-correct="true" data-activity="6" onclick="toggleChoice(this)">
+                            <div class="choice-emoji-box" style="font-size:3.5rem;">🐶</div>
+                            <div class="choice-label">Aso</div>
+                            <div class="choice-checkbox"></div>
+                        </div>
+                    </div>
+
+                    <button class="check-btn mt-5" id="check-act6" onclick="checkActivity(6)">
+                        <i class="fa-solid fa-check-circle"></i> Suriin ang Aking Sagot
+                    </button>
+                    <div class="feedback-banner" id="feedback-act6">
+                        <span class="feedback-icon" id="feedback-icon-6"></span>
+                        <span id="feedback-text-6"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="unit-slide" id="unit-7">
+                <div class="section-card">
+                    <div class="section-badge badge-blue">🧠 Sagutin Natin</div>
+
+                    <h2 class="activity-title mt-3">Sagutin Natin!</h2>
+                    <p class="activity-instruction">Isulat ang nawawalang tunog upang mabuo ang ngalan ng mga larawan.</p>
+
+                    <div style="max-width: 400px; margin: 0 auto; margin-top:20px;">
+                        <div class="sagutin-item">
+                            <span class="sagutin-emoji">🐻</span>
+                            <div class="sagutin-word">
+                                <input type="text" class="fill-blank-input" id="blank1" maxlength="1" data-answer="o" autocomplete="off" style="width: 50px;">so
+                            </div>
+                        </div>
+                        <div class="sagutin-item">
+                            <span class="sagutin-emoji">⏰</span>
+                            <div class="sagutin-word">
+                                <input type="text" class="fill-blank-input" id="blank2" maxlength="1" data-answer="o" autocomplete="off" style="width: 50px;">rasan
+                            </div>
+                        </div>
+                        <div class="sagutin-item">
+                            <span class="sagutin-emoji">🐕</span>
+                            <div class="sagutin-word">
+                                as<input type="text" class="fill-blank-input" id="blank3" maxlength="1" data-answer="o" autocomplete="off" style="width: 50px;">
+                            </div>
+                        </div>
+                        <div class="sagutin-item">
+                            <span class="sagutin-emoji">🥤</span>
+                            <div class="sagutin-word">
+                                bas<input type="text" class="fill-blank-input" id="blank4" maxlength="1" data-answer="o" autocomplete="off" style="width: 50px;">
+                            </div>
+                        </div>
+                        <div class="sagutin-item">
+                            <span class="sagutin-emoji">🐔</span>
+                            <div class="sagutin-word">
+                                man<input type="text" class="fill-blank-input" id="blank5" maxlength="1" data-answer="o" autocomplete="off" style="width: 40px; margin:0 4px;">k
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="check-btn mt-4" id="check-act7" onclick="checkFillBlanksAct7()" style="background:linear-gradient(135deg,var(--blue),#1565c0);">
+                        <i class="fa-solid fa-check-circle"></i> Suriin ang Aking Sagot
+                    </button>
+
+                    <div class="feedback-banner" id="feedback-act7">
+                        <span class="feedback-icon" id="feedback-icon-7"></span>
+                        <span id="feedback-text-7"></span>
+                    </div>
+
+                    <div id="score-section" style="display:none; margin-top: 28px;">
+                        <div class="score-card">
+                            <div class="score-title">🎉 Napakahusay!</div>
+                            <div class="score-stars" id="scoreStars">⭐⭐⭐⭐⭐</div>
+                            <p style="font-size:1.1rem;font-weight:800;color:#555;" id="scoreText"></p>
+                            <p style="font-size:0.95rem;color:#888;font-weight:700;margin-top:6px;" id="scoreDetail"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="nav-bar" id="navBar">
         <button class="nav-btn prev-btn" id="prevBtn" onclick="goBack()" style="visibility:hidden;">
             <i class="fa-solid fa-arrow-left"></i> Bumalik
         </button>
@@ -2122,32 +804,41 @@
         </div>
 
         <div style="display: flex; gap: 10px;">
-            <button class="nav-btn prev-btn" id="skipBtn" onclick="goSkip()">
-                Laktawan <i class="fa-solid fa-forward-step"></i>
-            </button>
-
-            <button class="nav-btn next-btn" id="nextBtn" onclick="goNext()">
-                Susunod <i class="fa-solid fa-arrow-right"></i>
-            </button>
+            <button class="nav-btn prev-btn" id="skipBtn" onclick="goSkip()">Laktawan <i class="fa-solid fa-forward-step"></i></button>
+            <button class="nav-btn next-btn" id="nextBtn" onclick="goNext()">Susunod <i class="fa-solid fa-arrow-right"></i></button>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         (function () {
+            const UNIT_NAMES = ['Kilalanin Natin', 'Pagsulat', 'Malaking O', 'Maliit na o', 'Oo', 'Gawain 1', 'Pagsasanay', 'Sagutin Natin'];
+            let currentUnit = 0;  
+            const totalUnits = 8;
 
-            // ── Interactive Activities (Unit 6 & 7) ──
+            const state = {
+                1: { checked: false, score: 0, total: 0 },
+                2: { checked: false, score: 0, total: 0 },
+                3: { checked: false, score: 0, total: 0 },
+                4: { checked: false, score: 0, total: 0 },
+                5: { checked: false, score: 0, total: 0 }, // Para sa Alamin Natin (Bilugan)
+                6: { checked: false, score: 0, total: 0 }, // Para sa Gawain 1 (Tsek)
+                7: { checked: false, score: 0, total: 0 }  // Para sa Sagutin Natin
+            };
+
+            // Count correct answers per activity
+            document.querySelectorAll('.choice-card[data-correct="true"]').forEach(card => {
+                const act = card.dataset.activity;
+                if (state[act]) state[act].total++;
+            });
+
+            // ── Interactive Activities (Unit 5 & 6) ──
             window.toggleChoice = function (card) {
                 if (window.AudioManager) window.AudioManager.playSFX('click');
-                // If it's act 3 (Alamin Natin), we use the circled class
-                if (card.dataset.activity === "3") {
-                    if (card.classList.contains('circled')) {
-                        card.classList.remove('circled');
-                    } else {
-                        card.classList.add('circled');
-                    }
+                if (card.dataset.activity === "5") {
+                    if (card.classList.contains('circled')) card.classList.remove('circled');
+                    else card.classList.add('circled');
                 } else {
-                    // Standard checkbox toggle for act 4
                     card.classList.toggle('selected');
                     const cb = card.querySelector('.choice-checkbox');
                     if (cb) cb.classList.toggle('checked');
@@ -2157,8 +848,8 @@
             window.checkActivity = function (actNum) {
                 if (state[actNum].checked) return;
 
-                const isAct3 = (actNum === 3 || actNum === "3");
-                const selectedClass = isAct3 ? 'circled' : 'selected';
+                const isAct5 = (actNum === 5 || actNum === "5");
+                const selectedClass = isAct5 ? 'circled' : 'selected';
 
                 const cards = document.querySelectorAll(`.choice-card[data-activity="${actNum}"]`);
                 let allCorrect = true;
@@ -2225,8 +916,8 @@
                 let allCorrect = true;
 
                 inputs.forEach(input => {
-                    const val = input.value.trim();
-                    const ans = input.dataset.answer;
+                    const val = input.value.trim().toLowerCase();
+                    const ans = input.dataset.answer.toLowerCase();
                     if (val === ans) {
                         input.style.borderBottomColor = 'var(--green)';
                         input.style.color = 'var(--green)';
@@ -2237,9 +928,9 @@
                     }
                 });
 
-                const banner = document.getElementById('feedback-act5');
-                const icon = document.getElementById('feedback-icon-5');
-                const text = document.getElementById('feedback-text-5');
+                const banner = document.getElementById('feedback-act7');
+                const icon = document.getElementById('feedback-icon-7');
+                const text = document.getElementById('feedback-text-7');
 
                 if (allCorrect) {
                     if (window.AudioManager) window.AudioManager.playSFX('correct');
@@ -2252,9 +943,10 @@
                     banner.className = 'feedback-banner show correct-fb';
                     icon.innerHTML = '🌟';
                     text.innerHTML = 'Napakagaling! Tama ang lahat ng letra.';
-                    document.getElementById('check-act5').disabled = true;
+                    document.getElementById('check-act7').disabled = true;
 
                     updateNextBtn();
+                    showFinalScore();
                 } else {
                     if (window.AudioManager) window.AudioManager.playSFX('failed');
                     banner.className = 'feedback-banner show error-fb';
@@ -2263,33 +955,11 @@
                 }
             };
 
-            // ── State ──
-            const UNIT_NAMES = ['Kilalanin Natin', 'Pagsulat', 'Malaking O', 'Maliit na o', 'Oo', 'Gawain 1', 'Pagsasanay', 'Sagutin Natin'];
-            let currentUnit = 0;  // 0-indexed
-            const totalUnits = 8;
-
-            const state = {
-                1: { checked: false, score: 0, total: 0 },
-                2: { checked: false, score: 0, total: 0 },
-                3: { checked: false, score: 0, total: 0 },
-                4: { checked: false, score: 0, total: 0 },
-                5: { checked: false, score: 0, total: 0 },
-                6: { checked: false, score: 0, total: 0 },
-                7: { checked: false, score: 0, total: 0 }
-            };
-
-            // Count correct answers per activity
-            document.querySelectorAll('.choice-card[data-correct="true"]').forEach(card => {
-                const act = card.dataset.activity;
-                if (state[act]) state[act].total++;
-            });
-
             // ── Navigation ──
             function updateUI() {
                 const track = document.getElementById('unitsTrack');
                 track.style.transform = `translateX(-${currentUnit * (100 / 8)}%)`;
 
-                // Dots
                 for (let i = 0; i < totalUnits; i++) {
                     const dot = document.getElementById(`dot-${i}`);
                     dot.classList.remove('active', 'done');
@@ -2297,27 +967,21 @@
                     else if (i === currentUnit) dot.classList.add('active');
                 }
 
-                // Counter
                 document.getElementById('unitNum').textContent = currentUnit + 1;
                 document.getElementById('unitName').textContent = UNIT_NAMES[currentUnit];
 
-                // Prev btn
                 const prevBtn = document.getElementById('prevBtn');
                 prevBtn.style.visibility = currentUnit === 0 ? 'hidden' : 'visible';
 
-                // Skip btn
                 const skipBtn = document.getElementById('skipBtn');
-                if (skipBtn) {
-                    skipBtn.style.display = (currentUnit === totalUnits - 1) ? 'none' : 'flex';
-                }
+                if (skipBtn) skipBtn.style.display = (currentUnit === totalUnits - 1) ? 'none' : 'flex';
 
-                // Next / Finish btn
                 updateNextBtn();
             }
 
             function updateNextBtn() {
                 const nextBtn = document.getElementById('nextBtn');
-                if (currentUnit === totalUnits - 1) { // Unit 8 (Sagutin Natin)
+                if (currentUnit === totalUnits - 1) { 
                     if (state[7].checked) {
                         nextBtn.className = 'nav-btn finish-btn';
                         nextBtn.innerHTML = '<i class="fa-solid fa-flag-checkered"></i> Bumalik sa Mapa';
@@ -2351,15 +1015,7 @@
                         nextBtn.innerHTML = 'Susunod <i class="fa-solid fa-lock"></i>';
                         nextBtn.disabled = true;
                     }
-                } else if (currentUnit === 1 && !state[1].checked) {
-                    nextBtn.className = 'nav-btn next-btn';
-                    nextBtn.innerHTML = 'Susunod <i class="fa-solid fa-lock"></i>';
-                    nextBtn.disabled = true;
-                } else if (currentUnit === 5 && !state[3].checked) {
-                    nextBtn.className = 'nav-btn next-btn';
-                    nextBtn.innerHTML = 'Susunod <i class="fa-solid fa-lock"></i>';
-                    nextBtn.disabled = true;
-                } else if (currentUnit === 6 && !state[4].checked) {
+                } else if (currentUnit > 0 && currentUnit < 7 && !state[currentUnit].checked) {
                     nextBtn.className = 'nav-btn next-btn';
                     nextBtn.innerHTML = 'Susunod <i class="fa-solid fa-lock"></i>';
                     nextBtn.disabled = true;
@@ -2392,29 +1048,22 @@
             window.goSkip = function () {
                 if (window.AudioManager) window.AudioManager.playSFX('click');
                 if (currentUnit < totalUnits - 1) {
-                    // Force complete validation for current unit
-                    if (currentUnit === 1) state[1].checked = true;
-                    if (currentUnit === 5) state[3].checked = true;
-                    if (currentUnit === 6) state[4].checked = true;
-
+                    if (currentUnit > 0) state[currentUnit].checked = true;
                     currentUnit++;
                     updateUI();
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
             };
 
-            // ── Unit 1 Shared Controls (two-column layout) ──
-            window._u1ActivePad = 'upper'; // track which canvas was last touched
+            // ── Drawing Pads Logic ──
+            window._u1ActivePad = 'upper'; 
 
             window.setU1Color = function (color, el) {
                 if (window.AudioManager) window.AudioManager.playSFX('click');
                 document.querySelectorAll('.u1-color').forEach(s => s.classList.remove('active'));
                 if (el) el.classList.add('active');
                 ['upper', 'lower'].forEach(id => {
-                    if (pads[id]) {
-                        pads[id].color = color;
-                        updateCursor(id, color);
-                    }
+                    if (pads[id]) { pads[id].color = color; updateCursor(id, color); }
                 });
             };
 
@@ -2422,24 +1071,18 @@
                 if (window.AudioManager) window.AudioManager.playSFX('click');
                 document.querySelectorAll('.u1-brush').forEach(b => b.classList.remove('active'));
                 if (el) el.classList.add('active');
-                ['upper', 'lower'].forEach(id => {
-                    if (pads[id]) pads[id].brush = size;
-                });
+                ['upper', 'lower'].forEach(id => { if (pads[id]) pads[id].brush = size; });
             };
 
             window.markU1Done = async function () {
                 const btn = document.getElementById('u1-tapos-btn');
                 if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sinusuri...'; }
-
-                // validate both pads
                 const vUpper = await validateDrawingAI('upper');
                 const vLower = await validateDrawingAI('lower');
-
                 if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-check"></i> Tapos na!'; }
 
                 let failed = false;
 
-                // Show feedback for upper
                 const tickU = document.getElementById('doneTick-upper');
                 const frameU = document.getElementById('frameUpper');
                 if (!vUpper.valid) {
@@ -2459,7 +1102,6 @@
                     }
                 }
 
-                // Show feedback for lower
                 const tickL = document.getElementById('doneTick-lower');
                 const frameL = document.getElementById('frameLower');
                 if (!vLower.valid) {
@@ -2483,7 +1125,6 @@
                     if (window.AudioManager) window.AudioManager.playSFX('failed');
                 } else {
                     if (window.AudioManager) window.AudioManager.playSFX('correct');
-                    // If both done, unlock next
                     if (pads['upper'].done && pads['lower'].done && !state[1].checked) {
                         state[1].checked = true; state[1].score = 1;
                         const cur = parseInt(document.getElementById('starCount').textContent);
@@ -2493,92 +1134,24 @@
                 }
             };
 
-            // ── Pagsasanay (Unit 3/2) Drawing Pads ──
-            window.act2CurrentColor = '#4A90E2';
-            window.act2BrushSize = 5;
-            window.act2IsEraser = false;
-
-            window.setAct2Color = function (swatch) {
-                if (window.AudioManager) window.AudioManager.playSFX('click');
-                document.querySelectorAll('#colorPalette .color-swatch').forEach(s => s.classList.remove('active'));
-                swatch.classList.add('active');
-                window.act2CurrentColor = swatch.dataset.color;
-
-                if (window.act2IsEraser) {
-                    window.toggleAct2Eraser(); // turn off eraser
-                }
-
-                ['exA', 'exB', 'exC'].forEach(id => {
-                    if (pads[id]) {
-                        pads[id].color = window.act2CurrentColor;
-                        updateCursor(id, window.act2CurrentColor);
-                    }
-                });
-            };
-
-            window.setAct2BrushSize = function (val) {
-                if (window.AudioManager) window.AudioManager.playSFX('click');
-                window.act2BrushSize = val;
-                ['exA', 'exB', 'exC'].forEach(id => {
-                    if (pads[id]) {
-                        pads[id].brush = parseInt(val);
-                        updateCursor(id, pads[id].color); // cursor size is fixed in visual for now or we could omit
-                    }
-                });
-            };
-
-            window.toggleAct2Eraser = function () {
-                if (window.AudioManager) window.AudioManager.playSFX('click');
-                window.act2IsEraser = !window.act2IsEraser;
-                const btn = document.getElementById('btnEraser');
-                if (window.act2IsEraser) {
-                    btn.classList.add('active-tool');
-                    ['exA', 'exB', 'exC'].forEach(id => {
-                        if (pads[id]) {
-                            pads[id].color = '#ffffff';
-                            updateCursor(id, '#ffffff'); // pseudo-eraser cursor
-                        }
-                    });
-                } else {
-                    btn.classList.remove('active-tool');
-                    ['exA', 'exB', 'exC'].forEach(id => {
-                        if (pads[id]) {
-                            pads[id].color = window.act2CurrentColor;
-                            updateCursor(id, window.act2CurrentColor);
-                        }
-                    });
-                }
-            };
-
-            // ── Unit 4 & 5: Interactive Canvas Drawing Pads ──
             const pads = {};
 
             function initPad(id) {
                 const capId = id.charAt(0).toUpperCase() + id.slice(1);
                 const canvas = document.getElementById('canvas' + capId);
                 const frame = document.getElementById('frame' + capId);
-                // Resize canvas to fill frame width
                 function resizeCanvas() {
                     const w = frame.clientWidth;
                     canvas.width = w;
-                    // height is set via HTML attribute
-                    if (pads[id] && pads[id].snapshots.length) {
-                        restoreSnapshot(id);
-                    }
+                    if (pads[id] && pads[id].snapshots.length) restoreSnapshot(id);
                 }
                 resizeCanvas();
                 new ResizeObserver(resizeCanvas).observe(frame);
 
                 pads[id] = {
-                    canvas,
-                    ctx: canvas.getContext('2d'),
-                    drawing: false,
+                    canvas, ctx: canvas.getContext('2d'), drawing: false,
                     color: id === 'upper' ? '#4D96FF' : (id === 'lower' ? '#FF6B9D' : '#6BCB77'),
-                    brush: 5,
-                    snapshots: [],
-                    strokeCount: 0,
-                    maxStrokes: id === 'upper' ? 3 : (id === 'lower' ? 2 : 100),
-                    done: false
+                    brush: 5, snapshots: [], done: false
                 };
 
                 const ctx = pads[id].ctx;
@@ -2590,15 +1163,9 @@
                     const scaleX = canvas.width / rect.width;
                     const scaleY = canvas.height / rect.height;
                     if (e.touches) {
-                        return {
-                            x: (e.touches[0].clientX - rect.left) * scaleX,
-                            y: (e.touches[0].clientY - rect.top) * scaleY
-                        };
+                        return { x: (e.touches[0].clientX - rect.left) * scaleX, y: (e.touches[0].clientY - rect.top) * scaleY };
                     }
-                    return {
-                        x: (e.clientX - rect.left) * scaleX,
-                        y: (e.clientY - rect.top) * scaleY
-                    };
+                    return { x: (e.clientX - rect.left) * scaleX, y: (e.clientY - rect.top) * scaleY };
                 }
 
                 function startDraw(e) {
@@ -2608,13 +1175,8 @@
                     saveSnapshot(id);
                     const p = getPos(e);
                     ctx.beginPath();
-                    if (pads[id].color === '#ffffff') {
-                        ctx.globalCompositeOperation = 'destination-out';
-                        ctx.strokeStyle = 'rgba(0,0,0,1)';
-                    } else {
-                        ctx.globalCompositeOperation = 'source-over';
-                        ctx.strokeStyle = pads[id].color;
-                    }
+                    ctx.globalCompositeOperation = 'source-over';
+                    ctx.strokeStyle = pads[id].color;
                     ctx.lineWidth = pads[id].brush;
                     ctx.moveTo(p.x, p.y);
                 }
@@ -2628,8 +1190,6 @@
                 function endDraw(e) {
                     if (!pads[id].drawing) return;
                     pads[id].drawing = false;
-                    // Count stroke
-                    pads[id].strokeCount++;
                 }
 
                 canvas.addEventListener('mousedown', startDraw, { passive: false });
@@ -2640,15 +1200,12 @@
                 canvas.addEventListener('touchmove', draw, { passive: false });
                 canvas.addEventListener('touchend', endDraw);
 
-                // Init cursor
                 updateCursor(id, pads[id].color);
             }
 
             function updateCursor(id, color) {
-                // Generate an SVG pencil cursor filled with the selected color
                 const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="${color}" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>`;
                 const encoded = encodeURIComponent(svg);
-                // The pencil tip in this SVG is at the bottom-left, approximately at (2, 22)
                 pads[id].canvas.style.cursor = `url('data:image/svg+xml;utf8,${encoded}') 2 22, crosshair`;
             }
 
@@ -2677,7 +1234,6 @@
                         img.onload = () => p.ctx.drawImage(img, 0, 0, p.canvas.width, p.canvas.height);
                         img.src = p.snapshots[p.snapshots.length - 1];
                     }
-                    p.strokeCount = Math.max(0, p.strokeCount - 1);
                 }
             };
 
@@ -2686,7 +1242,6 @@
                 const p = pads[id];
                 p.ctx.clearRect(0, 0, p.canvas.width, p.canvas.height);
                 p.snapshots = [];
-                p.strokeCount = 0;
                 p.done = false;
 
                 const capId = id.charAt(0).toUpperCase() + id.slice(1);
@@ -2698,12 +1253,11 @@
                     tick.style.background = '#E9FBEE';
                 }
             };
+            
             function getTargetLetterForPad(id) {
                 const capId = id.charAt(0).toUpperCase() + id.slice(1);
                 const ghostContainer = document.getElementById('ghost' + capId);
                 if (!ghostContainer) return null;
-                const wm = ghostContainer.querySelector('.watermark-letter');
-                if (wm) return wm.textContent.trim()[0];
                 const gl = ghostContainer.querySelector('.ghost-letter');
                 if (gl) return gl.textContent.trim()[0];
                 return null;
@@ -2713,86 +1267,28 @@
                 const p = pads[id];
                 const ctx = p.ctx;
                 const canvas = p.canvas;
-
-                // 1. Fast empty-canvas check first
                 const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
                 let totalInk = 0;
                 for (let i = 0; i < imgData.length; i += 4) {
                     if (imgData[i + 3] > 20) totalInk++;
                 }
                 if (totalInk < 50) {
-                    return {
-                        valid: false,
-                        reason: 'Walang guhit pa. Subukang sumulat!',
-                        encouragement_fil: 'Subukan mo ulit! Kaya mo yan!',
-                        tip: 'Gumuhit ng malaking letra sa loob ng kahon.'
-                    };
-                }
-
-                // 2. Local Completeness Check (Verify all ghost letter boxes have ink)
-                try {
-                    const capId = id.charAt(0).toUpperCase() + id.slice(1);
-                    const ghostContainer = document.getElementById('ghost' + capId);
-                    const spans = ghostContainer ? ghostContainer.querySelectorAll('.ghost-letter') : [];
-
-                    if (spans.length > 0) {
-                        const canvasRect = canvas.getBoundingClientRect();
-                        const scaleX = canvas.width / canvasRect.width;
-                        const scaleY = canvas.height / canvasRect.height;
-                        let coveredZones = 0;
-
-                        spans.forEach(span => {
-                            const r = span.getBoundingClientRect();
-                            const bx1 = Math.max(0, Math.floor((r.left - canvasRect.left) * scaleX) - 10);
-                            const by1 = Math.max(0, Math.floor((r.top - canvasRect.top) * scaleY) - 10);
-                            const bx2 = Math.min(canvas.width, Math.ceil((r.right - canvasRect.left) * scaleX) + 10);
-                            const by2 = Math.min(canvas.height, Math.ceil((r.bottom - canvasRect.top) * scaleY) + 10);
-
-                            let hits = 0;
-                            for (let sy = by1; sy <= by2; sy += 4) {
-                                for (let sx = bx1; sx <= bx2; sx += 4) {
-                                    const idx = (sy * canvas.width + sx) * 4;
-                                    if (imgData[idx + 3] > 20) hits++;
-                                }
-                            }
-                            if (hits >= 8) coveredZones++;
-                        });
-
-                        if (coveredZones < spans.length) {
-                            return {
-                                valid: false,
-                                reason: 'Hindi pa po tapos ang lahat!',
-                                encouragement_fil: 'Sige pa, punan ang lahat ng gabay na letra! 😊',
-                                tip: `May mga kahon pa na wala pang sulat. Trace mo lahat sila!`
-                            };
-                        }
-                    }
-                } catch (e) {
-                    console.warn('[Completeness check] error:', e);
+                    return { valid: false, reason: 'Walang guhit pa. Subukang sumulat!', encouragement_fil: 'Subukan mo ulit! Kaya mo yan!' };
                 }
 
                 const image_b64 = canvas.toDataURL('image/png');
-                const target_letter = getTargetLetterForPad(id) || '?';
+                const target_letter = getTargetLetterForPad(id) || 'O';
                 try {
                     const resp = await fetch('/api/validate-handwriting/', {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': '{{ csrf_token }}'
-                        },
+                        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}' },
                         body: JSON.stringify({ image_b64, target_letter })
                     });
                     if (!resp.ok) throw new Error('HTTP ' + resp.status);
                     return await resp.json();
                 } catch (err) {
                     console.warn('[AI validate] fallback:', err);
-                    return {
-                        valid: true,
-                        confidence: 0.70,
-                        reason: 'Offline validation - accepted.',
-                        encouragement_fil: 'Magaling! Napakaganda ng iyong pagsulat!',
-                        tip: null
-                    };
+                    return { valid: true, confidence: 0.70, reason: 'Offline validation - accepted.', encouragement_fil: 'Magaling! Napakaganda ng iyong pagsulat!', tip: null };
                 }
             }
 
@@ -2838,61 +1334,24 @@
                     tick.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 }
 
-                // If both done, unlock next
                 if (id === 'exA' || id === 'exB' || id === 'exC') {
-                    // It's a single unit validation
-                    const stIndex = id === 'exA' ? 3 : (id === 'exB' ? 4 : 5); // exA->state3, exB->state4, exC->state5
+                    // Iu-update ang state based sa unit number (exA=2, exB=3, exC=4)
+                    const stIndex = id === 'exA' ? 2 : (id === 'exB' ? 3 : 4); 
                     if (!state[stIndex].checked) {
                         state[stIndex].checked = true;
-                        state[stIndex].score = 1;
-                        const cur = parseInt(document.getElementById('starCount').textContent);
-                        document.getElementById('starCount').textContent = cur + 1;
-                        launchConfetti();
+                        
+                        // FIX: Bigyan lang ng star kapag nasa ExC (Pagsamahin) na para maging 5 stars total
+                        if (id === 'exC') {
+                            state[stIndex].score = 1;
+                            const cur = parseInt(document.getElementById('starCount').textContent);
+                            document.getElementById('starCount').textContent = cur + 1;
+                            launchConfetti();
+                        } else {
+                            state[stIndex].score = 0; // Practice lang
+                        }
                     }
                 }
                 updateNextBtn();
-            };
-
-            window.checkUnit5Pagsasanay = async function () {
-                // Determine if all three pads have drawings
-                let allValid = true;
-                for (const pid of ['p1', 'p2', 'p3']) {
-                    const v = await validateDrawingAI(pid);
-                    if (!v.valid) {
-                        allValid = false;
-                        const frame = document.getElementById('frame' + pid.charAt(0).toUpperCase() + pid.slice(1));
-                        frame.style.border = '4px solid #f44336';
-                        setTimeout(() => { frame.style.border = '4px solid #90CAF9'; }, 700);
-
-                        const tick = document.getElementById('doneTick-' + pid);
-                        if (tick) {
-                            tick.className = 'pad-done-tick show error-tick';
-                            tick.style.display = 'flex';
-                            tick.innerHTML = '⚠️ ' + v.reason;
-                        }
-                    } else {
-                        const tick = document.getElementById('doneTick-' + pid);
-                        if (tick && !tick.classList.contains('show')) {
-                            tick.className = 'pad-done-tick show';
-                            tick.style.display = 'flex';
-                            tick.innerHTML = '✅ Magaling!';
-                        }
-                    }
-                }
-
-                if (allValid) {
-                    if (window.AudioManager) window.AudioManager.playSFX('correct');
-                    if (!state[7].checked) {
-                        state[7].checked = true;
-                        state[7].score = 1; // 1 point for finishing
-                        const cur = parseInt(document.getElementById('starCount').textContent);
-                        document.getElementById('starCount').textContent = cur + 1;
-                        launchConfetti();
-                        updateNextBtn();
-                    }
-                } else {
-                    if (window.AudioManager) window.AudioManager.playSFX('failed');
-                }
             };
 
             window.setColor = function (id, color, swatch) {
@@ -2920,8 +1379,10 @@
 
             // ── Final Score ──
             function showFinalScore() {
-                const totalScore = state[1].score + state[2].score + state[3].score + state[4].score + state[5].score + state[6].score + state[7].score + (state['blanks']?.score || 0);
-                const maxScore = 7; // 1 pt per unit (Gawain 1, Gawain 2, Pagsulat, Pagsasanay, Sagutin Natin)
+                // Summation of all scores. Only units 1, 4, 5, 6, and 7 yield points.
+                const totalScore = state[1].score + state[2].score + state[3].score + state[4].score + state[5].score + state[6].score + state[7].score;
+                const maxScore = 5; 
+                
                 const section = document.getElementById('score-section');
                 section.style.display = 'block';
                 section.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -2938,28 +1399,8 @@
                 document.getElementById('scoreText').textContent = msg;
                 document.getElementById('scoreDetail').textContent = `Puntos: ${totalScore} / ${maxScore}`;
 
-                // Update finish button
                 updateNextBtn();
                 launchConfetti();
-
-                // Save progress to backend
-                const levelId = "{{ level_id|default:'' }}";
-                if (levelId) {
-                    fetch('{% url "core:save_progress" %}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': '{{ csrf_token }}'
-                        },
-                        body: JSON.stringify({
-                            level_id: parseInt(levelId),
-                            stars: starsCount,
-                            is_completed: true
-                        })
-                    }).then(res => res.json()).then(data => {
-                        console.log("Progress saved:", data);
-                    }).catch(err => console.error("Error saving progress:", err));
-                }
             }
 
             // ── Sound ──
@@ -2975,8 +1416,15 @@
                     const vol = window.TTSettings.getVolume() / 100;
                     introAudio.volume = vol; wordsAudio.volume = vol;
                 }
-                introAudio.addEventListener('ended', () => wordsAudio.play());
-                introAudio.play();
+                introAudio.addEventListener('ended', () => wordsAudio.play().catch(e=> {}));
+                introAudio.play().catch(e=> {
+                     if ('speechSynthesis' in window) {
+                        const utter = new SpeechSynthesisUtterance('o... o... oso... orasan... ospital');
+                        utter.lang = 'tl-PH'; utter.rate = 0.75; utter.pitch = 1.1;
+                        window.speechSynthesis.cancel();
+                        window.speechSynthesis.speak(utter);
+                    }
+                });
             };
 
             // ── Confetti ──
